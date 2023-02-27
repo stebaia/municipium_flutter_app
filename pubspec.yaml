@@ -50,6 +50,7 @@ dependencies:
   auto_route: ^5.0.4
   favicon: ^1.1.0
   cached_network_image: ^3.2.3
+  onesignal_flutter: ^3.5.0
 
 
 dev_dependencies:
