@@ -6,9 +6,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/repositories/mappers/municipality_mapper.dart';
+import 'package:municipium/repositories/mappers/municipality_secure_mapper.dart';
 import 'package:municipium/repositories/municipality_repository.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
+import 'package:municipium/utils/secure_storage.dart';
 import 'package:pine/di/dependency_injector_helper.dart';
 import 'package:pine/pine.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -22,14 +24,27 @@ part 'repositories.dart';
 
 class DependencyInjector extends StatelessWidget {
   final Widget child;
+
   const DependencyInjector({Key? key, required this.child}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => DependencyInjectorHelper(
-        blocs: _blocs,
-        mappers: _mappers,
-        providers: _providers,
-        repositories: _repositories,
-        child: child,
-      );
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<SingleChildWidget>>(
+      future: providersFun(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return DependencyInjectorHelper(
+            blocs: _blocs,
+            mappers: _mappers,
+            providers: snapshot.data!,
+            repositories: _repositories,
+            child: child,
+          );
+        } else {
+          // Restituisci un indicatore di caricamento o qualcosa di simile mentre aspetti i dati
+          return CircularProgressIndicator();
+        }
+      },
+    );
+  }
 }

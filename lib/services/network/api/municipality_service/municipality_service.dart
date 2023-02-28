@@ -4,12 +4,11 @@ import 'package:retrofit/retrofit.dart';
 
 part 'municipality_service.g.dart';
 
-
 @RestApi()
 abstract class MunicipalityService {
-  factory MunicipalityService(Dio dio, {String baseUrl}) = _MunicipalityService; 
+  factory MunicipalityService(Dio dio, {String baseUrl}) = _MunicipalityService;
 
   @GET('municipalities/show_mobile/{municipalityId}')
-  Future<MunicipalityDTO> getMunicipality(@Path('municipalityId') int municipalityId);
-
+  Future<MunicipalityDTO> getMunicipality(
+      @Path('municipalityId') int municipalityId);
 }
