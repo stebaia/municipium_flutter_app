@@ -15,6 +15,7 @@ import 'package:municipium/repositories/mappers/municipality_secure_mapper.dart'
 import 'package:municipium/repositories/mappers/news_item_mapper.dart';
 import 'package:municipium/repositories/municipality_repository.dart';
 import 'package:municipium/repositories/news_repository.dart';
+import 'package:municipium/services/network/api/event_service/event_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/api/news_service/news_service.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
