@@ -20,7 +20,7 @@ class EventItemMapper extends DTOMapper<EventDTO, EventItemList> {
       id: dto.id!,
       title: dto.title!,
       images: mapperImages.fromDTO(dto.image!),
-      newsCategories: itemCategoryList,
+      eventCategories: itemCategoryList,
       publishedAt: dto.publishedAt!,
     );
   }
