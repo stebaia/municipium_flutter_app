@@ -13,5 +13,10 @@ final List<RepositoryProvider> _repositories = [
           newsDetailMapper: context.read(),
           newsItemMapper: context.read(),
           newsService: context.read(),
+          logger: context.read())),
+  RepositoryProvider<EventsRepository>(
+      create: (context) => EventsRepository(
+          eventItemMapper: context.read(),
+          eventService: context.read(),
           logger: context.read()))
 ];
