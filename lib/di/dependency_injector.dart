@@ -8,6 +8,7 @@ import 'package:municipium/model/item_category.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/model/news_item_list.dart';
+import 'package:municipium/repositories/events_repository.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/item_category_mapper.dart';
 import 'package:municipium/repositories/mappers/municipality_mapper.dart';
@@ -15,6 +16,7 @@ import 'package:municipium/repositories/mappers/municipality_secure_mapper.dart'
 import 'package:municipium/repositories/mappers/news_item_mapper.dart';
 import 'package:municipium/repositories/municipality_repository.dart';
 import 'package:municipium/repositories/news_repository.dart';
+import 'package:municipium/services/network/api/event_service/event_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/api/news_service/news_service.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
