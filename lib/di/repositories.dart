@@ -7,5 +7,10 @@ final List<RepositoryProvider> _repositories = [
           secureStorage: context.read(),
           municipalityService: context.read(),
           municipalityMapper: context.read(),
+          logger: context.read())),
+  RepositoryProvider<NewsRepository>(
+      create: (context) => NewsRepository(
+          newsItemMapper: context.read(),
+          newsService: context.read(),
           logger: context.read()))
 ];
