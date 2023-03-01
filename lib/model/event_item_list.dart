@@ -6,17 +6,17 @@ class EventItemList extends Equatable {
   final int id;
   final String title;
   final MunicipiumImage images;
-  final List<ItemCategory> newsCategories;
+  final List<ItemCategory> eventCategories;
   final String publishedAt;
 
   const EventItemList(
       {required this.id,
       required this.title,
       required this.images,
-      required this.newsCategories,
+      required this.eventCategories,
       required this.publishedAt});
 
   @override
   // TODO: implement props
-  List<Object?> get props => [id, title, images, newsCategories, publishedAt];
+  List<Object?> get props => [id, title, images, eventCategories, publishedAt];
 }
