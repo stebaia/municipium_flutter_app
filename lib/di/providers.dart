@@ -40,5 +40,17 @@ Future<List<SingleChildWidget>> providersFun() async {
         baseUrl: baseUrl,
       ),
     ),
+    Provider<NewsService>(
+      create: (context) => NewsService(
+        context.read<Dio>(),
+        baseUrl: baseUrl,
+      ),
+    ),
+    Provider<EventService>(
+      create: (context) => EventService(
+        context.read<Dio>(),
+        baseUrl: baseUrl,
+      ),
+    )
   ];
 }

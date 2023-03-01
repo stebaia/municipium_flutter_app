@@ -7,4 +7,13 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<MunicipalityDTO, Municipality>>(
     create: (_) => MunicipalityMapper(),
   ),
+  Provider<DTOMapper<NewsDTO, NewsItemList>>(
+    create: (_) => NewsItemMapper(),
+  ),
+  Provider<DTOMapper<ItemCategoryDTO, ItemCategory>>(
+    create: (_) => ItemCategoryMapper(),
+  ),
+  Provider<DTOMapper<MImagesDTO, MunicipiumImage>>(
+    create: (_) => MunicipiumImageMapper(),
+  ),
 ];
