@@ -5,6 +5,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/repositories/news_repository.dart';
+import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/ui/pages/news_list_page.dart';
 
 class MainPage extends StatefulWidget with AutoRouteWrapper {
   const MainPage({super.key});
@@ -40,8 +42,7 @@ class _MainPageState extends State<MainPage> {
                 MaterialButton(
                   child: Text('get news'),
                   onPressed: (() {
-                  NewsRepository newsRepository = context.read();
-                  newsRepository.getNewsList();
+                    context.pushRoute(const NewsListRoute());
                 }))
               ],
             )

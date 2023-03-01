@@ -16,4 +16,7 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<MImagesDTO, MunicipiumImage>>(
     create: (_) => MunicipiumImageMapper(),
   ),
+  Provider<DTOMapper<EventDTO, EventItemList>>(
+    create: (_) => EventItemMapper(),
+  ),
 ];
