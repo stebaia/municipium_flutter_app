@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/model/item_category.dart';
 
-class NewsItemList extends Equatable {
+class EventItemList extends Equatable {
   final int id;
   final String title;
   final MunicipiumImage images;
   final List<ItemCategory> newsCategories;
   final String publishedAt;
 
-  const NewsItemList(
+  const EventItemList(
       {required this.id,
       required this.title,
       required this.images,
