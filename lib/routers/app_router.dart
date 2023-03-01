@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:municipium/ui/pages/main_page.dart';
-import 'package:municipium/ui/pages/news_list_page.dart';
+import 'package:municipium/ui/pages/news_section/news_detail_page.dart';
+import 'package:municipium/ui/pages/news_section/news_list_page.dart';
 import 'package:municipium/ui/pages/splash_page.dart';
 
 @MaterialAutoRouter(
@@ -14,6 +15,9 @@ import 'package:municipium/ui/pages/splash_page.dart';
     AutoRoute(
       page: NewsListPage,
     ),
+    AutoRoute(
+      page: NewsDetailPage
+    )
   ],
 )
 class $AppRouter {}
