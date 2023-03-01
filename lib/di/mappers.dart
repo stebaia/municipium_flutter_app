@@ -19,4 +19,7 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<EventDTO, EventItemList>>(
     create: (_) => EventItemMapper(),
   ),
+  Provider<DTOMapper<NewsDTO, NewsDetail>>(
+    create: (_) => NewsDetailMapper(),
+  ),
 ];

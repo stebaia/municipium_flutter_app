@@ -10,6 +10,7 @@ final List<RepositoryProvider> _repositories = [
           logger: context.read())),
   RepositoryProvider<NewsRepository>(
       create: (context) => NewsRepository(
+          newsDetailMapper: context.read(),
           newsItemMapper: context.read(),
           newsService: context.read(),
           logger: context.read()))

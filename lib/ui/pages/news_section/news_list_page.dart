@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/news_list_bloc/news_list_bloc_bloc.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 
 class NewsListPage extends StatefulWidget with AutoRouteWrapper {
   const NewsListPage({super.key});
@@ -15,7 +16,7 @@ class NewsListPage extends StatefulWidget with AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<NewsListBloc>(
           create: (context) =>
-              NewsListBloc(newsRepository: context.read())..fetchNewsList(),
+              NewsListBloc(newsRepository: context.read()),
         )
       ], child: this);
 }
@@ -34,6 +35,7 @@ class _NewsListPageState extends State<NewsListPage> {
           return ListView.builder(
               itemCount: state.newsItemList.length,
               itemBuilder: ((context, index) => ListTile(
+                onTap: () => context.pushRoute(NewsDetailRoute(newsId: state.newsItemList[index].id)),
                     title: Text(
                       state.newsItemList[index].title,
                     ),
