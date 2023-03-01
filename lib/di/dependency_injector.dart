@@ -9,6 +9,7 @@ import 'package:municipium/model/item_category.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/model/news_item_list.dart';
+import 'package:municipium/repositories/events_repository.dart';
 import 'package:municipium/repositories/mappers/event_item_mapper.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/item_category_mapper.dart';
