@@ -10,15 +10,12 @@ class NewsRepository {
   final DTOMapper<NewsDTO, NewsDetail> newsDetailMapper;
   final NewsService newsService;
   final Logger logger;
-  
-  NewsRepository({
-    required this.logger,
-    required this.newsService,
-    required this.newsItemMapper,
-    required this.newsDetailMapper
-  });
 
- 
+  NewsRepository(
+      {required this.logger,
+      required this.newsService,
+      required this.newsItemMapper,
+      required this.newsDetailMapper});
 
   Future<List<NewsItemList>> getNewsList() async {
     try {
@@ -35,14 +32,13 @@ class NewsRepository {
   }
 
   Future<NewsDetail> getNewsDetail(int newsId) async {
-    try{
+    try {
       final newsDetailResponse = await newsService.getNewsDetail(newsId);
       final newsDetail = newsDetailMapper.fromDTO(newsDetailResponse);
       return newsDetail;
-    }catch (error, stackTrace) {
+    } catch (error, stackTrace) {
       logger.e('Error in getting news $newsId', error, stackTrace);
       rethrow;
     }
   }
-
 }
