@@ -18,10 +18,7 @@ class NewsRepository {
     required this.newsDetailMapper
   });
 
-  NewsRepository(
-      {required this.logger,
-      required this.newsService,
-      required this.newsItemMapper});
+ 
 
   Future<List<NewsItemList>> getNewsList() async {
     try {

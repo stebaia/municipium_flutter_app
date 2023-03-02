@@ -7,21 +7,21 @@ abstract class EventListState extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchingNewsListState extends EventListState {
-  const FetchingNewsListState();
+class FetchingEventListState extends EventListState {
+  const FetchingEventListState();
 }
 
-class FetchedNewsListState extends EventListState {
+class FetchedEventListState extends EventListState {
   final List<EventItemList> newsItemList;
-  const FetchedNewsListState(this.newsItemList);
+  const FetchedEventListState(this.newsItemList);
   @override
   List<Object> get props => [newsItemList];
 }
 
-class NoNewsListState extends EventListState {
-  const NoNewsListState();
+class NoEventListState extends EventListState {
+  const NoEventListState();
 }
 
-class ErrorNewsListState extends EventListState {
-  const ErrorNewsListState();
+class ErrorEventListState extends EventListState {
+  const ErrorEventListState();
 }
