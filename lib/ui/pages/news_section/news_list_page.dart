@@ -25,6 +25,7 @@ class _NewsListPageState extends State<NewsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
         body: Container(child: BlocBuilder<NewsListBloc, NewsListBlocState>(
       builder: (context, state) {
         if (state is FetchingNewsListState) {

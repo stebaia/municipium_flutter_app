@@ -43,6 +43,11 @@ class _MainPageState extends State<MainPage> {
                   child: Text('get news'),
                   onPressed: (() {
                     context.pushRoute(const NewsListRoute());
+                })),
+                MaterialButton(
+                  child: Text('get pois'),
+                  onPressed: (() {
+                    context.pushRoute(const PointOfInterestListRoute());
                 }))
               ],
             )

@@ -11,74 +11,86 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:flutter/material.dart' as _i6;
+import 'package:auto_route/auto_route.dart' as _i6;
+import 'package:flutter/material.dart' as _i7;
 import 'package:municipium/ui/pages/main_page.dart' as _i2;
 import 'package:municipium/ui/pages/news_section/news_detail_page.dart' as _i4;
 import 'package:municipium/ui/pages/news_section/news_list_page.dart' as _i3;
+import 'package:municipium/ui/pages/point_of_interest_section/point_of_interest_list_page.dart'
+    as _i5;
 import 'package:municipium/ui/pages/splash_page.dart' as _i1;
 
-class AppRouter extends _i5.RootStackRouter {
-  AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
+class AppRouter extends _i6.RootStackRouter {
+  AppRouter([_i7.GlobalKey<_i7.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i5.PageFactory> pagesMap = {
+  final Map<String, _i6.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SplashPage(),
       );
     },
     MainRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i5.WrappedRoute(child: const _i2.MainPage()),
+        child: _i6.WrappedRoute(child: const _i2.MainPage()),
       );
     },
     NewsListRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i5.WrappedRoute(child: const _i3.NewsListPage()),
+        child: _i6.WrappedRoute(child: const _i3.NewsListPage()),
       );
     },
     NewsDetailRoute.name: (routeData) {
       final args = routeData.argsAs<NewsDetailRouteArgs>();
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i5.WrappedRoute(
+        child: _i6.WrappedRoute(
             child: _i4.NewsDetailPage(
           key: args.key,
           newsId: args.newsId,
         )),
       );
     },
+    PointOfInterestListRoute.name: (routeData) {
+      return _i6.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: _i6.WrappedRoute(child: const _i5.PointOfInterestListPage()),
+      );
+    },
   };
 
   @override
-  List<_i5.RouteConfig> get routes => [
-        _i5.RouteConfig(
+  List<_i6.RouteConfig> get routes => [
+        _i6.RouteConfig(
           SplashRoute.name,
           path: '/',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           MainRoute.name,
           path: '/main-page',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           NewsListRoute.name,
           path: '/news-list-page',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           NewsDetailRoute.name,
           path: '/news-detail-page',
+        ),
+        _i6.RouteConfig(
+          PointOfInterestListRoute.name,
+          path: '/point-of-interest-list-page',
         ),
       ];
 }
 
 /// generated route for
 /// [_i1.SplashPage]
-class SplashRoute extends _i5.PageRouteInfo<void> {
+class SplashRoute extends _i6.PageRouteInfo<void> {
   const SplashRoute()
       : super(
           SplashRoute.name,
@@ -90,7 +102,7 @@ class SplashRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.MainPage]
-class MainRoute extends _i5.PageRouteInfo<void> {
+class MainRoute extends _i6.PageRouteInfo<void> {
   const MainRoute()
       : super(
           MainRoute.name,
@@ -102,7 +114,7 @@ class MainRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.NewsListPage]
-class NewsListRoute extends _i5.PageRouteInfo<void> {
+class NewsListRoute extends _i6.PageRouteInfo<void> {
   const NewsListRoute()
       : super(
           NewsListRoute.name,
@@ -114,9 +126,9 @@ class NewsListRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.NewsDetailPage]
-class NewsDetailRoute extends _i5.PageRouteInfo<NewsDetailRouteArgs> {
+class NewsDetailRoute extends _i6.PageRouteInfo<NewsDetailRouteArgs> {
   NewsDetailRoute({
-    _i6.Key? key,
+    _i7.Key? key,
     required int newsId,
   }) : super(
           NewsDetailRoute.name,
@@ -136,7 +148,7 @@ class NewsDetailRouteArgs {
     required this.newsId,
   });
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   final int newsId;
 
@@ -144,4 +156,16 @@ class NewsDetailRouteArgs {
   String toString() {
     return 'NewsDetailRouteArgs{key: $key, newsId: $newsId}';
   }
+}
+
+/// generated route for
+/// [_i5.PointOfInterestListPage]
+class PointOfInterestListRoute extends _i6.PageRouteInfo<void> {
+  const PointOfInterestListRoute()
+      : super(
+          PointOfInterestListRoute.name,
+          path: '/point-of-interest-list-page',
+        );
+
+  static const String name = 'PointOfInterestListRoute';
 }

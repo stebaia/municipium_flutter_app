@@ -51,6 +51,12 @@ Future<List<SingleChildWidget>> providersFun() async {
         context.read<Dio>(),
         baseUrl: baseUrl,
       ),
+    ),
+    Provider<PointOfInterestService>(
+      create: (context) => PointOfInterestService(
+        context.read<Dio>(),
+        baseUrl: baseUrl,
+      ),
     )
   ];
 }

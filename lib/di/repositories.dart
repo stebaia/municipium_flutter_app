@@ -18,5 +18,10 @@ final List<RepositoryProvider> _repositories = [
       create: (context) => EventsRepository(
           eventItemMapper: context.read(),
           eventService: context.read(),
+          logger: context.read())),
+  RepositoryProvider<PointOfInterestRepository>(
+      create: (context) => PointOfInterestRepository(
+          pointOfInterestMapper: context.read(),
+          pointOfInterestService: context.read(),
           logger: context.read()))
 ];
