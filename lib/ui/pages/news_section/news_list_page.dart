@@ -16,7 +16,7 @@ class NewsListPage extends StatefulWidget with AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<NewsListBloc>(
           create: (context) =>
-              NewsListBloc(newsRepository: context.read()),
+              NewsListBloc(newsRepository: context.read())..fetchNewsList(),
         )
       ], child: this);
 }
