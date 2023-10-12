@@ -33,10 +33,9 @@ class PointOfInterestListBloc
       if (pointOfInterestsList.pointOfInterestsItemList!.length > 0){
         emit(FetchedPointOfInterestListState(pointOfInterestsList));
         page++;
-      }
-        
-      else
-        emit(NoPointOfInterestListState());
+      }else {
+        emit(const NoPointOfInterestListState());
+      }    
     } catch (error) {
       emit(const ErrorPointOfInterestListState());
     }
