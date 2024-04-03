@@ -1,6 +1,6 @@
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
-import 'package:pine/utils/mapper.dart';
+import 'package:pine/utils/dto_mapper.dart';
 
 class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
   @override

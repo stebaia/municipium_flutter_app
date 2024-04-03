@@ -1,11 +1,10 @@
-import 'package:municipium/model/event_item_list.dart';
 import 'package:municipium/model/item_category.dart';
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/model/news_detail.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/item_category_mapper.dart';
 import 'package:municipium/services/network/dto/news_dto.dart';
-import 'package:pine/utils/mapper.dart';
+import 'package:pine/utils/dto_mapper.dart';
 
 class NewsDetailMapper extends DTOMapper<NewsDTO, NewsDetail> {
   @override

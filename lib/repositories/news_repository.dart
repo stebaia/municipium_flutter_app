@@ -3,6 +3,7 @@ import 'package:municipium/model/news_detail.dart';
 import 'package:municipium/model/news_item_list.dart';
 import 'package:municipium/services/network/api/news_service/news_service.dart';
 import 'package:municipium/services/network/dto/news_dto.dart';
+import 'package:pine/utils/dto_mapper.dart';
 import 'package:pine/utils/mapper.dart';
 
 class NewsRepository {
@@ -25,8 +26,8 @@ class NewsRepository {
         newsList.add(newsItemMapper.fromDTO(element));
       });
       return newsList;
-    } catch (error, stackTrace) {
-      logger.e('Error in getting news list', error, stackTrace);
+    } catch (error) {
+      logger.e('Error in getting news list');
       rethrow;
     }
   }
@@ -36,8 +37,8 @@ class NewsRepository {
       final newsDetailResponse = await newsService.getNewsDetail(newsId);
       final newsDetail = newsDetailMapper.fromDTO(newsDetailResponse);
       return newsDetail;
-    } catch (error, stackTrace) {
-      logger.e('Error in getting news $newsId', error, stackTrace);
+    } catch (error) {
+      logger.e('Error in getting news $newsId');
       rethrow;
     }
   }

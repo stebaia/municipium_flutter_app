@@ -1,6 +1,6 @@
 import 'package:municipium/model/item_category.dart';
 import 'package:municipium/services/network/dto/news_categories_dto.dart';
-import 'package:pine/utils/mapper.dart';
+import 'package:pine/utils/dto_mapper.dart';
 
 class ItemCategoryMapper extends DTOMapper<ItemCategoryDTO, ItemCategory> {
   @override

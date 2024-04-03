@@ -2,7 +2,7 @@ import 'package:municipium/model/point_of_interests_item.dart';
 import 'package:municipium/model/point_of_intertests_list.dart';
 import 'package:municipium/repositories/mappers/point_of_interest_item_mapper.dart';
 import 'package:municipium/services/network/dto/point_of_interests_list_dto.dart';
-import 'package:pine/utils/mapper.dart';
+import 'package:pine/utils/dto_mapper.dart';
 
 class PointOfInterestsListMapper
     extends DTOMapper<PointOfInterestsDTO, PointOfInterestsList> {

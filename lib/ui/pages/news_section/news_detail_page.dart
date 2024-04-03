@@ -5,7 +5,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/news_detail_bloc/news_detail_bloc.dart';
 
-class NewsDetailPage extends StatefulWidget with AutoRouteWrapper{
+
+@RoutePage()
+class NewsDetailPage extends StatefulWidget implements AutoRouteWrapper{
 
   final int newsId;
   const NewsDetailPage({super.key, required this.newsId});

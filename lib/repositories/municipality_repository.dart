@@ -3,6 +3,7 @@ import 'package:municipium/model/municipality.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
 import 'package:municipium/utils/secure_storage.dart';
+import 'package:pine/utils/dto_mapper.dart';
 import 'package:pine/utils/mapper.dart';
 
 class MunicipalityRepository {
@@ -28,7 +29,7 @@ class MunicipalityRepository {
           .setMunicipalityKeyInStorage(munMapper.from(municipality));
       return municipality;
     } catch (error, stackTrace) {
-      logger.e('Error in getting municipality', error, stackTrace);
+      logger.e('Error in getting municipality');
       rethrow;
     }
   }

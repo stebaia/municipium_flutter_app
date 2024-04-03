@@ -1,7 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/repositories/mappers/municipality_secure_mapper.dart';
-import 'package:pine/utils/mapper.dart';
 
 class SecureStorage {
   final storage = const FlutterSecureStorage();
@@ -9,6 +8,7 @@ class SecureStorage {
   final String _oneSignalKey = "ONE_SIGNAL_KEY";
 
   final String _municipalityKey = "MUNINICIPALITY_KEY";
+
 
   Future setMunicipalityKeyInStorage(String municipality) async {
     await storage.write(key: _municipalityKey, value: municipality);

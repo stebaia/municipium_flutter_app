@@ -8,7 +8,9 @@ import 'package:municipium/repositories/news_repository.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/pages/news_section/news_list_page.dart';
 
-class MainPage extends StatefulWidget with AutoRouteWrapper {
+
+@RoutePage()
+class MainPage extends StatefulWidget implements AutoRouteWrapper {
   const MainPage({super.key});
 
   @override

@@ -1,27 +1,25 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:municipium/ui/pages/main_page.dart';
-import 'package:municipium/ui/pages/news_section/news_detail_page.dart';
-import 'package:municipium/ui/pages/news_section/news_list_page.dart';
-import 'package:municipium/ui/pages/point_of_interest_section/point_of_interest_list_page.dart';
-import 'package:municipium/ui/pages/splash_page.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 
-@MaterialAutoRouter(
-  replaceInRouteName: 'Page,Route',
-  preferRelativeImports: false,
-  routes: [
-    AutoRoute(page: SplashPage, initial: true),
+@AutoRouterConfig(replaceInRouteName: 'Page,Route', )
+class AppRouter extends $AppRouter {
+
+ @override
+ List<AutoRoute> get routes => [
+    AutoRoute(page: SplashRoute.page, initial: true),
+    AutoRoute(page: OnboardingRoute.page),
+    AutoRoute(page: OnboardingSearchMunicipalityRoute.page),
     AutoRoute(
-      page: MainPage,
+      page: MainRoute.page,
     ),
     AutoRoute(
-      page: NewsListPage,
+      page: NewsListRoute.page,
     ),
     AutoRoute(
-      page: NewsDetailPage
+      page: NewsDetailRoute.page
     ),
     AutoRoute(
-      page: PointOfInterestListPage
+      page: PointOfInterestListRoute.page
     )
-  ],
-)
-class $AppRouter {}
+ ];
+}

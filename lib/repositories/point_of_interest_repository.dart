@@ -2,7 +2,7 @@ import 'package:logger/logger.dart';
 import 'package:municipium/model/point_of_intertests_list.dart';
 import 'package:municipium/services/network/api/point_of_intertest_service/point_of_interest_service.dart';
 import 'package:municipium/services/network/dto/point_of_interests_list_dto.dart';
-import 'package:pine/utils/mapper.dart';
+import 'package:pine/utils/dto_mapper.dart';
 
 class PointOfInterestRepository {
   final DTOMapper<PointOfInterestsDTO, PointOfInterestsList> pointOfInterestMapper;
@@ -20,8 +20,8 @@ class PointOfInterestRepository {
           await pointOfInterestService.getPointOfInterestList(pageIndex, pageSize);
       final pointOfInterestsList = pointOfInterestMapper.fromDTO(pointOfInterestsListResponse);
       return pointOfInterestsList;
-    } catch (error, stackTrace) {
-      logger.e('Error in getting news list', error, stackTrace);
+    } catch (error) {
+      logger.e('Error in getting news list');
       rethrow;
     }
   }

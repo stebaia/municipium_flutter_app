@@ -6,7 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/news_list_bloc/news_list_bloc_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 
-class NewsListPage extends StatefulWidget with AutoRouteWrapper {
+
+@RoutePage()
+class NewsListPage extends StatefulWidget implements AutoRouteWrapper {
   const NewsListPage({super.key});
 
   @override

@@ -4,8 +4,7 @@ import 'package:municipium/model/point_of_interests_item.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/item_category_mapper.dart';
 import 'package:municipium/services/network/dto/point_of_interests_list_dto.dart';
-import 'package:pine/dto/dto.dart';
-import 'package:pine/utils/mapper.dart';
+import 'package:pine/utils/dto_mapper.dart';
 
 class PointOfInterestsItemMapper extends DTOMapper<PointOfInterestsItemDTO, PointOfInterestsItem>{
   @override

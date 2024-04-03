@@ -1,6 +1,6 @@
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
-import 'package:pine/utils/mapper.dart';
+import 'package:pine/utils/dto_mapper.dart';
 
 class MunicipiumImageMapper extends DTOMapper<MImagesDTO, MunicipiumImage> {
   @override
