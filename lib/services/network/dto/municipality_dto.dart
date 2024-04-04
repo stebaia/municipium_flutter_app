@@ -154,7 +154,8 @@ class MunicipalityDTO extends DTO with EquatableMixin{
 	MunicipalityDTO({this.issueUrl, this.prefix, this.googlePlusLink, this.conciliaSandbox, this.enableEnhancedIssues, this.zipCode, this.siteHeaderLogoType, this.pec, this.youtubeLink, this.province, this.draft, this.secondScript, this.telegramLink, this.id, this.fax, this.nuovoBo, this.enableSpontaneo, this.vatCode, this.enableAuthentication, this.surface, this.eventsRepeating, this.active, this.serviceProvider, this.serviceIndexEidas, this.siteBoxColor, this.serviceLabel, this.enableLdap, this.sandboxClientId, this.phone, this.surveyLoginCode, this.iban, this.jcityGovIntegration, this.linkedinLink, this.civilDefencePointOfInterestCategoryIds, this.itineraryEnabled, this.emergenzaSordi, this.codiceCatastale, this.roundedImage, this.serviceProviderCieid, this.latitude, this.facebookLink, this.civilDefenceNewsCategoryIds, this.isChild, this.skype, this.recaptchaSecretKey, this.accessibilityCode, this.jcityGovEnte, this.paymentLoginCode, this.headerUrl, this.enableIssues, this.email, this.firstScript, this.digitalDossierServices, this.issueDescription, this.authLevelCieid, this.address, this.languages, this.enablePagamento, this.headerName, this.menu, this.enableAvviso, this.civilDefenceType, this.issueStatistics, this.jcityGovUrl, this.provinceId, this.siteHeaderTitleType, this.privateSection, this.newsRepeating, this.serviceIndex, this.enableGarbageCalendar, this.importSportello, this.siteTemplate, this.numberFaq, this.twitterLink, this.enableFaq, this.activeDms, this.newMenu, this.clientId, this.siteLogo, this.appService1, this.features, this.appService3, this.hideContent, this.appService2, this.codiceSap, this.appService4, this.conciliaEnabled, this.evaluationFormLink, this.instagramLink, this.conciliaServerIp, this.idGallery, this.logo, this.eventHomepageTemplate, this.clientSecret, this.slug, this.longitude, this.citizensNumber, this.displayEventsCalendar, this.image, this.bannerVisible, this.conciliaCustomerCode, this.enableRegistration, this.gdprEnabled, this.penalityOnlineStampDuty, this.tax, this.siteHeaderTitle, this.pagopaEnabled, this.recaptchaKey, this.background, this.name, this.subdomain, this.region, this.istat, this.enableEstrattoConto, this.sandboxClientSecret, this.authLevel, this.description, this.fiscalCode, this.customMenuServices, this.conciliaServerPort, this.newsIdForeground, this.enableEvaluate, this.analyticsTrackingCode, this.urlDms, this.issuesLoginCode, this.pagopaCodiceTipoDebito, this.deafEmergency, this.galleryMosaic, this.isAggregator, this.urlSportello, this.enableExport, this.frontendPermissions, this.siteHeaderColor, this.countPrenotazioni, this.paypalEnabled, this.topBlocks, this.cookiePolicyActive, this.disableImage, this.searchStreet});
 
 	MunicipalityDTO.fromJson(Map<String, dynamic> json) {
-		issueUrl = json['issue_url'];
+    try {
+      issueUrl = json['issue_url'];
 		prefix = json['prefix'];
 		googlePlusLink = json['google_plus_link'];
 		conciliaSandbox = json['concilia_sandbox'];
@@ -187,7 +188,7 @@ class MunicipalityDTO extends DTO with EquatableMixin{
 		iban = json['iban'];
 		jcityGovIntegration = json['jcity_gov_integration'];
 		linkedinLink = json['linkedin_link'];
-		civilDefencePointOfInterestCategoryIds = json['civil_defence_point_of_interest_category_ids'].cast<int>();
+		civilDefencePointOfInterestCategoryIds = json['civil_defence_point_of_interest_category_ids']?.cast<int>();
 		itineraryEnabled = json['itinerary_enabled'];
 		emergenzaSordi = json['emergenza_sordi'];
 		codiceCatastale = json['codice_catastale'];
@@ -195,7 +196,7 @@ class MunicipalityDTO extends DTO with EquatableMixin{
 		serviceProviderCieid = json['service_provider_cieid'];
 		latitude = json['latitude'];
 		facebookLink = json['facebook_link'];
-		civilDefenceNewsCategoryIds = json['civil_defence_news_category_ids'].cast<int>();
+		civilDefenceNewsCategoryIds = json['civil_defence_news_category_ids']?.cast<int>();
 		isChild = json['is_child'];
 		skype = json['skype'];
 		recaptchaSecretKey = json['recaptcha_secret_key'];
@@ -210,10 +211,10 @@ class MunicipalityDTO extends DTO with EquatableMixin{
 		issueDescription = json['issue_description'];
 		authLevelCieid = json['auth_level_cieid'];
 		address = json['address'];
-		languages = json['languages'].cast<String>();
+		languages = json['languages']?.cast<String>();
 		enablePagamento = json['enable_pagamento'];
 		headerName = json['header_name'];
-		menu = json['menu'].cast<String>();
+		menu = json['menu']?.cast<String>();
 		enableAvviso = json['enable_avviso'];
 		civilDefenceType = json['civil_defence_type'];
 		issueStatistics = json['issue_statistics'];
@@ -299,6 +300,11 @@ class MunicipalityDTO extends DTO with EquatableMixin{
 		cookiePolicyActive = json['cookie_policy_active'];
 		disableImage = json['disable_image'];
 		searchStreet = json['search_street'];
+    }catch (ex) {
+      print(ex);
+    }
+		
+    
 	}
 
 	Map<String, dynamic> toJson() {

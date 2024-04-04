@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:municipium/di/dependency_injector.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/routers/app_router.dart';
+import 'package:municipium/utils/theme_helper.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class App extends StatefulWidget {
@@ -50,7 +51,7 @@ class _App extends State<App> {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         routeInformationParser: _router.defaultRouteParser(),
         routerDelegate: _router.delegate(),
-        theme: ThemeData(primarySwatch: Colors.blue),
+        theme: ThemeHelper.darkTheme,
       ),
     );
   }

@@ -18,6 +18,13 @@ class FetchedMunicipalityState extends MunicipalityState {
   List<Object> get props => [municipality];
 }
 
+class FetchedMunicipalityListState extends MunicipalityState {
+  final List<Municipality> municipalityList;
+  const FetchedMunicipalityListState(this.municipalityList);
+
+  List<Object> get props => [municipalityList];
+}
+
 class NoMunicipalityState extends MunicipalityState {
   const NoMunicipalityState();
 }

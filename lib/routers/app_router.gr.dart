@@ -58,7 +58,8 @@ abstract class $AppRouter extends _i8.RootStackRouter {
     OnboardingSearchMunicipalityRoute.name: (routeData) {
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.OnboardingSearchMunicipalityPage(),
+        child: _i8.WrappedRoute(
+            child: const _i5.OnboardingSearchMunicipalityPage()),
       );
     },
     PointOfInterestListRoute.name: (routeData) {

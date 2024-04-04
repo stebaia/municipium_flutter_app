@@ -20,6 +20,35 @@ class MunicipalityRepository {
       required this.municipalityMapper,
       required this.logger});
 
+  
+  Future<List<Municipality>> getMunicipalityList() async {
+    try {
+      final municipalityResponse = await municipalityService.getListMunicipality();
+      final List<Municipality> municipalities = [];
+      municipalityResponse.forEach((element) {
+        municipalities.add(municipalityMapper.fromDTO(element));
+      });
+      return municipalities;
+    }catch(error) {
+      logger.e(error.toString());
+      rethrow;
+    }
+  }
+
+  Future<List<Municipality>> getMunicipalityListFromPosition(double lat, double lng) async {
+    try {
+      final municipalityResponse = await municipalityService.getListMunicipalityWithLatLng(lat, lng);
+      final List<Municipality> municipalities = [];
+      municipalityResponse.forEach((element) {
+        municipalities.add(municipalityMapper.fromDTO(element));
+      });
+      return municipalities;
+    }catch(error) {
+      logger.e(error.toString());
+      rethrow;
+    }
+  }
+
   Future<Municipality> saveMunicipality(int municipalityId) async {
     try {
       final municipalityResponse =

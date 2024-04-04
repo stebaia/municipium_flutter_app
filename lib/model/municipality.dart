@@ -13,3 +13,4 @@ class Municipality extends Equatable {
   @override
   List<Object?> get props => [municipalityName, muninicipalityId];
 }
+
