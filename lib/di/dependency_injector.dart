@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/event_item_list.dart';
 import 'package:municipium/model/item_category.dart';
 import 'package:municipium/model/municipality.dart';
@@ -68,6 +69,7 @@ class DependencyInjector extends StatelessWidget {
         } else {
           // Restituisci un indicatore di caricamento o qualcosa di simile mentre aspetti i dati
           return CircularProgressIndicator();
+          
         }
       },
     );
