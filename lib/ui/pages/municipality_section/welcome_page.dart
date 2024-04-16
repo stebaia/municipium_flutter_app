@@ -10,6 +10,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:municipium/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
 import 'package:municipium/ui/components/civil_defence/civil_defence_emergency_phone_number_component.dart';
 import 'package:municipium/ui/components/custom_bottomsheet.dart';
@@ -106,7 +107,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                         FullWidthConfirmButton(
                           isEnabled: true,
-                          onTap: () {},
+                          onTap: () => context.pushRoute(const CoreMunicipalityRoute()),
                           text: 'Entra in Municipium',
                         ),
                         const SizedBox(
