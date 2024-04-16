@@ -20,6 +20,30 @@ class FetchMunicipalityListEvent extends MunicipalityEvent {
   List<Object> get props => [];
 }
 
+class GetMunicipalityTemp extends MunicipalityEvent {
+  const GetMunicipalityTemp();
+  @override
+  List<Object> get props => [];
+}
+
+class FilterMunicipalityListEvent extends MunicipalityEvent {
+  final String filterText;
+
+  const FilterMunicipalityListEvent({required this.filterText});
+
+  @override
+  List<Object> get props => [filterText];
+}
+
+class SetMunicipalityTempEvent extends MunicipalityEvent {
+  final Municipality municipality;
+
+  const SetMunicipalityTempEvent({required this.municipality});
+
+  @override
+  List<Object> get props => [municipality];
+}
+
 class FetchMunicipalityListWithPositionEvent extends MunicipalityEvent {
   final double lat;
   final double lng;

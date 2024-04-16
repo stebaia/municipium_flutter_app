@@ -58,7 +58,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           _pageController.animateToPage(2, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
                         })
                     : GestureDetector(
-                        onTap: () => context.pushRoute(const OnboardingSearchMunicipalityRoute()),
+                        onTap: () => context.pushRoute(OnboardingSearchMunicipalityRoute()),
                         child: const Text(
                         'Cerca il tuo comune',
                         style: TextStyle(color: Colors.blue),

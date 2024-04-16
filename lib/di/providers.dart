@@ -57,6 +57,12 @@ Future<List<SingleChildWidget>> providersFun() async {
         context.read<Dio>(),
         baseUrl: baseUrl,
       ),
+    ),
+    Provider<CivilDefenceService>(
+      create: (context) => CivilDefenceService(
+        context.read<Dio>(),
+        baseUrl: baseUrl,
+      ),
     )
   ];
 }

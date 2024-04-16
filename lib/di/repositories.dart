@@ -23,5 +23,10 @@ final List<RepositoryProvider> _repositories = [
       create: (context) => PointOfInterestRepository(
           pointOfInterestMapper: context.read(),
           pointOfInterestService: context.read(),
+          logger: context.read())),
+  RepositoryProvider<CivilDefenceRepository>(
+      create: (context) => CivilDefenceRepository(
+          emergencyCallMapper: context.read(),
+          civilDefenceService: context.read(),
           logger: context.read()))
 ];
