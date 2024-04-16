@@ -81,8 +81,9 @@ class _WelcomePageState extends State<WelcomePage> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10,),
-                        FullWidthConfirmButton(isEnabled: true, onTap: (){}, text: 'Entra in Municipium',)
+                        const SizedBox(height: 10,),
+                        FullWidthConfirmButton(isEnabled: true, onTap: (){}, text: 'Entra in Municipium',),
+                        const SizedBox(height: 20,),
                       ],
                     ),
                   ),
