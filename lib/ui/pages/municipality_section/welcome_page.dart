@@ -7,9 +7,12 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:municipium/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
+import 'package:municipium/ui/components/civil_defence/civil_defence_emergency_phone_number_component.dart';
+import 'package:municipium/ui/components/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/municipality_components/emergency_call_box.dart';
 import 'package:municipium/ui/components/municipality_components/info_municipality_box.dart';
 import 'package:municipium/ui/components/municipality_components/last_update_box.dart';
@@ -27,6 +30,11 @@ class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
           create: (context) =>
               MunicipalityBloc(municipalityRepository: context.read())
                 ..fetchMunicipality(municipalityId),
+        ),
+        BlocProvider<EmergencyCallBloc>(
+          create: (context) =>
+              EmergencyCallBloc(civilDefenceRepository: context.read())
+                ..fetchEmergencyCallList(),
         )
       ], child: this);
 }
@@ -50,7 +58,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     '${municipality.background.baseUrl}${municipality.background.i1280}',
                     fit: BoxFit.cover,
                   )),
-               Column(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -65,29 +73,48 @@ class _WelcomePageState extends State<WelcomePage> {
                           crossAxisSpacing: 10,
                           children: [
                             StaggeredGridTile.count(
-                              crossAxisCellCount: 4,
-                              mainAxisCellCount: 3,
-                              child: InfoMunicipalityBox(municipality: municipality,)
-                            ),
+                                crossAxisCellCount: 4,
+                                mainAxisCellCount: 3,
+                                child: InfoMunicipalityBox(
+                                  municipality: municipality,
+                                )),
+                            StaggeredGridTile.count(
+                                crossAxisCellCount: 2,
+                                mainAxisCellCount: 3,
+                                child: GestureDetector(
+                                  child: const EmergencyCallBox(),
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        builder: ((modalContext) =>
+                                            CustomBaseBottomSheet(
+                                                title: 'Chiamate d\'emergenza',
+                                                body:
+                                                    CivilDefenceEmergencyPhoneNumberComponent(
+                                                        mContext: context))));
+                                  },
+                                )),
                             const StaggeredGridTile.count(
-                              crossAxisCellCount: 2,
-                              mainAxisCellCount: 3,
-                              child:  EmergencyCallBox()
-                            ),
-                            const StaggeredGridTile.count(
-                              crossAxisCellCount: 6,
-                              mainAxisCellCount: 3,
-                              child:  LastUpdateBox()
-                            ),
+                                crossAxisCellCount: 6,
+                                mainAxisCellCount: 3,
+                                child: LastUpdateBox()),
                           ],
                         ),
-                        const SizedBox(height: 10,),
-                        FullWidthConfirmButton(isEnabled: true, onTap: (){}, text: 'Entra in Municipium',),
-                        const SizedBox(height: 20,),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        FullWidthConfirmButton(
+                          isEnabled: true,
+                          onTap: () {},
+                          text: 'Entra in Municipium',
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                       ],
                     ),
                   ),
-                  
                 ],
               )
             ],

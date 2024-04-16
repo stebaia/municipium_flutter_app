@@ -28,4 +28,7 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<PointOfInterestsItemDTO, PointOfInterestsItem>>(
     create: (_) => PointOfInterestsItemMapper(),
   ),
+  Provider<DTOMapper<CivilDefenceEmergencyCallDTO, CivilDefenceEmergencyCall>>(
+    create: (_) => CivilDefenceEmergencyCallMapper(),
+  )
 ];
