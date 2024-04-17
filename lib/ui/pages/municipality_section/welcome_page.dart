@@ -107,7 +107,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                         FullWidthConfirmButton(
                           isEnabled: true,
-                          onTap: () => context.pushRoute(const CoreMunicipalityRoute()),
+                          onTap: () => context.pushRoute(CoreMunicipalityRoute()),
                           text: 'Entra in Municipium',
                         ),
                         const SizedBox(

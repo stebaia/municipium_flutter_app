@@ -9,8 +9,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i11;
-import 'package:flutter/cupertino.dart' as _i13;
-import 'package:flutter/material.dart' as _i12;
+import 'package:flutter/cupertino.dart' as _i12;
+import 'package:flutter/material.dart' as _i13;
 import 'package:municipium/ui/pages/main_page.dart' as _i3;
 import 'package:municipium/ui/pages/municipality_section/core_municipality_page.dart'
     as _i1;
@@ -33,9 +33,11 @@ abstract class $AppRouter extends _i11.RootStackRouter {
   @override
   final Map<String, _i11.PageFactory> pagesMap = {
     CoreMunicipalityRoute.name: (routeData) {
+      final args = routeData.argsAs<CoreMunicipalityRouteArgs>(
+          orElse: () => const CoreMunicipalityRouteArgs());
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.CoreMunicipalityPage(),
+        child: _i1.CoreMunicipalityPage(key: args.key),
       );
     },
     HomeRoute.name: (routeData) {
@@ -115,16 +117,32 @@ abstract class $AppRouter extends _i11.RootStackRouter {
 
 /// generated route for
 /// [_i1.CoreMunicipalityPage]
-class CoreMunicipalityRoute extends _i11.PageRouteInfo<void> {
-  const CoreMunicipalityRoute({List<_i11.PageRouteInfo>? children})
-      : super(
+class CoreMunicipalityRoute
+    extends _i11.PageRouteInfo<CoreMunicipalityRouteArgs> {
+  CoreMunicipalityRoute({
+    _i12.Key? key,
+    List<_i11.PageRouteInfo>? children,
+  }) : super(
           CoreMunicipalityRoute.name,
+          args: CoreMunicipalityRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'CoreMunicipalityRoute';
 
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+  static const _i11.PageInfo<CoreMunicipalityRouteArgs> page =
+      _i11.PageInfo<CoreMunicipalityRouteArgs>(name);
+}
+
+class CoreMunicipalityRouteArgs {
+  const CoreMunicipalityRouteArgs({this.key});
+
+  final _i12.Key? key;
+
+  @override
+  String toString() {
+    return 'CoreMunicipalityRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -145,7 +163,7 @@ class HomeRoute extends _i11.PageRouteInfo<void> {
 /// [_i3.MainPage]
 class MainRoute extends _i11.PageRouteInfo<MainRouteArgs> {
   MainRoute({
-    _i12.Key? key,
+    _i13.Key? key,
     required int municipalityId,
     List<_i11.PageRouteInfo>? children,
   }) : super(
@@ -169,7 +187,7 @@ class MainRouteArgs {
     required this.municipalityId,
   });
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   final int municipalityId;
 
@@ -183,7 +201,7 @@ class MainRouteArgs {
 /// [_i4.NewsDetailPage]
 class NewsDetailRoute extends _i11.PageRouteInfo<NewsDetailRouteArgs> {
   NewsDetailRoute({
-    _i12.Key? key,
+    _i13.Key? key,
     required int newsId,
     List<_i11.PageRouteInfo>? children,
   }) : super(
@@ -207,7 +225,7 @@ class NewsDetailRouteArgs {
     required this.newsId,
   });
 
-  final _i12.Key? key;
+  final _i13.Key? key;
 
   final int newsId;
 
@@ -250,7 +268,7 @@ class OnboardingRoute extends _i11.PageRouteInfo<void> {
 class OnboardingSearchMunicipalityRoute
     extends _i11.PageRouteInfo<OnboardingSearchMunicipalityRouteArgs> {
   OnboardingSearchMunicipalityRoute({
-    _i13.Key? key,
+    _i12.Key? key,
     List<_i11.PageRouteInfo>? children,
   }) : super(
           OnboardingSearchMunicipalityRoute.name,
@@ -267,7 +285,7 @@ class OnboardingSearchMunicipalityRoute
 class OnboardingSearchMunicipalityRouteArgs {
   const OnboardingSearchMunicipalityRouteArgs({this.key});
 
-  final _i13.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -307,7 +325,7 @@ class SplashRoute extends _i11.PageRouteInfo<void> {
 /// [_i10.WelcomePage]
 class WelcomeRoute extends _i11.PageRouteInfo<WelcomeRouteArgs> {
   WelcomeRoute({
-    _i13.Key? key,
+    _i12.Key? key,
     required int municipalityId,
     List<_i11.PageRouteInfo>? children,
   }) : super(
@@ -331,7 +349,7 @@ class WelcomeRouteArgs {
     required this.municipalityId,
   });
 
-  final _i13.Key? key;
+  final _i12.Key? key;
 
   final int municipalityId;
 

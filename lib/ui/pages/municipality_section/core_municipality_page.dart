@@ -7,14 +7,19 @@ import 'package:municipium/routers/app_router.gr.dart';
 
 @RoutePage()
 class CoreMunicipalityPage extends StatelessWidget {
-  const CoreMunicipalityPage({super.key});
+  CoreMunicipalityPage({super.key});
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
+        scaffoldKey: _scaffoldKey,
         backgroundColor: Colors.white,
         //darkMode.darkTheme ? ThemeHelper.backgroundColorDark : Colors.white,
-        routes: [
+        routes: const [
+          HomeRoute(),
+          HomeRoute(),
+          HomeRoute(),
           HomeRoute()
         ],
         bottomNavigationBuilder: (context, tabsRouter) {
@@ -47,6 +52,22 @@ class CoreMunicipalityPage extends StatelessWidget {
                 ),
               ]);
         },
+      drawer: Drawer(),
+      appBarBuilder: ((context, tabsRouter) {
+        return AppBar(
+            title: Text(tabsRouter.current.name),
+            backgroundColor: Colors.transparent,
+            leading: null,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  _scaffoldKey.currentState!.openDrawer();
+                },
+                icon: const Icon(Icons.menu, color: Colors.black,),
+              )
+            ],
+          );
+      }),
       );
   }
   
