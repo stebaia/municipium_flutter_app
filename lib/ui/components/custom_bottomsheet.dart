@@ -4,16 +4,17 @@ import 'package:flutter/widgets.dart';
 
 class CustomBaseBottomSheet extends StatelessWidget {
   const CustomBaseBottomSheet(
-      {super.key, required this.title, required this.body});
+      {super.key, required this.title, required this.body, required this.height});
 
   final String title;
   final Widget body;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
-      height: MediaQuery.of(context).size.height * 0.85,
+      height: height,
       child: Column(
         children: [
           Row(
