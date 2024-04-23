@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +91,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                         isScrollControlled: true,
                                         builder: ((modalContext) =>
                                             CustomBaseBottomSheet(
-                                                title: 'Chiamate d\'emergenza',
+                                                title: AppLocalizations.of(
+                                                        context)!
+                                                    .btn_go_to_municipium,
                                                 body:
                                                     CivilDefenceEmergencyPhoneNumberComponent(
                                                         mContext: context))));
@@ -112,7 +113,8 @@ class _WelcomePageState extends State<WelcomePage> {
                           onTap: () {
                             context.pushRoute(CoreMunicipalityRoute());
                           },
-                          text: 'Entra in Municipium',
+                          text: AppLocalizations.of(context)!
+                              .btn_go_to_municipium,
                         ),
                         const SizedBox(
                           height: 20,
@@ -126,7 +128,7 @@ class _WelcomePageState extends State<WelcomePage> {
           );
         } else {
           return Center(
-            child: Text('Errore'),
+            child: Text(AppLocalizations.of(context)!.error_get_municipality),
           );
         }
       })),

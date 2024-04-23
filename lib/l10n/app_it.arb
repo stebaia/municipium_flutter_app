@@ -1,3 +1,17 @@
 {
-    "helloWorld": "Ciao mondo!"
+    "text_last_update" : "Ultimi aggiornamenti",
+    "text_emergency_call" : "Chiamate di emergenza",
+    "text_change_municipality" : "Cambia comune",
+    "text_search_municipality" : "Cerca il tuo comune",
+
+    "navbar_home" : "Home",
+    "navbar_maps" : "Mappa",
+    "navbar_calendar" : "Agenda",
+    "navbar_personal_area" : "Area personale",
+
+    "btn_go_to_municipium" : "Entra in municipium",
+
+    "error_get_municipality" : "Errore nel caricamento del comune, riprova più tardi",
+    "errog_get_municipality_list" : "Errore nel caricamento della lista di comuni, riprova più tardi"
+
 }

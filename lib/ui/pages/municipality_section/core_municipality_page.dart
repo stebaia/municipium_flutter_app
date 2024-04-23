@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/menu_drawer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class CoreMunicipalityPage extends StatelessWidget {
@@ -23,26 +24,26 @@ class CoreMunicipalityPage extends StatelessWidget {
             unselectedItemColor: Colors.white,
             currentIndex: tabsRouter.activeIndex,
             onTap: tabsRouter.setActiveIndex,
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.home),
-                activeIcon: Icon(CupertinoIcons.home),
-                label: 'Home',
+                icon: const Icon(CupertinoIcons.home),
+                activeIcon: const Icon(CupertinoIcons.home),
+                label: AppLocalizations.of(context)!.navbar_home,
               ),
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.map),
-                activeIcon: Icon(CupertinoIcons.map),
-                label: 'Mappa',
+                icon: const Icon(CupertinoIcons.map),
+                activeIcon: const Icon(CupertinoIcons.map),
+                label: AppLocalizations.of(context)!.navbar_maps,
               ),
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.calendar),
-                activeIcon: Icon(CupertinoIcons.calendar),
-                label: 'Agenda',
+                icon: const Icon(CupertinoIcons.calendar),
+                activeIcon: const Icon(CupertinoIcons.calendar),
+                label: AppLocalizations.of(context)!.navbar_calendar,
               ),
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.person),
-                activeIcon: Icon(CupertinoIcons.person),
-                label: 'Area personale',
+                icon: const Icon(CupertinoIcons.person),
+                activeIcon: const Icon(CupertinoIcons.person),
+                label: AppLocalizations.of(context)!.navbar_personal_area,
               ),
             ]);
       },
