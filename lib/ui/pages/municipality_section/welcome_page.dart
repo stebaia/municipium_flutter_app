@@ -91,12 +91,17 @@ class _WelcomePageState extends State<WelcomePage> {
                                         isScrollControlled: true,
                                         builder: ((modalContext) =>
                                             CustomBaseBottomSheet(
-                                                title: AppLocalizations.of(
-                                                        context)!
-                                                    .btn_go_to_municipium,
-                                                body:
-                                                    CivilDefenceEmergencyPhoneNumberComponent(
-                                                        mContext: context))));
+                                              title:
+                                                  AppLocalizations.of(context)!
+                                                      .btn_go_to_municipium,
+                                              body:
+                                                  CivilDefenceEmergencyPhoneNumberComponent(
+                                                      mContext: context),
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.85,
+                                            )));
                                   },
                                 )),
                             const StaggeredGridTile.count(

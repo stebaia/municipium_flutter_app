@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/custom_bottomsheet.dart';
+import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/municipality_components/modal_rapid_action_component.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
@@ -111,15 +112,11 @@ class CoreMunicipalityPage extends StatelessWidget {
       },
       floatingActionButton: FloatingActionButton(
         onPressed: (() => showModalBottomSheet(
-                                        context: context,
-                                        
-                                        builder: ((modalContext) =>
-                                            CustomBaseBottomSheet(
-                                                height: MediaQuery.of(context).size.height * 0.3,
-                                                title: 'azioni rapide',
-                                                body:
-                                                    const ModalRapidActionComponent(
-                                                        ))))),
+            context: context,
+            builder: ((modalContext) => CustomBaseBottomSheet(
+                height: MediaQuery.of(context).size.height * 0.3,
+                title: 'azioni rapide',
+                body: const ModalRapidActionComponent())))),
         child: const Icon(Icons.add),
       ),
       appBarBuilder: ((context, tabsRouter) {
