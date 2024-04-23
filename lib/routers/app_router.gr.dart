@@ -11,8 +11,8 @@
 import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:flutter/cupertino.dart' as _i13;
 import 'package:flutter/material.dart' as _i14;
-import 'package:flutter/widgets.dart' as _i15;
-import 'package:municipium/model/menu/submenu_type.dart' as _i16;
+import 'package:municipium/model/menu/menu_item.dart' as _i16;
+import 'package:municipium/model/menu/submenu_type.dart' as _i15;
 import 'package:municipium/ui/pages/main_page.dart' as _i3;
 import 'package:municipium/ui/pages/municipality_section/core_municipality_page.dart'
     as _i1;
@@ -112,6 +112,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
         child: _i10.SubMenuPage(
           key: args.key,
           menu: args.menu,
+          item: args.item,
         ),
       );
     },
@@ -339,14 +340,16 @@ class SplashRoute extends _i12.PageRouteInfo<void> {
 /// [_i10.SubMenuPage]
 class SubMenuRoute extends _i12.PageRouteInfo<SubMenuRouteArgs> {
   SubMenuRoute({
-    _i15.Key? key,
-    required _i16.SubMenuType menu,
+    _i14.Key? key,
+    required _i15.SubMenuType menu,
+    required _i16.MenuItem item,
     List<_i12.PageRouteInfo>? children,
   }) : super(
           SubMenuRoute.name,
           args: SubMenuRouteArgs(
             key: key,
             menu: menu,
+            item: item,
           ),
           initialChildren: children,
         );
@@ -361,15 +364,18 @@ class SubMenuRouteArgs {
   const SubMenuRouteArgs({
     this.key,
     required this.menu,
+    required this.item,
   });
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
-  final _i16.SubMenuType menu;
+  final _i15.SubMenuType menu;
+
+  final _i16.MenuItem item;
 
   @override
   String toString() {
-    return 'SubMenuRouteArgs{key: $key, menu: $menu}';
+    return 'SubMenuRouteArgs{key: $key, menu: $menu, item: $item}';
   }
 }
 

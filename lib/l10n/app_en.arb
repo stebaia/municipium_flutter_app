@@ -12,34 +12,40 @@
     "btn_go_to_municipium" : "Entra in municipium",
 
     "error_get_municipality" : "Errore nel caricamento del comune, riprova più tardi",
-    "errog_get_municipality_list" : "Errore nel caricamento della lista di comuni, riprova più tardi"
+    "errog_get_municipality_list" : "Errore nel caricamento della lista di comuni, riprova più tardi",
 
 
-    ///MENU
 
-    "news_menu" : "Notizie";
-    "poi_menu" : "Punti d'interesse";
-    "dms_poi" : "Tipicità & Servizi";
-    "issue_menu" : "Segnalazioni";
-    "dms_menu" : "Turismo";
-    "garbage_menu" : "Rifiuti";
-    "garbage_collections_menu" : "Ritiro ingrombranti";
-    "garbage_categories_menu" : "Glossario";
-    "recycling_areas_menu" : "Punti di raccolta";
-    "calendar_menu" : "Calendario";
-    "services_menu" : "Servizi Online";
-    "surveys_menu" : "Sondaggi";
-    "penalties_menu" : "Multe";
-    "ecoattivi_menu" : "Ecoattivi";
-    "digital_dossier_menu" : "Sportello telematico";
-    "civil_defence_menu" : "Protezione Civile";
-    "payment_menu" : "Pagamenti";
-    "dms_host" : "Alloggi";
-    "dms_eatery" : "Ristoranti";
-    "dms_experience" : "Esperienze";
-    "civil_defence_alerts" : "Allerte di protezione civile";
-    "civil_defence_phone_numbers" : "Chiamate d'emergenza";
-    "civil_defence_are_u_ready" : "In caso di calamità";
-    "civil_defence_advice" : "Avvisi di criticità";
-    "civil_defence_info" : "Info di protezione civile";
+
+    "news_menu" : "Notizie",
+    "poi_menu" : "Punti d'interesse",
+    "dms_poi" : "Tipicità & Servizi",
+    "issue_menu" : "Segnalazioni",
+    "dms_menu" : "Turismo",
+    "garbage_menu" : "Rifiuti",
+    "garbage_collections_menu" : "Ritiro ingrombranti",
+    "garbage_categories_menu" : "Glossario",
+    "recycling_areas_menu" : "Punti di raccolta",
+    "calendar_menu" : "Calendario",
+    "services_menu" : "Servizi Online",
+    "surveys_menu" : "Sondaggi",
+    "penalties_menu" : "Multe",
+    "ecoattivi_menu" : "Ecoattivi",
+    "digital_dossier_menu" : "Sportello telematico",
+    "civil_defence_menu" : "Protezione Civile",
+    "payment_menu" : "Pagamenti",
+    "dms_host" : "Alloggi",
+    "dms_eatery" : "Ristoranti",
+    "dms_experience" : "Esperienze",
+    "civil_defence_alerts" : "Allerte di protezione civile",
+    "civil_defence_phone_numbers" : "Chiamate d'emergenza",
+    "civil_defence_are_u_ready" : "In caso di calamità",
+    "civil_defence_advice" : "Avvisi di criticità",
+    "civil_defence_info" : "Info di protezione civile",
+    "settings_menu" : "Impostazioni",
+    "privacy_policy_menu" : "Privacy policy",
+    "info_munic_menu" : "Info su Municipium", 
+    "invite_friend_menu" : "Invita un amico",
+    "guide_menu" : "Guida",
+    "municipality_change_menu" : "Cambia comune"
 }

@@ -6,6 +6,7 @@ import 'package:municipium/services/network/dto/civil_defence_dto.dart';
 import 'package:municipium/services/network/dto/dms_dto.dart';
 import 'package:municipium/services/network/dto/garbage_dto.dart';
 import 'package:municipium/utils/enum.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuHelper {
   static List<MenuItem> getIterableMenu(Municipality municipality) {
@@ -162,64 +163,64 @@ class MenuHelper {
     return null;
   }
 
-  static String? getSubMenuName(SubMenuItemType type) {
+  static String? getSubMenuName(BuildContext context, SubMenuItemType type) {
     switch (type) {
       case GarbageMenuType.recyclyngAreas:
-        return 'Punti di raccolta';
+        return AppLocalizations.of(context)?.recycling_areas_menu;
       case GarbageMenuType.garbageCollectors:
-        return 'Ritiro ingombranti';
+        return AppLocalizations.of(context)?.garbage_collections_menu;
       case GarbageMenuType.garbageCalendars:
-        return 'Ecocalendari';
+        return AppLocalizations.of(context)?.calendar_menu;
       case GarbageMenuType.garbageCategories:
-        return 'Glossario';
+        return AppLocalizations.of(context)?.garbage_categories_menu;
       case CivilDefenceType.civilDefencePhoneNumbers:
-        return 'Chiamate d\'emergenza';
+        return AppLocalizations.of(context)?.civil_defence_phone_numbers;
       case CivilDefenceType.civilDefenceLevels:
-        return 'Allerte di protezione civile';
+        return AppLocalizations.of(context)?.civil_defence_alerts;
       case CivilDefenceType.civilDefenceInformations:
-        return 'Info protezione civile';
+        return AppLocalizations.of(context)?.civil_defence_info;
       case CivilDefenceType.civilDefenceAlertNews:
-        return 'Avvisi di criticità';
+        return AppLocalizations.of(context)?.civil_defence_advice;
       case CivilDefenceType.civilDefenceAreUReady:
-        return 'In caso di calamità';
+        return AppLocalizations.of(context)?.civil_defence_are_u_ready;
       case DmsType.eatery:
-        return 'Ristoranti';
+        return AppLocalizations.of(context)?.dms_eatery;
       case DmsType.host:
-        return 'Alloggi';
+        return AppLocalizations.of(context)?.dms_host;
       case DmsType.poi:
-        return 'Tipicità & Servizi';
+        return AppLocalizations.of(context)?.dms_poi;
       case DmsType.experience:
-        return 'Esperienze';
+        return AppLocalizations.of(context)?.dms_experience;
     }
     return null;
   }
 
-  static String getMenuName(MenuItem item) {
+  static String getMenuName(BuildContext context, MenuItem item) {
     switch (item.type) {
       case MenuItemType.news:
-        return 'News';
+        return AppLocalizations.of(context)!.news_menu;
       case MenuItemType.issue:
-        return 'Segnalazioni';
+        return AppLocalizations.of(context)!.issue_menu;
       case MenuItemType.penalties:
-        return 'Multe';
+        return AppLocalizations.of(context)!.penalties_menu;
       case MenuItemType.surveys:
-        return 'Sondaggi';
+        return AppLocalizations.of(context)!.surveys_menu;
       case MenuItemType.garbage:
-        return 'Rifiuti';
+        return AppLocalizations.of(context)!.garbage_menu;
       case MenuItemType.ecoattivi:
-        return 'Ecoattivi';
+        return AppLocalizations.of(context)!.ecoattivi_menu;
       case MenuItemType.poi:
-        return 'Punti d\'interesse';
+        return AppLocalizations.of(context)!.poi_menu;
       case MenuItemType.services:
-        return 'Servizi online';
+        return AppLocalizations.of(context)!.services_menu;
       case MenuItemType.dms:
-        return 'Turismo';
+        return AppLocalizations.of(context)!.dms_menu;
       case MenuItemType.digitalDossier:
         return '';
       case MenuItemType.civilDefence:
-        return 'Protezione civile';
+        return AppLocalizations.of(context)!.civil_defence_menu;
       case MenuItemType.payment:
-        return 'Pagamenti';
+        return AppLocalizations.of(context)!.payment_menu;
     }
   }
 }

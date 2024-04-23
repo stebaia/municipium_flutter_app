@@ -22,16 +22,24 @@ class MenuRow extends StatelessWidget {
       child: GestureDetector(
         onTap: onTapMethod,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (icon != null) ...[
-              Icon(icon),
-              const SizedBox(width: 16),
-            ],
-            Text(textToShow,
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, fontSize: sizeFont)),
-            const SizedBox(width: 12),
-            if (showIconArrow) const Icon(Icons.keyboard_arrow_right)
+            Row(
+              children: [
+                if (icon != null) ...[
+                  Icon(icon),
+                  const SizedBox(width: 16),
+                ],
+                Text(textToShow,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400, fontSize: sizeFont)),
+                const SizedBox(width: 12),
+              ],
+            ),
+            if (showIconArrow) ...[
+              const SizedBox(width: 20),
+              const Icon(Icons.keyboard_arrow_right),
+            ]
           ],
         ),
       ),

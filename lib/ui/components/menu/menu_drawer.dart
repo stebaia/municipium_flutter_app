@@ -6,6 +6,7 @@ import 'package:municipium/model/menu/menu_item.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/menu/menu_row.dart';
 import 'package:municipium/utils/menu_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuDrawer extends StatefulWidget {
   MenuDrawer({super.key, required this.mContext, required this.scaffoldKey});
@@ -48,7 +49,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   sizeFont: 20,
                   icon: Icons.person_outlined),
               MenuRow(
-                  textToShow: 'Cambia comune',
+                  textToShow:
+                      AppLocalizations.of(context)!.municipality_change_menu,
                   onTapMethod: () {},
                   sizeFont: 20,
                   icon: Icons.location_on_outlined),
@@ -59,11 +61,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   padding: const EdgeInsets.only(top: 0),
                   itemBuilder: (context, index) {
                     return MenuRow(
-                        textToShow: MenuHelper.getMenuName(menuList[index]),
+                        textToShow:
+                            MenuHelper.getMenuName(context, menuList[index]),
                         onTapMethod: () {
                           if (menuList[index].subMenu != null) {
-                            context.pushRoute(
-                                SubMenuRoute(menu: menuList[index].subMenu!));
+                            context.pushRoute(SubMenuRoute(
+                                menu: menuList[index].subMenu!,
+                                item: menuList[index]));
                           }
                         },
                         sizeFont: 20,
@@ -76,20 +80,25 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 color: Colors.white,
               ),
               MenuRow(
-                  textToShow: 'Impostazioni', onTapMethod: () {}, sizeFont: 15),
-              MenuRow(
-                  textToShow: 'Privacy policy',
+                  textToShow: AppLocalizations.of(context)!.settings_menu,
                   onTapMethod: () {},
                   sizeFont: 15),
               MenuRow(
-                  textToShow: 'Info su Municipium',
+                  textToShow: AppLocalizations.of(context)!.privacy_policy_menu,
                   onTapMethod: () {},
                   sizeFont: 15),
               MenuRow(
-                  textToShow: 'Invita un amico',
+                  textToShow: AppLocalizations.of(context)!.info_munic_menu,
                   onTapMethod: () {},
                   sizeFont: 15),
-              MenuRow(textToShow: 'Guida', onTapMethod: () {}, sizeFont: 15)
+              MenuRow(
+                  textToShow: AppLocalizations.of(context)!.invite_friend_menu,
+                  onTapMethod: () {},
+                  sizeFont: 15),
+              MenuRow(
+                  textToShow: AppLocalizations.of(context)!.guide_menu,
+                  onTapMethod: () {},
+                  sizeFont: 15)
             ],
           ),
         ),
