@@ -41,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
         }
       },
       child: const Scaffold(
-        backgroundColor: Color(ThemeHelper.blueMunicipium),
+        backgroundColor: ThemeHelper.blueMunicipium,
         body: Center(
           child: Icon(Icons.ac_unit),
         ),

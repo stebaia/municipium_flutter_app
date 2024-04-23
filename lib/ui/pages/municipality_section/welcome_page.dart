@@ -91,6 +91,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                         builder: ((modalContext) =>
                                             CustomBaseBottomSheet(
                                                 title: 'Chiamate d\'emergenza',
+                                                height: MediaQuery.of(context).size.height * 0.85,
                                                 body:
                                                     CivilDefenceEmergencyPhoneNumberComponent(
                                                         mContext: context))));

@@ -51,7 +51,9 @@ class _App extends State<App> {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         routeInformationParser: _router.defaultRouteParser(),
         routerDelegate: _router.delegate(),
-        theme: ThemeHelper.darkTheme,
+        theme: ThemeHelper.lightTheme,
+        darkTheme: ThemeHelper.darkTheme,
+        themeMode: ThemeMode.system,
       ),
     );
   }
