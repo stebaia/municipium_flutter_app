@@ -6,98 +6,99 @@ class UtilityHelper {
   static List<MenuItem> getIterableMenu(Municipality municipality) {
     List<MenuItem> list = [];
     if (municipality.new_menu.news != null) {
-      list.add(MenuItem.news);
+      list.add(MenuItem(type: MenuItemType.news));
     }
     if (municipality.new_menu.issue != null) {
-      list.add(MenuItem.issue);
+      list.add(MenuItem(type: MenuItemType.issue));
     }
     if (municipality.new_menu.penalties != null) {
-      list.add(MenuItem.penalties);
+      list.add(MenuItem(type: MenuItemType.penalties));
     }
     if (municipality.new_menu.surveys != null) {
-      list.add(MenuItem.surveys);
+      list.add(MenuItem(type: MenuItemType.surveys));
     }
     if (municipality.new_menu.garbage != null) {
-      list.add(MenuItem.garbage);
+      list.add(MenuItem(
+          type: MenuItemType.garbage, subMenu: municipality.new_menu.garbage));
     }
     if (municipality.new_menu.ecoattivi != null) {
-      list.add(MenuItem.ecoattivi);
+      list.add(MenuItem(type: MenuItemType.ecoattivi));
     }
     if (municipality.new_menu.poi != null) {
-      list.add(MenuItem.poi);
+      list.add(MenuItem(type: MenuItemType.poi));
     }
     if (municipality.new_menu.services != null) {
-      list.add(MenuItem.services);
+      list.add(MenuItem(type: MenuItemType.services));
     }
     if (municipality.new_menu.dms != null) {
-      list.add(MenuItem.dms);
-    }
-    if (municipality.new_menu.digitalDossier != null) {
-      list.add(MenuItem.digitalDossier);
+      list.add(
+          MenuItem(type: MenuItemType.dms, subMenu: municipality.new_menu.dms));
     }
     if (municipality.new_menu.civilDefence != null) {
-      list.add(MenuItem.digitalDossier);
+      list.add(MenuItem(
+          type: MenuItemType.civilDefence,
+          subMenu: municipality.new_menu.civilDefence));
     }
     if (municipality.new_menu.payment != null) {
-      list.add(MenuItem.payment);
+      list.add(MenuItem(type: MenuItemType.payment));
     }
     return list;
   }
 
   static IconData getMenuIcon(MenuItem item) {
-    switch (item) {
-      case MenuItem.news:
+    switch (item.type) {
+      case MenuItemType.news:
         return Icons.newspaper;
-      case MenuItem.issue:
+      case MenuItemType.issue:
         return Icons.notifications;
-      case MenuItem.penalties:
+      case MenuItemType.penalties:
         return Icons.article;
-      case MenuItem.surveys:
+      case MenuItemType.surveys:
         return Icons.assessment;
-      case MenuItem.garbage:
+      case MenuItemType.garbage:
         return Icons.delete;
-      case MenuItem.ecoattivi:
+      case MenuItemType.ecoattivi:
         return Icons.thumb_up;
-      case MenuItem.poi:
+      case MenuItemType.poi:
         return Icons.place;
-      case MenuItem.services:
+      case MenuItemType.services:
         return Icons.people;
-      case MenuItem.dms:
+      case MenuItemType.dms:
         return Icons.luggage;
-      case MenuItem.digitalDossier:
+      case MenuItemType.digitalDossier:
         return Icons.calculate;
-      case MenuItem.civilDefence:
+      case MenuItemType.civilDefence:
         return Icons.warning;
-      case MenuItem.payment:
+      case MenuItemType.payment:
         return Icons.payment;
     }
   }
 
   static String getMenuName(MenuItem item) {
-    switch (item) {
-      case MenuItem.news:
+    switch (item.type) {
+      case MenuItemType.news:
         return 'News';
-      case MenuItem.issue:
+      case MenuItemType.issue:
         return 'Segnalazioni';
-      case MenuItem.penalties:
+      case MenuItemType.penalties:
         return 'Multe';
-      case MenuItem.surveys:
+      case MenuItemType.surveys:
         return 'Sondaggi';
-      case MenuItem.garbage:
+      case MenuItemType.garbage:
         return 'Rifiuti';
-      case MenuItem.ecoattivi:
+      case MenuItemType.ecoattivi:
         return 'Ecoattivi';
-      case MenuItem.poi:
+      case MenuItemType.poi:
         return 'Punti d\'interesse';
-      case MenuItem.services:
+      case MenuItemType.services:
         return 'Servizi online';
-      case MenuItem.dms:
+      case MenuItemType.dms:
         return 'Turismo';
-      case MenuItem.digitalDossier:
+      case MenuItemType.digitalDossier:
         return '';
-      case MenuItem.civilDefence:
+      case MenuItemType.civilDefence:
         return 'Protezione civile';
-      case MenuItem.payment:
+      case MenuItemType.payment:
         return 'Pagamenti';
     }
   }

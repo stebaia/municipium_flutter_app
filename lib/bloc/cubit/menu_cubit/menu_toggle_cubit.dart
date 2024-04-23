@@ -5,6 +5,14 @@ enum MenuToggleVisibility { visible, invisible }
 class MenuToggleCubit extends Cubit<MenuToggleVisibility> {
   MenuToggleCubit() : super(MenuToggleVisibility.invisible);
 
-  void toggle(bool visible) => emit(
-      visible ? MenuToggleVisibility.visible : MenuToggleVisibility.invisible);
+  bool toggleState = false;
+
+  void toggle() {
+    MenuToggleVisibility emitState = MenuToggleVisibility.invisible;
+    emitState = toggleState
+        ? MenuToggleVisibility.visible
+        : MenuToggleVisibility.invisible;
+    toggleState = !toggleState;
+    emit(emitState);
+  }
 }

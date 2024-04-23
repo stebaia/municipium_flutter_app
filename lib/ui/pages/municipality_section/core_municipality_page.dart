@@ -48,6 +48,7 @@ class CoreMunicipalityPage extends StatelessWidget {
       },
       drawer: MenuDrawer(
         mContext: context,
+        scaffoldKey: _scaffoldKey,
       ),
       appBarBuilder: ((context, tabsRouter) {
         return AppBar(
