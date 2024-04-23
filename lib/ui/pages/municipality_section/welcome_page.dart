@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:municipium/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
+import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
@@ -50,6 +50,7 @@ class _WelcomePageState extends State<WelcomePage> {
           return const CircularProgressIndicator();
         } else if (state is FetchedMunicipalityState) {
           Municipality municipality = state.municipality;
+          context.read<MunicipalityGlobalCubit>().authenticated(municipality);
           return Stack(
             children: [
               SizedBox(
@@ -90,7 +91,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                         isScrollControlled: true,
                                         builder: ((modalContext) =>
                                             CustomBaseBottomSheet(
-                                                title: 'Chiamate d\'emergenza',
+                                                title: AppLocalizations.of(
+                                                        context)!
+                                                    .btn_go_to_municipium,
                                                 body:
                                                     CivilDefenceEmergencyPhoneNumberComponent(
                                                         mContext: context))));
@@ -107,8 +110,11 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                         FullWidthConfirmButton(
                           isEnabled: true,
-                          onTap: () => context.pushRoute(CoreMunicipalityRoute()),
-                          text: 'Entra in Municipium',
+                          onTap: () {
+                            context.pushRoute(CoreMunicipalityRoute());
+                          },
+                          text: AppLocalizations.of(context)!
+                              .btn_go_to_municipium,
                         ),
                         const SizedBox(
                           height: 20,
@@ -122,7 +128,7 @@ class _WelcomePageState extends State<WelcomePage> {
           );
         } else {
           return Center(
-            child: Text('Errore'),
+            child: Text(AppLocalizations.of(context)!.error_get_municipality),
           );
         }
       })),

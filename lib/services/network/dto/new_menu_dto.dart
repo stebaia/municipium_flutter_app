@@ -1,8 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:municipium/services/network/dto/civil_defence_dto.dart';
 import 'package:municipium/services/network/dto/dms_dto.dart';
 import 'package:municipium/services/network/dto/garbage_dto.dart';
 
-class NewMenuDTO {
+class NewMenuDTO extends Equatable{
 	String? news;
 	String? issue;
 	String? penalties;
@@ -58,4 +59,8 @@ class NewMenuDTO {
 		data['events'] = this.events;
 		return data;
 	}
+  
+   @override
+   // TODO: implement props
+   List<Object?> get props => [news, issue, surveys, garbage, ecoattivi, poi, services, dms, digitalDossier, civilDefence, payment, events];
 }

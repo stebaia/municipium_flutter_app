@@ -1,9 +1,9 @@
 part of 'dependency_injector.dart';
 
 final List<BlocProvider> _blocs = [
-   BlocProvider<MunicipalityBloc>(
-    create: (context) =>
-        MunicipalityBloc(municipalityRepository: context.read())
-          ..checkMunicipalityState(),
+  BlocProvider<MunicipalityGlobalCubit>(
+    create: (context) => MunicipalityGlobalCubit(
+        municipalityRepository: context.read(), context: context)
+      ..checkMunicipalityGlobalState(),
   ),
 ];

@@ -11,76 +11,86 @@ part 'municipality_state.dart';
 class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
   final MunicipalityRepository municipalityRepository;
   List<Municipality> _municipalityList = [];
-  
-  
 
   MunicipalityBloc({required this.municipalityRepository})
       : super(const FetchingMunicipalityState()) {
     on<FetchMunicipalityEvent>(_fetchMunicipality);
     on<FetchMunicipalityListEvent>(_fetchMunicipalityList);
     on<FilterMunicipalityListEvent>(_filterMunicipalityList);
-    on<FetchMunicipalityListWithPositionEvent>(_fetchMunicipalityListWithPosition );
+    on<FetchMunicipalityListWithPositionEvent>(
+        _fetchMunicipalityListWithPosition);
   }
 
-
-
-  void fetchMunicipalityListWithPosition(double lat, double lng) => add(FetchMunicipalityListWithPositionEvent(lat: lat, lng: lng));
+  void fetchMunicipalityListWithPosition(double lat, double lng) =>
+      add(FetchMunicipalityListWithPositionEvent(lat: lat, lng: lng));
 
   void fetchMunicipalityList() => add(const FetchMunicipalityListEvent());
 
-  void filterMunicipalityList(String filterText) => add(FilterMunicipalityListEvent(filterText: filterText));
+  void filterMunicipalityList(String filterText) =>
+      add(FilterMunicipalityListEvent(filterText: filterText));
 
   void checkMunicipalityState() async {
     try {
       final municipality = await municipalityRepository.currentMunicipality;
-      if(municipality != null) {
+      if (municipality != null) {
         emit(FetchedMunicipalityState(municipality));
-      }else {
+      } else {
         emit(NoMunicipalityState());
       }
-    }catch (e) {
+    } catch (e) {
       emit(NoMunicipalityState());
     }
   }
 
-  
+  Future<Municipality?> getMunicipality() async {
+    try {
+      final municipality = await municipalityRepository.currentMunicipality;
+      return municipality;
+    } catch (e) {
+      return null;
+    }
+  }
 
-
-  Future<void> _filterMunicipalityList(FilterMunicipalityListEvent event, Emitter<MunicipalityState> emit) async {
+  Future<void> _filterMunicipalityList(FilterMunicipalityListEvent event,
+      Emitter<MunicipalityState> emit) async {
     try {
       // Eseguire il filtro sulla lista completa delle municipalità
-      final filteredList = _municipalityList.where((municipality) =>
-        municipality.municipalityName.toLowerCase().contains(event.filterText.toLowerCase())
-      ).toList();
+      final filteredList = _municipalityList
+          .where((municipality) => municipality.municipalityName
+              .toLowerCase()
+              .contains(event.filterText.toLowerCase()))
+          .toList();
       emit(FetchedMunicipalityListState(filteredList));
     } catch (error) {
       emit(const ErrorMunicipalityState());
     }
   }
-  
 
-  Future<FutureOr<void>> _fetchMunicipalityList(FetchMunicipalityListEvent event,
-      Emitter<MunicipalityState> emit) async {
-        emit(const FetchingMunicipalityState());
-        try {
-          final municipalityList = await municipalityRepository.getMunicipalityList();
-          _municipalityList = municipalityList;
-          emit(FetchedMunicipalityListState(municipalityList));
-        }catch (ex){
-          emit(const ErrorMunicipalityState());
-        }
-      }
+  Future<FutureOr<void>> _fetchMunicipalityList(
+      FetchMunicipalityListEvent event, Emitter<MunicipalityState> emit) async {
+    emit(const FetchingMunicipalityState());
+    try {
+      final municipalityList =
+          await municipalityRepository.getMunicipalityList();
+      _municipalityList = municipalityList;
+      emit(FetchedMunicipalityListState(municipalityList));
+    } catch (ex) {
+      emit(const ErrorMunicipalityState());
+    }
+  }
 
-  Future<FutureOr<void>> _fetchMunicipalityListWithPosition(FetchMunicipalityListWithPositionEvent event,
+  Future<FutureOr<void>> _fetchMunicipalityListWithPosition(
+      FetchMunicipalityListWithPositionEvent event,
       Emitter<MunicipalityState> emit) async {
-        emit(const FetchingMunicipalityState());
-        try {
-          final municipalityList = await municipalityRepository.getMunicipalityListFromPosition(event.lat, event.lng);
-          emit(FetchedMunicipalityListState(municipalityList));
-        }catch (ex){
-          emit(const ErrorMunicipalityState());
-        }
-      }
+    emit(const FetchingMunicipalityState());
+    try {
+      final municipalityList = await municipalityRepository
+          .getMunicipalityListFromPosition(event.lat, event.lng);
+      emit(FetchedMunicipalityListState(municipalityList));
+    } catch (ex) {
+      emit(const ErrorMunicipalityState());
+    }
+  }
 
   void fetchMunicipality(int municipalityId) =>
       add(FetchMunicipalityEvent(municipalityId: municipalityId));
