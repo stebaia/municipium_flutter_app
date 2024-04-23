@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class MenuRow extends StatelessWidget {
@@ -6,11 +7,13 @@ class MenuRow extends StatelessWidget {
       required this.textToShow,
       required this.onTapMethod,
       required this.sizeFont,
-      this.icon});
+      this.icon,
+      this.showIconArrow = false});
   final String textToShow;
   final Function()? onTapMethod;
   final double sizeFont;
   final IconData? icon;
+  final bool showIconArrow;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,8 @@ class MenuRow extends StatelessWidget {
             Text(textToShow,
                 style:
                     TextStyle(fontWeight: FontWeight.bold, fontSize: sizeFont)),
-            const SizedBox(width: 12)
+            const SizedBox(width: 12),
+            if (showIconArrow) const Icon(Icons.keyboard_arrow_right)
           ],
         ),
       ),

@@ -15,9 +15,21 @@ enum MenuItemType {
   payment
 }
 
-class MenuItem {
-  MenuItemType type;
-  SubMenuType? subMenu;
+class SubMenuItemType {}
 
-  MenuItem({required this.type, this.subMenu});
+enum GarbageMenuType implements SubMenuItemType {
+  recyclyngAreas,
+  garbageCollectors,
+  garbageCalendars,
+  garbageCategories
 }
+
+enum CivilDefenceType implements SubMenuItemType {
+  civilDefencePhoneNumbers,
+  civilDefenceLevels,
+  civilDefenceAlertNews,
+  civilDefenceInformations,
+  civilDefenceAreUReady
+}
+
+enum DmsType implements SubMenuItemType { eatery, host, poi, experience }

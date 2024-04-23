@@ -1,10 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/cubit/menu_cubit/menu_toggle_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:municipium/model/menu/menu_item.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/menu/menu_row.dart';
-import 'package:municipium/utils/enum.dart';
-import 'package:municipium/utils/utility_helper.dart';
+import 'package:municipium/utils/menu_helper.dart';
 
 class MenuDrawer extends StatefulWidget {
   MenuDrawer({super.key, required this.mContext, required this.scaffoldKey});
@@ -21,7 +22,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
     final municipality = (widget.mContext.watch<MunicipalityGlobalCubit>().state
             as StoredMunicipalityGlobalState)
         .municipality;
-    final List<MenuItem> menuList = UtilityHelper.getIterableMenu(municipality);
+    final List<MenuItem> menuList = MenuHelper.getIterableMenu(municipality);
 
     return Container(
       decoration: const BoxDecoration(color: Colors.black),
@@ -58,10 +59,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   padding: const EdgeInsets.only(top: 0),
                   itemBuilder: (context, index) {
                     return MenuRow(
-                        textToShow: UtilityHelper.getMenuName(menuList[index]),
-                        onTapMethod: () {},
+                        textToShow: MenuHelper.getMenuName(menuList[index]),
+                        onTapMethod: () {
+                          if (menuList[index].subMenu != null) {
+                            context.pushRoute(
+                                SubMenuRoute(menu: menuList[index].subMenu!));
+                          }
+                        },
                         sizeFont: 20,
-                        icon: UtilityHelper.getMenuIcon(menuList[index]));
+                        icon: MenuHelper.getMenuIcon(menuList[index]));
                   },
                   itemCount: menuList.length,
                   shrinkWrap: true,

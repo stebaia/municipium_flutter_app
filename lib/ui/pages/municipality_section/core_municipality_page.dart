@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
@@ -9,7 +11,7 @@ import 'package:municipium/ui/components/municipality_components/modal_rapid_act
 import 'package:municipium/utils/theme_helper.dart';
 
 @RoutePage()
-class CoreMunicipalityPage extends StatelessWidget {
+class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
   CoreMunicipalityPage({super.key});
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -139,4 +141,13 @@ class CoreMunicipalityPage extends StatelessWidget {
       }),
     );
   }
+
+  @override
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
+        BlocProvider<MunicipalityBloc>(
+          create: (context) =>
+              MunicipalityBloc(municipalityRepository: context.read())
+                ..fetchMunicipality(0),
+        ),
+      ], child: this);
 }
