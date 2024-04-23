@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_id_cubit.dart';
 import 'package:municipium/bloc/cubit/visibility_cubit/visibility_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
@@ -36,9 +36,10 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Cerca il tuo comune',
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!
+                                .text_search_municipality,
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
