@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/services/network/dto/new_menu_dto.dart';
 
 class MenuDrawer extends StatefulWidget {
-  const MenuDrawer({super.key});
+  MenuDrawer({super.key, required this.mContext});
+  BuildContext mContext;
 
   @override
   State<MenuDrawer> createState() => _MenuDrawerState();
@@ -13,9 +15,9 @@ class MenuDrawer extends StatefulWidget {
 class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
-    final municipality =
-        (context.read<MunicipalityBloc>().state as FetchedMunicipalityState)
-            .municipality;
+    final municipality = (widget.mContext.watch<MunicipalityGlobalCubit>().state
+            as StoredMunicipalityGlobalState)
+        .municipality;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 60),
       child: Column(

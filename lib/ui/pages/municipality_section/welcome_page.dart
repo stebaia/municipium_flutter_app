@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:municipium/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
+import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
@@ -50,6 +51,7 @@ class _WelcomePageState extends State<WelcomePage> {
           return const CircularProgressIndicator();
         } else if (state is FetchedMunicipalityState) {
           Municipality municipality = state.municipality;
+          context.read<MunicipalityGlobalCubit>().authenticated(municipality);
           return Stack(
             children: [
               SizedBox(
@@ -107,7 +109,9 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                         FullWidthConfirmButton(
                           isEnabled: true,
-                          onTap: () => context.pushRoute(CoreMunicipalityRoute()),
+                          onTap: () {
+                            context.pushRoute(CoreMunicipalityRoute());
+                          },
                           text: 'Entra in Municipium',
                         ),
                         const SizedBox(

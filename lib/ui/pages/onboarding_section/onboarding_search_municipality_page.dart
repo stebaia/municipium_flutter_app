@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_id_cubit.dart';
 import 'package:municipium/bloc/cubit/visibility_cubit/visibility_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
@@ -50,7 +51,9 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                               onChanged: (value) {
                                 if (value.length >= 3) {
                                   context.read<VisibilityCubit>().show();
-                                  context.read<MunicipalityBloc>().filterMunicipalityList(value);
+                                  context
+                                      .read<MunicipalityBloc>()
+                                      .filterMunicipalityList(value);
                                 } else if (value.isEmpty) {
                                   context.read<VisibilityCubit>().hide();
                                 }
@@ -74,13 +77,29 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                 ),
                                 contentPadding: const EdgeInsets.all(16),
                                 border: OutlineInputBorder(
-                                  borderRadius: context.watch<VisibilityCubit>().state == VisibilityState.invisible ? BorderRadius.circular(10.0) : const BorderRadius.only(topLeft: Radius.circular(10,), topRight: Radius.circular(10)),
+                                  borderRadius:
+                                      context.watch<VisibilityCubit>().state ==
+                                              VisibilityState.invisible
+                                          ? BorderRadius.circular(10.0)
+                                          : const BorderRadius.only(
+                                              topLeft: Radius.circular(
+                                                10,
+                                              ),
+                                              topRight: Radius.circular(10)),
                                   borderSide: BorderSide(
                                     color: Colors.red,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                 borderRadius: context.watch<VisibilityCubit>().state == VisibilityState.invisible ? BorderRadius.circular(10.0) : const BorderRadius.only(topLeft: Radius.circular(10,), topRight: Radius.circular(10)),
+                                  borderRadius:
+                                      context.watch<VisibilityCubit>().state ==
+                                              VisibilityState.invisible
+                                          ? BorderRadius.circular(10.0)
+                                          : const BorderRadius.only(
+                                              topLeft: Radius.circular(
+                                                10,
+                                              ),
+                                              topRight: Radius.circular(10)),
                                   borderSide: BorderSide(
                                     color: Colors.blue,
                                   ),
@@ -96,54 +115,59 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                               BlocBuilder<VisibilityCubit, VisibilityState>(
                                 builder: (context, state) {
                                   if (state == VisibilityState.visible) {
-                                    
-                                        if (municipalityState
-                                            is FetchedMunicipalityListState) {
-                                          List<Municipality> _municipalityList =
-                                              municipalityState.municipalityList;
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                border: Border.all(
-                                                  color: Theme.of(context)
-                                                      .secondaryHeaderColor,
-                                                ),
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(10),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                10))),
-                                            child: ListView.separated(
-                                              padding: EdgeInsets.zero,
-                                              separatorBuilder:
-                                                  (context, index) => Divider(),
-                                              shrinkWrap: true,
-                                              itemCount:
-                                                  municipalityState.municipalityList.length,
-                                              itemBuilder: (context, index) {
-                                                final municipality = municipalityState
-                                                    .municipalityList[index];
-                                                return ListTile(
-                                                  title: Text(municipality
-                                                      .municipalityName),
-                                                  // Aggiungi qui altre informazioni che vuoi mostrare
-                                                  onTap: () {
-                                                    municipalityController.text = municipality.municipalityName;
-                                                    context.read<VisibilityCubit>().hide();
-                                                    context.read<MunicipalityIdBloc>().add(municipality.muninicipalityId);
-                                                    // Gestisci l'evento di tap sul municipio
-                                                  },
-                                                );
-                                              },
+                                    if (municipalityState
+                                        is FetchedMunicipalityListState) {
+                                      List<Municipality> _municipalityList =
+                                          municipalityState.municipalityList;
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            border: Border.all(
+                                              color: Theme.of(context)
+                                                  .secondaryHeaderColor,
                                             ),
-                                          );
-                                        } else {
-                                          return Container(); // Potresti mostrare un indicatore di caricamento qui
-                                        }
-                                    
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10))),
+                                        child: ListView.separated(
+                                          padding: EdgeInsets.zero,
+                                          separatorBuilder: (context, index) =>
+                                              Divider(),
+                                          shrinkWrap: true,
+                                          itemCount: municipalityState
+                                              .municipalityList.length,
+                                          itemBuilder: (context, index) {
+                                            final municipality =
+                                                municipalityState
+                                                    .municipalityList[index];
+                                            return ListTile(
+                                              title: Text(municipality
+                                                  .municipalityName),
+                                              // Aggiungi qui altre informazioni che vuoi mostrare
+                                              onTap: () {
+                                                municipalityController.text =
+                                                    municipality
+                                                        .municipalityName;
+                                                context
+                                                    .read<VisibilityCubit>()
+                                                    .hide();
+                                                context
+                                                    .read<MunicipalityIdBloc>()
+                                                    .add(municipality
+                                                        .muninicipalityId);
+                                                // Gestisci l'evento di tap sul municipio
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    } else {
+                                      return Container(); // Potresti mostrare un indicatore di caricamento qui
+                                    }
                                   } else {
                                     return Container();
                                   }
@@ -156,9 +180,11 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                           ),
                           FullWidthConfirmButton(
                             isEnabled: false,
-                            onTap: () {
-                              context.pushRoute(WelcomeRoute(municipalityId: context.read<MunicipalityIdBloc>().state));
-                              
+                            onTap: () async {
+                              context.pushRoute(WelcomeRoute(
+                                  municipalityId: context
+                                      .read<MunicipalityIdBloc>()
+                                      .state));
                             },
                           ),
                         ],

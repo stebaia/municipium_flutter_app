@@ -46,7 +46,9 @@ class CoreMunicipalityPage extends StatelessWidget {
               ),
             ]);
       },
-      drawer: MenuDrawer(),
+      drawer: MenuDrawer(
+        mContext: context,
+      ),
       appBarBuilder: ((context, tabsRouter) {
         return AppBar(
           title: Text(tabsRouter.current.name),
