@@ -69,6 +69,7 @@ class MenuDrawer extends StatelessWidget {
                             MenuHelper.checkAndPushRoute(
                                 context, menuList[index]);
                           }
+                          scaffoldKey.currentState?.closeDrawer();
                         },
                         sizeFont: 20,
                         icon: MenuHelper.getMenuIcon(menuList[index]));

@@ -28,95 +28,100 @@ class NewsDetailPage extends StatefulWidget implements AutoRouteWrapper {
 class _NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: BlocBuilder<NewsDetailBloc, NewsDetailState>(
-      builder: (context, state) {
-        if (state is FetchingNewsDetailState) {
-          return const CircularProgressIndicator();
-        } else if (state is FetchedNewsDetailState) {
-          return SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 16),
-              child: Column(
-                children: [
-                  Text(state.newsDetail.title,
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 28)),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Row(
+    return Scaffold(
+        appBar: AppBar(),
+        body: BlocBuilder<NewsDetailBloc, NewsDetailState>(
+          builder: (context, state) {
+            if (state is FetchingNewsDetailState) {
+              return const CircularProgressIndicator();
+            } else if (state is FetchedNewsDetailState) {
+              return SingleChildScrollView(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.calendar_today_outlined),
-                      const SizedBox(width: 8),
-                      Text(
-                          MunicipiumUtility.convertDate(
-                              state.newsDetail.publishedAt, 'dd.MM.yyyy'),
+                      Text(state.newsDetail.title,
                           style: const TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 17))
+                              fontWeight: FontWeight.w700, fontSize: 28)),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.calendar_today_outlined),
+                          const SizedBox(width: 8),
+                          Text(
+                              MunicipiumUtility.convertDate(
+                                  state.newsDetail.publishedAt, 'dd.MM.yyyy'),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400, fontSize: 17))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Container(
+                        height: 250,
+                        child: (state.newsDetail.images != null &&
+                                state.newsDetail.images!.isNotEmpty)
+                            ? PageView.builder(
+                                itemCount: state.newsDetail.images!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return DetailImageBox(
+                                      baseUrl: state
+                                          .newsDetail.images![index].baseUrl,
+                                      url: state.newsDetail.images![index]
+                                          .i1920x1280);
+                                },
+                              )
+                            : DetailImageBox(
+                                baseUrl: state.newsDetail.image.baseUrl,
+                                url: state.newsDetail.image.i1920x1280),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Text(state.newsDetail.content,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 17)),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      const Divider(
+                        color: Colors.white,
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      checkAndCreateRow(
+                          state.newsDetail.address, Icons.location_on_outlined,
+                          () {
+                        MunicipiumUtility.launchMapUrl(
+                            state.newsDetail.address!);
+                      }),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      checkAndCreateRow(state.newsDetail.url, Icons.link, () {
+                        MunicipiumUtility.launch(state.newsDetail.url!);
+                      }),
+                      const SizedBox(
+                        height: 16,
+                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Container(
-                    height: 250,
-                    child: (state.newsDetail.images != null &&
-                            state.newsDetail.images!.isNotEmpty)
-                        ? PageView.builder(
-                            itemCount: state.newsDetail.images!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return DetailImageBox(
-                                  baseUrl:
-                                      state.newsDetail.images![index].baseUrl,
-                                  url: state
-                                      .newsDetail.images![index].i1920x1280);
-                            },
-                          )
-                        : DetailImageBox(
-                            baseUrl: state.newsDetail.image.baseUrl,
-                            url: state.newsDetail.image.i1920x1280),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Text(state.newsDetail.content,
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 17)),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  const Divider(
-                    color: Colors.white,
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  checkAndCreateRow(
-                      state.newsDetail.address, Icons.location_on_outlined, () {
-                    MunicipiumUtility.launchMapUrl(state.newsDetail.address!);
-                  }),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  checkAndCreateRow(state.newsDetail.url, Icons.link, () {
-                    MunicipiumUtility.launch(state.newsDetail.url!);
-                  }),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                ],
-              ),
-            ),
-          );
-        } else {
-          return Center(
-            child: Text('Errore'),
-          );
-        }
-      },
-    ));
+                ),
+              );
+            } else {
+              return Center(
+                child: Text('Errore'),
+              );
+            }
+          },
+        ));
   }
 
   Widget checkAndCreateRow(
