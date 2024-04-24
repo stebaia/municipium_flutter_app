@@ -5,25 +5,21 @@ import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/mun
 import 'package:municipium/model/menu/menu_item.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/menu/menu_row.dart';
+import 'package:municipium/utils/enum.dart';
 import 'package:municipium/utils/menu_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MenuDrawer extends StatefulWidget {
+class MenuDrawer extends StatelessWidget {
   MenuDrawer({super.key, required this.mContext, required this.scaffoldKey});
   BuildContext mContext;
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
-  State<MenuDrawer> createState() => _MenuDrawerState();
-}
-
-class _MenuDrawerState extends State<MenuDrawer> {
-  @override
   Widget build(BuildContext context) {
-    final municipality = (widget.mContext.watch<MunicipalityGlobalCubit>().state
+    final municipality = (mContext.watch<MunicipalityGlobalCubit>().state
             as StoredMunicipalityGlobalState)
         .municipality;
-    final List<MenuItem> menuList = MenuHelper.getIterableMenu(municipality);
+    List<MenuItem> menuList = MenuHelper.getIterableMenu(municipality);
 
     return Container(
       decoration: const BoxDecoration(color: Colors.black),
@@ -39,15 +35,16 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   const SizedBox(width: 20),
                   GestureDetector(
                       child: const Icon(Icons.close),
-                      onTap: () =>
-                          widget.scaffoldKey.currentState?.closeDrawer())
+                      onTap: () => scaffoldKey.currentState?.closeDrawer())
                 ],
               ),
-              MenuRow(
-                  textToShow: municipality.municipalityName,
-                  onTapMethod: () {},
-                  sizeFont: 20,
-                  icon: Icons.person_outlined),
+              if (municipality.new_menu.digitalDossier != null) ...[
+                MenuRow(
+                    textToShow: AppLocalizations.of(context)!.spid_login_menu,
+                    onTapMethod: () {},
+                    sizeFont: 20,
+                    icon: Icons.person_outlined),
+              ],
               MenuRow(
                   textToShow:
                       AppLocalizations.of(context)!.municipality_change_menu,

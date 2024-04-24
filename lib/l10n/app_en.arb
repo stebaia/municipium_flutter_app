@@ -47,5 +47,6 @@
     "info_munic_menu" : "Info su Municipium", 
     "invite_friend_menu" : "Invita un amico",
     "guide_menu" : "Guida",
-    "municipality_change_menu" : "Cambia comune"
+    "municipality_change_menu" : "Cambia comune",
+    "spid_login_menu" : "Login con SPID"
 }
