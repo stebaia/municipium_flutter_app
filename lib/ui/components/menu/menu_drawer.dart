@@ -65,6 +65,9 @@ class MenuDrawer extends StatelessWidget {
                             context.pushRoute(SubMenuRoute(
                                 menu: menuList[index].subMenu!,
                                 item: menuList[index]));
+                          } else {
+                            MenuHelper.checkAndPushRoute(
+                                context, menuList[index]);
                           }
                         },
                         sizeFont: 20,

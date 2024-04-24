@@ -18,24 +18,24 @@ class NewsDetailMapper extends DTOMapper<NewsDTO, NewsDetail> {
       itemCategoryList.add(mapperItemCategory.fromDTO(element));
     }
 
-    for(var element in dto.images!){
+    for (var element in dto.images!) {
       newsDetailImage.add(mapperImages.fromDTO(element));
     }
-    
+
     return NewsDetail(
-      id: dto.id!,
-      title: dto.title!,
-      image: mapperImages.fromDTO(dto.image!),
-      newsCategories: itemCategoryList,
-      publishedAt: dto.publishedAt!,
-      images: newsDetailImage,
-      galleryId: dto.galleryId,
-      address: dto.address,
-      content: dto.content!,
-      attachments: dto.attachments,
-      slug: dto.slug!, 
-      civilDefenceAlerts: dto.civilDefenceAlerts
-    );
+        id: dto.id!,
+        title: dto.title!,
+        image: mapperImages.fromDTO(dto.image!),
+        newsCategories: itemCategoryList,
+        publishedAt: dto.publishedAt!,
+        images: newsDetailImage,
+        galleryId: dto.galleryId,
+        address: dto.address,
+        url: dto.url,
+        content: dto.content!,
+        attachments: dto.attachments,
+        slug: dto.slug!,
+        civilDefenceAlerts: dto.civilDefenceAlerts);
   }
 
   @override

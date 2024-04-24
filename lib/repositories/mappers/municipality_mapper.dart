@@ -15,11 +15,19 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
         logo: dto.logo != null
             ? mapperImages.fromDTO(dto.logo!)
             : const MunicipiumImage(
-                i1280: '', i300x300: '', baseUrl: '', i720x960: ''),
+                i1280: '',
+                i300x300: '',
+                baseUrl: '',
+                i720x960: '',
+                i1920x1280: ''),
         background: dto.image != null
             ? mapperImages.fromDTO(dto.image!)
             : const MunicipiumImage(
-                i1280: '', i300x300: '', baseUrl: '', i720x960: ''),
+                i1280: '',
+                i300x300: '',
+                baseUrl: '',
+                i720x960: '',
+                i1920x1280: ''),
         subdomain: dto.subdomain != null ? dto.subdomain! : '',
         new_menu: dto.newMenu ?? NewMenuDTO());
   }
