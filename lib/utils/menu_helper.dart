@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:municipium/model/menu/menu_item.dart';
 import 'package:municipium/model/menu/submenu_type.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/services/network/dto/civil_defence_dto.dart';
 import 'package:municipium/services/network/dto/dms_dto.dart';
 import 'package:municipium/services/network/dto/garbage_dto.dart';
 import 'package:municipium/utils/enum.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:auto_route/auto_route.dart';
 
 class MenuHelper {
   static List<MenuItem> getIterableMenu(Municipality municipality) {
     List<MenuItem> list = [];
     if (municipality.new_menu.news != null) {
       list.add(MenuItem(type: MenuItemType.news));
+    }
+    if (municipality.new_menu.events != null) {
+      list.add(MenuItem(type: MenuItemType.events));
     }
     if (municipality.new_menu.issue != null) {
       list.add(MenuItem(type: MenuItemType.issue));
@@ -106,6 +111,8 @@ class MenuHelper {
     switch (item.type) {
       case MenuItemType.news:
         return Icons.newspaper;
+      case MenuItemType.events:
+        return Icons.event;
       case MenuItemType.issue:
         return Icons.notifications;
       case MenuItemType.penalties:
@@ -199,6 +206,8 @@ class MenuHelper {
     switch (item.type) {
       case MenuItemType.news:
         return AppLocalizations.of(context)!.news_menu;
+      case MenuItemType.events:
+        return AppLocalizations.of(context)!.events_menu;
       case MenuItemType.issue:
         return AppLocalizations.of(context)!.issue_menu;
       case MenuItemType.penalties:
@@ -221,6 +230,47 @@ class MenuHelper {
         return AppLocalizations.of(context)!.civil_defence_menu;
       case MenuItemType.payment:
         return AppLocalizations.of(context)!.payment_menu;
+    }
+  }
+
+  static void checkAndPushRoute(BuildContext context, MenuItem menuItem) {
+    switch (menuItem.type) {
+      case MenuItemType.news:
+        context.pushRoute(NewsListRoute());
+        break;
+      case MenuItemType.issue:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.penalties:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.surveys:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.garbage:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.ecoattivi:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.poi:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.services:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.dms:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.digitalDossier:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.civilDefence:
+        // TODO: Handle this case.
+        break;
+      case MenuItemType.payment:
+        // TODO: Handle this case.
+        break;
     }
   }
 }

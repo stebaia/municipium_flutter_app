@@ -15,8 +15,9 @@
     "errog_get_municipality_list" : "Errore nel caricamento della lista di comuni, riprova più tardi",
 
 
+    "@_MENU_STRINGS" : {},
 
-
+    "events_menu" : "Eventi",
     "news_menu" : "Notizie",
     "poi_menu" : "Punti d'interesse",
     "dms_poi" : "Tipicità & Servizi",
@@ -48,5 +49,11 @@
     "invite_friend_menu" : "Invita un amico",
     "guide_menu" : "Guida",
     "municipality_change_menu" : "Cambia comune",
-    "spid_login_menu" : "Login con SPID"
+    "spid_login_menu" : "Login con SPID",
+
+    "@_NEWS_STRINGS" : {},
+
+    "no_news_fetched" : "Nessuna notizia presente",
+    "error_news_fetched" : "Errore nel download delle notizie",
+    "read_more" : "Leggi di più"
 }

@@ -8,14 +8,13 @@ class MunicipiumImageMapper extends DTOMapper<MImagesDTO, MunicipiumImage> {
       i1280: dto.i1280,
       i300x300: dto.i300x300,
       baseUrl: dto.baseUrl,
-      i720x960: dto.i720x960
-      );
+      i720x960: dto.i720x960,
+      i1920x1280: dto.i1920x1280);
 
   @override
   MImagesDTO toDTO(MunicipiumImage model) => MImagesDTO(
-        i1280: model.i1280,
-        i300x300: model.i300x300,
-        baseUrl: model.baseUrl,
-        i720x960: model.i720x960
-      );
+      i1280: model.i1280,
+      i300x300: model.i300x300,
+      baseUrl: model.baseUrl,
+      i720x960: model.i720x960);
 }

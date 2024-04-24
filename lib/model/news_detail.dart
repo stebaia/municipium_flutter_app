@@ -12,6 +12,7 @@ class NewsDetail extends Equatable {
   final String slug;
   final int? galleryId;
   final String? address;
+  final String? url;
   final List<ItemCategory> newsCategories;
   final String publishedAt;
   final List<CivilDefenceAlertsNewsDTO>? civilDefenceAlerts;
@@ -25,6 +26,7 @@ class NewsDetail extends Equatable {
       required this.newsCategories,
       required this.publishedAt,
       required this.address,
+      required this.url,
       required this.attachments,
       required this.civilDefenceAlerts,
       required this.content,
@@ -43,6 +45,7 @@ class NewsDetail extends Equatable {
         newsCategories,
         publishedAt,
         address,
+        url,
         attachments,
         civilDefenceAlerts,
         content,

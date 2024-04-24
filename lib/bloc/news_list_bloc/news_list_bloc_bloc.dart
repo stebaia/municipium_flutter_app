@@ -10,13 +10,18 @@ part 'news_list_bloc_state.dart';
 
 class NewsListBloc extends Bloc<NewsListBlocEvent, NewsListBlocState> {
   final NewsRepository newsRepository;
+  List<NewsItemList> allNews = [];
+  List<NewsItemList> allNewsFiltered = [];
 
   NewsListBloc({required this.newsRepository})
       : super(const FetchingNewsListState()) {
     on<FetchNewsListEvent>(_fetchNewsList);
+    on<FilterNewsListEvent>(_filterNewsList);
   }
 
   void fetchNewsList() => add(const FetchNewsListEvent());
+  void filterNewsList(String searchText) =>
+      add(FilterNewsListEvent(searchText));
 
   FutureOr<void> _fetchNewsList(FetchNewsListEvent fetchNewsListEvent,
       Emitter<NewsListBlocState> emit) async {
@@ -24,6 +29,7 @@ class NewsListBloc extends Bloc<NewsListBlocEvent, NewsListBlocState> {
     try {
       final newsItemsList = await newsRepository.getNewsList();
       if (newsItemsList.isNotEmpty) {
+        allNews = newsItemsList;
         emit(FetchedNewsListState(newsItemsList));
       } else {
         emit(const NoNewsListState());
@@ -31,5 +37,18 @@ class NewsListBloc extends Bloc<NewsListBlocEvent, NewsListBlocState> {
     } catch (error) {
       emit(const ErrorNewsListState());
     }
+  }
+
+  Future<void> _filterNewsList(
+      FilterNewsListEvent event, Emitter<NewsListBlocState> emit) async {
+    // Aggiorna la lista filtrata in base al testo di ricerca
+    allNewsFiltered = event.searchText != ''
+        ? allNews
+            .where((newsItem) => newsItem.title
+                .toLowerCase()
+                .contains(event.searchText.toLowerCase()))
+            .toList()
+        : allNews;
+    emit(FetchedNewsListState(allNewsFiltered));
   }
 }

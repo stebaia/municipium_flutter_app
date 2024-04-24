@@ -7,9 +7,16 @@ abstract class NewsListBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
 class FetchNewsListEvent extends NewsListBlocEvent {
   const FetchNewsListEvent();
-   @override
+  @override
   List<Object> get props => [];
+}
+
+class FilterNewsListEvent extends NewsListBlocEvent {
+  final String searchText;
+
+  const FilterNewsListEvent(this.searchText);
+  @override
+  List<Object> get props => [searchText];
 }

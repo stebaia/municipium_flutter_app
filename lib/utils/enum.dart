@@ -2,6 +2,7 @@ import 'package:municipium/model/menu/submenu_type.dart';
 
 enum MenuItemType {
   news,
+  events,
   issue,
   penalties,
   surveys,
