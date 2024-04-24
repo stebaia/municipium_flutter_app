@@ -84,7 +84,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       const SizedBox(
                         height: 24,
                       ),
-                      checkAndCreateRow(
+                      MunicipiumUtility.checkAndCreateRow(
                           state.newsDetail.address, Icons.location_on_outlined,
                           () {
                         MunicipiumUtility.launchMapUrl(
@@ -93,7 +93,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       const SizedBox(
                         height: 16,
                       ),
-                      checkAndCreateRow(state.newsDetail.url, Icons.link, () {
+                      MunicipiumUtility.checkAndCreateRow(
+                          state.newsDetail.url, Icons.link, () {
                         MunicipiumUtility.launch(state.newsDetail.url!);
                       }),
                       const SizedBox(
@@ -104,36 +105,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 ),
               );
             } else {
-              return Center(
+              return const Center(
                 child: Text('Errore'),
               );
             }
           },
         ));
-  }
-
-  Widget checkAndCreateRow(
-      String? stringToCheck, IconData icon, Function()? tap) {
-    return stringToCheck != null
-        ? GestureDetector(
-            onTap: tap,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(icon),
-                const SizedBox(
-                  width: 16,
-                ),
-                Expanded(
-                    child: Text(stringToCheck,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 13))),
-                const SizedBox(
-                  width: 24,
-                )
-              ],
-            ),
-          )
-        : Container();
   }
 }
