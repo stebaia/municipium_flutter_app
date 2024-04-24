@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/utils/municipium_utility.dart';
+import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
 class NewsListPage extends StatefulWidget implements AutoRouteWrapper {
@@ -27,6 +28,50 @@ class NewsListPage extends StatefulWidget implements AutoRouteWrapper {
 
 class _NewsListPageState extends State<NewsListPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  Widget _buildShimmerEffect() {
+    return ListView.builder(
+      itemBuilder: (_, __) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    )),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 2.0),
+              ),
+              Container(
+                width: 40.0,
+                height: 20.0,
+                color: Colors.white,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 2.0),
+              ),
+              Container(
+                width: double.infinity,
+                height: 20.0,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
+      ),
+      itemCount: 6, // Numero di skeleton che vuoi mostrare
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +83,8 @@ class _NewsListPageState extends State<NewsListPage> {
         appBar: AppBar(
             title: Text(AppLocalizations.of(context)!.news_menu),
             leading: IconButton(
-              onPressed: () => context.maybePop(),
+              onPressed: () => context.router.popUntil(
+                  (route) => route.settings.name == CoreMunicipalityRoute.name),
               icon: Icon(Icons.arrow_back_ios),
             ),
             actions: [
@@ -56,9 +102,7 @@ class _NewsListPageState extends State<NewsListPage> {
         body: Container(child: BlocBuilder<NewsListBloc, NewsListBlocState>(
           builder: (context, state) {
             if (state is FetchingNewsListState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return _buildShimmerEffect();
             } else if (state is FetchedNewsListState) {
               return CustomScrollView(
                 slivers: [

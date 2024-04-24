@@ -17,6 +17,7 @@ import 'package:municipium/ui/components/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/municipality_components/emergency_call_box.dart';
 import 'package:municipium/ui/components/municipality_components/info_municipality_box.dart';
 import 'package:municipium/ui/components/municipality_components/last_update_box.dart';
+import 'package:municipium/utils/theme_helper.dart';
 
 @RoutePage()
 class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
@@ -47,7 +48,9 @@ class _WelcomePageState extends State<WelcomePage> {
       body: BlocBuilder<MunicipalityBloc, MunicipalityState>(
           builder: ((context, state) {
         if (state is FetchingMunicipalityState) {
-          return const CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (state is FetchedMunicipalityState) {
           Municipality municipality = state.municipality;
           context.read<MunicipalityGlobalCubit>().authenticated(municipality);
@@ -114,6 +117,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           height: 10,
                         ),
                         FullWidthConfirmButton(
+                          fillColor: ThemeHelper.blueMunicipium,
                           isEnabled: true,
                           onTap: () {
                             context.pushRoute(CoreMunicipalityRoute());

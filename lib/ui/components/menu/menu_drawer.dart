@@ -8,6 +8,7 @@ import 'package:municipium/ui/components/menu/menu_row.dart';
 import 'package:municipium/utils/enum.dart';
 import 'package:municipium/utils/menu_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:municipium/utils/theme_helper.dart';
 
 class MenuDrawer extends StatelessWidget {
   MenuDrawer({super.key, required this.mContext, required this.scaffoldKey});
@@ -22,7 +23,7 @@ class MenuDrawer extends StatelessWidget {
     List<MenuItem> menuList = MenuHelper.getIterableMenu(municipality);
 
     return Container(
-      decoration: const BoxDecoration(color: Colors.black),
+      color: Theme.of(context).colorScheme.background,
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
         child: Container(
