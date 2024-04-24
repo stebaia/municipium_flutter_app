@@ -26,6 +26,7 @@ class NewsDetailPage extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _NewsDetailPageState extends State<NewsDetailPage> {
+  final PageController pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,21 +65,63 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       ),
                       Container(
                         height: 250,
-                        child: (state.newsDetail.images != null &&
-                                state.newsDetail.images!.isNotEmpty)
-                            ? PageView.builder(
-                                itemCount: state.newsDetail.images!.length,
-                                itemBuilder: (BuildContext context, int index) {
+                        child: Stack(
+                          children: [
+                            PageView.builder(
+                              controller: pageController,
+                              itemCount: (state.newsDetail.images != null &&
+                                      state.newsDetail.images!.isNotEmpty)
+                                  ? state.newsDetail.images!.length
+                                  : 1,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (state.newsDetail.images != null &&
+                                    state.newsDetail.images!.isNotEmpty) {
                                   return DetailImageBox(
-                                      baseUrl: state
-                                          .newsDetail.images![index].baseUrl,
-                                      url: state.newsDetail.images![index]
-                                          .i1920x1280);
+                                    baseUrl:
+                                        state.newsDetail.images![index].baseUrl,
+                                    url: state
+                                        .newsDetail.images![index].i1920x1280,
+                                  );
+                                } else {
+                                  return DetailImageBox(
+                                    baseUrl: state.newsDetail.image.baseUrl,
+                                    url: state.newsDetail.image.i1920x1280,
+                                  );
+                                }
+                              },
+                            ),
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              bottom: 0,
+                              child: IconButton(
+                                icon: const Icon(Icons.arrow_back_ios),
+                                onPressed: () {
+                                  pageController.previousPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
+                                  // Scorri alla pagina precedente
                                 },
-                              )
-                            : DetailImageBox(
-                                baseUrl: state.newsDetail.image.baseUrl,
-                                url: state.newsDetail.image.i1920x1280),
+                              ),
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              bottom: 0,
+                              child: IconButton(
+                                icon: const Icon(Icons.arrow_forward_ios),
+                                onPressed: () {
+                                  pageController.nextPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
+                                  // Scorri alla pagina successiva
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 24,
