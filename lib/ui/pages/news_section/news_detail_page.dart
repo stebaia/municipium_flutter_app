@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/news_detail_bloc/news_detail_bloc.dart';
 import 'package:municipium/model/news_detail.dart';
+import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 
@@ -63,66 +64,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       const SizedBox(
                         height: 24,
                       ),
-                      Container(
-                        height: 250,
-                        child: Stack(
-                          children: [
-                            PageView.builder(
-                              controller: pageController,
-                              itemCount: (state.newsDetail.images != null &&
-                                      state.newsDetail.images!.isNotEmpty)
-                                  ? state.newsDetail.images!.length
-                                  : 1,
-                              itemBuilder: (BuildContext context, int index) {
-                                if (state.newsDetail.images != null &&
-                                    state.newsDetail.images!.isNotEmpty) {
-                                  return DetailImageBox(
-                                    baseUrl:
-                                        state.newsDetail.images![index].baseUrl,
-                                    url: state
-                                        .newsDetail.images![index].i1920x1280,
-                                  );
-                                } else {
-                                  return DetailImageBox(
-                                    baseUrl: state.newsDetail.image.baseUrl,
-                                    url: state.newsDetail.image.i1920x1280,
-                                  );
-                                }
-                              },
-                            ),
-                            Positioned(
-                              left: 0,
-                              top: 0,
-                              bottom: 0,
-                              child: IconButton(
-                                icon: const Icon(Icons.arrow_back_ios),
-                                onPressed: () {
-                                  pageController.previousPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                  // Scorri alla pagina precedente
-                                },
-                              ),
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                              child: IconButton(
-                                icon: const Icon(Icons.arrow_forward_ios),
-                                onPressed: () {
-                                  pageController.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                  // Scorri alla pagina successiva
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      DetailGalleryBox(
+                          image: state.newsDetail.image,
+                          images: state.newsDetail.images,
+                          pageController: pageController),
                       const SizedBox(
                         height: 24,
                       ),
