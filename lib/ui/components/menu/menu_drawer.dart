@@ -1,27 +1,25 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/cubit/menu_cubit/menu_toggle_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:municipium/model/menu/menu_item.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/menu/menu_row.dart';
 import 'package:municipium/utils/enum.dart';
-import 'package:municipium/utils/utility_helper.dart';
+import 'package:municipium/utils/menu_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MenuDrawer extends StatefulWidget {
+class MenuDrawer extends StatelessWidget {
   MenuDrawer({super.key, required this.mContext, required this.scaffoldKey});
   BuildContext mContext;
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
-  State<MenuDrawer> createState() => _MenuDrawerState();
-}
-
-class _MenuDrawerState extends State<MenuDrawer> {
-  @override
   Widget build(BuildContext context) {
-    final municipality = (widget.mContext.watch<MunicipalityGlobalCubit>().state
+    final municipality = (mContext.watch<MunicipalityGlobalCubit>().state
             as StoredMunicipalityGlobalState)
         .municipality;
-    final List<MenuItem> menuList = UtilityHelper.getIterableMenu(municipality);
+    List<MenuItem> menuList = MenuHelper.getIterableMenu(municipality);
 
     return Container(
       decoration: const BoxDecoration(color: Colors.black),
@@ -37,17 +35,19 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   const SizedBox(width: 20),
                   GestureDetector(
                       child: const Icon(Icons.close),
-                      onTap: () =>
-                          widget.scaffoldKey.currentState?.closeDrawer())
+                      onTap: () => scaffoldKey.currentState?.closeDrawer())
                 ],
               ),
+              if (municipality.new_menu.digitalDossier != null) ...[
+                MenuRow(
+                    textToShow: AppLocalizations.of(context)!.spid_login_menu,
+                    onTapMethod: () {},
+                    sizeFont: 20,
+                    icon: Icons.person_outlined),
+              ],
               MenuRow(
-                  textToShow: municipality.municipalityName,
-                  onTapMethod: () {},
-                  sizeFont: 20,
-                  icon: Icons.person_outlined),
-              MenuRow(
-                  textToShow: 'Cambia comune',
+                  textToShow:
+                      AppLocalizations.of(context)!.municipality_change_menu,
                   onTapMethod: () {},
                   sizeFont: 20,
                   icon: Icons.location_on_outlined),
@@ -58,10 +58,17 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   padding: const EdgeInsets.only(top: 0),
                   itemBuilder: (context, index) {
                     return MenuRow(
-                        textToShow: UtilityHelper.getMenuName(menuList[index]),
-                        onTapMethod: () {},
+                        textToShow:
+                            MenuHelper.getMenuName(context, menuList[index]),
+                        onTapMethod: () {
+                          if (menuList[index].subMenu != null) {
+                            context.pushRoute(SubMenuRoute(
+                                menu: menuList[index].subMenu!,
+                                item: menuList[index]));
+                          }
+                        },
                         sizeFont: 20,
-                        icon: UtilityHelper.getMenuIcon(menuList[index]));
+                        icon: MenuHelper.getMenuIcon(menuList[index]));
                   },
                   itemCount: menuList.length,
                   shrinkWrap: true,
@@ -70,20 +77,25 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 color: Colors.white,
               ),
               MenuRow(
-                  textToShow: 'Impostazioni', onTapMethod: () {}, sizeFont: 15),
-              MenuRow(
-                  textToShow: 'Privacy policy',
+                  textToShow: AppLocalizations.of(context)!.settings_menu,
                   onTapMethod: () {},
                   sizeFont: 15),
               MenuRow(
-                  textToShow: 'Info su Municipium',
+                  textToShow: AppLocalizations.of(context)!.privacy_policy_menu,
                   onTapMethod: () {},
                   sizeFont: 15),
               MenuRow(
-                  textToShow: 'Invita un amico',
+                  textToShow: AppLocalizations.of(context)!.info_munic_menu,
                   onTapMethod: () {},
                   sizeFont: 15),
-              MenuRow(textToShow: 'Guida', onTapMethod: () {}, sizeFont: 15)
+              MenuRow(
+                  textToShow: AppLocalizations.of(context)!.invite_friend_menu,
+                  onTapMethod: () {},
+                  sizeFont: 15),
+              MenuRow(
+                  textToShow: AppLocalizations.of(context)!.guide_menu,
+                  onTapMethod: () {},
+                  sizeFont: 15)
             ],
           ),
         ),
