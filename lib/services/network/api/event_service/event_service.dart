@@ -8,9 +8,12 @@ part 'event_service.g.dart';
 abstract class EventService {
   factory EventService(Dio dio, {String baseUrl}) = _EventService;
 
-  @GET('news/{eventId}')
+  @GET('events/{eventId}')
   Future<EventDTO> getEventDetail(@Path('eventId') int eventId);
 
-  @GET('news/')
+  @GET('events/')
   Future<List<EventDTO>> getEventsList();
+
+  @GET('events/paged_events?page_index={page_index}&page_size={page_size}')
+  Future<EventPagedDTO> getEventsPaged(@Path('page_index') int page_index, @Path('page_size') int page_size);
 }

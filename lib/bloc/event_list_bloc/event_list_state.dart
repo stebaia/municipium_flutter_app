@@ -12,10 +12,10 @@ class FetchingEventListState extends EventListState {
 }
 
 class FetchedEventListState extends EventListState {
-  final List<EventItemList> newsItemList;
-  const FetchedEventListState(this.newsItemList);
+  final List<EventItemList> eventItemList;
+  const FetchedEventListState(this.eventItemList);
   @override
-  List<Object> get props => [newsItemList];
+  List<Object> get props => [eventItemList];
 }
 
 class NoEventListState extends EventListState {

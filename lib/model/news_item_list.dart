@@ -5,6 +5,7 @@ import 'package:municipium/model/item_category.dart';
 class NewsItemList extends Equatable {
   final int id;
   final String title;
+  final String description;
   final MunicipiumImage images;
   final List<ItemCategory> newsCategories;
   final String publishedAt;
@@ -13,10 +14,11 @@ class NewsItemList extends Equatable {
       {required this.id,
       required this.title,
       required this.images,
+      required this.description,
       required this.newsCategories,
       required this.publishedAt});
 
   @override
   // TODO: implement props
-  List<Object?> get props => [id, title, images, newsCategories, publishedAt];
+  List<Object?> get props => [id, title, images, newsCategories, publishedAt, description];
 }
