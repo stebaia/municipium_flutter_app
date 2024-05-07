@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:municipium/bloc/event_list_bloc/event_list_bloc.dart';
 import 'package:municipium/bloc/news_list_bloc/news_list_bloc_bloc.dart';
+import 'package:municipium/model/event_item_list.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
@@ -12,24 +14,26 @@ import 'package:municipium/utils/theme_helper.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
-class NewsListPage extends StatefulWidget implements AutoRouteWrapper {
-  const NewsListPage({super.key});
+class EventListPage extends StatefulWidget implements AutoRouteWrapper {
+  const EventListPage({super.key});
 
   @override
-  State<NewsListPage> createState() => _NewsListPageState();
+  State<EventListPage> createState() => _EventListPageState();
 
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<NewsListBloc>(
+        BlocProvider<EventListBloc>(
           create: (context) =>
-              NewsListBloc(newsRepository: context.read())..fetchNewsList(),
+              EventListBloc(eventsRepository: context.read())..fetchEventList(),
         )
       ], child: this);
 }
 
-class _NewsListPageState extends State<NewsListPage> {
+class _EventListPageState extends State<EventListPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final List<EventItemList> _eventItemList = [];
   bool _isSearching = false;
   Widget _buildShimmerEffect() {
     return ListView.builder(
@@ -109,7 +113,7 @@ class _NewsListPageState extends State<NewsListPage> {
                 padding: const EdgeInsets.only(left: 48),
                 child: Center(
                   child: Text(
-                    AppLocalizations.of(context)!.news_menu.toUpperCase(),
+                    AppLocalizations.of(context)!.events_menu.toUpperCase(),
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -144,13 +148,23 @@ class _NewsListPageState extends State<NewsListPage> {
         ],
       ),
         extendBodyBehindAppBar: false,
-        body: Container(child: BlocBuilder<NewsListBloc, NewsListBlocState>(
+        body: Container(child: BlocBuilder<EventListBloc, EventListState>(
           builder: (context, state) {
-            if (state is FetchingNewsListState) {
+            if (state is FetchingEventListState && _eventItemList.isEmpty) {
               return _buildShimmerEffect();
-            } else if (state is FetchedNewsListState) {
+            } else if (state is FetchedEventListState ) {
+                  _eventItemList.addAll(state.eventItemList);
+                  context.read<EventListBloc>().isFetching = false;
+            }  else if (state is NoNewsListState) {
+              return Center(
+                child: Text(AppLocalizations.of(context)!.no_news_fetched),
+              );
+            }
                   return ListView.builder(
-                        itemCount: state.newsItemList.length,
+                        controller: _scrollController..addListener(() {if(_scrollController.offset == _scrollController.position.maxScrollExtent && !context.read<EventListBloc>().isFetching){
+                          context.read<EventListBloc>()..isFetching = true..add(const FetchEventListEvent());
+                        } }),
+                        itemCount: _eventItemList.length,
                         itemBuilder: ((context, index) => 
                          GestureDetector(
                           child: Padding(
@@ -162,9 +176,8 @@ class _NewsListPageState extends State<NewsListPage> {
                               children: [
                                 DetailImageBox(
                                   baseUrl:
-                                      state.newsItemList[index].images.baseUrl,
-                                  url: state
-                                      .newsItemList[index].images.i1920x1280,
+                                      _eventItemList[index].images.baseUrl,
+                                  url: _eventItemList[index].images.i1920x1280,
                                 ),
                                 const SizedBox(
                                   height: 16,
@@ -176,7 +189,7 @@ class _NewsListPageState extends State<NewsListPage> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        state.newsItemList[index].title,
+                                        _eventItemList[index].title,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 20,
@@ -190,7 +203,7 @@ class _NewsListPageState extends State<NewsListPage> {
                                     ),
                                     Text(
                                       MunicipiumUtility.convertDate(
-                                        state.newsItemList[index].publishedAt,
+                                        _eventItemList[index].publishedAt,
                                         'dd.MM.yyyy',
                                       ),
                                       style: const TextStyle(
@@ -205,7 +218,7 @@ class _NewsListPageState extends State<NewsListPage> {
                                   height: 16,
                                 ),
                                 Text(
-                                  state.newsItemList[index].description,
+                                  _eventItemList[index].description,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 15,
@@ -236,7 +249,7 @@ class _NewsListPageState extends State<NewsListPage> {
                                       ),
                                       onPressed: () {
                                         context.pushRoute(NewsDetailRoute(
-                                          newsId: state.newsItemList[index].id,
+                                          newsId: _eventItemList[index].id,
                                         ));
                                       },
                                     ),
@@ -250,7 +263,7 @@ class _NewsListPageState extends State<NewsListPage> {
                           ),
                           onTap: () {
                             context.pushRoute(NewsDetailRoute(
-                              newsId: state.newsItemList[index].id,
+                              newsId: _eventItemList[index].id,
                             ));
                           },
                         )
@@ -260,15 +273,7 @@ class _NewsListPageState extends State<NewsListPage> {
                   ),
                 
               );
-            } else if (state is NoNewsListState) {
-              return Center(
-                child: Text(AppLocalizations.of(context)!.no_news_fetched),
-              );
-            } else {
-              return Center(
-                child: Text(AppLocalizations.of(context)!.error_news_fetched),
-              );
-            }
+             
           },
         )));
   }

@@ -6,6 +6,7 @@ import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/services/network/dto/civil_defence_dto.dart';
 import 'package:municipium/services/network/dto/dms_dto.dart';
 import 'package:municipium/services/network/dto/garbage_dto.dart';
+import 'package:municipium/ui/pages/events_section/event_list_page.dart';
 import 'package:municipium/utils/enum.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:auto_route/auto_route.dart';
@@ -236,7 +237,10 @@ class MenuHelper {
   static void checkAndPushRoute(BuildContext context, MenuItem menuItem) {
     switch (menuItem.type) {
       case MenuItemType.news:
-        context.pushRoute(NewsListRoute());
+        context.pushRoute(const NewsListRoute());
+        break;
+      case MenuItemType.events:
+        context.pushRoute(const EventListRoute());
         break;
       case MenuItemType.issue:
         // TODO: Handle this case.

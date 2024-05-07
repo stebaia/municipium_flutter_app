@@ -19,6 +19,7 @@ class NewsItemMapper extends DTOMapper<NewsDTO, NewsItemList> {
       title: dto.title!,
       images: mapperImages.fromDTO(dto.image!),
       newsCategories: itemCategoryList,
+      description: dto.excerpt ?? '',
       publishedAt: dto.publishedAt!,
     );
 

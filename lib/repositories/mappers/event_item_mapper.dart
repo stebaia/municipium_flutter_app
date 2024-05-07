@@ -11,15 +11,19 @@ class EventItemMapper extends DTOMapper<EventDTO, EventItemList> {
     MunicipiumImageMapper mapperImages = MunicipiumImageMapper();
     ItemCategoryMapper mapperItemCategory = ItemCategoryMapper();
     List<ItemCategory> itemCategoryList = [];
-    for (var element in dto.eventCategories!) {
+    if(dto.eventCategories != null) {
+      for (var element in dto.eventCategories!) {
       itemCategoryList.add(mapperItemCategory.fromDTO(element));
     }
+    }
+    
     return EventItemList(
-      id: dto.id!,
-      title: dto.title!,
+      id: dto.id ?? 0,
+      title: dto.title ?? '',
       images: mapperImages.fromDTO(dto.image!),
       eventCategories: itemCategoryList,
-      publishedAt: dto.publishedAt!,
+      description: dto.excerpt ?? '',
+      publishedAt: dto.publishedAt ?? '',
     );
   }
 
