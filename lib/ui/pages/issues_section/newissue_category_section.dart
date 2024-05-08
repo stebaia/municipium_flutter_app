@@ -89,10 +89,15 @@ class NewIssueCategorySection extends StatelessWidget {
                         .first
                         .description
                         .isNotEmpty
-                    ? Text(fetchedTags.issueMappedList
-                        .where((e) => e.id == state.issueCategoryId)
-                        .first
-                        .description)
+                    ? Row(
+                        children: [
+                          Text(fetchedTags.issueMappedList
+                              .where((e) => e.id == state.issueCategoryId)
+                              .first
+                              .description),
+                          const SizedBox()
+                        ],
+                      )
                     : Container()
               ],
             ),
