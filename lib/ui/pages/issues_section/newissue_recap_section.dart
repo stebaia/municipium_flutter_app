@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
-import 'package:municipium/bloc/cubit/issue_cubit/issue_state.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 
 class NewIssueRecapSection extends StatelessWidget {
