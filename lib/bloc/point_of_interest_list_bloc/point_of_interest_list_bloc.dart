@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:municipium/model/point_of_intertests_list.dart';
 import 'package:municipium/repositories/point_of_interest_repository.dart';
+import 'package:municipium/services/network/dto/category_poi_dto.dart';
 
 part 'point_of_interest_list_event.dart';
 part 'point_of_interest_list_state.dart';
@@ -16,10 +17,16 @@ class PointOfInterestListBloc
   PointOfInterestListBloc({required this.pointOfInterestRepository})
       : super(const FetchingPointOfInterestListState()) {
     on<FetchPointOfInterestListEvent>(_fetchPointOfInterestList);
+    
   }
+
+  
 
   void fetchPointOfInterestList() => add(
       FetchPointOfInterestListEvent());
+
+  
+  
 
   FutureOr<void> _fetchPointOfInterestList(
       FetchPointOfInterestListEvent fetchPointOfInterestListEvent,

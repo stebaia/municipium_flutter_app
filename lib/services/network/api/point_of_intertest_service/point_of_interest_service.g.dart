@@ -19,7 +19,7 @@ class _PointOfInterestService implements PointOfInterestService {
   String? baseUrl;
 
   @override
-  Future<PointOfInterestsDTO> getPointOfInterestList(
+  Future<PointOfInterestsDTO> getPointOfInterestListPaged(
     int pageIndex,
     int pageSize,
   ) async {
@@ -45,6 +45,62 @@ class _PointOfInterestService implements PointOfInterestService {
               baseUrl,
             ))));
     final value = PointOfInterestsDTO.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<PointOfInterestsDTO> getPointOfInterestList() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PointOfInterestsDTO>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'point_of_interests/paged_pois_with_filter',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = PointOfInterestsDTO.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<List<CategoryPoiDTO>> getCategoryPoi() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<CategoryPoiDTO>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'point_of_interest_categories/categories_with_poi',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) => CategoryPoiDTO.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

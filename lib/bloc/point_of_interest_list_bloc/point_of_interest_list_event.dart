@@ -11,3 +11,4 @@ class FetchPointOfInterestListEvent extends PointOfInterestListEvent {
    @override
   List<Object> get props => [];
 }
+

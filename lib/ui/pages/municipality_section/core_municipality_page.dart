@@ -3,29 +3,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:municipium/app.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/main.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/municipality_components/modal_rapid_action_component.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
+
+
 @RoutePage()
 class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   CoreMunicipalityPage({super.key});
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
 
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      drawer: MenuDrawer(
-        mContext: context,
-        scaffoldKey: _scaffoldKey,
-      ),
-      scaffoldKey: _scaffoldKey,
-      backgroundColor: Colors.white,
+      scaffoldKey: scaffoldKey,
+      
+        drawer: MenuDrawer(
+          mContext: context,
+          scaffoldKey: scaffoldKey,
+        ),
       //darkMode.darkTheme ? ThemeHelper.backgroundColorDark : Colors.white,
-      routes: const [HomeRoute(), HomeRoute(), HomeRoute(), HomeRoute()],
+      routes: [HomeRoute(), MapsRoute(scaffoldKey: scaffoldKey), HomeRoute(), HomeRoute()],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavigationBar(
             elevation: 0,
@@ -112,6 +117,7 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
               ),
             ]);
       },
+      
       floatingActionButton: FloatingActionButton(
         onPressed: (() => showModalBottomSheet(
             context: context,
@@ -121,24 +127,8 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                 body: const ModalRapidActionComponent())))),
         child: const Icon(Icons.add),
       ),
-      appBarBuilder: ((context, tabsRouter) {
-        return AppBar(
-          title: Text(tabsRouter.current.name),
-          backgroundColor: Colors.transparent,
-          leading: null,
-          actions: [
-            IconButton(
-              onPressed: () {
-                _scaffoldKey.currentState!.openDrawer();
-              },
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.black,
-              ),
-            )
-          ],
-        );
-      }),
+      
+     
     );
   }
 

@@ -26,3 +26,4 @@ class ErrorPointOfInterestListState extends PointOfInterestListState {
   const ErrorPointOfInterestListState();
 }
 
+

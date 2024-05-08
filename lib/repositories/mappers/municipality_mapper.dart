@@ -12,6 +12,8 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
     return Municipality(
         municipalityName: dto.name!,
         muninicipalityId: dto.id!,
+        lat: dto.latitude ?? 0,
+        lng: dto.longitude ?? 0,
         logo: dto.logo != null
             ? mapperImages.fromDTO(dto.logo!)
             : const MunicipiumImage(

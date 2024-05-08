@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:municipium/services/network/dto/category_poi_dto.dart';
 import 'package:municipium/services/network/dto/point_of_interests_list_dto.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -10,5 +11,11 @@ abstract class PointOfInterestService {
 
 
   @GET('point_of_interests/paged_pois_with_filter?page_index={pageIndex}&page_size={pageSize}')
-  Future<PointOfInterestsDTO> getPointOfInterestList(@Path('pageIndex') int pageIndex, @Path('pageSize') int pageSize);
+  Future<PointOfInterestsDTO> getPointOfInterestListPaged(@Path('pageIndex') int pageIndex, @Path('pageSize') int pageSize);
+
+  @GET('point_of_interests/paged_pois_with_filter')
+  Future<PointOfInterestsDTO> getPointOfInterestList();
+
+  @GET('point_of_interest_categories/categories_with_poi')
+  Future<List<CategoryPoiDTO>> getCategoryPoi();
 }
