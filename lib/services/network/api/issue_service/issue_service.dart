@@ -1,0 +1,24 @@
+import 'package:dio/dio.dart';
+import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
+import 'package:municipium/services/network/dto/issue_dto.dart';
+import 'package:municipium/services/network/dto/issue_tag_dto.dart';
+import 'package:retrofit/http.dart';
+
+part 'issue_service.g.dart';
+
+@RestApi()
+abstract class IssueService {
+  factory IssueService(Dio dio, {String baseUrl}) = _IssueService;
+
+  @GET('issues/{issueId}')
+  Future<IssueDto> getIssueDetail(@Path('issueId') int issueId);
+
+  @GET('issues/')
+  Future<List<IssueDto>> getIssuesList();
+
+  @GET('tags/')
+  Future<List<IssueTagDto>> getIssueTags();
+
+  @GET('issue_categories/')
+  Future<List<IssueCategoryTagDto>> getIssueCategoriesTags();
+}
