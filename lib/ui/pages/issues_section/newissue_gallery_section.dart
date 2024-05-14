@@ -14,7 +14,6 @@ class NewIssueGallerySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool selected = false;
     List<Image> imageList = [];
     return BlocBuilder<IssueCubit, ProgressIssue>(
       builder: (context, state) {
@@ -40,8 +39,11 @@ class NewIssueGallerySection extends StatelessWidget {
                 Row(
                   children: [
                     Checkbox(
-                      value: selected,
-                      onChanged: (value) {},
+                      value: state.noPhoto,
+                      activeColor: ThemeHelper.blueMunicipium,
+                      onChanged: (value) {
+                        context.read<IssueCubit>().setNoPhoto(value ?? false);
+                      },
                     ),
                     const SizedBox(
                       width: 16,

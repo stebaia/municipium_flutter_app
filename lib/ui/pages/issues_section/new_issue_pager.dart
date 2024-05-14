@@ -47,7 +47,7 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
             ((model.address ?? '').isNotEmpty) &&
             ((model.content ?? '').isNotEmpty);
       case 2: //pagina galleria
-        return true;
+        return model.noPhoto!;
       case 3:
         return true;
     }

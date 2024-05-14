@@ -49,4 +49,9 @@ class IssueCubit extends Cubit<ProgressIssue> {
     final updatedIssue = state.copyWith(content: value);
     emit(updatedIssue);
   }
+
+  void setNoPhoto(bool value) {
+    final updatedIssue = state.copyWith(noPhoto: value);
+    emit(updatedIssue);
+  }
 }
