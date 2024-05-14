@@ -14,9 +14,9 @@ class PointOfInterestListPage extends StatefulWidget implements AutoRouteWrapper
 
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<PointOfInterestListBloc>(
+        BlocProvider<PointOfInterestBloc>(
           create: (context) =>
-              PointOfInterestListBloc(pointOfInterestRepository: context.read())..fetchPointOfInterestList(),
+              PointOfInterestBloc(pointOfInterestRepository: context.read())..fetchPointOfInterestList(),
         )
       ], child: this);
 }
@@ -28,7 +28,7 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-        body: Container(child: BlocBuilder<PointOfInterestListBloc, PointOfInterestListState>(
+        body: Container(child: BlocBuilder<PointOfInterestBloc, PointOfInterestState>(
       builder: (context, state) {
         if (state is FetchingPointOfInterestListState && _pointOfInterestItemList.isEmpty) {
           return const Center(
@@ -36,7 +36,7 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
           );
         } else if (state is FetchedPointOfInterestListState) {
           _pointOfInterestItemList.addAll(state.pointOfInterestsList.pointOfInterestsItemList!.toList());
-          context.read<PointOfInterestListBloc>().isFetching = false;
+          context.read<PointOfInterestBloc>().isFetching = false;
         } else if (state is NoPointOfInterestListState && _pointOfInterestItemList.isEmpty) {
           return Center(
             child: Text('Nessun poi presente'),
@@ -47,8 +47,8 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
           );
         }
         return ListView.builder(
-              controller: _scrollController..addListener(() {if(_scrollController.offset == _scrollController.position.maxScrollExtent && !context.read<PointOfInterestListBloc>().isFetching){
-                context.read<PointOfInterestListBloc>()..isFetching= true..add(const FetchPointOfInterestListEvent());
+              controller: _scrollController..addListener(() {if(_scrollController.offset == _scrollController.position.maxScrollExtent && !context.read<PointOfInterestBloc>().isFetching){
+                context.read<PointOfInterestBloc>()..isFetching= true..add(const FetchPointOfInterestListEvent());
               }}),
               itemCount: _pointOfInterestItemList.length,
               itemBuilder: ((context, index) => ListTile(

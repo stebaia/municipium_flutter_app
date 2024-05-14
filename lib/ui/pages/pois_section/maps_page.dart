@@ -15,6 +15,7 @@ import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/mun
 import 'package:municipium/bloc/cubit/selected_categories_cubit.dart/selected_categories_cubit.dart';
 import 'package:municipium/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
 import 'package:municipium/model/item_category.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
 import 'package:municipium/ui/components/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/maps_component/filter_modal_bottomsheet.dart';
@@ -31,9 +32,9 @@ class MapsPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<PointOfInterestListBloc>(
+        BlocProvider<PointOfInterestBloc>(
           create: (context) =>
-              PointOfInterestListBloc(pointOfInterestRepository: context.read())
+              PointOfInterestBloc(pointOfInterestRepository: context.read())
                 ..fetchPointOfInterestList(),
         ),
         BlocProvider<CategoryPoiBloc>(
@@ -85,7 +86,7 @@ class _MapsPageState extends State<MapsPage> {
     final municipality = (context.watch<MunicipalityGlobalCubit>().state
             as StoredMunicipalityGlobalState)
         .municipality;
-    return BlocConsumer<PointOfInterestListBloc, PointOfInterestListState>(
+    return BlocConsumer<PointOfInterestBloc, PointOfInterestState>(
       listener: (context, state) {
         if(state is FetchingPointOfInterestListState) {
           SVProgressHUD.show(status: AppLocalizations.of(context)!
@@ -139,7 +140,7 @@ class _MapsPageState extends State<MapsPage> {
                                     ),
                                     FullWidthConfirmButton(
                                       isEnabled: true,
-                                      onTap: () {},
+                                      onTap: () => context.pushRoute(DetailPoiRoute(poiId: point.id!)),
                                       height: 40,
                                       text: AppLocalizations.of(context)!
                                           .btn_go_open_detail,

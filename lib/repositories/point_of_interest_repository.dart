@@ -2,6 +2,7 @@ import 'package:logger/logger.dart';
 import 'package:municipium/model/point_of_intertests_list.dart';
 import 'package:municipium/services/network/api/point_of_intertest_service/point_of_interest_service.dart';
 import 'package:municipium/services/network/dto/category_poi_dto.dart';
+import 'package:municipium/services/network/dto/poi_detail_dto.dart';
 import 'package:municipium/services/network/dto/point_of_interests_list_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
@@ -26,6 +27,17 @@ class PointOfInterestRepository {
       rethrow;
     }
   }
+  
+  Future<PoiDetailDTO> getDetailPoi({required int idPoi}) async {
+    try {
+      final detailPoi = await pointOfInterestService.getDetailPoi(idPoi);
+      return detailPoi;
+    }catch (error) {
+      logger.e('Error getting poi with id: ' + idPoi.toString() );
+      rethrow;
+    }
+  }
+  
 
   Future<List<CategoryPoiDTO>> getCategoryPoiList() async {
     try {
