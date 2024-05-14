@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MunicipiumUtility {
@@ -57,5 +58,15 @@ class MunicipiumUtility {
             ),
           )
         : Container();
+  }
+
+  static Future<void> requestGalleryPermission(Function() method) async {
+    final PermissionStatus status = await Permission.photos.request();
+    if (status.isGranted) {
+      // Se i permessi sono stati concessi, puoi accedere alla galleria delle immagini
+      method();
+    } else {
+      // Se l'utente ha negato i permessi, mostra un messaggio o gestisci di conseguenza
+    }
   }
 }

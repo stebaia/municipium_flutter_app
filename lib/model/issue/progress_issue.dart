@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:municipium/model/issue/issue_mapped_category.dart';
 
 class ProgressIssue extends Equatable {
   String? address;
@@ -8,6 +9,7 @@ class ProgressIssue extends Equatable {
   String? image3;
   String? image4;
   int? issueCategoryId;
+  int? issueSubCategoryId;
   String? latitude;
   String? longitude;
   String? municipalityId;
@@ -15,23 +17,31 @@ class ProgressIssue extends Equatable {
   String? phone;
   String? surname;
   String? content;
+  int? currentPage;
+  int? totalPage;
+  List<IssueMappedCategory>? subList;
 
-  ProgressIssue({
-    this.address,
-    this.email,
-    this.image1,
-    this.image2,
-    this.image3,
-    this.image4,
-    this.issueCategoryId,
-    this.latitude,
-    this.longitude,
-    this.municipalityId,
-    this.name,
-    this.phone,
-    this.surname,
-    this.content,
-  });
+  ProgressIssue(
+      {this.address,
+      this.email,
+      this.image1,
+      this.image2,
+      this.image3,
+      this.image4,
+      this.issueCategoryId,
+      this.issueSubCategoryId,
+      this.latitude,
+      this.longitude,
+      this.municipalityId,
+      this.name,
+      this.phone,
+      this.surname,
+      this.content,
+      int? currentPage, // Aggiunto currentPage come parametro opzionale
+      this.totalPage,
+      subList})
+      : currentPage = currentPage ?? 0,
+        subList = subList ?? []; // Imposta 0 se currentPage è null
 
   ProgressIssue copyWith(
       {String? address,
@@ -41,33 +51,39 @@ class ProgressIssue extends Equatable {
       String? image3,
       String? image4,
       int? issueCategoryId,
+      int? issueSubCategoryId,
       String? latitude,
       String? longitude,
       String? municipalityId,
       String? name,
       String? phone,
       String? surname,
-      String? content}) {
+      String? content,
+      int? currentPage,
+      int? totalPage,
+      List<IssueMappedCategory>? subList}) {
     return ProgressIssue(
-      address: address ?? this.address,
-      email: email ?? this.email,
-      image1: image1 ?? this.image1,
-      image2: image2 ?? this.image2,
-      image3: image3 ?? this.image3,
-      image4: image4 ?? this.image4,
-      issueCategoryId: issueCategoryId ?? this.issueCategoryId,
-      latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
-      municipalityId: municipalityId ?? this.municipalityId,
-      name: name ?? this.name,
-      phone: phone ?? this.phone,
-      surname: surname ?? this.surname,
-      content: content ?? this.content,
-    );
+        address: address ?? this.address,
+        email: email ?? this.email,
+        image1: image1 ?? this.image1,
+        image2: image2 ?? this.image2,
+        image3: image3 ?? this.image3,
+        image4: image4 ?? this.image4,
+        issueCategoryId: issueCategoryId ?? this.issueCategoryId,
+        issueSubCategoryId: issueSubCategoryId ?? this.issueSubCategoryId,
+        latitude: latitude ?? this.latitude,
+        longitude: longitude ?? this.longitude,
+        municipalityId: municipalityId ?? this.municipalityId,
+        name: name ?? this.name,
+        phone: phone ?? this.phone,
+        surname: surname ?? this.surname,
+        content: content ?? this.content,
+        currentPage: currentPage ?? this.currentPage,
+        totalPage: totalPage ?? this.totalPage,
+        subList: subList ?? this.subList);
   }
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         address,
         email,
@@ -76,12 +92,16 @@ class ProgressIssue extends Equatable {
         image3,
         image4,
         issueCategoryId,
+        issueSubCategoryId,
         latitude,
         longitude,
         municipalityId,
         name,
         surname,
         phone,
-        content
+        content,
+        currentPage,
+        totalPage,
+        subList
       ];
 }

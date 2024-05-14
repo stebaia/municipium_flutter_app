@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:municipium/model/issue/issue_category_tag.dart';
 import 'package:municipium/model/issue/issue_item_list.dart';
 import 'package:municipium/repositories/issues_repository.dart';
 
@@ -23,6 +24,7 @@ class IssueListBloc extends Bloc<IssueListEvent, IssueListState> {
     emit(const FetchingIssueListState());
     try {
       final issueItemList = await issuesRepository.getIssuesList();
+      final issueCategoryList = await issuesRepository.getIssueCategoryList();
       if (issueItemList.isNotEmpty) {
         emit(FetchedIssueListState(issueItemList));
       } else {

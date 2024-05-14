@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
+import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
@@ -9,6 +10,8 @@ class NewIssueMessageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fetchedTags =
+        context.read<IssueTagBloc>().state as FetchedIssueTagState;
     return BlocBuilder<IssueCubit, ProgressIssue>(
       builder: (context, state) {
         return SingleChildScrollView(
@@ -29,29 +32,41 @@ class NewIssueMessageSection extends StatelessWidget {
                 ),
                 getBorderedTextField(
                   placeHolder: 'Nome e cognome',
-                  onChanged: (value) {},
+                  value: state.name,
+                  onChanged: (value) {
+                    context.read<IssueCubit>().setNameSurname(value);
+                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 getBorderedTextField(
                   title: 'email',
+                  value: state.email,
                   placeHolder: 'name@email.com',
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    context.read<IssueCubit>().setEmail(value);
+                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 getBorderedTextField(
                   placeHolder: 'Telefono',
-                  onChanged: (value) {},
+                  value: state.phone,
+                  onChanged: (value) {
+                    context.read<IssueCubit>().setPhoneNUmber(value);
+                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 getBorderedTextField(
                     placeHolder: 'Indirizzo segnalazione',
-                    onChanged: (value) {},
+                    value: state.address,
+                    onChanged: (value) {
+                      context.read<IssueCubit>().setAddress(value);
+                    },
                     customIcon: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.gps_fixed_outlined))),
@@ -60,8 +75,11 @@ class NewIssueMessageSection extends StatelessWidget {
                 ),
                 getBorderedTextField(
                   placeHolder: 'Messaggio',
+                  value: state.content,
                   height: 200,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    context.read<IssueCubit>().setMessage(value);
+                  },
                 ),
               ],
             ),
@@ -76,7 +94,8 @@ class NewIssueMessageSection extends StatelessWidget {
       IconButton? customIcon,
       String? placeHolder,
       Function(String)? onChanged,
-      double? height}) {
+      double? height,
+      String? value}) {
     return Column(
       children: [
         Row(
@@ -97,7 +116,8 @@ class NewIssueMessageSection extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border.all(color: ThemeHelper.lightGrey),
               borderRadius: BorderRadius.circular(12)),
-          child: TextField(
+          child: TextFormField(
+            initialValue: value,
             onChanged: onChanged,
             decoration: InputDecoration(
                 suffixIcon: customIcon,

@@ -78,9 +78,11 @@ abstract class $AppRouter extends _i15.RootStackRouter {
       );
     },
     NewIssueRouter.name: (routeData) {
+      final args = routeData.argsAs<NewIssueRouterArgs>(
+          orElse: () => const NewIssueRouterArgs());
       return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i15.WrappedRoute(child: const _i6.NewIssuePager()),
+        child: _i15.WrappedRoute(child: _i6.NewIssuePager(key: args.key)),
       );
     },
     NewsDetailRoute.name: (routeData) {
@@ -264,16 +266,31 @@ class MainRouteArgs {
 
 /// generated route for
 /// [_i6.NewIssuePager]
-class NewIssueRouter extends _i15.PageRouteInfo<void> {
-  const NewIssueRouter({List<_i15.PageRouteInfo>? children})
-      : super(
+class NewIssueRouter extends _i15.PageRouteInfo<NewIssueRouterArgs> {
+  NewIssueRouter({
+    _i16.Key? key,
+    List<_i15.PageRouteInfo>? children,
+  }) : super(
           NewIssueRouter.name,
+          args: NewIssueRouterArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'NewIssueRouter';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i15.PageInfo<NewIssueRouterArgs> page =
+      _i15.PageInfo<NewIssueRouterArgs>(name);
+}
+
+class NewIssueRouterArgs {
+  const NewIssueRouterArgs({this.key});
+
+  final _i16.Key? key;
+
+  @override
+  String toString() {
+    return 'NewIssueRouterArgs{key: $key}';
+  }
 }
 
 /// generated route for

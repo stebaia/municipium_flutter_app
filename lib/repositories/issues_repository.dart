@@ -37,20 +37,30 @@ class IssuesRepository {
     }
   }
 
-  Future<List<IssueMappedCategory>> getIssueCategoryTagList() async {
+  Future<List<IssueCategoryTag>> getIssueCategoryList() async {
     try {
       final List<IssueCategoryTagDto> issueCategoryTagResponse =
           await issueService.getIssueCategoriesTags();
+      final List<IssueCategoryTag> listCategory = [];
+      for (var cat in issueCategoryTagResponse) {
+        listCategory.add(issueCategoryTagMapper.fromDTO(cat));
+      }
+      return listCategory;
+    } catch (error, stackTrace) {
+      logger.e('Error in getting tags categories list');
+      rethrow;
+    }
+  }
+
+  Future<List<IssueMappedCategory>> getIssueCategoryTagList() async {
+    try {
       final List<IssueTagDto> issueTagResponse =
           await issueService.getIssueTags();
       final List<IssueTag> listTag = [];
-      final List<IssueCategoryTag> listCategory = [];
+      final List<IssueCategoryTag> listCategory = await getIssueCategoryList();
 
       for (var tag in issueTagResponse) {
         listTag.add(issueTagMapper.fromDTO(tag));
-      }
-      for (var cat in issueCategoryTagResponse) {
-        listCategory.add(issueCategoryTagMapper.fromDTO(cat));
       }
       final List<IssueMappedCategory> list = mapModels(listTag, listCategory);
       list.sort((a, b) => a.name.compareTo(b.name));

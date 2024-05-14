@@ -3,8 +3,10 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
 class NewIssueGallerySection extends StatelessWidget {
@@ -21,7 +23,11 @@ class NewIssueGallerySection extends StatelessWidget {
             child: Column(
               children: [
                 getButton(
-                    title: 'Aggiungi foto dalla galleria', icon: Icons.add),
+                    onTap: () {
+                      _pickImageFromGallery();
+                    },
+                    title: 'Aggiungi foto dalla galleria',
+                    icon: Icons.add),
                 const SizedBox(
                   height: 16,
                 ),
@@ -58,6 +64,18 @@ class NewIssueGallerySection extends StatelessWidget {
     );
   }
 
+  Future<void> _pickImageFromGallery() async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      // Esegui qualcosa con l'immagine selezionata
+      // Ad esempio, visualizzala in un'immagine o esegui altre operazioni
+      // pickedImage.path contiene il percorso dell'immagine selezionata
+    } else {
+      // L'utente ha annullato la selezione dell'immagine
+    }
+  }
+
   Widget? checkGallery({List<Image>? imageList}) {
     if (imageList != null && imageList.isNotEmpty) {
       return Column(
@@ -84,29 +102,32 @@ class NewIssueGallerySection extends StatelessWidget {
     }
   }
 
-  Widget getButton({String? title, IconData? icon}) {
-    return Container(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        decoration: BoxDecoration(
-            border: Border.all(color: ThemeHelper.blueMunicipium),
-            borderRadius: BorderRadius.circular(12)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(
-              size: 30,
-              icon,
-              color: ThemeHelper.blueMunicipium,
-            ),
-            Text(
-              title ?? '',
-              style: const TextStyle(
-                  color: ThemeHelper.blueMunicipium,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700),
-            ),
-            const SizedBox()
-          ],
-        ));
+  Widget getButton({String? title, IconData? icon, Function()? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          decoration: BoxDecoration(
+              border: Border.all(color: ThemeHelper.blueMunicipium),
+              borderRadius: BorderRadius.circular(12)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                size: 30,
+                icon,
+                color: ThemeHelper.blueMunicipium,
+              ),
+              Text(
+                title ?? '',
+                style: const TextStyle(
+                    color: ThemeHelper.blueMunicipium,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700),
+              ),
+              const SizedBox()
+            ],
+          )),
+    );
   }
 }
