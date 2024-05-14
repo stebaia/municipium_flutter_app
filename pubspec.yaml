@@ -59,6 +59,7 @@ dependencies:
   shimmer: ^3.0.0
   google_maps_flutter: ^2.6.1
   clippy_flutter: ^2.0.0-nullsafety.1
+  flutter_svprogresshud: ^1.0.1
 
 
 dev_dependencies:

@@ -52,6 +52,9 @@
     "municipality_change_menu" : "Cambia comune",
     "spid_login_menu" : "Login con SPID",
 
+    "loading_sv_message" : "caricamento",
+    "loading_sv_message_poi" : "caricamento punti di interesse",
+
     "@_NEWS_STRINGS" : {},
 
     "no_news_fetched" : "Nessuna notizia presente",

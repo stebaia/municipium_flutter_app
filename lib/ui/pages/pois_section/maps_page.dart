@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:municipium/app.dart';
@@ -84,7 +85,15 @@ class _MapsPageState extends State<MapsPage> {
     final municipality = (context.watch<MunicipalityGlobalCubit>().state
             as StoredMunicipalityGlobalState)
         .municipality;
-    return BlocBuilder<PointOfInterestListBloc, PointOfInterestListState>(
+    return BlocConsumer<PointOfInterestListBloc, PointOfInterestListState>(
+      listener: (context, state) {
+        if(state is FetchingPointOfInterestListState) {
+          SVProgressHUD.show(status: AppLocalizations.of(context)!
+                                          .loading_sv_message_poi,);
+        }else {
+          SVProgressHUD.dismiss();
+        }
+      },
       builder: (context, state) {
         Set<Marker> markers = {};
         if (state is FetchedPointOfInterestListState) {
@@ -107,15 +116,19 @@ class _MapsPageState extends State<MapsPage> {
                                 color: Theme.of(context).primaryColor,
                                 padding: const EdgeInsets.all(16),
                                 width: width,
-                                height: height,
+                                
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      point.name!,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    Container(
+                                      height:30,
+                                      child: Text(
+                                        point.name!,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                     const SizedBox(
                                       height: 10,

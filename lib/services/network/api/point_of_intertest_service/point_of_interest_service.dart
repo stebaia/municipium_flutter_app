@@ -18,4 +18,5 @@ abstract class PointOfInterestService {
 
   @GET('point_of_interest_categories/categories_with_poi')
   Future<List<CategoryPoiDTO>> getCategoryPoi();
+
 }
