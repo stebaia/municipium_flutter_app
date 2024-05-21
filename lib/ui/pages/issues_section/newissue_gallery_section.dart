@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:path/path.dart';
@@ -15,7 +16,8 @@ import 'package:photo_manager/photo_manager.dart';
 
 class NewIssueGallerySection extends StatelessWidget {
   NewIssueGallerySection({super.key});
-  ImagePicker picker = ImagePicker();
+  ImagePicker _picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<IssueCubit, ProgressIssue>(
@@ -35,30 +37,25 @@ class NewIssueGallerySection extends StatelessWidget {
                 ),
                 _getButton(
                     onTap: () {
-                      _pickImages(context);
+                      _openCamera(context);
                     },
                     title: 'Scatta nuove foto',
                     icon: Icons.camera_alt_outlined),
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: state.noPhoto,
-                      activeColor: ThemeHelper.blueMunicipium,
-                      onChanged: (value) {
-                        context.read<IssueCubit>().setNoPhoto(value ?? false);
-                      },
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    const Text(
-                      'Non ho foto da aggiungere',
-                      style: TextStyle(fontSize: 17),
-                    )
-                  ],
+                ComponentFactory.createCheckbox(
+                  state.noPhoto ?? false,
+                  const Text(
+                    'Non ho foto da aggiungere',
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: -0.4),
+                  ),
+                  onChanged: (value) {
+                    context.read<IssueCubit>().setNoPhoto(value ?? false);
+                  },
                 ),
                 const SizedBox(
                   height: 16,
@@ -76,12 +73,12 @@ class NewIssueGallerySection extends StatelessWidget {
     final cubit = context.read<IssueCubit>();
     final int sizeLimit = 4 - (cubit.state.imageList ?? []).length;
     if (sizeLimit > 1) {
-      final List<XFile> pickedFiles = await picker.pickMultiImage(
+      final List<XFile> pickedFiles = await _picker.pickMultiImage(
           imageQuality: 50, maxWidth: 800, limit: sizeLimit);
       cubit.setImageList(pickedFiles);
     } else if (sizeLimit > 0) {
       final XFile? pickedFile =
-          await picker.pickImage(source: ImageSource.gallery);
+          await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         cubit.setImageList([pickedFile]);
       }
@@ -90,82 +87,33 @@ class NewIssueGallerySection extends StatelessWidget {
 
   Widget _checkGallery({List<XFile>? imageList}) {
     if (imageList != null && imageList.isNotEmpty) {
-      return SizedBox(
-        height: 150,
-        child: Column(
-          children: [
-            const Row(
-              children: [
-                Text(
-                  'FOTO AGGIUNTE',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
-                ),
-                SizedBox()
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: imageList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: 120,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.file(
-                                File(imageList[index].path),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              margin: const EdgeInsets.all(4),
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromRGBO(245, 248, 253, 1)),
-                              child: Center(
-                                child: IconButton(
-                                  onPressed: () {
-                                    context
-                                        .read<IssueCubit>()
-                                        .removePhoto(index);
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: ThemeHelper.blueMunicipium,
-                                  ),
-                                  iconSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ));
-                },
+      return ComponentFactory.createGalleryHorizzontalList(imageList,
+          title: const Row(
+            children: [
+              Text(
+                'FOTO AGGIUNTE',
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.4),
               ),
-            ),
-          ],
-        ),
-      );
+              SizedBox()
+            ],
+          ), onDeletePressed: (context, index) {
+        context.read<IssueCubit>().removePhoto(index);
+      });
     } else {
       return Container();
     }
   }
 
-  Future<void> _pickImages(BuildContext context) async {}
+  Future<void> _openCamera(BuildContext context) async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    final cubit = context.read<IssueCubit>();
+    if (image != null) {
+      cubit.setImageList([XFile(image.path)]);
+    }
+  }
 
   Widget _getButton({String? title, IconData? icon, Function()? onTap}) {
     return GestureDetector(
@@ -188,7 +136,8 @@ class NewIssueGallerySection extends StatelessWidget {
                 style: const TextStyle(
                     color: ThemeHelper.blueMunicipium,
                     fontSize: 17,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.4),
               ),
               const SizedBox()
             ],

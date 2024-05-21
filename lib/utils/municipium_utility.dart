@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:municipium/utils/theme_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,31 +39,6 @@ class MunicipiumUtility {
     }
   }
 
-  static Widget checkAndCreateRow(
-      String? stringToCheck, IconData icon, Function()? tap) {
-    return stringToCheck != null
-        ? GestureDetector(
-            onTap: tap,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(icon),
-                const SizedBox(
-                  width: 16,
-                ),
-                Expanded(
-                    child: Text(stringToCheck,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 13))),
-                const SizedBox(
-                  width: 24,
-                )
-              ],
-            ),
-          )
-        : Container();
-  }
-
   static Future<void> requestGalleryPermission(Function() method) async {
     final PermissionStatus status = await Permission.photos.request();
     if (status.isGranted) {
@@ -68,5 +47,15 @@ class MunicipiumUtility {
     } else {
       // Se l'utente ha negato i permessi, mostra un messaggio o gestisci di conseguenza
     }
+  }
+
+  static bool isValidEmail(String email) {
+    // Definisci la RegExp per l'email
+    final RegExp emailRegExp = RegExp(
+      r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+',
+    );
+
+    // Verifica se l'email corrisponde alla RegExp
+    return emailRegExp.hasMatch(email);
   }
 }

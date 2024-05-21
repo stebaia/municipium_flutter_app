@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
 class NewIssueMessageSection extends StatelessWidget {
@@ -22,7 +23,7 @@ class NewIssueMessageSection extends StatelessWidget {
                   children: [
                     Text(
                       'Tutti i campi sono obbligatori',
-                      style: TextStyle(fontSize: 17),
+                      style: TextStyle(fontSize: 17, letterSpacing: -0.4),
                     ),
                     SizedBox()
                   ],
@@ -30,7 +31,7 @@ class NewIssueMessageSection extends StatelessWidget {
                 const SizedBox(
                   height: 32,
                 ),
-                getBorderedTextField(
+                ComponentFactory.getBorderedTextField(
                   placeHolder: 'Nome e cognome',
                   value: state.name,
                   onChanged: (value) {
@@ -40,7 +41,7 @@ class NewIssueMessageSection extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                getBorderedTextField(
+                ComponentFactory.getBorderedTextField(
                   title: 'email',
                   value: state.email,
                   placeHolder: 'name@email.com',
@@ -51,17 +52,17 @@ class NewIssueMessageSection extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                getBorderedTextField(
-                  placeHolder: 'Telefono',
-                  value: state.phone,
-                  onChanged: (value) {
-                    context.read<IssueCubit>().setPhoneNUmber(value);
-                  },
-                ),
+                ComponentFactory.getBorderedTextField(
+                    placeHolder: 'Telefono',
+                    value: state.phone,
+                    onChanged: (value) {
+                      context.read<IssueCubit>().setPhoneNUmber(value);
+                    },
+                    keyboardType: TextInputType.phone),
                 const SizedBox(
                   height: 20,
                 ),
-                getBorderedTextField(
+                ComponentFactory.getBorderedTextField(
                     placeHolder: 'Indirizzo segnalazione',
                     value: state.address,
                     onChanged: (value) {
@@ -73,7 +74,7 @@ class NewIssueMessageSection extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                getBorderedTextField(
+                ComponentFactory.getBorderedTextField(
                   placeHolder: 'Messaggio',
                   value: state.content,
                   height: 200,
@@ -86,47 +87,6 @@ class NewIssueMessageSection extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget getBorderedTextField(
-      {String? title,
-      IconButton? customIcon,
-      String? placeHolder,
-      Function(String)? onChanged,
-      double? height,
-      String? value}) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              (title ?? placeHolder ?? '').toUpperCase(),
-              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
-            ),
-            const SizedBox()
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Container(
-          height: height,
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-          decoration: BoxDecoration(
-              border: Border.all(color: ThemeHelper.lightGrey),
-              borderRadius: BorderRadius.circular(12)),
-          child: TextFormField(
-            initialValue: value,
-            onChanged: onChanged,
-            decoration: InputDecoration(
-                suffixIcon: customIcon,
-                hintText: placeHolder,
-                border: InputBorder.none,
-                hintStyle: const TextStyle(color: ThemeHelper.lightGrey)),
-          ),
-        )
-      ],
     );
   }
 }

@@ -23,7 +23,9 @@ class NewIssueCategorySection extends StatelessWidget {
             child: Column(
               children: [
                 const Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit adipiscing sit enim enim id iaculis tristique. '),
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit adipiscing sit enim enim id iaculis tristique. ',
+                  style: TextStyle(letterSpacing: -0.4),
+                ),
                 const SizedBox(
                   height: 32,
                 ),
@@ -31,8 +33,10 @@ class NewIssueCategorySection extends StatelessWidget {
                   children: [
                     Text(
                       'TIPO SEGNALAZIONE',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                          letterSpacing: -0.4),
                     ),
                     SizedBox()
                   ],
@@ -50,7 +54,8 @@ class NewIssueCategorySection extends StatelessWidget {
                     underline: Container(),
                     hint: const Text(
                       'Seleziona una voce',
-                      style: TextStyle(color: ThemeHelper.lightGrey),
+                      style: TextStyle(
+                          color: ThemeHelper.lightGrey, letterSpacing: -0.4),
                     ),
                     isExpanded: true,
                     menuMaxHeight: 300,
@@ -78,7 +83,10 @@ class NewIssueCategorySection extends StatelessWidget {
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value), // Testo dell'opzione
+                        child: Text(
+                          value,
+                          style: const TextStyle(letterSpacing: -0.4),
+                        ), // Testo dell'opzione
                       );
                     }).toList(),
                   ),
@@ -94,9 +102,12 @@ class NewIssueCategorySection extends StatelessWidget {
                             .isNotEmpty)
                     ? Row(
                         children: [
-                          Text(fetchedTags
-                              .getFromIssueCategoryId(state.issueCategoryId)!
-                              .description),
+                          Text(
+                              fetchedTags
+                                  .getFromIssueCategoryId(
+                                      state.issueCategoryId)!
+                                  .description,
+                              style: const TextStyle(letterSpacing: -0.4)),
                           const SizedBox()
                         ],
                       )
@@ -113,7 +124,9 @@ class NewIssueCategorySection extends StatelessWidget {
                           underline: Container(),
                           hint: const Text(
                             'Seleziona una voce',
-                            style: TextStyle(color: ThemeHelper.lightGrey),
+                            style: TextStyle(
+                                color: ThemeHelper.lightGrey,
+                                letterSpacing: -0.4),
                           ),
                           isExpanded: true,
                           menuMaxHeight: 300,
@@ -143,7 +156,10 @@ class NewIssueCategorySection extends StatelessWidget {
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Text(value), // Testo dell'opzione
+                              child: Text(
+                                value,
+                                style: const TextStyle(letterSpacing: -0.4),
+                              ), // Testo dell'opzione
                             );
                           }).toList(),
                         ))

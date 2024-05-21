@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:path/path.dart' as p;
 
 class IssueCubit extends Cubit<ProgressIssue> {
   IssueCubit() : super(ProgressIssue());
@@ -58,8 +59,14 @@ class IssueCubit extends Cubit<ProgressIssue> {
   }
 
   void setImageList(List<XFile> list) {
-    final List<XFile> selectedImages = List.from(state.imageList ?? [])
-      ..addAll(list);
+    final List<XFile> selectedImages = List.from(state.imageList ?? []);
+    for (final XFile image in list) {
+      final String normalizedImagePath = p.canonicalize(image.path);
+      if (!selectedImages.any((XFile existingImage) =>
+          p.canonicalize(existingImage.path) == normalizedImagePath)) {
+        selectedImages.add(image);
+      }
+    }
     final updatedIssue = state.copyWith(imageList: selectedImages);
     emit(updatedIssue);
   }
@@ -70,6 +77,11 @@ class IssueCubit extends Cubit<ProgressIssue> {
       list.removeAt(index);
     }
     final updatedIssue = state.copyWith(imageList: List<XFile>.from(list));
+    emit(updatedIssue);
+  }
+
+  void setPrivacy(bool value) {
+    final updatedIssue = state.copyWith(privacy: value);
     emit(updatedIssue);
   }
 }

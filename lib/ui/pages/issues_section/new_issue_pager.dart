@@ -11,6 +11,7 @@ import 'package:municipium/ui/pages/issues_section/newissue_category_section.dar
 import 'package:municipium/ui/pages/issues_section/newissue_gallery_section.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_message_section.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_recap_section.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
 @RoutePage()
@@ -42,14 +43,15 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
         }
       case 1: //pagina messaggio e dati personali
         return ((model.name ?? '').isNotEmpty) &&
-            ((model.email ?? '').isNotEmpty) &&
+            ((model.email ?? '').isNotEmpty &&
+                MunicipiumUtility.isValidEmail(model.email ?? '')) &&
             ((model.phone ?? '').isNotEmpty) &&
             ((model.address ?? '').isNotEmpty) &&
             ((model.content ?? '').isNotEmpty);
       case 2: //pagina galleria
-        return model.noPhoto!;
+        return model.noPhoto! || (model.imageList ?? []).isNotEmpty;
       case 3:
-        return true;
+        return model.privacy ?? false;
     }
     return true;
   }
@@ -93,7 +95,8 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                           style: TextStyle(
                               color: ThemeHelper.lightGrey,
                               fontSize: 12,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: -0.4),
                         ),
                         SizedBox()
                       ],
@@ -109,6 +112,7 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                           style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w700,
+                            letterSpacing: -0.4,
                           ),
                         ),
                         const SizedBox()
@@ -163,7 +167,9 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                               Text(
                                 'Step ${stateIssue.currentPage! + 1} di $totalPage',
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 12),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 12,
+                                    letterSpacing: -0.4),
                               )
                             ],
                           )
@@ -223,7 +229,9 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                                   })
                                 : null,
                             child: RoundedShapeButton(
-                                title: 'Avanti',
+                                title: stateIssue.currentPage! != totalPage - 1
+                                    ? 'Avanti'
+                                    : 'Invia',
                                 color: checkStep
                                     ? ThemeHelper.blueMunicipium
                                     : Colors.grey,

@@ -7,6 +7,7 @@ import 'package:municipium/bloc/news_detail_bloc/news_detail_bloc.dart';
 import 'package:municipium/model/news_detail.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
+import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 
 @RoutePage()
@@ -33,7 +34,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => context.maybePop(),),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => context.maybePop(),
+          ),
         ),
         body: BlocBuilder<NewsDetailBloc, NewsDetailState>(
           builder: (context, state) {
@@ -87,7 +91,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       const SizedBox(
                         height: 24,
                       ),
-                      MunicipiumUtility.checkAndCreateRow(
+                      ComponentFactory.checkAndCreateRow(
                           state.newsDetail.address, Icons.location_on_outlined,
                           () {
                         MunicipiumUtility.launchMapUrl(
@@ -96,7 +100,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       const SizedBox(
                         height: 16,
                       ),
-                      MunicipiumUtility.checkAndCreateRow(
+                      ComponentFactory.checkAndCreateRow(
                           state.newsDetail.url, Icons.link, () {
                         MunicipiumUtility.launch(state.newsDetail.url!);
                       }),

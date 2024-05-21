@@ -19,7 +19,7 @@ class RoundedShapeButton extends StatelessWidget {
           color: color ?? ThemeHelper.blueMunicipium),
       child: Text(
         title,
-        style: TextStyle(color: textColor ?? Colors.white),
+        style: TextStyle(color: textColor ?? Colors.white, letterSpacing: -0.4),
       ),
     );
   }
