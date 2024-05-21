@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 
 class ProgressIssue extends Equatable {
@@ -21,6 +23,7 @@ class ProgressIssue extends Equatable {
   int? totalPage;
   List<IssueMappedCategory>? subList;
   bool? noPhoto;
+  List<XFile>? imageList;
 
   ProgressIssue(
       {this.address,
@@ -41,10 +44,12 @@ class ProgressIssue extends Equatable {
       int? currentPage, // Aggiunto currentPage come parametro opzionale
       this.totalPage,
       List<IssueMappedCategory>? subList,
-      bool? noPhoto})
+      bool? noPhoto,
+      List<XFile>? imageList})
       : currentPage = currentPage ?? 0,
         subList = subList ?? [],
-        noPhoto = noPhoto ?? false; // Imposta 0 se currentPage è null
+        noPhoto = noPhoto ?? false,
+        imageList = imageList ?? []; // Imposta 0 se currentPage è null
 
   ProgressIssue copyWith(
       {String? address,
@@ -65,7 +70,8 @@ class ProgressIssue extends Equatable {
       int? currentPage,
       int? totalPage,
       List<IssueMappedCategory>? subList,
-      bool? noPhoto}) {
+      bool? noPhoto,
+      List<XFile>? imageList}) {
     return ProgressIssue(
         address: address ?? this.address,
         email: email ?? this.email,
@@ -85,7 +91,8 @@ class ProgressIssue extends Equatable {
         currentPage: currentPage ?? this.currentPage,
         totalPage: totalPage ?? this.totalPage,
         subList: subList ?? this.subList,
-        noPhoto: noPhoto ?? this.noPhoto);
+        noPhoto: noPhoto ?? this.noPhoto,
+        imageList: imageList ?? this.imageList);
   }
 
   @override
@@ -108,6 +115,7 @@ class ProgressIssue extends Equatable {
         currentPage,
         totalPage,
         subList,
-        noPhoto
+        noPhoto,
+        imageList
       ];
 }

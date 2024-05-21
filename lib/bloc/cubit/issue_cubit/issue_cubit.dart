@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 
@@ -52,6 +54,22 @@ class IssueCubit extends Cubit<ProgressIssue> {
 
   void setNoPhoto(bool value) {
     final updatedIssue = state.copyWith(noPhoto: value);
+    emit(updatedIssue);
+  }
+
+  void setImageList(List<XFile> list) {
+    final List<XFile> selectedImages = List.from(state.imageList ?? [])
+      ..addAll(list);
+    final updatedIssue = state.copyWith(imageList: selectedImages);
+    emit(updatedIssue);
+  }
+
+  void removePhoto(int index) {
+    final List<XFile> list = List<XFile>.from(state.imageList ?? []);
+    if (list.length >= index + 1) {
+      list.removeAt(index);
+    }
+    final updatedIssue = state.copyWith(imageList: List<XFile>.from(list));
     emit(updatedIssue);
   }
 }
