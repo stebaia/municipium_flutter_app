@@ -243,7 +243,7 @@ class MenuHelper {
         context.pushRoute(const EventListRoute());
         break;
       case MenuItemType.issue:
-        // TODO: Handle this case.
+        context.pushRoute(const IssuesListRoute());
         break;
       case MenuItemType.penalties:
         // TODO: Handle this case.

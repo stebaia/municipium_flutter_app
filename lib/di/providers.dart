@@ -63,6 +63,9 @@ Future<List<SingleChildWidget>> providersFun() async {
         context.read<Dio>(),
         baseUrl: baseUrl,
       ),
-    )
+    ),
+    Provider<IssueService>(
+        create: (context) =>
+            IssueService(context.read<Dio>(), baseUrl: baseUrl))
   ];
 }
