@@ -13,6 +13,7 @@ import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:path/path.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewIssueGallerySection extends StatelessWidget {
   NewIssueGallerySection({super.key});
@@ -30,7 +31,7 @@ class NewIssueGallerySection extends StatelessWidget {
                     onTap: () {
                       _pickImageFromGallery(context);
                     },
-                    title: 'Aggiungi foto dalla galleria',
+                    title: AppLocalizations.of(context)!.add_photo_gallery,
                     icon: Icons.add),
                 const SizedBox(
                   height: 16,
@@ -39,16 +40,16 @@ class NewIssueGallerySection extends StatelessWidget {
                     onTap: () {
                       _openCamera(context);
                     },
-                    title: 'Scatta nuove foto',
+                    title: AppLocalizations.of(context)!.add_photo_camera,
                     icon: Icons.camera_alt_outlined),
                 const SizedBox(
                   height: 16,
                 ),
                 ComponentFactory.createCheckbox(
                   state.noPhoto ?? false,
-                  const Text(
-                    'Non ho foto da aggiungere',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.no_photo_to_add,
+                    style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
                         letterSpacing: -0.4),
@@ -60,7 +61,7 @@ class NewIssueGallerySection extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                _checkGallery(imageList: state.imageList),
+                _checkGallery(context, imageList: state.imageList),
               ],
             ),
           ),
@@ -85,19 +86,19 @@ class NewIssueGallerySection extends StatelessWidget {
     }
   }
 
-  Widget _checkGallery({List<XFile>? imageList}) {
+  Widget _checkGallery(BuildContext context, {List<XFile>? imageList}) {
     if (imageList != null && imageList.isNotEmpty) {
       return ComponentFactory.createGalleryHorizzontalList(imageList,
-          title: const Row(
+          title: Row(
             children: [
               Text(
-                'FOTO AGGIUNTE',
-                style: TextStyle(
+                AppLocalizations.of(context)!.photo_added.toUpperCase(),
+                style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -0.4),
               ),
-              SizedBox()
+              const SizedBox()
             ],
           ), onDeletePressed: (context, index) {
         context.read<IssueCubit>().removePhoto(index);

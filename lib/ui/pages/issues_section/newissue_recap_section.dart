@@ -9,6 +9,7 @@ import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewIssueRecapSection extends StatelessWidget {
   const NewIssueRecapSection({super.key});
@@ -30,213 +31,226 @@ class NewIssueRecapSection extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(245, 248, 253, 1),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Column(
-                  children: [
-                    const Row(
-                      children: [
-                        Text(
-                          'Dati seganalazione',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: -0.4),
-                        ),
-                        SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'TIPOLOGIA SEGNALAZIONE',
-                          style: TextStyle(
-                              color: ThemeHelper.darkGrey,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              letterSpacing: -0.4),
-                        ),
-                        SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          category.name,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 17,
-                              letterSpacing: -0.4),
-                        ),
-                        const SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'NOME E COGNOME',
-                          style: TextStyle(
-                              color: ThemeHelper.darkGrey,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              letterSpacing: -0.4),
-                        ),
-                        SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          state.name ?? '',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 17,
-                              letterSpacing: -0.4),
-                        ),
-                        const SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'TELEFONO',
-                          style: TextStyle(
-                              color: ThemeHelper.darkGrey,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              letterSpacing: -0.4),
-                        ),
-                        SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          state.phone ?? '',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 17,
-                              letterSpacing: -0.4),
-                        ),
-                        const SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'INDIRIZZO SEGNALAZIONE',
-                          style: TextStyle(
-                              color: ThemeHelper.darkGrey,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              letterSpacing: -0.4),
-                        ),
-                        SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          state.address ?? '',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 17,
-                              letterSpacing: -0.4),
-                        ),
-                        const SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'MESSAGGIO',
-                          style: TextStyle(
-                              color: ThemeHelper.darkGrey,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              letterSpacing: -0.4),
-                        ),
-                        SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          state.content ?? '',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 17,
-                              letterSpacing: -0.4),
-                        ),
-                        const SizedBox()
-                      ],
-                    ),
-                  ],
+              Card(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      //color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!
+                                .issue_data
+                                .toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!
+                                .issue_type
+                                .toUpperCase(),
+                            style: const TextStyle(
+                                color: ThemeHelper.darkGrey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            category.name,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 17,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!
+                                .name_surname
+                                .toUpperCase(),
+                            style: const TextStyle(
+                                color: ThemeHelper.darkGrey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            state.name ?? '',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 17,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!
+                                .phone_desc
+                                .toUpperCase(),
+                            style: const TextStyle(
+                                color: ThemeHelper.darkGrey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            state.phone ?? '',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 17,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!
+                                .address_desc
+                                .toUpperCase(),
+                            style: const TextStyle(
+                                color: ThemeHelper.darkGrey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            state.address ?? '',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 17,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.content_desc,
+                            style: const TextStyle(
+                                color: ThemeHelper.darkGrey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            state.content ?? '',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 17,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 32,
               ),
               (state.imageList ?? []).isNotEmpty
-                  ? Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: const Color.fromRGBO(245, 248, 253, 1),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: ComponentFactory.createGalleryHorizzontalList(
-                        state.imageList!,
-                        title: const Row(
-                          children: [
-                            Text(
-                              'Foto segnalazione',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: -0.4),
-                            ),
-                            SizedBox()
-                          ],
+                  ? Card(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12)),
+                        child: ComponentFactory.createGalleryHorizzontalList(
+                          state.imageList!,
+                          title: Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.issue_photo,
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: -0.4),
+                              ),
+                              const SizedBox()
+                            ],
+                          ),
                         ),
                       ),
                     )
                   : Container(),
               ComponentFactory.createCheckbox(
                 state.privacy ?? false,
-                const Text('Accettazione informativa sui dati personali',
-                    style: TextStyle(
+                Text(AppLocalizations.of(context)!.accept_privacy,
+                    style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
                         letterSpacing: -0.4)),
@@ -247,9 +261,9 @@ class NewIssueRecapSection extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                'Procedendo con la compilazione e con l\'invio di questo modulo Lei acconsente al trattamento dei dati personali forniti, ai sensi e per gli effetti dell\'articolo 13 del Regolamento EU 2016/679 e della normativa nazionale applicabile in materia di trattamento dei dati personali, per la finalità e nei limiti indicati dall\'informativa sulla privacy che la invitiamo a leggere con attenzione.',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.privacy_desc,
+                style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                     letterSpacing: -0.4),
@@ -261,7 +275,7 @@ class NewIssueRecapSection extends StatelessWidget {
                 children: [
                   RichText(
                     text: TextSpan(
-                      text: 'Leggi l\'informativa',
+                      text: AppLocalizations.of(context)!.read_privacy,
                       style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,

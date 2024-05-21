@@ -13,6 +13,7 @@ import 'package:municipium/ui/pages/issues_section/newissue_message_section.dart
 import 'package:municipium/ui/pages/issues_section/newissue_recap_section.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
@@ -61,8 +62,8 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
     final PageController pageController = PageController();
     totalPage = pages.length;
     final issueCubit = context.read<IssueCubit>();
-    return MaterialApp(
-        home: Scaffold(
+
+    return Scaffold(
       appBar: AppBar(
         // Rimuovi il titolo
         title: const SizedBox.shrink(),
@@ -88,17 +89,17 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                 return Container(
                   padding: const EdgeInsets.all(16),
                   child: Column(children: [
-                    const Row(
+                    Row(
                       children: [
                         Text(
-                          'NUOVA SEGNALAZIONE',
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.new_issue.toUpperCase(),
+                          style: const TextStyle(
                               color: ThemeHelper.lightGrey,
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                               letterSpacing: -0.4),
                         ),
-                        SizedBox()
+                        const SizedBox()
                       ],
                     ),
                     const SizedBox(
@@ -108,7 +109,7 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          getTitle(stateIssue.currentPage!),
+                          getTitle(context, stateIssue.currentPage!),
                           style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w700,
@@ -208,8 +209,9 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                                           Curves.ease, // Curva dell'animazione
                                     );
                                   }),
-                                  child: const RoundedShapeButton(
-                                      title: 'Indietro',
+                                  child: RoundedShapeButton(
+                                      title: AppLocalizations.of(context)!
+                                          .back_desc,
                                       color: ThemeHelper.blueMunicipium,
                                       textColor: Colors.white),
                                 )
@@ -230,8 +232,8 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                                 : null,
                             child: RoundedShapeButton(
                                 title: stateIssue.currentPage! != totalPage - 1
-                                    ? 'Avanti'
-                                    : 'Invia',
+                                    ? AppLocalizations.of(context)!.next_desc
+                                    : AppLocalizations.of(context)!.send_desc,
                                 color: checkStep
                                     ? ThemeHelper.blueMunicipium
                                     : Colors.grey,
@@ -250,19 +252,19 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
           }
         },
       ),
-    ));
+    );
   }
 
-  String getTitle(int currentPage) {
+  String getTitle(BuildContext context, int currentPage) {
     switch (currentPage) {
       case 0:
-        return 'Tipo segnalazione';
+        return AppLocalizations.of(context)!.issue_type;
       case 1:
-        return 'Dati segnalazione';
+        return AppLocalizations.of(context)!.issue_data;
       case 2:
-        return 'Foto segnalazione';
+        return AppLocalizations.of(context)!.issue_photo;
       case 3:
-        return 'Riepilogo';
+        return AppLocalizations.of(context)!.issue_recap;
       default:
         return '';
     }

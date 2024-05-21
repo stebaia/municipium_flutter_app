@@ -5,6 +5,7 @@ import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewIssueCategorySection extends StatelessWidget {
   NewIssueCategorySection({super.key});
@@ -18,7 +19,6 @@ class NewIssueCategorySection extends StatelessWidget {
     return BlocBuilder<IssueCubit, ProgressIssue>(
       builder: (context, state) {
         return Container(
-          decoration: const BoxDecoration(color: Colors.white),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -29,16 +29,16 @@ class NewIssueCategorySection extends StatelessWidget {
                 const SizedBox(
                   height: 32,
                 ),
-                const Row(
+                Row(
                   children: [
                     Text(
-                      'TIPO SEGNALAZIONE',
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.issue_type,
+                      style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 12,
                           letterSpacing: -0.4),
                     ),
-                    SizedBox()
+                    const SizedBox()
                   ],
                 ),
                 const SizedBox(
@@ -52,9 +52,9 @@ class NewIssueCategorySection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8)),
                   child: DropdownButton<String>(
                     underline: Container(),
-                    hint: const Text(
-                      'Seleziona una voce',
-                      style: TextStyle(
+                    hint: Text(
+                      AppLocalizations.of(context)!.choose_voice,
+                      style: const TextStyle(
                           color: ThemeHelper.lightGrey, letterSpacing: -0.4),
                     ),
                     isExpanded: true,
@@ -122,9 +122,9 @@ class NewIssueCategorySection extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         child: DropdownButton<String>(
                           underline: Container(),
-                          hint: const Text(
-                            'Seleziona una voce',
-                            style: TextStyle(
+                          hint: Text(
+                            AppLocalizations.of(context)!.choose_voice,
+                            style: const TextStyle(
                                 color: ThemeHelper.lightGrey,
                                 letterSpacing: -0.4),
                           ),

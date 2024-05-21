@@ -31,7 +31,7 @@ class ComponentFactory {
       Function(BuildContext context, int index)? onDeletePressed}) {
     ScrollController controller = ScrollController();
     return SizedBox(
-      height: 200,
+      height: 150,
       child: Column(
         children: [
           title ?? Container(),
