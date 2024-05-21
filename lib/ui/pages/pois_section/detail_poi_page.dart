@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
+import 'package:municipium/services/network/dto/poi_detail_dto.dart';
 
 @RoutePage()
 class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {
@@ -14,6 +17,13 @@ class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => context.maybePop(),
+        ),
+      ),
       body: SingleChildScrollView(
         child: BlocBuilder<PointOfInterestBloc, PointOfInterestState>(
           builder: (context, state) {
@@ -25,7 +35,16 @@ class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text(state.poiDetailDTO.name!)],
+                  children: [
+                    Text(
+                      state.poiDetailDTO.name!,
+                      style: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
+                    _buildRowArgument(state.poiDetailDTO),
+                    _buildRowCategories(state.poiDetailDTO),
+                    _buildImages(state.poiDetailDTO)
+                  ],
                 ),
               );
             } else {
@@ -44,6 +63,73 @@ class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {
         ),
       ),
     );
+  }
+
+  Widget _buildImages(PoiDetailDTO poiDetailDTO) {
+    if (poiDetailDTO.images != null) {
+      if (poiDetailDTO.images!.isNotEmpty) {
+        return CarouselSlider(
+          options: CarouselOptions(),
+          items: poiDetailDTO.images!
+              .map((item) => Container(
+                    child: Center(
+                        child: Image.network(item.i640!,
+                            fit: BoxFit.cover, width: 1000)),
+                  ))
+              .toList(),
+        );
+      } else {
+        return Container();
+      }
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _buildRowCategories(PoiDetailDTO poiDetailDTO) {
+    if (poiDetailDTO.pointOfInterestCategories != null) {
+      if (poiDetailDTO.pointOfInterestCategories!.isNotEmpty) {
+        return Row(
+          children: [
+            Text(
+              poiDetailDTO.pointOfInterestCategories!
+                  .map((cat) => cat.name)
+                  .join(' - ')
+                  .toUpperCase(),
+              style: const TextStyle(
+                  fontSize: 12, color: Colors.grey, letterSpacing: 1),
+            )
+          ],
+        );
+      } else {
+        return Container();
+      }
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _buildRowArgument(PoiDetailDTO poiDetailDTO) {
+    if (poiDetailDTO.argomenti != null) {
+      if (poiDetailDTO.argomenti!.isNotEmpty) {
+        return Row(
+          children: [
+            Text(
+              poiDetailDTO.argomenti!
+                  .map((argument) => argument.name)
+                  .join(' - ')
+                  .toUpperCase(),
+              style: const TextStyle(
+                  fontSize: 12, color: Colors.grey, letterSpacing: 1),
+            )
+          ],
+        );
+      } else {
+        return Container();
+      }
+    } else {
+      return Container();
+    }
   }
 
   @override
