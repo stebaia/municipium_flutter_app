@@ -19,13 +19,13 @@ class _EventService implements EventService {
   String? baseUrl;
 
   @override
-  Future<EventDTO> getEventDetail(int eventId) async {
+  Future<EventDetailDto> getEventDetail(int eventId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<EventDTO>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<EventDetailDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -41,7 +41,7 @@ class _EventService implements EventService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = EventDTO.fromJson(_result.data!);
+    final value = EventDetailDto.fromJson(_result.data!);
     return value;
   }
 

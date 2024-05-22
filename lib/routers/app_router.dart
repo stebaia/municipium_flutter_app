@@ -23,6 +23,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(
           page: EventListRoute.page,
         ),
+        AutoRoute(page: EventDetailRoute.page),
         AutoRoute(page: IssuesListRoute.page),
         AutoRoute(page: NewIssueRouter.page),
         AutoRoute(page: WelcomeRoute.page),

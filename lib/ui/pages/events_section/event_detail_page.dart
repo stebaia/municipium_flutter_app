@@ -1,37 +1,28 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:municipium/bloc/news_detail_bloc/news_detail_bloc.dart';
-import 'package:municipium/model/news/news_detail.dart';
+import 'package:municipium/bloc/event_detail_bloc/event_detail_bloc.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
-import 'package:municipium/ui/components/detail_image_box.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 
 @RoutePage()
-class NewsDetailPage extends StatefulWidget implements AutoRouteWrapper {
-  final int newsId;
-  const NewsDetailPage({super.key, required this.newsId});
+class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
+  const EventDetailPage({super.key, required this.eventId});
+  final int eventId;
 
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<NewsDetailBloc>(
-          create: (context) => NewsDetailBloc(newsRepository: context.read())
-            ..fetchNewsDetail(newsId),
+        BlocProvider<EventDetailBLoc>(
+          create: (context) => EventDetailBLoc(eventRepository: context.read())
+            ..fetchEventDetail(eventId),
         )
       ], child: this);
 
   @override
-  State<NewsDetailPage> createState() => _NewsDetailPageState();
-}
-
-class _NewsDetailPageState extends State<NewsDetailPage> {
-  final PageController pageController = PageController();
-  @override
   Widget build(BuildContext context) {
+    final PageController pageController = PageController();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -40,11 +31,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
             onPressed: () => context.maybePop(),
           ),
         ),
-        body: BlocBuilder<NewsDetailBloc, NewsDetailState>(
+        body: BlocBuilder<EventDetailBLoc, EventDetailState>(
           builder: (context, state) {
-            if (state is FetchingNewsDetailState) {
+            if (state is FetchingEventDetailState) {
               return const CircularProgressIndicator();
-            } else if (state is FetchedNewsDetailState) {
+            } else if (state is FetchedEventDetailState) {
               return SingleChildScrollView(
                 child: Container(
                   padding:
@@ -52,7 +43,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(state.newsDetail.title,
+                      Text(state.eventDetail.title ?? '',
                           style: const TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 28)),
                       const SizedBox(
@@ -64,7 +55,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           const SizedBox(width: 8),
                           Text(
                               MunicipiumUtility.convertDate(
-                                  state.newsDetail.publishedAt, 'dd.MM.yyyy'),
+                                  state.eventDetail.publishedAt ?? '',
+                                  'dd.MM.yyyy'),
                               style: const TextStyle(
                                   fontWeight: FontWeight.w400, fontSize: 17))
                         ],
@@ -73,14 +65,14 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         height: 24,
                       ),
                       DetailGalleryBox(
-                          image: state.newsDetail.image,
-                          images: state.newsDetail.images,
+                          image: state.eventDetail.image,
+                          images: state.eventDetail.images,
                           pageController: pageController),
                       const SizedBox(
                         height: 24,
                       ),
                       Html(
-                        data: state.newsDetail.content ?? '',
+                        data: state.eventDetail.content ?? '',
                       ),
                       const SizedBox(
                         height: 24,
@@ -92,17 +84,17 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         height: 24,
                       ),
                       ComponentFactory.checkAndCreateRow(
-                          state.newsDetail.address, Icons.location_on_outlined,
+                          state.eventDetail.address, Icons.location_on_outlined,
                           () {
                         MunicipiumUtility.launchMapUrl(
-                            state.newsDetail.address!);
+                            state.eventDetail.address!);
                       }),
                       const SizedBox(
                         height: 16,
                       ),
                       ComponentFactory.checkAndCreateRow(
-                          state.newsDetail.url, Icons.link, () {
-                        MunicipiumUtility.launch(state.newsDetail.url!);
+                          state.eventDetail.url, Icons.link, () {
+                        MunicipiumUtility.launch(state.eventDetail.url!);
                       }),
                       const SizedBox(
                         height: 16,

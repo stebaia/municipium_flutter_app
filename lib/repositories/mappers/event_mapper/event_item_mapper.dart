@@ -1,4 +1,4 @@
-import 'package:municipium/model/event_item_list.dart';
+import 'package:municipium/model/events/event_item_list.dart';
 import 'package:municipium/model/item_category.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/item_category_mapper.dart';
@@ -11,12 +11,12 @@ class EventItemMapper extends DTOMapper<EventDTO, EventItemList> {
     MunicipiumImageMapper mapperImages = MunicipiumImageMapper();
     ItemCategoryMapper mapperItemCategory = ItemCategoryMapper();
     List<ItemCategory> itemCategoryList = [];
-    if(dto.eventCategories != null) {
+    if (dto.eventCategories != null) {
       for (var element in dto.eventCategories!) {
-      itemCategoryList.add(mapperItemCategory.fromDTO(element));
+        itemCategoryList.add(mapperItemCategory.fromDTO(element));
+      }
     }
-    }
-    
+
     return EventItemList(
       id: dto.id ?? 0,
       title: dto.title ?? '',

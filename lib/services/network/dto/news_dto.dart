@@ -5,6 +5,45 @@ import 'package:municipium/services/network/dto/m_images_dto.dart';
 import 'package:municipium/services/network/dto/news_categories_dto.dart';
 import 'package:pine/dto/dto.dart';
 
+class NewsPagedDto extends DTO with EquatableMixin {
+  int? total;
+  int? pages;
+  List<NewsDTO>? results;
+  int? currentPage;
+  int? pageSize;
+
+  NewsPagedDto(
+      {this.total, this.pages, this.results, this.currentPage, this.pageSize});
+
+  NewsPagedDto.fromJson(Map<String, dynamic> json) {
+    total = json['total'];
+    pages = json['pages'];
+    if (json['results'] != null) {
+      results = <NewsDTO>[];
+      json['results'].forEach((v) {
+        results!.add(new NewsDTO.fromJson(v));
+      });
+    }
+    currentPage = json['current_page'];
+    pageSize = json['page_size'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['total'] = this.total;
+    data['pages'] = this.pages;
+    if (this.results != null) {
+      data['results'] = this.results!.map((v) => v.toJson()).toList();
+    }
+    data['current_page'] = this.currentPage;
+    data['page_size'] = this.pageSize;
+    return data;
+  }
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
+
 class NewsDTO extends DTO with EquatableMixin {
   int? id;
   String? title;
