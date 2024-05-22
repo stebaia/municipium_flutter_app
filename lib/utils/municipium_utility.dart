@@ -1,9 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:municipium/model/municipality.dart';
+import 'package:municipium/services/network/dto/post_issue_dto.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -57,5 +63,99 @@ class MunicipiumUtility {
 
     // Verifica se l'email corrisponde alla RegExp
     return emailRegExp.hasMatch(email);
+  }
+
+  static Future<List<String>> convertToBase64(List<XFile> list) async {
+    List<String> base64List = [];
+    for (XFile file in list) {
+      File imageFile = File(file.path);
+      List<int> imageBytes = await imageFile.readAsBytes();
+      String base64 = base64Encode(imageBytes);
+      base64List.add(base64);
+    }
+    return base64List;
+  }
+
+  static Future<PostIssueDto> createPostIssue(
+      ProgressIssue issue, Municipality municipality) async {
+    PostIssueDto issueDto = PostIssueDto();
+    IssueContentDto contentDto = IssueContentDto();
+    contentDto.municipalityId = municipality.muninicipalityId;
+    contentDto.municipalityName = municipality.municipalityName;
+    contentDto.latitude = issue.latitude;
+    contentDto.longitude = issue.longitude;
+    contentDto.address = issue.address;
+    contentDto.phone = issue.phone;
+    contentDto.surname = issue.surname;
+    contentDto.email = issue.email;
+    contentDto.issueCategoryId =
+        issue.issueSubCategoryId ?? issue.issueCategoryId;
+    if (issue.imageList != null && (issue.imageList ?? []).isNotEmpty) {
+      List<String> listBase64 = [];
+      listBase64 = await MunicipiumUtility.convertToBase64(issue.imageList!);
+      ImageIssueDto image1 = ImageIssueDto();
+      image1.file = listBase64[0];
+      DateTime now = DateTime.now();
+      String name = DateFormat().format(now);
+      image1.filename = '$name.png';
+      image1.originalFilename = name;
+      contentDto.image1 = image1;
+      if (listBase64.length > 1) {
+        ImageIssueDto image2 = ImageIssueDto();
+        image2.file = listBase64[1];
+        DateTime now = DateTime.now();
+        String name = DateFormat().format(now);
+        image2.filename = '$name.png';
+        image2.originalFilename = name;
+        contentDto.image2 = image2;
+      }
+      if (listBase64.length > 2) {
+        ImageIssueDto image3 = ImageIssueDto();
+        image3.file = listBase64[2];
+        DateTime now = DateTime.now();
+        String name = DateFormat().format(now);
+        image3.filename = '$name.png';
+        image3.originalFilename = name;
+        contentDto.image3 = image3;
+      }
+      if (listBase64.length > 3) {
+        ImageIssueDto image4 = ImageIssueDto();
+        image4.file = listBase64[3];
+        DateTime now = DateTime.now();
+        String name = DateFormat().format(now);
+        image4.filename = '$name.png';
+        image4.originalFilename = name;
+        contentDto.image4 = image4;
+      }
+    }
+    issueDto.issue = contentDto;
+    issueDto.udid = '';
+
+    issueDto.userAgent = await MunicipiumUtility.createUserAgent();
+    return issueDto;
+  }
+
+  static Future<String> createUserAgent() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    String info = '';
+
+    try {
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfoPlugin.androidInfo;
+        info = "${packageInfo.appName} ${packageInfo.version} "
+            "${androidInfo.model} ${androidInfo.version.release} "
+            "Darwin/Android ${androidInfo.version.sdkInt}";
+      } else if (Platform.isIOS) {
+        final iosInfo = await deviceInfoPlugin.iosInfo;
+        info = "${packageInfo.appName} ${packageInfo.version} "
+            "${iosInfo.utsname.machine} ${iosInfo.systemVersion} "
+            "${iosInfo.utsname.version} "
+            "Darwin/${iosInfo.utsname.release}";
+      }
+    } catch (e) {
+      info = 'Failed to get info: $e';
+    }
+    return info;
   }
 }
