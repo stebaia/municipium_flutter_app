@@ -8,8 +8,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:municipium/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
+import 'package:municipium/services/network/dto/contact_point_dto.dart';
 import 'package:municipium/services/network/dto/poi_detail_dto.dart';
+import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.dart';
+import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';
+import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/utils/icons_utils.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
@@ -31,9 +37,7 @@ class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {
       body: SingleChildScrollView(
         child: BlocBuilder<PointOfInterestBloc, PointOfInterestState>(
           builder: (context, state) {
-            if (state is FetchingPoiDetailState) {
-              return Container();
-            } else if (state is FetchedPoiDetailState) {
+            if (state is FetchedPoiDetailState) {
               return Container(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -63,24 +67,25 @@ class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {
                     const SizedBox(
                       height: 20,
                     ),
-                    _buildRowElement(
+                    buildRowElement(
                       Icons.place,
                       state.poiDetailDTO.address,
                       () => MapsLauncher.launchCoordinates(
                           double.parse(state.poiDetailDTO.latitude!),
                           double.parse(state.poiDetailDTO.longitude!)),
                     ),
-                    _buildRowElement(
+                    buildRowElement(
                         Icons.place, state.poiDetailDTO.openingTimes, null),
-                    _buildRowElementLink(
+                    buildRowElementLink(
                         CupertinoIcons.link, state.poiDetailDTO.webSite),
-                    _buildRowElement(Icons.accessible,
+                    buildRowElement(Icons.accessible,
                         state.poiDetailDTO.modalitaAccesso, null),
-                    _buildContactPoints(state.poiDetailDTO.puntiContatto)
+                    RowContactPoint(
+                        contactsPoint: state.poiDetailDTO.puntiContatto)
                   ],
                 ),
               );
-            } else {
+            } else if (state is ErrorPoiDetailState) {
               return Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
@@ -91,132 +96,13 @@ class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {
                           color: Theme.of(context).colorScheme.inversePrimary),
                     ),
                   ));
+            } else {
+              return const ShimmerDetailComponent();
             }
           },
         ),
       ),
     );
-  }
-
-  Widget _buildContactPoints(List<PuntiContatto>? puntiDiContatto) {
-    if (puntiDiContatto != null && puntiDiContatto.isNotEmpty) {
-      return ListView.builder(
-        shrinkWrap: true,
-        primary: false,
-        itemCount: puntiDiContatto.length,
-        itemBuilder: (context, index) {
-          return Container(
-            height: 40,
-            padding: EdgeInsets.symmetric(vertical: 6),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  fit: FlexFit
-                      .tight, // Usa 'tight' per consumare tutto lo spazio disponibile
-                  child: Row(
-                    children: [
-                      Icon(PnnrUtils.getIconsFromContactPointPnnr(
-                          puntiDiContatto[index].tipo!)),
-                      const SizedBox(width: 10),
-                      Text(puntiDiContatto[index].label!)
-                    ],
-                  ),
-                ),
-                // Usa 'loose' per permettere al widget di occupare solo lo spazio necessario
-                Container(
-                  width: 200,
-                  child: InkWell(
-                    child: Text(
-                      puntiDiContatto[index].valore!,
-                      textAlign: TextAlign.end,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    onTap: () {
-                      // Assicurati di invocare il metodo correttamente con il parametro
-                      final url = PnnrUtils.getUrlFromContactPointPnnr(
-                          puntiDiContatto[index].tipo!,
-                          puntiDiContatto[index].valore!);
-                      if (url != null) {
-                        launchUrl(url);
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      );
-    } else {
-      return Container();
-    }
-  }
-
-  Widget _buildRowElement(
-      IconData iconData, String? text, void Function()? onTap) {
-    if (text != null) {
-      if (text.isNotEmpty) {
-        return InkWell(
-          onTap: onTap,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Icon(iconData),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(child: Text(text)),
-                ],
-              ),
-              const SizedBox(
-                height: 14,
-              ),
-            ],
-          ),
-        );
-      } else {
-        return Container();
-      }
-    } else {
-      return Container();
-    }
-  }
-
-  Widget _buildRowElementLink(IconData iconData, String? text) {
-    if (text != null) {
-      if (text.isNotEmpty) {
-        return Column(
-          children: [
-            SizedBox(
-              height: 50,
-              child: Row(
-                children: [
-                  Icon(iconData),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                    child: InkWell(
-                      child: Text(text),
-                      onTap: () => launchUrl(Uri.parse(text)),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 14,
-            ),
-          ],
-        );
-      } else {
-        return Container();
-      }
-    } else {
-      return Container();
-    }
   }
 
   Widget _buildOpenDataLogo(PoiDetailDTO poiDetailDTO) {
