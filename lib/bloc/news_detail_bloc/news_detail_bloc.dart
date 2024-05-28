@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:municipium/model/news_detail.dart';
+import 'package:municipium/model/news/news_detail.dart';
 import 'package:municipium/repositories/news_repository.dart';
 
 part 'news_detail_event.dart';

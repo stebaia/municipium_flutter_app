@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/event_list_bloc/event_list_bloc.dart';
-import 'package:municipium/bloc/news_list_bloc/news_list_bloc_bloc.dart';
-import 'package:municipium/model/event_item_list.dart';
+import 'package:municipium/model/events/event_item_list.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
@@ -33,7 +32,7 @@ class _EventListPageState extends State<EventListPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final List<EventItemList> _eventItemList = [];
+
   bool _isSearching = false;
 
   @override
@@ -56,7 +55,7 @@ class _EventListPageState extends State<EventListPage> {
                   ),
                   style: const TextStyle(color: Colors.white),
                   onChanged: ((value) =>
-                      context.read<NewsListBloc>().filterNewsList(value)),
+                      context.read<EventListBloc>().filterEventList(value)),
                 )
               : Padding(
                   padding: const EdgeInsets.only(left: 48),
@@ -82,6 +81,7 @@ class _EventListPageState extends State<EventListPage> {
                   if (!_isSearching) {
                     // Clear search when closing the search
                     _searchController.clear();
+                    context.read<EventListBloc>().filterEventList('');
                   }
                 });
               },
@@ -100,12 +100,16 @@ class _EventListPageState extends State<EventListPage> {
         extendBodyBehindAppBar: false,
         body: Container(child: BlocBuilder<EventListBloc, EventListState>(
           builder: (context, state) {
-            if (state is FetchingEventListState && _eventItemList.isEmpty) {
+            List<EventItemList> eventsToShow =
+                (context.read<EventListBloc>().allEvents);
+            if (_isSearching) {
+              eventsToShow = (context.read<EventListBloc>().allEventsFiltered);
+            }
+            if (state is FetchingEventListState && eventsToShow.isEmpty) {
               return ShimmerUtils.buildShimmer(6);
             } else if (state is FetchedEventListState) {
-              _eventItemList.addAll(state.eventItemList);
               context.read<EventListBloc>().isFetching = false;
-            } else if (state is NoNewsListState) {
+            } else if (state is NoEventListState) {
               return Center(
                 child: Text(AppLocalizations.of(context)!.no_news_fetched),
               );
@@ -115,13 +119,14 @@ class _EventListPageState extends State<EventListPage> {
                 ..addListener(() {
                   if (_scrollController.offset ==
                           _scrollController.position.maxScrollExtent &&
-                      !context.read<EventListBloc>().isFetching) {
+                      !context.read<EventListBloc>().isFetching &&
+                      !_isSearching) {
                     context.read<EventListBloc>()
                       ..isFetching = true
                       ..add(const FetchEventListEvent());
                   }
                 }),
-              itemCount: _eventItemList.length,
+              itemCount: eventsToShow.length,
               itemBuilder: ((context, index) => GestureDetector(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -131,8 +136,8 @@ class _EventListPageState extends State<EventListPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DetailImageBox(
-                            baseUrl: _eventItemList[index].images.baseUrl,
-                            url: _eventItemList[index].images.i1920x1280,
+                            baseUrl: eventsToShow[index].images.baseUrl,
+                            url: eventsToShow[index].images.i1920x1280,
                           ),
                           const SizedBox(
                             height: 16,
@@ -143,7 +148,7 @@ class _EventListPageState extends State<EventListPage> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  _eventItemList[index].title,
+                                  eventsToShow[index].title,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 20,
@@ -157,7 +162,7 @@ class _EventListPageState extends State<EventListPage> {
                               ),
                               Text(
                                 MunicipiumUtility.convertDate(
-                                  _eventItemList[index].publishedAt,
+                                  eventsToShow[index].publishedAt,
                                   'dd.MM.yyyy',
                                 ),
                                 style: const TextStyle(
@@ -172,7 +177,7 @@ class _EventListPageState extends State<EventListPage> {
                             height: 16,
                           ),
                           Text(
-                            _eventItemList[index].description,
+                            eventsToShow[index].description,
                             style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 15,
@@ -201,8 +206,8 @@ class _EventListPageState extends State<EventListPage> {
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {
-                                  context.pushRoute(NewsDetailRoute(
-                                    newsId: _eventItemList[index].id,
+                                  context.pushRoute(EventDetailRoute(
+                                    eventId: eventsToShow[index].id,
                                   ));
                                 },
                               ),
@@ -215,8 +220,8 @@ class _EventListPageState extends State<EventListPage> {
                       ),
                     ),
                     onTap: () {
-                      context.pushRoute(NewsDetailRoute(
-                        newsId: _eventItemList[index].id,
+                      context.pushRoute(EventDetailRoute(
+                        eventId: 60189, //eventsToShow[index].id,
                       ));
                     },
                   )),

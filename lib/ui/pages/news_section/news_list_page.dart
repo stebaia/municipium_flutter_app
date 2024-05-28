@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/news_list_bloc/news_list_bloc_bloc.dart';
+import 'package:municipium/model/news/news_item_list.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
@@ -31,6 +32,7 @@ class NewsListPage extends StatefulWidget implements AutoRouteWrapper {
 class _NewsListPageState extends State<NewsListPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   bool _isSearching = false;
 
   @override
@@ -79,6 +81,7 @@ class _NewsListPageState extends State<NewsListPage> {
                   if (!_isSearching) {
                     // Clear search when closing the search
                     _searchController.clear();
+                    context.read<NewsListBloc>().filterNewsList('');
                   }
                 });
               },
@@ -97,120 +100,132 @@ class _NewsListPageState extends State<NewsListPage> {
         extendBodyBehindAppBar: false,
         body: Container(child: BlocBuilder<NewsListBloc, NewsListBlocState>(
           builder: (context, state) {
-            if (state is FetchingNewsListState) {
+            List<NewsItemList> newsToShow =
+                (context.read<NewsListBloc>().allNews);
+            if (_isSearching) {
+              newsToShow = (context.read<NewsListBloc>().allNewsFiltered);
+            }
+            if (state is FetchingNewsListState && newsToShow.isEmpty) {
               return ShimmerUtils.buildShimmer(6);
             } else if (state is FetchedNewsListState) {
-              return ListView.builder(
-                itemCount: state.newsItemList.length,
-                itemBuilder: ((context, index) => GestureDetector(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 24, horizontal: 16),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DetailImageBox(
-                              baseUrl: state.newsItemList[index].images.baseUrl,
-                              url: state.newsItemList[index].images.i1920x1280,
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    state.newsItemList[index].title,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20,
-                                    ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  MunicipiumUtility.convertDate(
-                                    state.newsItemList[index].publishedAt,
-                                    'dd.MM.yyyy',
-                                  ),
-                                  style: const TextStyle(
-                                    color: Color.fromRGBO(188, 191, 200, 1),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Text(
-                              state.newsItemList[index].description,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextButton(
-                                  style: ButtonStyle(
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                    ),
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color?>(
-                                            ThemeHelper.blueMunicipium),
-                                  ),
-                                  child: Text(
-                                    AppLocalizations.of(context)!.read_more,
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    context.pushRoute(NewsDetailRoute(
-                                      newsId: state.newsItemList[index].id,
-                                    ));
-                                  },
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        context.pushRoute(NewsDetailRoute(
-                          newsId: state.newsItemList[index].id,
-                        ));
-                      },
-                    )),
-              );
+              context.read<NewsListBloc>().isFetching = false;
             } else if (state is NoNewsListState) {
               return Center(
                 child: Text(AppLocalizations.of(context)!.no_news_fetched),
               );
-            } else {
-              return Center(
-                child: Text(AppLocalizations.of(context)!.error_news_fetched),
-              );
             }
+            return ListView.builder(
+              controller: _scrollController
+                ..addListener(() {
+                  if (_scrollController.offset ==
+                          _scrollController.position.maxScrollExtent &&
+                      !context.read<NewsListBloc>().isFetching &&
+                      !_isSearching) {
+                    context.read<NewsListBloc>()
+                      ..isFetching = true
+                      ..add(const FetchNewsListEvent());
+                  }
+                }),
+              itemCount: newsToShow.length,
+              itemBuilder: ((context, index) => GestureDetector(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 24, horizontal: 16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DetailImageBox(
+                            baseUrl: newsToShow[index].images.baseUrl,
+                            url: newsToShow[index].images.i1920x1280,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  newsToShow[index].title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                MunicipiumUtility.convertDate(
+                                  newsToShow[index].publishedAt,
+                                  'dd.MM.yyyy',
+                                ),
+                                style: const TextStyle(
+                                  color: Color.fromRGBO(188, 191, 200, 1),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            newsToShow[index].description,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color?>(
+                                          ThemeHelper.blueMunicipium),
+                                ),
+                                child: Text(
+                                  AppLocalizations.of(context)!.read_more,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {
+                                  context.pushRoute(NewsDetailRoute(
+                                    newsId: newsToShow[index].id,
+                                  ));
+                                },
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    onTap: () {
+                      context.pushRoute(NewsDetailRoute(
+                        newsId: newsToShow[index].id,
+                      ));
+                    },
+                  )),
+            );
           },
         )));
   }

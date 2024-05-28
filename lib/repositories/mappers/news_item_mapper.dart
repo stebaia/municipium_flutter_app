@@ -1,5 +1,5 @@
 import 'package:municipium/model/item_category.dart';
-import 'package:municipium/model/news_item_list.dart';
+import 'package:municipium/model/news/news_item_list.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/item_category_mapper.dart';
 import 'package:municipium/services/network/dto/news_dto.dart';
@@ -22,9 +22,8 @@ class NewsItemMapper extends DTOMapper<NewsDTO, NewsItemList> {
       description: dto.excerpt ?? '',
       publishedAt: dto.publishedAt!,
     );
-
-
   }
+
   @override
   NewsDTO toDTO(NewsItemList model) => NewsDTO();
 }

@@ -12,3 +12,11 @@ class FetchEventListEvent extends EventListEvent {
   @override
   List<Object> get props => [];
 }
+
+class FilterEventListEvent extends EventListEvent {
+  final String searchText;
+
+  const FilterEventListEvent(this.searchText);
+  @override
+  List<Object> get props => [searchText];
+}

@@ -46,20 +46,23 @@ class _NewsService implements NewsService {
   }
 
   @override
-  Future<List<NewsDTO>> getNewsList() async {
+  Future<NewsPagedDto> getNewsList(
+    int page_index,
+    int page_size,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<List<dynamic>>(_setStreamType<List<NewsDTO>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<NewsPagedDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'news/',
+              'news/paged_news?page_index=${page_index}&page_size=${page_size}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -68,9 +71,7 @@ class _NewsService implements NewsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => NewsDTO.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = NewsPagedDto.fromJson(_result.data!);
     return value;
   }
 

@@ -9,9 +9,9 @@ abstract class NewsService {
   factory NewsService(Dio dio, {String baseUrl}) = _NewsService;
 
   @GET('news/{newsId}')
-  Future<NewsDTO> getNewsDetail(
-      @Path('newsId') int newsId);
+  Future<NewsDTO> getNewsDetail(@Path('newsId') int newsId);
 
-  @GET('news/')
-  Future<List<NewsDTO>> getNewsList();
+  @GET('news/paged_news?page_index={page_index}&page_size={page_size}')
+  Future<NewsPagedDto> getNewsList(
+      @Path('page_index') int page_index, @Path('page_size') int page_size);
 }
