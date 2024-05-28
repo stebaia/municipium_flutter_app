@@ -53,3 +53,6 @@ lib/routers/app_router.gr.dart
 *.cc
 
 *.cmake
+
+# Ignora i file specifici
+lib/routers/app_router.gr.dart
