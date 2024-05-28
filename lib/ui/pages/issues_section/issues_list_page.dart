@@ -27,7 +27,6 @@ class _IssuesListPageState extends State<IssuesListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
         title: Text('Segnalazioni'),
         leading: IconButton(
           onPressed: () => context.router.popUntil(
