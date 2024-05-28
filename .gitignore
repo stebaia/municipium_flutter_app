@@ -53,3 +53,4 @@ lib/routers/app_router.gr.dart
 *.cc
 
 *.cmake
+lib/routers/app_router.gr.dart
