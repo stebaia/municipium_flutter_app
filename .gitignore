@@ -45,3 +45,11 @@ app.*.map.json
 
 *.lock
 ios/Runner.xcodeproj/project.pbxproj
+
+ios/Runner.xcodeproj/
+
+lib/routers/app_router.gr.dart
+
+*.cc
+
+*.cmake
