@@ -80,7 +80,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         height: 24,
                       ),
                       Html(
-                        data: state.newsDetail.content ?? '',
+                        data: state.newsDetail.content,
                       ),
                       const SizedBox(
                         height: 24,

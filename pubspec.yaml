@@ -65,6 +65,7 @@ dependencies:
   photo_manager: ^3.1.1
   package_info_plus: ^8.0.0
   flutter_html: ^3.0.0-beta.2
+  html_unescape: ^2.0.0
 
 
 dev_dependencies:

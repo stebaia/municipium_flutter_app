@@ -41,6 +41,7 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                   padding:
                       const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(state.eventDetail.title ?? '',
@@ -84,6 +85,15 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         height: 24,
                       ),
                       ComponentFactory.checkAndCreateRow(
+                          'Da ${MunicipiumUtility.convertDate(state.eventDetail.startDate ?? '', 'dd MMM yyyy')}, ${MunicipiumUtility.convertDate(state.eventDetail.startTime ?? '', 'HH.mm')} a ${MunicipiumUtility.convertDate(state.eventDetail.endDate ?? '', 'dd MMM yyyy')}, ${MunicipiumUtility.convertDate(state.eventDetail.endTime ?? '', 'HH.mm')}',
+                          Icons.calendar_month, () {
+                        MunicipiumUtility.launchMapUrl(
+                            state.eventDetail.address!);
+                      }),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ComponentFactory.checkAndCreateRow(
                           state.eventDetail.address, Icons.location_on_outlined,
                           () {
                         MunicipiumUtility.launchMapUrl(
@@ -98,6 +108,44 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                       }),
                       const SizedBox(
                         height: 16,
+                      ),
+                      ComponentFactory.checkAndCreateRow(
+                          state.eventDetail.costo, Icons.payments, () {}),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Column(
+                            children: [
+                              ComponentFactory.checkAndCreateMultiRow(
+                                  state.eventDetail.rivoltoA, 'Rivolto a'),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              ComponentFactory.checkAndCreateMultiRow(
+                                  state.eventDetail.patrocinatoDa,
+                                  'Patrocinato da '),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              ComponentFactory.checkAndCreateMultiRow(
+                                state.eventDetail.sponsorPnrr,
+                                'Sponsor ',
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              ComponentFactory.checkAndCreateMultiRow(
+                                state.eventDetail.ulterioriInformazioni,
+                                'Ulteriori informazioni ',
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
