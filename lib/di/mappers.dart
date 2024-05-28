@@ -30,5 +30,11 @@ final List<SingleChildWidget> _mappers = [
   ),
   Provider<DTOMapper<CivilDefenceEmergencyCallDTO, CivilDefenceEmergencyCall>>(
     create: (_) => CivilDefenceEmergencyCallMapper(),
-  )
+  ),
+  Provider<DTOMapper<IssueDto, IssueItemList>>(
+    create: (_) => IssueItemMapper(),
+  ),
+  Provider<DTOMapper<IssueTagDto, IssueTag>>(create: (_) => IssueTagMapper()),
+  Provider<DTOMapper<IssueCategoryTagDto, IssueCategoryTag>>(
+      create: (_) => IssueCategoryTagMapper())
 ];

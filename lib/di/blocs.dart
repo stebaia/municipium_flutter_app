@@ -6,4 +6,7 @@ final List<BlocProvider> _blocs = [
         municipalityRepository: context.read(), context: context)
       ..checkMunicipalityGlobalState(),
   ),
+  BlocProvider<IssueCubit>(
+    create: (context) => IssueCubit(),
+  )
 ];

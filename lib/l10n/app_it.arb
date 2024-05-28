@@ -57,5 +57,31 @@
 
     "no_news_fetched" : "Nessuna notizia presente",
     "error_news_fetched" : "Errore nel download delle notizie",
-    "read_more" : "Leggi di più"
-}
+    "read_more" : "Leggi di più",
+
+    "@_ISSUES_STRINGS" : {},
+    "new_issue" : "Nuova segnalazione",
+    "back_desc" : "Indietro",
+    "next_desc" : "Avanti",
+    "send_desc" : "Invia",
+    "issue_type" : "Tipo segnalazione",
+    "issue_data" : "Dati segnalazione",
+    "issue_photo" : "Foto segnalazione",
+    "issue_recap" : "Riepilogo",
+    "choose_voice" : "Seleziona una voce",
+    "add_photo_gallery" : "Aggiungi foto dalla galleria",
+    "add_photo_camera" : "Scatta nuove foto",
+    "no_photo_to_add" : "Non ho foto da aggiungere",
+    "photo_added" : "Foto aggiunte",
+    "all_field_needed" : "Tutti i campi sono obbligatori",
+    "name_surname" : "Nome e cognome",
+    "email_desc" : "Email",
+    "phone_desc" : "Telefono",
+    "address_desc" : "Indirizzo segnalazione",
+    "content_desc" : "Messaggio",
+    "accept_privacy" : "Accettazione informativa sui dati personali",
+    "privacy_desc" : "Procedendo con la compilazione e con l'invio di questo modulo Lei acconsente al trattamento dei dati personali forniti, ai sensi e per gli effetti dell'articolo 13 del Regolamento EU 2016/679 e della normativa nazionale applicabile in materia di trattamento dei dati personali, per la finalità e nei limiti indicati dall'informativa sulla privacy che la invitiamo a leggere con attenzione.",
+    "read_privacy" : "Leggi l'informativa"
+
+
+}   

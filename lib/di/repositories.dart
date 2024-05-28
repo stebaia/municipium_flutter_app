@@ -28,5 +28,13 @@ final List<RepositoryProvider> _repositories = [
       create: (context) => CivilDefenceRepository(
           emergencyCallMapper: context.read(),
           civilDefenceService: context.read(),
-          logger: context.read()))
+          logger: context.read())),
+  RepositoryProvider<IssuesRepository>(
+    create: (context) => IssuesRepository(
+        issueItemMapper: context.read(),
+        issueTagMapper: context.read(),
+        issueCategoryTagMapper: context.read(),
+        issueService: context.read(),
+        logger: context.read()),
+  )
 ];
