@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:municipium/utils/theme_helper.dart';
@@ -57,5 +58,10 @@ class MunicipiumUtility {
 
     // Verifica se l'email corrisponde alla RegExp
     return emailRegExp.hasMatch(email);
+  }
+
+  static String removeHtmlTags(String htmlString) {
+    final RegExp exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
+    return HtmlUnescape().convert(htmlString.replaceAll(exp, ''));
   }
 }

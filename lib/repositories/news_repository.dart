@@ -1,6 +1,6 @@
 import 'package:logger/logger.dart';
-import 'package:municipium/model/news_detail.dart';
-import 'package:municipium/model/news_item_list.dart';
+import 'package:municipium/model/news/news_detail.dart';
+import 'package:municipium/model/news/news_item_list.dart';
 import 'package:municipium/services/network/api/news_service/news_service.dart';
 import 'package:municipium/services/network/dto/news_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
@@ -18,13 +18,17 @@ class NewsRepository {
       required this.newsItemMapper,
       required this.newsDetailMapper});
 
-  Future<List<NewsItemList>> getNewsList() async {
+  Future<List<NewsItemList>> getNewsList(
+      {required int pageIndex, required int pageSize}) async {
     try {
-      final List<NewsDTO> newsListResponse = await newsService.getNewsList();
+      final NewsPagedDto newsListResponse =
+          await newsService.getNewsList(pageIndex, pageSize);
       final List<NewsItemList> newsList = [];
-      newsListResponse.forEach((element) {
-        newsList.add(newsItemMapper.fromDTO(element));
-      });
+      if (newsListResponse.results != null) {
+        for (var element in newsListResponse.results!) {
+          newsList.add(newsItemMapper.fromDTO(element));
+        }
+      }
       return newsList;
     } catch (error) {
       logger.e('Error in getting news list');

@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:municipium/ui/components/horizzontal_gallery.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
@@ -88,21 +89,24 @@ class NewIssueGallerySection extends StatelessWidget {
 
   Widget _checkGallery(BuildContext context, {List<XFile>? imageList}) {
     if (imageList != null && imageList.isNotEmpty) {
-      return ComponentFactory.createGalleryHorizzontalList(imageList,
-          title: Row(
-            children: [
-              Text(
-                AppLocalizations.of(context)!.photo_added.toUpperCase(),
-                style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.4),
-              ),
-              const SizedBox()
-            ],
-          ), onDeletePressed: (context, index) {
-        context.read<IssueCubit>().removePhoto(index);
-      });
+      return HorizzontalGallery(
+        imageList: imageList,
+        title: Row(
+          children: [
+            Text(
+              AppLocalizations.of(context)!.photo_added.toUpperCase(),
+              style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: -0.4),
+            ),
+            const SizedBox()
+          ],
+        ),
+        onDeletePressed: (context, index) {
+          context.read<IssueCubit>().removePhoto(index);
+        },
+      );
     } else {
       return Container();
     }

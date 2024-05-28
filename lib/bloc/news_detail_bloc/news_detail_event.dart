@@ -8,10 +8,9 @@ abstract class NewsDetailEvent extends Equatable {
 }
 
 class FetchNewsDetailEvent extends NewsDetailEvent {
-
   final int newsId;
 
   const FetchNewsDetailEvent({required this.newsId});
-   @override
+  @override
   List<Object> get props => [newsId];
 }

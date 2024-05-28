@@ -6,6 +6,7 @@ import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/mun
 import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:municipium/ui/components/horizzontal_gallery.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
@@ -229,8 +230,8 @@ class NewIssueRecapSection extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12)),
-                        child: ComponentFactory.createGalleryHorizzontalList(
-                          state.imageList!,
+                        child: HorizzontalGallery(
+                          imageList: state.imageList!,
                           title: Row(
                             children: [
                               Text(

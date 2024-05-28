@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:municipium/bloc/news_detail_bloc/news_detail_bloc.dart';
-import 'package:municipium/model/news_detail.dart';
+import 'package:municipium/model/news/news_detail.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
 import 'package:municipium/utils/component_factory.dart';
@@ -78,10 +79,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       const SizedBox(
                         height: 24,
                       ),
-                      Text(state.newsDetail.content,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 17)),
+                      Html(
+                        data: state.newsDetail.content,
+                      ),
                       const SizedBox(
                         height: 24,
                       ),
