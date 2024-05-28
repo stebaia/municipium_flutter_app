@@ -57,6 +57,13 @@ dependencies:
   url_launcher: ^6.2.6
   skeletonizer: ^1.1.1
   shimmer: ^3.0.0
+  google_maps_flutter: ^2.6.1
+  clippy_flutter: ^2.0.0-nullsafety.1
+  flutter_svprogresshud: ^1.0.1
+  carousel_slider: ^4.2.1
+  flutter_html: ^3.0.0-beta.2
+  image_picker: ^1.1.1
+  maps_launcher: ^2.2.1
 
 
 dev_dependencies:

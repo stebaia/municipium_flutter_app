@@ -18,9 +18,12 @@
   </intent>
 </queries>
    <application
-        android:label="municipium_flutter_app"
+        android:label="municipium"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDQiFkb2LQuyamAtqPf6W3ATjwsuNpEPtA" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -9,23 +9,34 @@ part 'event_list_event.dart';
 part 'event_list_state.dart';
 
 class EventListBloc extends Bloc<EventListEvent, EventListState> {
-  final EventsRepository newsRepository;
+  final EventsRepository eventsRepository;
+  int page = 1;
+  bool isFetching = true;
 
-  EventListBloc({required this.newsRepository})
+  EventListBloc({required this.eventsRepository})
       : super(const FetchingEventListState()) {
     on<FetchEventListEvent>(_fetchEventList);
   }
 
-  FutureOr<void> _fetchEventList(FetchEventListEvent fetchNewsListEvent,
+  void fetchEventList() => add(const FetchEventListEvent());
+
+
+
+  FutureOr<void> _fetchEventList(
+      FetchEventListEvent fetchEventListEvent,
       Emitter<EventListState> emit) async {
     emit(const FetchingEventListState());
     try {
-      final newsItemsList = await newsRepository.getEventsList();
-      if (newsItemsList.isNotEmpty) {
-        emit(FetchedEventListState(newsItemsList));
-      } else {
+      final eventItemList =
+          await eventsRepository.getEventsList(
+              pageIndex: page,
+              pageSize: 20);
+      if (eventItemList.isNotEmpty){
+        emit(FetchedEventListState(eventItemList));
+        page++;
+      }else {
         emit(const NoEventListState());
-      }
+      }    
     } catch (error) {
       emit(const ErrorEventListState());
     }

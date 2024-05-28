@@ -32,7 +32,7 @@ class _EventService implements EventService {
     )
             .compose(
               _dio.options,
-              'news/${eventId}',
+              'events/${eventId}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -59,7 +59,7 @@ class _EventService implements EventService {
     )
             .compose(
               _dio.options,
-              'news/',
+              'events/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -71,6 +71,36 @@ class _EventService implements EventService {
     var value = _result.data!
         .map((dynamic i) => EventDTO.fromJson(i as Map<String, dynamic>))
         .toList();
+    return value;
+  }
+
+  @override
+  Future<EventPagedDTO> getEventsPaged(
+    int page_index,
+    int page_size,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<EventPagedDTO>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'events/paged_events?page_index=${page_index}&page_size=${page_size}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = EventPagedDTO.fromJson(_result.data!);
     return value;
   }
 

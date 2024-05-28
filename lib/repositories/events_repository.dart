@@ -14,17 +14,20 @@ class EventsRepository {
       required this.eventService,
       required this.eventItemMapper});
 
-  Future<List<EventItemList>> getEventsList() async {
+  Future<List<EventItemList>> getEventsList({required int pageIndex, required int pageSize}) async {
     try {
-      final List<EventDTO> eventsListResponse =
-          await eventService.getEventsList();
+      final EventPagedDTO eventsListResponse =
+          await eventService.getEventsPaged(pageIndex, pageSize);
       final List<EventItemList> eventsList = [];
-      eventsListResponse.forEach((element) {
+      if(eventsListResponse.results != null) {
+         for (var element in eventsListResponse.results!) {
         eventsList.add(eventItemMapper.fromDTO(element));
-      });
+      }
+      }
+     
       return eventsList;
     } catch (error, stackTrace) {
-      logger.e('Error in getting news list');
+      logger.e('Error in getting events list');
       rethrow;
     }
   }

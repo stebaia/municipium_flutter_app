@@ -5,6 +5,8 @@ import 'package:municipium/routers/app_router.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
+
+
 class App extends StatefulWidget {
   App({super.key});
 

@@ -11,6 +11,8 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         'name': from.municipalityName,
         'id': from.muninicipalityId,
         'subdomain': from.subdomain,
+        'lat' : from.lat,
+        'lng' : from.lng,
         'logo': from.logo.toJson(),
         'background': from.background.toJson(),
         'new_menu': from.new_menu.toJson() // Serializza l'oggetto MunicipiumImage
@@ -22,6 +24,8 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
     return Municipality(
         municipalityName: json['name'],
         muninicipalityId: json['id'],
+        lat: json['lat'],
+        lng: json['lng'],
         logo: MunicipiumImage.fromJson(json['logo']),
         background: MunicipiumImage.fromJson(
             json['background']), // Deserializza l'oggetto MunicipiumImage

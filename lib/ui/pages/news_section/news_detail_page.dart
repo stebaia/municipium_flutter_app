@@ -31,7 +31,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => context.maybePop(),),
+        ),
         body: BlocBuilder<NewsDetailBloc, NewsDetailState>(
           builder: (context, state) {
             if (state is FetchingNewsDetailState) {
