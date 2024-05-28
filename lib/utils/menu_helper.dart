@@ -237,7 +237,7 @@ class MenuHelper {
       case MenuItemType.payment:
         return AppLocalizations.of(context)!.payment_menu;
       case MenuItemType.sportelloTelematico:
-        return AppLocalizations.of(context)!.digital_dossier_menu;
+        return AppLocalizations.of(context)!.sportello_telematico_menu;
     }
   }
 

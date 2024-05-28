@@ -59,7 +59,7 @@ class _PnrrServicesPageState extends State<PnrrServicesPage> {
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context)!
-                          .digital_dossier_menu
+                          .sportello_telematico_menu
                           .toUpperCase(),
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
