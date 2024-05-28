@@ -33,8 +33,6 @@ class _EventListPageState extends State<EventListPage> {
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
-  bool _isSearching = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +43,7 @@ class _EventListPageState extends State<EventListPage> {
         ),
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          title: _isSearching
+          title: context.read<EventListBloc>().isSearching
               ? TextField(
                   controller: _searchController,
                   autofocus: true,
@@ -78,8 +76,9 @@ class _EventListPageState extends State<EventListPage> {
               icon: const Icon(Icons.search),
               onPressed: () {
                 setState(() {
-                  _isSearching = !_isSearching;
-                  if (!_isSearching) {
+                  context.read<EventListBloc>().isSearching =
+                      !context.read<EventListBloc>().isSearching;
+                  if (!context.read<EventListBloc>().isSearching) {
                     // Clear search when closing the search
                     _searchController.clear();
                     context.read<EventListBloc>().filterEventList('');
@@ -103,7 +102,7 @@ class _EventListPageState extends State<EventListPage> {
           builder: (context, state) {
             List<EventItemList> eventsToShow =
                 (context.read<EventListBloc>().allEvents);
-            if (_isSearching) {
+            if (context.read<EventListBloc>().isSearching) {
               eventsToShow = (context.read<EventListBloc>().allEventsFiltered);
             }
             if (state is FetchingEventListState && eventsToShow.isEmpty) {
@@ -121,7 +120,7 @@ class _EventListPageState extends State<EventListPage> {
                   if (_scrollController.offset ==
                           _scrollController.position.maxScrollExtent &&
                       !context.read<EventListBloc>().isFetching &&
-                      !_isSearching) {
+                      !context.read<EventListBloc>().isSearching) {
                     context.read<EventListBloc>()
                       ..isFetching = true
                       ..add(const FetchEventListEvent());

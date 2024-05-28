@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:municipium/bloc/event_detail_bloc/event_detail_bloc.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
+import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.dart';
+import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 
@@ -75,6 +77,11 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                       Html(
                         data: state.eventDetail.content ?? '',
                       ),
+                      Text(
+                        state.eventDetail.eventCategories!
+                            .map((e) => e.name)
+                            .join(', '),
+                      ),
                       const SizedBox(
                         height: 24,
                       ),
@@ -84,37 +91,39 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                       const SizedBox(
                         height: 24,
                       ),
-                      ComponentFactory.checkAndCreateRow(
+                      buildRowElement(Icons.calendar_month,
                           'Da ${MunicipiumUtility.convertDate(state.eventDetail.startDate ?? '', 'dd MMM yyyy')}, ${MunicipiumUtility.convertDate(state.eventDetail.startTime ?? '', 'HH.mm')} a ${MunicipiumUtility.convertDate(state.eventDetail.endDate ?? '', 'dd MMM yyyy')}, ${MunicipiumUtility.convertDate(state.eventDetail.endTime ?? '', 'HH.mm')}',
-                          Icons.calendar_month, () {
-                        MunicipiumUtility.launchMapUrl(
-                            state.eventDetail.address!);
-                      }),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      ComponentFactory.checkAndCreateRow(
-                          state.eventDetail.address, Icons.location_on_outlined,
                           () {
                         MunicipiumUtility.launchMapUrl(
                             state.eventDetail.address!);
                       }),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      ComponentFactory.checkAndCreateRow(
-                          state.eventDetail.url, Icons.link, () {
+                      buildRowElement(
+                          Icons.location_on_outlined, state.eventDetail.address,
+                          () {
+                        MunicipiumUtility.launchMapUrl(
+                            state.eventDetail.address!);
+                      }),
+                      buildRowElement(Icons.link, state.eventDetail.url, () {
                         MunicipiumUtility.launch(state.eventDetail.url!);
                       }),
+                      buildRowElement(
+                          Icons.payments,
+                          MunicipiumUtility.removeHtmlTags(
+                              state.eventDetail.costo ?? ''),
+                          () {}),
                       const SizedBox(
-                        height: 16,
+                        height: 24,
                       ),
-                      ComponentFactory.checkAndCreateRow(
-                          state.eventDetail.costo, Icons.payments, () {}),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Card(
+                      buildCreditsRow('Rivolto a', state.eventDetail.rivoltoA),
+                      buildCreditsRow(
+                          'Patrocinato da', state.eventDetail.patrocinatoDa),
+                      buildCreditsRow('Sponsor', state.eventDetail.sponsorPnrr),
+                      buildCreditsRow('Ulteriori informazioni',
+                          state.eventDetail.ulterioriInformazioni),
+                      RowContactPoint(
+                          contactsPoint: state.eventDetail.puntiContatto),
+
+                      /*Card(
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
@@ -146,7 +155,46 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                             ],
                           ),
                         ),
+                      ),*/
+                      const SizedBox(
+                        height: 16,
                       ),
+                      buildLinkBox(
+                          'Persone',
+                          state.eventDetail.persone
+                              ?.map((e) => e.name)
+                              .toList(),
+                          state.eventDetail.persone
+                              ?.map((e) => () {})
+                              .toList()),
+                      buildLinkBox(
+                          'Argomenti',
+                          state.eventDetail.argomenti
+                              ?.map((e) => e.name)
+                              .toList(),
+                          state.eventDetail.argomenti
+                              ?.map((e) => () {})
+                              .toList()),
+                      buildLinkBox(
+                          'Supportato da',
+                          state.eventDetail.supportatoDa
+                              ?.map((e) => e.titolo)
+                              .toList(),
+                          state.eventDetail.supportatoDa
+                              ?.map((e) => () {})
+                              .toList()),
+                      buildLinkBox(
+                          'Evento genitore',
+                          state.eventDetail.parent != null
+                              ? [state.eventDetail.parent?.parentTitle]
+                              : [],
+                          [() {}]),
+                      buildLinkBox(
+                          'Eventi figli',
+                          state.eventDetail.childs
+                              ?.map((e) => e.child_title)
+                              .toList(),
+                          state.eventDetail.childs?.map((e) => () {}).toList()),
                     ],
                   ),
                 ),
