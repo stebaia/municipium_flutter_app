@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:municipium/model/municipium_image.dart';
+import 'package:municipium/services/network/dto/contact_point_dto.dart';
 import 'package:municipium/services/network/dto/event_detail_dto.dart';
 
 class EventDetail implements Equatable {

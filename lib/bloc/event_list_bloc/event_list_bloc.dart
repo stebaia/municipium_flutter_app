@@ -12,6 +12,7 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
   final EventsRepository eventsRepository;
   int page = 1;
   bool isFetching = true;
+  bool isSearching = false;
   List<EventItemList> allEvents = [];
   List<EventItemList> allEventsFiltered = [];
 

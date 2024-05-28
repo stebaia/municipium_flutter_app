@@ -33,7 +33,6 @@ class _NewsListPageState extends State<NewsListPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  bool _isSearching = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class _NewsListPageState extends State<NewsListPage> {
         ),
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          title: _isSearching
+          title: context.read<NewsListBloc>().isSearching
               ? TextField(
                   controller: _searchController,
                   autofocus: true,
@@ -78,8 +77,9 @@ class _NewsListPageState extends State<NewsListPage> {
               icon: const Icon(Icons.search),
               onPressed: () {
                 setState(() {
-                  _isSearching = !_isSearching;
-                  if (!_isSearching) {
+                  context.read<NewsListBloc>().isSearching =
+                      !context.read<NewsListBloc>().isSearching;
+                  if (!context.read<NewsListBloc>().isSearching) {
                     // Clear search when closing the search
                     _searchController.clear();
                     context.read<NewsListBloc>().filterNewsList('');
@@ -103,7 +103,7 @@ class _NewsListPageState extends State<NewsListPage> {
           builder: (context, state) {
             List<NewsItemList> newsToShow =
                 (context.read<NewsListBloc>().allNews);
-            if (_isSearching) {
+            if (context.read<NewsListBloc>().isSearching) {
               newsToShow = (context.read<NewsListBloc>().allNewsFiltered);
             }
             if (state is FetchingNewsListState && newsToShow.isEmpty) {
@@ -121,7 +121,7 @@ class _NewsListPageState extends State<NewsListPage> {
                   if (_scrollController.offset ==
                           _scrollController.position.maxScrollExtent &&
                       !context.read<NewsListBloc>().isFetching &&
-                      !_isSearching) {
+                      !context.read<NewsListBloc>().isSearching) {
                     context.read<NewsListBloc>()
                       ..isFetching = true
                       ..add(const FetchNewsListEvent());
