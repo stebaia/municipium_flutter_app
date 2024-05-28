@@ -8,6 +8,7 @@ enum MenuItemType {
   surveys,
   garbage,
   ecoattivi,
+  sportelloTelematico,
   poi,
   services,
   dms,

@@ -111,6 +111,7 @@ Widget buildLinkBox(
           itemBuilder: (context, index) => GestureDetector(
             onTap: onPressed?[index],
             child: Card(
+              color: Theme.of(context).cardColor,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(

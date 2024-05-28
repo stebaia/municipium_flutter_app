@@ -37,5 +37,11 @@ final List<RepositoryProvider> _repositories = [
         issueCategoryTagMapper: context.read(),
         issueService: context.read(),
         logger: context.read()),
+  ),
+  RepositoryProvider<PnrrServiceRepository>(
+    create: (context) => PnrrServiceRepository(
+        pnrrMapper: context.read(),
+        pnrrService: context.read(),
+        logger: context.read()),
   )
 ];
