@@ -8,18 +8,17 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i16;
-import 'package:flutter/cupertino.dart' as _i17;
-import 'package:flutter/material.dart' as _i18;
-import 'package:municipium/model/menu/menu_item.dart' as _i20;
-import 'package:municipium/model/menu/submenu_type.dart' as _i19;
-import 'package:municipium/ui/pages/events_section/event_detail_page.dart'
-    as _i2;
+import 'package:auto_route/auto_route.dart' as _i15;
+import 'package:flutter/cupertino.dart' as _i16;
+import 'package:flutter/material.dart' as _i17;
+import 'package:municipium/model/menu/menu_item.dart' as _i19;
+import 'package:municipium/model/menu/submenu_type.dart' as _i18;
 import 'package:municipium/ui/pages/events_section/event_list_page.dart' as _i3;
+import 'package:municipium/ui/pages/events_section/event_list_page.dart' as _i2;
 import 'package:municipium/ui/pages/issues_section/issues_list_page.dart'
-    as _i5;
-import 'package:municipium/ui/pages/issues_section/new_issue_pager.dart' as _i7;
-import 'package:municipium/ui/pages/main_page.dart' as _i6;
+    as _i4;
+import 'package:municipium/ui/pages/issues_section/new_issue_pager.dart' as _i6;
+import 'package:municipium/ui/pages/main_page.dart' as _i5;
 import 'package:municipium/ui/pages/municipality_section/core_municipality_page.dart'
     as _i1;
 import 'package:municipium/ui/pages/municipality_section/home_page.dart' as _i4;
@@ -35,6 +34,8 @@ import 'package:municipium/ui/pages/point_of_interest_section/point_of_interest_
     as _i12;
 import 'package:municipium/ui/pages/splash_page.dart' as _i13;
 import 'package:municipium/ui/pages/submenu_page.dart' as _i14;
+import 'package:municipium/ui/pages/pois_section/detail_poi_page.dart' as _i2;
+import 'package:municipium/ui/pages/pois_section/maps_page.dart' as _i6;
 
 abstract class $AppRouter extends _i16.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -61,16 +62,33 @@ abstract class $AppRouter extends _i16.RootStackRouter {
         )),
       );
     },
+    DetailPoiRoute.name: (routeData) {
+      final args = routeData.argsAs<DetailPoiRouteArgs>();
+      return _i15.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i15.WrappedRoute(
+            child: _i2.DetailPoiPage(
+          key: args.key,
+          poiId: args.poiId,
+        )),
+      );
+    },
     EventListRoute.name: (routeData) {
       return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i16.WrappedRoute(child: const _i3.EventListPage()),
+        child: _i15.WrappedRoute(child: const _i3.EventListPage()),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      final args =
+          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
+        child: _i15.WrappedRoute(child: const _i2.EventListPage()),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.HomePage(),
+        child: _i4.HomePage(key: args.key),
       );
     },
     IssuesListRoute.name: (routeData) {
@@ -90,6 +108,17 @@ abstract class $AppRouter extends _i16.RootStackRouter {
         )),
       );
     },
+<<<<<<< HEAD
+    MapsRoute.name: (routeData) {
+      final args = routeData.argsAs<MapsRouteArgs>();
+      return _i15.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i15.WrappedRoute(
+            child: _i6.MapsPage(
+          key: args.key,
+          scaffoldKey: args.scaffoldKey,
+        )),
+=======
     NewIssueRouter.name: (routeData) {
       final args = routeData.argsAs<NewIssueRouterArgs>(
           orElse: () => const NewIssueRouterArgs());
@@ -239,6 +268,48 @@ class EventDetailRouteArgs {
 /// [_i3.EventListPage]
 class EventListRoute extends _i16.PageRouteInfo<void> {
   const EventListRoute({List<_i16.PageRouteInfo>? children})
+/// [_i2.DetailPoiPage]
+class DetailPoiRoute extends _i15.PageRouteInfo<DetailPoiRouteArgs> {
+  DetailPoiRoute({
+    _i16.Key? key,
+    required int poiId,
+    List<_i15.PageRouteInfo>? children,
+  }) : super(
+          DetailPoiRoute.name,
+          args: DetailPoiRouteArgs(
+            key: key,
+            poiId: poiId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'DetailPoiRoute';
+
+  static const _i15.PageInfo<DetailPoiRouteArgs> page =
+      _i15.PageInfo<DetailPoiRouteArgs>(name);
+}
+
+class DetailPoiRouteArgs {
+  const DetailPoiRouteArgs({
+    this.key,
+    required this.poiId,
+  });
+
+  final _i16.Key? key;
+
+  final int poiId;
+
+  @override
+  String toString() {
+    return 'DetailPoiRouteArgs{key: $key, poiId: $poiId}';
+  }
+}
+
+/// generated route for
+/// [_i3.EventListPage]
+/// [_i2.EventListPage]
+class EventListRoute extends _i15.PageRouteInfo<void> {
+  const EventListRoute({List<_i15.PageRouteInfo>? children})
       : super(
           EventListRoute.name,
           initialChildren: children,
@@ -250,17 +321,19 @@ class EventListRoute extends _i16.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.HomePage]
-class HomeRoute extends _i16.PageRouteInfo<void> {
-  const HomeRoute({List<_i16.PageRouteInfo>? children})
+/// [_i3.HomePage]
+class HomeRoute extends _i15.PageRouteInfo<void> {
+  const HomeRoute({List<_i15.PageRouteInfo>? children})
       : super(
+>>>>>>> d14547e36fef02cdef9e3bd387a288061db7a7bd
           HomeRoute.name,
+          args: HomeRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'HomeRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
@@ -278,8 +351,8 @@ class IssuesListRoute extends _i16.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.MainPage]
-class MainRoute extends _i16.PageRouteInfo<MainRouteArgs> {
+/// [_i5.MainPage]
+class MainRoute extends _i15.PageRouteInfo<MainRouteArgs> {
   MainRoute({
     _i18.Key? key,
     required int municipalityId,
@@ -316,8 +389,8 @@ class MainRouteArgs {
 }
 
 /// generated route for
-/// [_i7.NewIssuePager]
-class NewIssueRouter extends _i16.PageRouteInfo<NewIssueRouterArgs> {
+/// [_i6.NewIssuePager]
+class NewIssueRouter extends _i15.PageRouteInfo<NewIssueRouterArgs> {
   NewIssueRouter({
     _i17.Key? key,
     List<_i16.PageRouteInfo>? children,
@@ -341,6 +414,7 @@ class NewIssueRouterArgs {
   @override
   String toString() {
     return 'NewIssueRouterArgs{key: $key}';
+>>>>>>> d14547e36fef02cdef9e3bd387a288061db7a7bd
   }
 }
 

@@ -10,6 +10,7 @@
     "navbar_personal_area" : "Area personale",
 
     "btn_go_to_municipium" : "Entra in municipium",
+    "btn_go_open_detail" : "Apri dettaglio",
 
     "error_get_municipality" : "Errore nel caricamento del comune, riprova più tardi",
     "errog_get_municipality_list" : "Errore nel caricamento della lista di comuni, riprova più tardi",
@@ -50,6 +51,9 @@
     "guide_menu" : "Guida",
     "municipality_change_menu" : "Cambia comune",
     "spid_login_menu" : "Login con SPID",
+
+    "loading_sv_message" : "caricamento",
+    "loading_sv_message_poi" : "caricamento punti di interesse",
 
     "@_NEWS_STRINGS" : {},
 
