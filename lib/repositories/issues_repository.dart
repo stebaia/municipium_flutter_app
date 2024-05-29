@@ -32,7 +32,7 @@ class IssuesRepository {
       }
       return list;
     } catch (error, stackTrace) {
-      logger.e('Error in getting issues list');
+      logger.e('Error in getting issues list municipality-object');
       rethrow;
     }
   }

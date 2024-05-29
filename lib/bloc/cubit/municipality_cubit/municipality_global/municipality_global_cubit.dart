@@ -18,6 +18,7 @@ class MunicipalityGlobalCubit extends Cubit<MunicipalityGlobalState> {
     try {
       final municipality = await municipalityRepository.currentMunicipality;
       if (municipality != null) {
+        if()
         emit(FetchedMunicipalityGlobalState(municipality));
       } else {
         emit(NotMunicipalityGlobalState());

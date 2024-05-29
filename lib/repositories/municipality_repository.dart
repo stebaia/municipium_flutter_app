@@ -5,6 +5,7 @@ import 'package:municipium/services/network/dto/municipality_dto.dart';
 import 'package:municipium/utils/secure_storage.dart';
 import 'package:pine/utils/dto_mapper.dart';
 import 'package:pine/utils/mapper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MunicipalityRepository {
   final Mapper<Municipality, String> munMapper;
@@ -20,30 +21,32 @@ class MunicipalityRepository {
       required this.municipalityMapper,
       required this.logger});
 
-  
   Future<List<Municipality>> getMunicipalityList() async {
     try {
-      final municipalityResponse = await municipalityService.getListMunicipality();
+      final municipalityResponse =
+          await municipalityService.getListMunicipality();
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
       });
       return municipalities;
-    }catch(error) {
+    } catch (error) {
       logger.e(error.toString());
       rethrow;
     }
   }
 
-  Future<List<Municipality>> getMunicipalityListFromPosition(double lat, double lng) async {
+  Future<List<Municipality>> getMunicipalityListFromPosition(
+      double lat, double lng) async {
     try {
-      final municipalityResponse = await municipalityService.getListMunicipalityWithLatLng(lat, lng);
+      final municipalityResponse =
+          await municipalityService.getListMunicipalityWithLatLng(lat, lng);
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
       });
       return municipalities;
-    }catch(error) {
+    } catch (error) {
       logger.e(error.toString());
       rethrow;
     }
@@ -61,6 +64,11 @@ class MunicipalityRepository {
       logger.e('Error in getting municipality');
       rethrow;
     }
+  }
+
+  Future<Municipality?> getMunicipalityIfIsFirstTime() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final municipality = preferences.getString('');
   }
 
   Future<Municipality?> get currentMunicipality async {

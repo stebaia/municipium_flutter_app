@@ -1,4 +1,4 @@
-package com.example.municipium_flutter_app
+package com.municipiumapp.municipium
 
 import io.flutter.embedding.android.FlutterActivity
 
