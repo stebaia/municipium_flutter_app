@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:municipium/services/network/dto/contact_point_dto.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
+import 'package:municipium/services/network/dto/pnrr_body_dto.dart';
 import 'package:pine/dto/dto.dart';
 
 class PoiDetailDTO extends DTO with EquatableMixin {
@@ -10,7 +11,7 @@ class PoiDetailDTO extends DTO with EquatableMixin {
   String? type;
   String? youtubeLink;
   int? municipalityId;
-  List<PuntiContatto>? puntiContatto;
+  List<ContentPnrr>? puntiContatto;
   String? instagramLink;
   int? id;
   List<PointOfInterestCategories>? pointOfInterestCategories;
@@ -115,9 +116,9 @@ class PoiDetailDTO extends DTO with EquatableMixin {
     youtubeLink = json['youtube_link'];
     municipalityId = json['municipality_id'];
     if (json['punti_contatto'] != null) {
-      puntiContatto = <PuntiContatto>[];
+      puntiContatto = <ContentPnrr>[];
       json['punti_contatto'].forEach((v) {
-        puntiContatto!.add(new PuntiContatto.fromJson(v));
+        puntiContatto!.add(new ContentPnrr.fromJson(v));
       });
     }
     instagramLink = json['instagram_link'];

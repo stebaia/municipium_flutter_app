@@ -6,6 +6,7 @@ import 'package:municipium/bloc/event_detail_bloc/event_detail_bloc.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';
+import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 
@@ -36,7 +37,7 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
         body: BlocBuilder<EventDetailBLoc, EventDetailState>(
           builder: (context, state) {
             if (state is FetchingEventDetailState) {
-              return const CircularProgressIndicator();
+              return const ShimmerDetailComponent();
             } else if (state is FetchedEventDetailState) {
               return SingleChildScrollView(
                 child: Container(
@@ -164,7 +165,7 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                           state.eventDetail.persone
                               ?.map((e) => e.name)
                               .toList(),
-                          state.eventDetail.persone
+                          onPressed: state.eventDetail.persone
                               ?.map((e) => () {})
                               .toList()),
                       buildLinkBox(
@@ -172,7 +173,7 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                           state.eventDetail.argomenti
                               ?.map((e) => e.name)
                               .toList(),
-                          state.eventDetail.argomenti
+                          onPressed: state.eventDetail.argomenti
                               ?.map((e) => () {})
                               .toList()),
                       buildLinkBox(
@@ -180,7 +181,7 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                           state.eventDetail.supportatoDa
                               ?.map((e) => e.titolo)
                               .toList(),
-                          state.eventDetail.supportatoDa
+                          onPressed: state.eventDetail.supportatoDa
                               ?.map((e) => () {})
                               .toList()),
                       buildLinkBox(
@@ -188,13 +189,15 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
                           state.eventDetail.parent != null
                               ? [state.eventDetail.parent?.parentTitle]
                               : [],
-                          [() {}]),
+                          onPressed: [() {}]),
                       buildLinkBox(
                           'Eventi figli',
                           state.eventDetail.childs
                               ?.map((e) => e.child_title)
                               .toList(),
-                          state.eventDetail.childs?.map((e) => () {}).toList()),
+                          onPressed: state.eventDetail.childs
+                              ?.map((e) => () {})
+                              .toList()),
                     ],
                   ),
                 ),

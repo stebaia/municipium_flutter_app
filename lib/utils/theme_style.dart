@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:municipium/utils/theme_helper.dart';
 
 class LightTheme {
   static const primaryColor = Color(0xff2140E9);
@@ -45,6 +46,9 @@ class LightTheme {
             borderSide: BorderSide(color: Colors.red),
           ),
         ),
+        cardColor: const Color.fromRGBO(245, 248, 253, 1),
+        cardTheme: const CardTheme(
+            surfaceTintColor: const Color.fromRGBO(245, 248, 253, 1)),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -155,6 +159,8 @@ class DarkTheme {
             foregroundColor: Colors.white,
           ),
         ),
+        cardColor: Color(0xFF303030),
+        cardTheme: const CardTheme(surfaceTintColor: Color(0xFF303030)),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
             fontSize: 32,

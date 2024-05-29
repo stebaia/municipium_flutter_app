@@ -1,12 +1,12 @@
-class PuntiContatto {
+class PuntiContattos {
   int? tipo;
   String? titolo;
   String? valore;
   String? label;
 
-  PuntiContatto({this.tipo, this.titolo, this.valore, this.label});
+  PuntiContattos({this.tipo, this.titolo, this.valore, this.label});
 
-  PuntiContatto.fromJson(Map<String, dynamic> json) {
+  PuntiContattos.fromJson(Map<String, dynamic> json) {
     tipo = json['tipo'];
     titolo = json['titolo'];
     valore = json['valore'];

@@ -36,6 +36,9 @@ class MenuHelper {
     if (municipality.new_menu.ecoattivi != null) {
       list.add(MenuItem(type: MenuItemType.ecoattivi));
     }
+    if (municipality.new_menu.sportelloTelematico != null) {
+      list.add(MenuItem(type: MenuItemType.sportelloTelematico));
+    }
     if (municipality.new_menu.poi != null) {
       list.add(MenuItem(type: MenuItemType.poi));
     }
@@ -136,6 +139,8 @@ class MenuHelper {
         return Icons.warning;
       case MenuItemType.payment:
         return Icons.payment;
+      case MenuItemType.sportelloTelematico:
+        return Icons.perm_contact_calendar;
     }
   }
 
@@ -226,11 +231,13 @@ class MenuHelper {
       case MenuItemType.dms:
         return AppLocalizations.of(context)!.dms_menu;
       case MenuItemType.digitalDossier:
-        return '';
+        return AppLocalizations.of(context)!.digital_dossier_menu;
       case MenuItemType.civilDefence:
         return AppLocalizations.of(context)!.civil_defence_menu;
       case MenuItemType.payment:
         return AppLocalizations.of(context)!.payment_menu;
+      case MenuItemType.sportelloTelematico:
+        return AppLocalizations.of(context)!.sportello_telematico_menu;
     }
   }
 
@@ -275,6 +282,8 @@ class MenuHelper {
       case MenuItemType.payment:
         // TODO: Handle this case.
         break;
+      case MenuItemType.sportelloTelematico:
+        context.pushRoute(PnrrServicesRoute(type: 'services'));
     }
   }
 }

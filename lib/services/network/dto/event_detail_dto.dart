@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/services/network/dto/contact_point_dto.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
+import 'package:municipium/services/network/dto/pnrr_body_dto.dart';
 import 'package:pine/dto/dto.dart';
 
 class EventDetailDto extends DTO implements Equatable {
@@ -10,7 +11,7 @@ class EventDetailDto extends DTO implements Equatable {
   String? content;
   String? url;
   int? municipalityId;
-  List<PuntiContatto>? puntiContatto;
+  List<ContentPnrr>? puntiContatto;
   String? municipalityName;
   String? slug;
   String? excerpt;
@@ -45,7 +46,7 @@ class EventDetailDto extends DTO implements Equatable {
   bool? isImported;
   List<Attachments>? attachments;
   String? translation;
-  List<Argomento>? argomenti;
+  List<ArgomentoPnrr>? argomenti;
   List<Persona>? persone;
   Parent? parent;
   List<Childs>? childs;
@@ -106,9 +107,9 @@ class EventDetailDto extends DTO implements Equatable {
     url = json['url'];
     municipalityId = json['municipality_id'];
     if (json['punti_contatto'] != null) {
-      puntiContatto = <PuntiContatto>[];
+      puntiContatto = <ContentPnrr>[];
       json['punti_contatto'].forEach((v) {
-        puntiContatto!.add(new PuntiContatto.fromJson(v));
+        puntiContatto!.add(new ContentPnrr.fromJson(v));
       });
     }
     municipalityName = json['municipality_name'];
@@ -162,9 +163,9 @@ class EventDetailDto extends DTO implements Equatable {
     }
     translation = json['translation'];
     if (json['argomenti'] != null) {
-      argomenti = <Argomento>[];
+      argomenti = <ArgomentoPnrr>[];
       json['argomenti'].forEach((v) {
-        argomenti!.add(new Argomento.fromJson(v));
+        argomenti!.add(new ArgomentoPnrr.fromJson(v));
       });
     }
     if (json['persone'] != null) {
@@ -401,25 +402,6 @@ class Persona {
   Persona({this.name, this.id});
 
   Persona.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    id = json['id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['id'] = this.id;
-    return data;
-  }
-}
-
-class Argomento {
-  String? name;
-  int? id;
-
-  Argomento({this.name, this.id});
-
-  Argomento.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     id = json['id'];
   }

@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:municipium/routers/app_router.gr.dart';
-import 'package:municipium/ui/pages/pois_section/detail_poi_page.dart';
 
 @AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
@@ -13,7 +12,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: OnboardingSearchMunicipalityRoute.page),
         AutoRoute(page: CoreMunicipalityRoute.page, children: [
           AutoRoute(page: HomeRoute.page),
-           AutoRoute(page: MapsRoute.page),
+          AutoRoute(page: MapsRoute.page),
         ]),
         AutoRoute(page: SubMenuRoute.page),
         AutoRoute(
@@ -25,12 +24,15 @@ class AppRouter extends $AppRouter {
         AutoRoute(
           page: EventListRoute.page,
         ),
+        AutoRoute(page: PnrrServicesRoute.page),
+        AutoRoute(page: PnrrDetailRoute.page),
+        AutoRoute(page: PnrrDetailWebviewRoute.page),
         AutoRoute(page: EventDetailRoute.page),
         AutoRoute(page: DetailPoiRoute.page),
         AutoRoute(page: IssuesListRoute.page),
         AutoRoute(page: NewIssueRouter.page),
         AutoRoute(page: WelcomeRoute.page),
         AutoRoute(page: NewsDetailRoute.page),
-        AutoRoute(page: PointOfInterestListRoute.page)
+        AutoRoute(page: PointOfInterestListRoute.page),
       ];
 }
