@@ -93,13 +93,18 @@ Widget buildCreditsRow(String title, String? content) {
   }
 }
 
-Widget buildLinkBox(
-    String title, List<String?>? children, List<Function()?>? onPressed) {
+Widget buildLinkBox(String title, List<String?>? children,
+    {IconData? icon, List<VoidCallback?>? onPressed}) {
   if (children != null && children.isNotEmpty) {
     return Column(
       children: [
         Row(
-          children: [Text(title), const SizedBox()],
+          children: [
+            Text(title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+            const SizedBox()
+          ],
         ),
         const SizedBox(
           height: 14,
@@ -109,7 +114,12 @@ Widget buildLinkBox(
           physics: const NeverScrollableScrollPhysics(),
           itemCount: children.length,
           itemBuilder: (context, index) => GestureDetector(
-            onTap: onPressed?[index],
+            onTap: () {
+              final onPressedFunc = onPressed?[index];
+              if (onPressedFunc != null) {
+                onPressedFunc();
+              }
+            },
             child: Card(
               color: Theme.of(context).cardColor,
               child: Padding(
@@ -117,15 +127,16 @@ Widget buildLinkBox(
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        children[index] ?? '',
-                        //style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
-                      ),
+                      child: Text(children[index] ?? '',
+                          style: const TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.w400)
+                          //style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                          ),
                     ),
                     const SizedBox(),
                     IconButton(
-                        onPressed: onPressed?[index],
-                        icon: const Icon(Icons.arrow_forward_ios_outlined))
+                        onPressed: () {},
+                        icon: Icon(icon ?? Icons.arrow_forward_ios_outlined))
                   ],
                 ),
               ),
@@ -137,4 +148,24 @@ Widget buildLinkBox(
   } else {
     return Container();
   }
+}
+
+Widget buildDescriptionRow(String? title, String? description) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          Text(
+            title ?? '',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox()
+        ],
+      ),
+      const SizedBox(height: 4),
+      Text(MunicipiumUtility.removeHtmlTags(description ?? ''),
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
+    ],
+  );
 }

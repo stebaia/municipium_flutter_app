@@ -128,6 +128,18 @@ class _PnrrServicesPageState extends State<PnrrServicesPage> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return GestureDetector(
+                            onTap: () {
+                              if (state.servicesList[index].sitePageId !=
+                                  null) {
+                                context.pushRoute(PnrrDetailRoute(
+                                    type: 'servizio'
+                                        '',
+                                    id: state.servicesList[index].sitePageId!));
+                              } else {
+                                context.pushRoute(PnrrDetailWebviewRoute(
+                                    url: state.servicesList[index].url ?? ''));
+                              }
+                            },
                             child: Card(
                               color: Theme.of(context).cardColor,
                               child: Padding(

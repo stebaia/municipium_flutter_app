@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/services/network/dto/contact_point_dto.dart';
 import 'package:municipium/services/network/dto/event_detail_dto.dart';
+import 'package:municipium/services/network/dto/pnrr_body_dto.dart';
 
 class EventDetail implements Equatable {
   int? id;
@@ -9,7 +10,7 @@ class EventDetail implements Equatable {
   String? content;
   String? url;
   int? municipalityId;
-  List<PuntiContatto>? puntiContatto;
+  List<ContentPnrr>? puntiContatto;
   String? municipalityName;
   String? publishedAt;
   String? startDate;
@@ -36,7 +37,7 @@ class EventDetail implements Equatable {
   List<EventCategories>? eventCategories;
   List<Attachments>? attachments;
   String? translation;
-  List<Argomento>? argomenti;
+  List<ArgomentoPnrr>? argomenti;
   List<Persona>? persone;
   Parent? parent;
   List<SupportatoDa>? supportatoDa;

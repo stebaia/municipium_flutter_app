@@ -8,6 +8,7 @@ import 'package:municipium/bloc/news_detail_bloc/news_detail_bloc.dart';
 import 'package:municipium/model/news/news_detail.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
+import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 
@@ -42,7 +43,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
         body: BlocBuilder<NewsDetailBloc, NewsDetailState>(
           builder: (context, state) {
             if (state is FetchingNewsDetailState) {
-              return const CircularProgressIndicator();
+              return const ShimmerDetailComponent();
             } else if (state is FetchedNewsDetailState) {
               return SingleChildScrollView(
                 child: Container(

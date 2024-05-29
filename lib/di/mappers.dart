@@ -41,4 +41,9 @@ final List<SingleChildWidget> _mappers = [
       create: (_) => EventDetailMapper()),
   Provider<DTOMapper<ServicePnrrDTO, ServicePnrr>>(
       create: (_) => ServicePnrrMapper()),
+  Provider<DTOMapper<PnrrBodyResponseDto, BodyPnrrResponse>>(
+      create: (_) => BodyResponsePnrrMapper()),
+  Provider<DTOMapper<ServicePnrrDTO, ServicePnrr>>(
+      create: (_) => ServicePnrrMapper()),
+  Provider<DTOMapper<PnrrBodyDto, BodyPnrr>>(create: (_) => BodyPnrrMapper())
 ];

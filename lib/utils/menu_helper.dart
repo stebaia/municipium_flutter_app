@@ -231,7 +231,7 @@ class MenuHelper {
       case MenuItemType.dms:
         return AppLocalizations.of(context)!.dms_menu;
       case MenuItemType.digitalDossier:
-        return '';
+        return AppLocalizations.of(context)!.digital_dossier_menu;
       case MenuItemType.civilDefence:
         return AppLocalizations.of(context)!.civil_defence_menu;
       case MenuItemType.payment:

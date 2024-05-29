@@ -41,6 +41,7 @@ final List<RepositoryProvider> _repositories = [
   RepositoryProvider<PnrrServiceRepository>(
     create: (context) => PnrrServiceRepository(
         pnrrMapper: context.read(),
+        pnrrBodyMapper: context.read(),
         pnrrService: context.read(),
         logger: context.read()),
   )

@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:municipium/services/network/dto/contact_point_dto.dart';
+import 'package:municipium/services/network/dto/pnrr_body_dto.dart';
 import 'package:municipium/utils/icons_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RowContactPoint extends StatelessWidget {
   const RowContactPoint({super.key, this.contactsPoint});
 
-  final List<PuntiContatto>? contactsPoint;
+  final List<ContentPnrr>? contactsPoint;
 
-  Widget _buildContactPoints(List<PuntiContatto>? puntiDiContatto) {
+  Widget _buildContactPoints(List<ContentPnrr>? puntiDiContatto) {
     if (puntiDiContatto != null && puntiDiContatto.isNotEmpty) {
       return ListView.builder(
         shrinkWrap: true,

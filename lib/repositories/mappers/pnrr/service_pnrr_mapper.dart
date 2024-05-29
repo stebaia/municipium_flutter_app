@@ -8,7 +8,7 @@ class ServicePnrrMapper extends DTOMapper<ServicePnrrDTO, ServicePnrr> {
     return ServicePnrr(
         categoria: dto.categoria,
         argomenti: dto.argomenti,
-        url: dto.urn,
+        url: dto.url,
         title: dto.title,
         shortDescription: dto.shortDescription,
         itemType: dto.itemType,
