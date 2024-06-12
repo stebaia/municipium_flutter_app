@@ -3,6 +3,7 @@ import 'package:municipium/model/municipality.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
 import 'package:municipium/utils/secure_storage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pine/utils/dto_mapper.dart';
 import 'package:pine/utils/mapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,9 +67,21 @@ class MunicipalityRepository {
     }
   }
 
-  Future<Municipality?> getMunicipalityIfIsFirstTime() async {
+  Future<Municipality?> getMunicipalityFromOneSignal() async {
+    //OneSignal.U
+    Map<String, String> oneSignalTag = await OneSignal.User.getTags();
+    print(oneSignalTag);
+    
+  }
+
+  Future<Municipality?> getMunicipalityFromSharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    final municipality = preferences.getString('');
+    String? municipality = preferences.getString('municipality-object');
+    if(municipality != null) {
+      print(municipality);
+    }else {
+      print('no old muniicipality');
+    }
   }
 
   Future<Municipality?> get currentMunicipality async {

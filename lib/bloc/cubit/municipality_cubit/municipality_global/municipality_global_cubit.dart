@@ -18,9 +18,14 @@ class MunicipalityGlobalCubit extends Cubit<MunicipalityGlobalState> {
     try {
       final municipality = await municipalityRepository.currentMunicipality;
       if (municipality != null) {
-        if()
         emit(FetchedMunicipalityGlobalState(municipality));
       } else {
+        Municipality? sharedOldMunicipality = await municipalityRepository.getMunicipalityFromOneSignal();
+        if(sharedOldMunicipality != null) {
+          //HO LA VECCHIA MUNICIPALITY, ORA FACCIO L'IMPORT DELLA NUOVA
+        }else {
+          //NON HO MUNICIPALITY
+        }
         emit(NotMunicipalityGlobalState());
       }
     } catch (e) {

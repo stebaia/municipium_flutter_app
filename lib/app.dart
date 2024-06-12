@@ -30,6 +30,7 @@ class _App extends State<App> {
       print(OneSignal.User.pushSubscription.optedIn);
       print(OneSignal.User.pushSubscription.id);
       print(OneSignal.User.pushSubscription.token);
+      print(OneSignal.User.getTags());
       print(state.current.jsonRepresentation());
     });
 
