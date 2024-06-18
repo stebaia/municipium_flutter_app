@@ -7,7 +7,7 @@ import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/ui/components/buttons/rounded_shape_button.dart';
-import 'package:municipium/ui/components/progress_pager_stepper.dart';
+import 'package:municipium/ui/components/pager/progress_pager_stepper.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_category_section.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_gallery_section.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_message_section.dart';

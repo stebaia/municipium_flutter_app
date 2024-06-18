@@ -4,6 +4,7 @@ import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:municipium/ui/components/dropdown/dropdown_outlined.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -44,26 +45,23 @@ class NewIssueCategorySection extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: ThemeHelper.lightGrey),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: DropdownButton<String>(
-                    underline: Container(),
-                    hint: Text(
-                      AppLocalizations.of(context)!.choose_voice,
-                      style: const TextStyle(
-                          color: ThemeHelper.lightGrey, letterSpacing: -0.4),
-                    ),
-                    isExpanded: true,
-                    menuMaxHeight: 300,
+                DropDownOutlined(
                     value: state.issueCategoryId != null
                         ? fetchedTags
                             .getFromIssueCategoryId(state.issueCategoryId)
                             ?.name
-                        : null, // Valore attualmente selezionato
+                        : null,
+                    values: fetchedTags.issueMappedList
+                        .map((e) => e.name)
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: const TextStyle(letterSpacing: -0.4),
+                        ), // Testo dell'opzione
+                      );
+                    }).toList(),
                     onChanged: (String? newValue) {
                       if (newValue != null) {
                         final model = fetchedTags.getFromName(newValue);
@@ -77,20 +75,7 @@ class NewIssueCategorySection extends StatelessWidget {
                               .setSubList(fetchedTags.getFromTag(model.id));
                         }
                       }
-                    },
-                    items: fetchedTags.issueMappedList
-                        .map((e) => e.name)
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(letterSpacing: -0.4),
-                        ), // Testo dell'opzione
-                      );
-                    }).toList(),
-                  ),
-                ),
+                    }),
                 const SizedBox(
                   height: 20,
                 ),

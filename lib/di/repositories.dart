@@ -44,5 +44,11 @@ final List<RepositoryProvider> _repositories = [
         pnrrBodyMapper: context.read(),
         pnrrService: context.read(),
         logger: context.read()),
+  ),
+  RepositoryProvider<ReservationsRepository>(
+    create: (context) => ReservationsRepository(
+        resarvableUnitsMapper: context.read(),
+        service: context.read(),
+        logger: context.read()),
   )
 ];
