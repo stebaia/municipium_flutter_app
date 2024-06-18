@@ -7,6 +7,7 @@ import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/ui/components/buttons/rounded_shape_button.dart';
+import 'package:municipium/ui/components/progress_pager_stepper.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_category_section.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_gallery_section.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_message_section.dart';
@@ -122,61 +123,9 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                     const SizedBox(
                       height: 16,
                     ),
-                    Container(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(
-                              totalPage,
-                              (index) {
-                                bool isColored = index <=
-                                    stateIssue
-                                        .currentPage!; //lo uso per tenere colorati i tratti precedenti
-                                return Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(4),
-                                      height: 5,
-                                      width:
-                                          (MediaQuery.of(context).size.width -
-                                                  (32 + totalPage * 4)) /
-                                              totalPage,
-                                      decoration: BoxDecoration(
-                                        color: isColored
-                                            ? ThemeHelper.blueMunicipium
-                                            : ThemeHelper.lightGrey,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                        width: 4), // Spazio tra i container
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Step ${stateIssue.currentPage! + 1} di $totalPage',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                    letterSpacing: -0.4),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+                    ProgressPagerStepper(
+                        totalPage: totalPage,
+                        currentPage: stateIssue.currentPage!),
                     const SizedBox(
                       height: 32,
                     ),
