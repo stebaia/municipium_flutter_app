@@ -85,5 +85,11 @@
 
     "theme_system" : "sistema",
     "theme_dark" : "scuro",
-    "theme_light" : "chiaro"
+    "theme_light" : "chiaro",
+
+    "text_list_of_municipality_title" : "lista dei comuni attivi",
+    "text_no_municipality_search" : "Non trovi il tuo comune?",
+    "text_issue_now" : "Segnalacelo ora",
+    "text_notify_from_other_municipality" : "Vuoi ricever notifiche anche di altri comuni?",
+    "text_select_municipality" : "Seleziona i comuni"
 }   

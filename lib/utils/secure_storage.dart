@@ -9,9 +9,23 @@ class SecureStorage {
 
   final String _municipalityKey = "MUNINICIPALITY_KEY";
 
+  final String _deviceKey = "DEVICE_KEY";
+
 
   Future setMunicipalityKeyInStorage(String municipality) async {
     await storage.write(key: _municipalityKey, value: municipality);
+  }
+
+  Future setDeviceKeyInStorage(String device) async {
+    await storage.write(key: _deviceKey, value: device);
+  }
+
+  Future<String?> getDeviceFromStorage() async {
+    try {
+      return await storage.read(key: _deviceKey);
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   Future<void> deleteMunicipalitylKeySecureData() async {

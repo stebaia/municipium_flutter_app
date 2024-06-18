@@ -5,7 +5,7 @@ Future<List<SingleChildWidget>> providersFun() async {
 
   final secureStorage = SecureStorage();
   String baseUrl = "https://staging.municipiumapp.it/api/v2/";
-
+  String baseUrlBe = "https://api.municipiumapp.it/";
   try {
     final municipality = await secureStorage.getMunicipalityObjectFromStorage();
     baseUrl = "https://${municipality!.subdomain}/api/v2/";
@@ -64,6 +64,7 @@ Future<List<SingleChildWidget>> providersFun() async {
         baseUrl: baseUrl,
       ),
     ),
+    Provider<MunicipalityBeService>(create: (context) => MunicipalityBeService(context.read<Dio>(), baseUrl: baseUrlBe),),
     Provider<IssueService>(
         create: (context) =>
             IssueService(context.read<Dio>(), baseUrl: baseUrl))
