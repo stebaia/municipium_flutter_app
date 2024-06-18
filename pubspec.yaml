@@ -74,6 +74,8 @@ dependencies:
   webview_flutter: ^4.8.0
   webview_flutter_android: ^3.16.3
   webview_flutter_wkwebview: ^3.13.1
+  hydrated_bloc: ^9.1.5
+  settings_ui: ^2.0.2
 
 
 dev_dependencies:

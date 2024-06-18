@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/ui/pages/settings_section/settings_page.dart';
 
 @AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
@@ -34,5 +35,6 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: WelcomeRoute.page),
         AutoRoute(page: NewsDetailRoute.page),
         AutoRoute(page: PointOfInterestListRoute.page),
+        AutoRoute(page: SettingsRoute.page)
       ];
 }

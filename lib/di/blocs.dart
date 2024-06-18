@@ -8,5 +8,6 @@ final List<BlocProvider> _blocs = [
   ),
   BlocProvider<IssueCubit>(
     create: (context) => IssueCubit(),
-  )
+  ),
+  BlocProvider<ThemeCubit>(create: (_) => ThemeCubit())
 ];

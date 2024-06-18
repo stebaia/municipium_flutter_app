@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:municipium/di/dependency_injector.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/routers/app_router.dart';
+import 'package:municipium/ui/components/theme_selector.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:municipium/utils/theme_style.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -46,16 +47,18 @@ class _App extends State<App> {
   @override
   Widget build(BuildContext context) {
     return DependencyInjector(
-      child: MaterialApp.router(
-        onGenerateTitle: (context) => 'Municipium flutter',
-        supportedLocales: AppLocalizations.supportedLocales,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        routeInformationParser: _router.defaultRouteParser(),
-        routerDelegate: _router.delegate(),
-        theme: LightTheme.make,
-        darkTheme: DarkTheme.make,
-        themeMode: ThemeMode.system,
-      ),
+      child: ThemeSelector(builder: (context, mode) {
+        return MaterialApp.router(
+          onGenerateTitle: (context) => 'Municipium flutter',
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          routeInformationParser: _router.defaultRouteParser(),
+          routerDelegate: _router.delegate(),
+          theme: LightTheme.make,
+          darkTheme: DarkTheme.make,
+          themeMode: mode,
+        );
+      }),
     );
   }
 }

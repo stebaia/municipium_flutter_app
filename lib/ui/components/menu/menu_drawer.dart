@@ -83,7 +83,9 @@ class MenuDrawer extends StatelessWidget {
               ),
               MenuRow(
                   textToShow: AppLocalizations.of(context)!.settings_menu,
-                  onTapMethod: () {},
+                  onTapMethod: () {
+                    context.pushRoute(const SettingsRoute());
+                  },
                   sizeFont: 15),
               MenuRow(
                   textToShow: AppLocalizations.of(context)!.privacy_policy_menu,

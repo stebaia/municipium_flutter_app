@@ -14,8 +14,9 @@
 
     "error_get_municipality" : "Errore nel caricamento del comune, riprova più tardi",
     "errog_get_municipality_list" : "Errore nel caricamento della lista di comuni, riprova più tardi",
-
-
+    "settings_app" : "App",
+    "settings_theme" : "Tema",
+    
     "@_MENU_STRINGS" : {},
 
     "events_menu" : "Eventi",
@@ -86,7 +87,7 @@
     "privacy_desc" : "Procedendo con la compilazione e con l'invio di questo modulo Lei acconsente al trattamento dei dati personali forniti, ai sensi e per gli effetti dell'articolo 13 del Regolamento EU 2016/679 e della normativa nazionale applicabile in materia di trattamento dei dati personali, per la finalità e nei limiti indicati dall'informativa sulla privacy che la invitiamo a leggere con attenzione.",
     "read_privacy" : "Leggi l'informativa",
 
-    "theme_system" : "system",
-    "theme_dark" : "dark",
-    "theme_light" : "light"
+    "theme_system" : "System",
+    "theme_dark" : "Dark",
+    "theme_light" : "Light"
 }
