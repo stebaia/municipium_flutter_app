@@ -4,6 +4,8 @@ final List<RepositoryProvider> _repositories = [
   RepositoryProvider<MunicipalityRepository>(
       create: (context) => MunicipalityRepository(
           munMapper: context.read(),
+          deviceMapper: context.read(),
+          municipalityBeService: context.read(),
           secureStorage: context.read(),
           municipalityService: context.read(),
           municipalityMapper: context.read(),

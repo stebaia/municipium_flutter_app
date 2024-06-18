@@ -137,7 +137,7 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<MunicipalityBloc>(
           create: (context) =>
               MunicipalityBloc(municipalityRepository: context.read())
-                ..fetchMunicipality(0),
+                ..fetchMunicipality(8093),
         ),
       ], child: this);
 }

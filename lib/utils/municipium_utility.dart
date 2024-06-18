@@ -65,3 +65,99 @@ class MunicipiumUtility {
     return HtmlUnescape().convert(htmlString.replaceAll(exp, ''));
   }
 }
+
+class MunicipiumAPIV3 {
+  static const String TAG = 'MunicipiumAPIV3';
+  static String HTTPS_PROTOCOL = AppInfo().getTipo() == AppInfoType.DEMO ? 'http://' : 'https://';
+
+  // DEVICE APIs
+  static const String DEVICES = '/devices';
+  static const String MUNICIPALITIES_SUBSCRIPTIONS = '/municipality-subscriptions';
+  static const String GARBAGE_SUBSCRIPTIONS = '/garbage-subscriptions';
+  static const String PRIMARY = '/primary';
+
+  static String getDevicesURL() {
+    return HTTPS_PROTOCOL + getEnvUrl() + DEVICES;
+  }
+
+  static String getDeviceURL(String udid) {
+    return HTTPS_PROTOCOL + getEnvUrl() + DEVICES + '/$udid';
+  }
+
+  static String getGarbageSubscriptionsURL() {
+    return HTTPS_PROTOCOL + getEnvUrl() + GARBAGE_SUBSCRIPTIONS;
+  }
+
+  static String getGarbageSubscriptionURL(int garbageSubscriptionId) {
+    return HTTPS_PROTOCOL + getEnvUrl() + GARBAGE_SUBSCRIPTIONS + '/$garbageSubscriptionId';
+  }
+
+  static String getGarbageSubscriptionsOfDevice(String udid) {
+    return getDeviceURL(udid) + GARBAGE_SUBSCRIPTIONS;
+  }
+
+  static String getGarbageSubscriptionOfDevice(String udid, int garbageSubscriptionId) {
+    return getDeviceURL(udid) + GARBAGE_SUBSCRIPTIONS + '/$garbageSubscriptionId';
+  }
+
+  static String getMunicipalitiesSubscriptionsURL() {
+    return HTTPS_PROTOCOL + getEnvUrl() + MUNICIPALITIES_SUBSCRIPTIONS;
+  }
+
+  static String getMunicipalitiesSubscriptionsOfDevice(String udid) {
+    return getDeviceURL(udid) + MUNICIPALITIES_SUBSCRIPTIONS;
+  }
+
+  static String getMunicipalitiesSubscriptionOfDevice(String udid, int municipalityId) {
+    return getDeviceURL(udid) + MUNICIPALITIES_SUBSCRIPTIONS + '/$municipalityId';
+  }
+
+  static String getPrimaryMunicipality(String udid) {
+    return HTTPS_PROTOCOL + getEnvUrl() + DEVICES + '/$udid' + MUNICIPALITIES_SUBSCRIPTIONS + PRIMARY;
+  }
+
+  static String getEnvUrl() {
+    return Environment.getApiUrl();
+  }
+
+  static String addParamsToRequest(String url) {
+    if (!url.contains('?')) {
+      return url + '?' + RequestFields.LANGUAGES + '=' +
+          (Locale.current.languageCode == 'en' ? Locale.current.languageCode : Locale.current.languageCode + ',en');
+    } else {
+      return url + '&' + RequestFields.LANGUAGES + '=' +
+          (Locale.current.languageCode == 'en' ? Locale.current.languageCode : Locale.current.languageCode + ',en');
+    }
+  }
+}
+
+class AppInfo {
+  AppInfoType getTipo() {
+    // Dummy implementation
+    return AppInfoType.PRODUCTION;
+  }
+}
+
+enum AppInfoType {
+  DEMO,
+  PRODUCTION,
+}
+
+class Environment {
+  static String getApiUrl() {
+    // Dummy implementation
+    return 'api.municipiumapp.it';
+  }
+}
+
+class RequestFields {
+  static const String LANGUAGES = 'languages';
+}
+
+class Locale {
+  static Locale current = Locale('en');
+
+  final String languageCode;
+
+  Locale(this.languageCode);
+}
