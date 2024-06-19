@@ -93,9 +93,7 @@ class NewIssueRecapSection extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            AppLocalizations.of(context)!
-                                .name_surname
-                                .toUpperCase(),
+                            '${AppLocalizations.of(context)!.name_desc.toUpperCase()} e ${AppLocalizations.of(context)!.surname_desc.toUpperCase()}',
                             style: const TextStyle(
                                 color: ThemeHelper.darkGrey,
                                 fontWeight: FontWeight.w400,
@@ -111,7 +109,7 @@ class NewIssueRecapSection extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            state.name ?? '',
+                            '${(state.name ?? '')} ${(state.surname ?? '')}',
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 17,

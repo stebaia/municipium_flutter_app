@@ -25,6 +25,12 @@ class MunicipiumUtility {
     return formattedDate;
   }
 
+  static String getDateForName() {
+    DateTime date = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd\'T\'HH:mm:ssZ').format(date);
+    return formattedDate;
+  }
+
   static void launch(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
@@ -168,11 +174,13 @@ class MunicipiumUtility {
 
 class MunicipiumAPIV3 {
   static const String TAG = 'MunicipiumAPIV3';
-  static String HTTPS_PROTOCOL = AppInfo().getTipo() == AppInfoType.DEMO ? 'http://' : 'https://';
+  static String HTTPS_PROTOCOL =
+      AppInfo().getTipo() == AppInfoType.DEMO ? 'http://' : 'https://';
 
   // DEVICE APIs
   static const String DEVICES = '/devices';
-  static const String MUNICIPALITIES_SUBSCRIPTIONS = '/municipality-subscriptions';
+  static const String MUNICIPALITIES_SUBSCRIPTIONS =
+      '/municipality-subscriptions';
   static const String GARBAGE_SUBSCRIPTIONS = '/garbage-subscriptions';
   static const String PRIMARY = '/primary';
 
@@ -189,15 +197,21 @@ class MunicipiumAPIV3 {
   }
 
   static String getGarbageSubscriptionURL(int garbageSubscriptionId) {
-    return HTTPS_PROTOCOL + getEnvUrl() + GARBAGE_SUBSCRIPTIONS + '/$garbageSubscriptionId';
+    return HTTPS_PROTOCOL +
+        getEnvUrl() +
+        GARBAGE_SUBSCRIPTIONS +
+        '/$garbageSubscriptionId';
   }
 
   static String getGarbageSubscriptionsOfDevice(String udid) {
     return getDeviceURL(udid) + GARBAGE_SUBSCRIPTIONS;
   }
 
-  static String getGarbageSubscriptionOfDevice(String udid, int garbageSubscriptionId) {
-    return getDeviceURL(udid) + GARBAGE_SUBSCRIPTIONS + '/$garbageSubscriptionId';
+  static String getGarbageSubscriptionOfDevice(
+      String udid, int garbageSubscriptionId) {
+    return getDeviceURL(udid) +
+        GARBAGE_SUBSCRIPTIONS +
+        '/$garbageSubscriptionId';
   }
 
   static String getMunicipalitiesSubscriptionsURL() {
@@ -208,12 +222,20 @@ class MunicipiumAPIV3 {
     return getDeviceURL(udid) + MUNICIPALITIES_SUBSCRIPTIONS;
   }
 
-  static String getMunicipalitiesSubscriptionOfDevice(String udid, int municipalityId) {
-    return getDeviceURL(udid) + MUNICIPALITIES_SUBSCRIPTIONS + '/$municipalityId';
+  static String getMunicipalitiesSubscriptionOfDevice(
+      String udid, int municipalityId) {
+    return getDeviceURL(udid) +
+        MUNICIPALITIES_SUBSCRIPTIONS +
+        '/$municipalityId';
   }
 
   static String getPrimaryMunicipality(String udid) {
-    return HTTPS_PROTOCOL + getEnvUrl() + DEVICES + '/$udid' + MUNICIPALITIES_SUBSCRIPTIONS + PRIMARY;
+    return HTTPS_PROTOCOL +
+        getEnvUrl() +
+        DEVICES +
+        '/$udid' +
+        MUNICIPALITIES_SUBSCRIPTIONS +
+        PRIMARY;
   }
 
   static String getEnvUrl() {
@@ -222,11 +244,21 @@ class MunicipiumAPIV3 {
 
   static String addParamsToRequest(String url) {
     if (!url.contains('?')) {
-      return url + '?' + RequestFields.LANGUAGES + '=' +
-          (Locale.current.languageCode == 'en' ? Locale.current.languageCode : Locale.current.languageCode + ',en');
+      return url +
+          '?' +
+          RequestFields.LANGUAGES +
+          '=' +
+          (Locale.current.languageCode == 'en'
+              ? Locale.current.languageCode
+              : Locale.current.languageCode + ',en');
     } else {
-      return url + '&' + RequestFields.LANGUAGES + '=' +
-          (Locale.current.languageCode == 'en' ? Locale.current.languageCode : Locale.current.languageCode + ',en');
+      return url +
+          '&' +
+          RequestFields.LANGUAGES +
+          '=' +
+          (Locale.current.languageCode == 'en'
+              ? Locale.current.languageCode
+              : Locale.current.languageCode + ',en');
     }
   }
 }

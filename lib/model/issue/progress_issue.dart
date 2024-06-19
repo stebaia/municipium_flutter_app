@@ -19,6 +19,9 @@ class ProgressIssue extends Equatable {
   String? phone;
   String? surname;
   String? content;
+  String? udid;
+  String? userAgent;
+  String? municipalityName;
   int? currentPage;
   int? totalPage;
   List<IssueMappedCategory>? subList;
@@ -42,6 +45,9 @@ class ProgressIssue extends Equatable {
       this.phone,
       this.surname,
       this.content,
+      this.udid,
+      this.userAgent,
+      this.municipalityName,
       int? currentPage, // Aggiunto currentPage come parametro opzionale
       this.totalPage,
       List<IssueMappedCategory>? subList,
@@ -70,6 +76,9 @@ class ProgressIssue extends Equatable {
       String? phone,
       String? surname,
       String? content,
+      String? udid,
+      String? userAgent,
+      String? municipalityName,
       int? currentPage,
       int? totalPage,
       List<IssueMappedCategory>? subList,
@@ -92,6 +101,9 @@ class ProgressIssue extends Equatable {
         phone: phone ?? this.phone,
         surname: surname ?? this.surname,
         content: content ?? this.content,
+        udid: udid ?? this.udid,
+        userAgent: userAgent ?? this.userAgent,
+        municipalityName: municipalityName ?? this.municipalityName,
         currentPage: currentPage ?? this.currentPage,
         totalPage: totalPage ?? this.totalPage,
         subList: subList ?? this.subList,
@@ -117,6 +129,9 @@ class ProgressIssue extends Equatable {
         surname,
         phone,
         content,
+        udid,
+        userAgent,
+        municipalityName,
         currentPage,
         totalPage,
         subList,

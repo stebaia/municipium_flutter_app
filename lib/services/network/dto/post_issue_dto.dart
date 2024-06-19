@@ -1,6 +1,7 @@
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:pine/dto/dto.dart';
 
-class PostIssueDto {
+class PostIssueDto extends DTO {
   IssueContentDto? issue;
   String? udid;
   String? userAgent;
@@ -36,6 +37,7 @@ class IssueContentDto {
   String? address;
   String? content;
   String? phone;
+  String? name;
   String? surname;
   String? email;
   int? issueCategoryId;
@@ -52,6 +54,7 @@ class IssueContentDto {
     this.address,
     this.content,
     this.phone,
+    this.name,
     this.surname,
     this.email,
     this.issueCategoryId,
@@ -71,6 +74,7 @@ class IssueContentDto {
       address: json['address'],
       content: json['content'],
       phone: json['phone'],
+      name: json['name'],
       surname: json['surname'],
       email: json['email'],
       issueCategoryId: json['issue_category_id'],
@@ -99,6 +103,7 @@ class IssueContentDto {
       'address': address,
       'content': content,
       'phone': phone,
+      'name': name,
       'surname': surname,
       'email': email,
       'issue_category_id': issueCategoryId,

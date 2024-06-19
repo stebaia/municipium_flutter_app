@@ -33,10 +33,20 @@ class NewIssueMessageSection extends StatelessWidget {
                   height: 32,
                 ),
                 ComponentFactory.getBorderedTextField(
-                  placeHolder: AppLocalizations.of(context)!.name_surname,
+                  placeHolder: AppLocalizations.of(context)!.name_desc,
                   value: state.name,
                   onChanged: (value) {
-                    context.read<IssueCubit>().setNameSurname(value);
+                    context.read<IssueCubit>().setName(value);
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ComponentFactory.getBorderedTextField(
+                  placeHolder: AppLocalizations.of(context)!.surname_desc,
+                  value: state.surname,
+                  onChanged: (value) {
+                    context.read<IssueCubit>().setSurname(value);
                   },
                 ),
                 const SizedBox(

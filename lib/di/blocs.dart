@@ -7,7 +7,7 @@ final List<BlocProvider> _blocs = [
       ..checkMunicipalityGlobalState(),
   ),
   BlocProvider<IssueCubit>(
-    create: (context) => IssueCubit(),
+    create: (context) => IssueCubit(issuesRepository: context.read()),
   ),
   BlocProvider<ThemeCubit>(create: (_) => ThemeCubit())
 ];

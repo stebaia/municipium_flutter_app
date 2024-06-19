@@ -3,16 +3,19 @@ import 'package:municipium/model/issue/issue_category_tag.dart';
 import 'package:municipium/model/issue/issue_item_list.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/issue_tag.dart';
+import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_tag_dto.dart';
+import 'package:municipium/services/network/dto/post_issue_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class IssuesRepository {
   final DTOMapper<IssueDto, IssueItemList> issueItemMapper;
   final DTOMapper<IssueTagDto, IssueTag> issueTagMapper;
   final DTOMapper<IssueCategoryTagDto, IssueCategoryTag> issueCategoryTagMapper;
+  final DTOMapper<PostIssueDto, ProgressIssue> postIssueMapper;
   final IssueService issueService;
   final Logger logger;
 
@@ -20,6 +23,7 @@ class IssuesRepository {
       {required this.issueItemMapper,
       required this.issueTagMapper,
       required this.issueCategoryTagMapper,
+      required this.postIssueMapper,
       required this.issueService,
       required this.logger});
 
@@ -46,6 +50,17 @@ class IssuesRepository {
         listCategory.add(issueCategoryTagMapper.fromDTO(cat));
       }
       return listCategory;
+    } catch (error, stackTrace) {
+      logger.e('Error in getting tags categories list');
+      rethrow;
+    }
+  }
+
+  Future<bool> postIssue(PostIssueDto issueDto) async {
+    try {
+      bool response = await issueService.postIssue(issueDto);
+      print(response);
+      return response;
     } catch (error, stackTrace) {
       logger.e('Error in getting tags categories list');
       rethrow;

@@ -20,8 +20,9 @@ class MunicipalityGlobalCubit extends Cubit<MunicipalityGlobalState> {
       if (municipality != null) {
         emit(FetchedMunicipalityGlobalState(municipality));
       } else {
-        Municipality? sharedOldMunicipality = await municipalityRepository.getMunicipalityFromOneSignal();
-        if(sharedOldMunicipality != null) {
+        Municipality? sharedOldMunicipality =
+            await municipalityRepository.getMunicipalityFromOneSignal();
+        if (sharedOldMunicipality != null) {
           emit(FetchedMunicipalityGlobalState(sharedOldMunicipality));
         }
         emit(NotMunicipalityGlobalState());
