@@ -91,7 +91,7 @@
     "text_no_municipality_search" : "Non trovi il tuo comune?",
     "text_issue_now" : "Segnalacelo ora",
     "text_notify_from_other_municipality" : "Vuoi ricever notifiche anche di altri comuni?",
-    "text_select_municipality" : "Seleziona i comuni"
+    "text_select_municipality" : "Seleziona i comuni",
     "theme_system" : "System",
     "theme_dark" : "Dark",
     "theme_light" : "Light"

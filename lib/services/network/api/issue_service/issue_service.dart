@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_tag_dto.dart';
+import 'package:municipium/services/network/dto/post_issue_dto.dart';
 import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
 
 part 'issue_service.g.dart';
 
@@ -21,4 +23,7 @@ abstract class IssueService {
 
   @GET('issue_categories/')
   Future<List<IssueCategoryTagDto>> getIssueCategoriesTags();
+
+  @POST('issues')
+  Future<bool> postIssue(@Body() PostIssueDto issue);
 }
