@@ -3,6 +3,7 @@ part of 'dependency_injector.dart';
 final List<RepositoryProvider> _repositories = [
   RepositoryProvider<MunicipalityRepository>(
       create: (context) => MunicipalityRepository(
+          configurationsMapper: context.read(),
           munMapper: context.read(),
           deviceMapper: context.read(),
           municipalityBeService: context.read(),

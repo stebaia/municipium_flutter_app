@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:logger/logger.dart';
 import 'package:municipium/model/device/device_be.dart';
+import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
@@ -16,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MunicipalityRepository {
   final Mapper<Municipality, String> munMapper;
   final Mapper<DeviceBe, String> deviceMapper;
+  final Mapper<Configurations, String> configurationsMapper;
   final SecureStorage secureStorage;
   final MunicipalityService municipalityService;
   final MunicipalityBeService municipalityBeService;
@@ -30,6 +32,7 @@ class MunicipalityRepository {
       required this.municipalityService,
       required this.municipalityMapper,
       required this.municipalityBeService,
+      required this.configurationsMapper,
       required this.logger});
 
   Future<List<Municipality>> getMunicipalityList() async {
@@ -98,6 +101,9 @@ class MunicipalityRepository {
         };
         OneSignal.User.addTags(map);
       }
+
+      final Configurations configurations = await municipalityService.getMunicipalityConfigurations();
+      secureStorage.setConfigurationsKeyInStorage(configurationsMapper.from(configurations));
       return municipality;
     } catch (error, stackTrace) {
       logger.e('Error in getting municipality');
@@ -154,8 +160,16 @@ class MunicipalityRepository {
     if(municipality != null) {
       print(municipality);
     }else {
-      print('no old muniicipality');
+      print('no old municipality');
     }
+  }
+
+  Future<Configurations?> getMunicipalityConfigurations() async {
+     final json = await secureStorage.getConfigurationsFromStorage();
+    if(json != null) {
+      return configurationsMapper.to(json);
+    }
+    return null;
   }
 
   Future<DeviceBe?> getCurrentDevice() async {

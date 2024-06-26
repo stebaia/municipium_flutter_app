@@ -11,6 +11,7 @@ import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_u
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/device/device_be.dart';
+import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/events/event_detail.dart';
 import 'package:municipium/model/events/event_item_list.dart';
 import 'package:municipium/model/issue/issue_category_tag.dart';
@@ -27,6 +28,7 @@ import 'package:municipium/repositories/civil_defence_repository.dart';
 import 'package:municipium/repositories/events_repository.dart';
 import 'package:municipium/repositories/issues_repository.dart';
 import 'package:municipium/repositories/mappers/civil_defence_mapper/civil_defence_emergency_call_mapper.dart';
+import 'package:municipium/repositories/mappers/configuration_mapper.dart';
 import 'package:municipium/repositories/mappers/device_secure_mapper.dart';
 import 'package:municipium/repositories/mappers/event_mapper/event_detail_mapper.dart';
 import 'package:municipium/repositories/mappers/event_mapper/event_item_mapper.dart';
