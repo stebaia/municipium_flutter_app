@@ -9,6 +9,11 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MunicipiumUtility {
+
+  static String BASEURL_PROD = 'https://cloud.municipiumapp.it/api/v2/';
+
+  static String BASEURL_STAGING = 'https://staging.municipiumapp.it/api/v2/';
+
   static String getDefaultImageUrl() {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }

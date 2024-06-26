@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:municipium/bloc/cubit/base_url_cubit/base_url_cubit.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/device/device_be.dart';
@@ -60,7 +62,11 @@ import 'package:municipium/services/network/dto/municipality_dto.dart';
 import 'package:municipium/services/network/dto/news_categories_dto.dart';
 import 'package:municipium/services/network/dto/news_dto.dart';
 import 'package:municipium/services/network/dto/point_of_interests_list_dto.dart';
+import 'package:municipium/utils/base_url_selector.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/secure_storage.dart';
+import 'package:municipium/utils/theme_helper.dart';
+import 'package:path/path.dart';
 import 'package:pine/di/dependency_injector_helper.dart';
 import 'package:pine/pine.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -79,22 +85,50 @@ class DependencyInjector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<SingleChildWidget>>(
-      future: providersFun(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return DependencyInjectorHelper(
-            blocs: _blocs,
-            mappers: _mappers,
-            providers: snapshot.data!,
-            repositories: _repositories,
-            child: child,
-          );
-        } else {
-          // Restituisci un indicatore di caricamento o qualcosa di simile mentre aspetti i dati
-          return CircularProgressIndicator();
-        }
-      },
+    return BlocProvider<BaseUrlCubit>(
+      create: (context) => BaseUrlCubit(),
+      child: Provider<SecureStorage>(
+        create: (context) => SecureStorage(),
+        child: BaseUrlSelector(
+          builder: (context, state) {
+            return BlocProvider(
+              create: (context) => MunicipalityUrlCubit(
+                  secureStorage: context.read(), baseUrl: state)..fetchMunicipalityInStorage(),
+              child: BlocBuilder<MunicipalityUrlCubit, MunicipalityUrlState>(
+                builder: (context, muincipalityUrlState) {
+                  String baseUrl;
+                  Widget content;
+
+                  if (muincipalityUrlState is MunicipalityUrlLoaded) {
+                    baseUrl = muincipalityUrlState.baseUrl;
+                  } else if (muincipalityUrlState is MunicipalityUrlEmpty) {
+                    baseUrl = state.name == 'prod' ? MunicipiumUtility.BASEURL_PROD : MunicipiumUtility.BASEURL_STAGING;
+                  } else {
+                    baseUrl = ''; // or some default value if needed
+                  }
+
+                  if (muincipalityUrlState is MunicipalityUrlLoading) {
+                    content = Container(
+                      color: Colors.blue,
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    content = DependencyInjectorHelper(
+                      repositories: _repositories,
+                      mappers: _mappers,
+                      blocs: _blocs,
+                      providers: providersFun(baseUrl: baseUrl),
+                      child: child,
+                    );
+                  }
+
+                  return content;
+                },
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

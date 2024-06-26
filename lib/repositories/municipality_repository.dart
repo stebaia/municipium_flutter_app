@@ -70,6 +70,34 @@ class MunicipalityRepository {
       final municipality = municipalityMapper.fromDTO(municipalityResponse);
       await secureStorage
           .setMunicipalityKeyInStorage(munMapper.from(municipality));
+      final deviceBeStorage = await getCurrentDevice();
+      final String? playerId = await OneSignal.User.getOnesignalId();
+      if(deviceBeStorage == null) {
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        String version = packageInfo.version;
+        String code = packageInfo.buildNumber;
+        String platform = '';
+        if(Platform.isAndroid){
+          platform = 'android';
+        }else {
+          platform = 'ios';
+        }
+        DeviceBe deviceBe = DeviceBe(playerId: playerId!, authToken: '', token: '', platform: platform, appVersion: version, udid: '', language: '');
+        final responseBePut = await municipalityBeService.putDevices(deviceBe);
+        deviceBe.udid = responseBePut.udid;
+        await secureStorage.setDeviceKeyInStorage(deviceMapper.from(deviceBe));
+        Map<String, dynamic> map = {
+          "municipalityId" : municipalityId,
+          "udid" : deviceBe.udid
+        };
+        OneSignal.User.addTags(map);
+      } else {
+        Map<String, dynamic> map = {
+          "municipalityId" : municipalityId,
+          "udid" : deviceBeStorage.udid
+        };
+        OneSignal.User.addTags(map);
+      }
       return municipality;
     } catch (error, stackTrace) {
       logger.e('Error in getting municipality');
