@@ -11,6 +11,13 @@ class SecureStorage {
 
   final String _deviceKey = "DEVICE_KEY";
 
+  final String _configurationMenu = "CONFIGURATION_MENU";
+
+
+  Future setConfigurationMenu(String menu) async {
+     await storage.write(key: _configurationMenu, value: menu);
+  }
+
 
   Future setMunicipalityKeyInStorage(String municipality) async {
     await storage.write(key: _municipalityKey, value: municipality);

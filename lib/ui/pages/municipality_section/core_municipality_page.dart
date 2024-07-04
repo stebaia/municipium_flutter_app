@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/app.dart';
+import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/main.dart';
 import 'package:municipium/routers/app_router.gr.dart';
@@ -19,25 +20,57 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   CoreMunicipalityPage({super.key});
   
-
+   @override
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
+        BlocProvider<MunicipalityBloc>(
+          create: (context) =>
+              MunicipalityBloc(municipalityRepository: context.read())
+                ..fetchMunicipality(8093),
+        ),
+      ], child: this);
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      scaffoldKey: scaffoldKey,
-      
+    return AutoTabsRouter(
+       routes: [HomeRoute(scaffoldKey: scaffoldKey), MapsRoute(scaffoldKey: scaffoldKey), HomeRoute(scaffoldKey: scaffoldKey), HomeRoute(scaffoldKey: scaffoldKey)],
+      transitionBuilder: (context,child,animation) => FadeTransition(
+            opacity: animation,
+            // the passed child is technically our animated selected-tab page
+            child: child,
+      ),
+      builder: (context, child) {
+        final tabsRouter = AutoTabsRouter.of(context);
+        return Scaffold(
+          key: scaffoldKey,
+          body: child,
         drawer: MenuDrawer(
           mContext: context,
           scaffoldKey: scaffoldKey,
         ),
       //darkMode.darkTheme ? ThemeHelper.backgroundColorDark : Colors.white,
-      routes: [HomeRoute(), MapsRoute(scaffoldKey: scaffoldKey), HomeRoute(), HomeRoute()],
-      bottomNavigationBuilder: (context, tabsRouter) {
-        return BottomNavigationBar(
+      floatingActionButton: tabsRouter.activeIndex == 0 ? FloatingActionButton.extended(onPressed: (() => context.pushRoute(const UserConfMenuEditRoute())), label: Text('Personalizza'), icon: Icon(Icons.edit),) : FloatingActionButton(
+        onPressed: () =>
+         
+            showModalBottomSheet(
+            context: context,
+            builder: ((modalContext) => CustomBaseBottomSheet(
+                height: MediaQuery.of(context).size.height * 0.3,
+                title: 'azioni rapide',
+                body: const ModalRapidActionComponent())))
+          
+          
+        ,
+        child: const Icon(Icons.add),),
+      bottomNavigationBar: 
+         BottomNavigationBar(
+          
             elevation: 0,
             backgroundColor: ThemeHelper.blueMunicipium,
             type: BottomNavigationBarType.fixed,
             currentIndex: tabsRouter.activeIndex,
-            onTap: tabsRouter.setActiveIndex,
+            onTap: (index) {
+              // here we switch between tabs
+              tabsRouter.setActiveIndex(index);
+            },
             items: [
               BottomNavigationBarItem(
                 icon: const SizedBox(
@@ -115,29 +148,17 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                     )),
                 label: 'Area personale',
               ),
-            ]);
+            ]));
       },
       
-      floatingActionButton: FloatingActionButton(
-        onPressed: (() => showModalBottomSheet(
-            context: context,
-            builder: ((modalContext) => CustomBaseBottomSheet(
-                height: MediaQuery.of(context).size.height * 0.3,
-                title: 'azioni rapide',
-                body: const ModalRapidActionComponent())))),
-        child: const Icon(Icons.add),
-      ),
+        );
+      }
+      
+      
+      
       
      
-    );
+    
   }
 
-  @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<MunicipalityBloc>(
-          create: (context) =>
-              MunicipalityBloc(municipalityRepository: context.read())
-                ..fetchMunicipality(8093),
-        ),
-      ], child: this);
-}
+ 

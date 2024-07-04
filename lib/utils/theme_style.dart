@@ -11,7 +11,7 @@ class LightTheme {
         primaryColor: primaryColor,
         colorScheme: const ColorScheme.light(
           primary: primaryColor,
-          secondary: primaryColor,
+          secondary: lightBlue,
         ),
         appBarTheme: AppBarTheme(elevation: 0, surfaceTintColor: lightBlue),
         bottomAppBarTheme: BottomAppBarTheme(color: Colors.black),
@@ -95,14 +95,15 @@ class LightTheme {
 
 class DarkTheme {
   static const primaryColor = Color(0xff2140E9);
-  static const darkBlack = Colors.black26;
+  static const darkBlack = Color.fromARGB(40, 41, 40, 40);
 
   static get make => ThemeData(
         brightness: Brightness.dark,
         primaryColor: primaryColor,
+        
         colorScheme: const ColorScheme.dark(
           primary: primaryColor,
-          secondary: primaryColor,
+          secondary: darkBlack,
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           selectedItemColor: Colors.white,
