@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 ),
-                BoxHorizzontalDashboardComponents(name: configurationMenus[2].serviceName,),
+                BoxHorizzontalDashboardComponents(name: configurationMenus[2].serviceName,isRemoved: configurationMenus[2].isRemoved, ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

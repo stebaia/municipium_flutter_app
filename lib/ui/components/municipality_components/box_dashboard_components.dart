@@ -50,11 +50,15 @@ class BoxVerticalDashboardComponents extends StatelessWidget {
 }
 
 class BoxHorizzontalDashboardComponents extends StatelessWidget {
-  const BoxHorizzontalDashboardComponents({super.key, required this.name,});
+  const BoxHorizzontalDashboardComponents({super.key, required this.name, this.isRemoved = false});
   final String name;
+  final bool isRemoved;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return isRemoved ? Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      height: MediaQuery.of(context).size.height * 0.14,
+      width: MediaQuery.of(context).size.width,) : Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       height: MediaQuery.of(context).size.height * 0.14,
       width: MediaQuery.of(context).size.width,

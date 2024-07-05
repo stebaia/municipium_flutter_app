@@ -11,9 +11,13 @@ class UserMenuConfigurationCubit extends HydratedCubit<List<UserConfigurationMen
   final UserRepository userRepository;
 
   UserMenuConfigurationCubit(this.userRepository) : super([]) {
-    // Se lo stato è vuoto, inizializzalo con i dati dal repository
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
     if (state.isEmpty) {
-      emit(userRepository.initUserMenuInShared());
+      List<UserConfigurationMenu> conf = await userRepository.initUserMenuInShared();
+      emit(conf);
     }
   }
 

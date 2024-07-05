@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:logger/logger.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/model/user/user_configuration_menu.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
@@ -62,6 +63,65 @@ class MunicipalityRepository {
       rethrow;
     }
   }
+
+  void addUserConfigurationMenus(Municipality municipality, List<UserConfigurationMenu> listWrapped) {
+  // Aggiungi news
+  if (municipality.newMenu.news != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.news!, isMandatory: false, position: 0));
+  }
+  // Aggiungi issue
+  if (municipality.newMenu.issue != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.issue!, isMandatory: false, position: 1));
+  }
+  // Aggiungi penalties
+  if (municipality.newMenu.penalties != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.penalties!, isMandatory: false, position: 2));
+  }
+  // Aggiungi surveys
+  if (municipality.newMenu.surveys != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.surveys!, isMandatory: false, position: 3));
+  }
+  // Aggiungi garbage
+  if (municipality.newMenu.garbage != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.garbage!.toString(), isMandatory: false, position: 4));
+  }
+  // Aggiungi ecoattivi
+  if (municipality.newMenu.ecoattivi != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.ecoattivi!, isMandatory: false, position: 5));
+  }
+  // Aggiungi poi
+  if (municipality.newMenu.poi != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.poi!, isMandatory: false, position: 6));
+  }
+  // Aggiungi services
+  if (municipality.newMenu.services != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.services!, isMandatory: false, position: 7));
+  }
+  // Aggiungi dms
+  if (municipality.newMenu.dms != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.dms!.toString(), isMandatory: false, position: 8));
+  }
+  // Aggiungi digitalDossier
+  if (municipality.newMenu.digitalDossier != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.digitalDossier!, isMandatory: false, position: 9));
+  }
+  // Aggiungi civilDefence
+  if (municipality.newMenu.civilDefence != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.civilDefence!.toString(), isMandatory: false, position: 10));
+  }
+  // Aggiungi payment
+  if (municipality.newMenu.payment != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.payment!, isMandatory: false, position: 11));
+  }
+  // Aggiungi events
+  if (municipality.newMenu.events != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.events!, isMandatory: false, position: 12));
+  }
+  // Aggiungi sportelloTelematico
+  if (municipality.newMenu.sportelloTelematico != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.sportelloTelematico!, isMandatory: false, position: 13));
+  }
+}
 
   Future<Municipality> saveMunicipality(int municipalityId) async {
     try {

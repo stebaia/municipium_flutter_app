@@ -14,6 +14,10 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
         muninicipalityId: dto.id!,
         lat: dto.latitude ?? 0,
         lng: dto.longitude ?? 0,
+        appServiceOne: dto.appService1 ?? '',
+        appServiceTwo: dto.appService2 ?? '',
+        appServiceThree: dto.appService3 ?? '',
+        appServiceFour: dto.appService4 ?? '',
         logo: dto.logo != null
             ? mapperImages.fromDTO(dto.logo!)
             : const MunicipiumImage(
@@ -31,7 +35,7 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
                 i720x960: '',
                 i1920x1280: ''),
         subdomain: dto.subdomain != null ? dto.subdomain! : '',
-        new_menu: dto.newMenu ?? NewMenuDTO());
+        newMenu: dto.newMenu ?? NewMenuDTO());
   }
 
   @override

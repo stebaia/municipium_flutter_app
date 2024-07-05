@@ -20,110 +20,120 @@ class UserConfMenuEditPage extends StatelessWidget {
     final municipality = (context.read<MunicipalityGlobalCubit>().state
             as StoredMunicipalityGlobalState)
         .municipality;
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'modifica widget'.toUpperCase(),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    return PopScope(
+      onPopInvoked: (did) {
+        context.read<TemporaryConfigurationCubit>().reset(context.read<UserMenuConfigurationCubit>().state);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'modifica widget'.toUpperCase(),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
         ),
-      ),
-      body: BlocConsumer<TemporaryConfigurationCubit,
-          List<UserConfigurationMenu>>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          List<UserConfigurationMenu> configurationMenus = state;
-          return Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).colorScheme.secondary,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    BoxVerticalEditableDashboardComponents(
-                      name: configurationMenus[0].serviceName,
-                      isMandatory: true,
-                      isRemoved: configurationMenus[0].isRemoved,
-                      onRemove: () =>
-                          onTapRemoveBox(configurationMenus[0], context),
-                      onEdit: () => onTapEditBox(0, context),
-                    ),
-                    BoxVerticalEditableDashboardComponents(
-                      name: configurationMenus[1].serviceName,
-                      isRemoved: configurationMenus[1].isRemoved,
-                      onRemove: () =>
-                          onTapRemoveBox(configurationMenus[1], context),
-                      onEdit: () => onTapEditBox(1, context),
-                    )
-                  ],
-                ),
-                BoxHorizzontalEditableDashboardComponents(
-                  name: configurationMenus[2].serviceName,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    BoxVerticalEditableDashboardComponents(
-                      name: configurationMenus[3].serviceName,
-                      isRemoved: configurationMenus[3].isRemoved,
-                      onRemove: () =>
-                          onTapRemoveBox(configurationMenus[3], context),
-                      onEdit: () => onTapEditBox(3, context),
-                    ),
-                    BoxVerticalEditableDashboardComponents(
-                      name: configurationMenus[4].serviceName,
-                      isRemoved: configurationMenus[4].isRemoved,
-                      onRemove: () =>
-                          onTapRemoveBox(configurationMenus[4], context),
-                      onEdit: () => onTapEditBox(4, context),
-                    )
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: BlocConsumer<TemporaryConfigurationCubit,
+            List<UserConfigurationMenu>>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            List<UserConfigurationMenu> configurationMenus = state;
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).colorScheme.secondary,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            context.read<TemporaryConfigurationCubit>().reset(
-                                context
-                                    .read<UserMenuConfigurationCubit>()
-                                    .state);
-                            context.maybePop();
-                          },
-                          child: Text('Annulla')),
-                      ElevatedButton(
-                          onPressed: () {
-                            final tempConfigurations = context
-                                .read<TemporaryConfigurationCubit>()
-                                .state;
-                            context
-                                .read<UserMenuConfigurationCubit>()
-                                .emit(List.from(tempConfigurations));
-                            context.maybePop();
-                          },
-                          child: Text('Salva')),
+                      BoxVerticalEditableDashboardComponents(
+                        name: configurationMenus[0].serviceName,
+                        isMandatory: true,
+                        isRemoved: configurationMenus[0].isRemoved,
+                        onRemove: () =>
+                            onTapRemoveBox(0,context),
+                        onEdit: () => onTapEditBox(0, context),
+                      ),
+                      BoxVerticalEditableDashboardComponents(
+                        name: configurationMenus[1].serviceName,
+                        isRemoved: configurationMenus[1].isRemoved,
+                        onRemove: () =>
+                            onTapRemoveBox(1,context),
+                        onEdit: () => onTapEditBox(1, context),
+                      )
                     ],
                   ),
-                )
-              ],
-            ),
-          );
-        },
+                  BoxHorizzontalEditableDashboardComponents(
+                    name: configurationMenus[2].serviceName,
+                    isRemoved: configurationMenus[2].isRemoved,
+                        onRemove: () =>
+                            onTapRemoveBox(2,context),
+                        onEdit: () => onTapEditBox(2, context),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BoxVerticalEditableDashboardComponents(
+                        name: configurationMenus[3].serviceName,
+                        isRemoved: configurationMenus[3].isRemoved,
+                        onRemove: () =>
+                            onTapRemoveBox(3,context),
+                        onEdit: () => onTapEditBox(3, context),
+                      ),
+                      BoxVerticalEditableDashboardComponents(
+                        name: configurationMenus[4].serviceName,
+                        isRemoved: configurationMenus[4].isRemoved,
+                        onRemove: () =>
+                            onTapRemoveBox(4,context),
+                        onEdit: () => onTapEditBox(4, context),
+                      )
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              context.read<TemporaryConfigurationCubit>().reset(
+                                  context
+                                      .read<UserMenuConfigurationCubit>()
+                                      .state);
+                              context.maybePop();
+                            },
+                            child: Text('Annulla')),
+                        ElevatedButton(
+                            onPressed: () {
+                              final tempConfigurations = context
+                                  .read<TemporaryConfigurationCubit>()
+                                  .state;
+                              context
+                                  .read<UserMenuConfigurationCubit>()
+                                  .emit(List.from(tempConfigurations));
+                              context.maybePop();
+                            },
+                            child: Text('Salva')),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
 
   void onTapRemoveBox(
-    UserConfigurationMenu userConfiguratioMenu,
+    int index,
     BuildContext context,
   ) {
+    UserConfigurationMenu emptyConf = UserConfigurationMenu(serviceName: '',isMandatory: false,isRemoved: true, position: 0);
     context
         .read<TemporaryConfigurationCubit>()
-        .removeConfiguration(userConfiguratioMenu);
+        .updateConfiguration(emptyConf, index);
   }
   void onTapEditBox(int position, BuildContext context) {
     showModalBottomSheet(

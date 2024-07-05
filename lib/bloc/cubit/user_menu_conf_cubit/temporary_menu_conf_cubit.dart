@@ -5,11 +5,16 @@ import 'package:municipium/repositories/user_repository.dart';
 class TemporaryConfigurationCubit extends Cubit<List<UserConfigurationMenu>> {
   UserRepository userRepository;
   TemporaryConfigurationCubit(this.userRepository) : super([]) {
-    if (state.isEmpty) {
-      emit(userRepository.initUserMenuInShared());
-    }
+    _initialize();
   }
 
+  Future<void> _initialize() async {
+    if (state.isEmpty) {
+      List<UserConfigurationMenu> conf = await userRepository.initUserMenuInShared();
+      emit(conf);
+    }
+  }
+  
   void addConfiguration(UserConfigurationMenu config) {
     state.add(config);
     emit(List.from(state)); // Emitti una nuova lista per aggiornare lo stato

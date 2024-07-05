@@ -15,7 +15,11 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         'lng' : from.lng,
         'logo': from.logo.toJson(),
         'background': from.background.toJson(),
-        'new_menu': from.new_menu.toJson() // Serializza l'oggetto MunicipiumImage
+        'appServiceOne' : from.appServiceOne,
+        'appServiceTwo' : from.appServiceTwo,
+        'appServiceThree' : from.appServiceThree,
+        'appServiceFour' : from.appServiceFour,
+        'new_menu': from.newMenu.toJson() // Serializza l'oggetto MunicipiumImage
       });
 
   @override
@@ -30,6 +34,10 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         background: MunicipiumImage.fromJson(
             json['background']), // Deserializza l'oggetto MunicipiumImage
         subdomain: json['subdomain'],
-        new_menu: NewMenuDTO.fromJson(json['new_menu']));
+        appServiceOne: json['appServiceOne'],
+        appServiceTwo: json['appServiceTwo'],
+        appServiceThree: json['appServiceThree'],
+        appServiceFour: json['appServiceFour'],
+        newMenu: NewMenuDTO.fromJson(json['new_menu']));
   }
 }
