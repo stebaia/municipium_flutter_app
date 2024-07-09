@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -18,5 +19,8 @@ abstract class MunicipalityService {
   @GET('municipalities/all=true&latitude={lat}&longitude={lng}&radius=50000')
   Future<List<MunicipalityDTO>> getListMunicipalityWithLatLng(
       @Path('lat') double lat, @Path('lng') double lng);
+
+  @GET('digital_dossier/configurations')
+  Future<Configurations> getMunicipalityConfigurations();
   
 }

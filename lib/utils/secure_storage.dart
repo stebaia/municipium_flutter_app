@@ -5,6 +5,8 @@ import 'package:municipium/repositories/mappers/municipality_secure_mapper.dart'
 class SecureStorage {
   final storage = const FlutterSecureStorage();
 
+  final String _configurationKey = "CONFIGURATIONS";
+
   final String _oneSignalKey = "ONE_SIGNAL_KEY";
 
   final String _municipalityKey = "MUNINICIPALITY_KEY";
@@ -25,6 +27,18 @@ class SecureStorage {
 
   Future setDeviceKeyInStorage(String device) async {
     await storage.write(key: _deviceKey, value: device);
+  }
+
+   Future setConfigurationsKeyInStorage(String conf) async {
+    await storage.write(key: _configurationKey, value: conf);
+  }
+
+  Future<String?> getConfigurationsFromStorage() async {
+    try {
+      return await storage.read(key: _configurationKey);
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   Future<String?> getDeviceFromStorage() async {
@@ -62,6 +76,9 @@ class SecureStorage {
       throw Exception(e);
     }
   }
+
+ 
+
 
   Future setOneSignalKeyInStorage(String key) async {
     await storage.write(key: _oneSignalKey, value: key);

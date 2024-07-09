@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:logger/logger.dart';
 import 'package:municipium/model/device/device_be.dart';
+import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
@@ -17,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MunicipalityRepository {
   final Mapper<Municipality, String> munMapper;
   final Mapper<DeviceBe, String> deviceMapper;
+  final Mapper<Configurations, String> configurationsMapper;
   final SecureStorage secureStorage;
   final MunicipalityService municipalityService;
   final MunicipalityBeService municipalityBeService;
@@ -31,6 +33,7 @@ class MunicipalityRepository {
       required this.municipalityService,
       required this.municipalityMapper,
       required this.municipalityBeService,
+      required this.configurationsMapper,
       required this.logger});
 
   Future<List<Municipality>> getMunicipalityList() async {
@@ -130,6 +133,37 @@ class MunicipalityRepository {
       final municipality = municipalityMapper.fromDTO(municipalityResponse);
       await secureStorage
           .setMunicipalityKeyInStorage(munMapper.from(municipality));
+      final deviceBeStorage = await getCurrentDevice();
+      final String? playerId = await OneSignal.User.getOnesignalId();
+      if(deviceBeStorage == null) {
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        String version = packageInfo.version;
+        String code = packageInfo.buildNumber;
+        String platform = '';
+        if(Platform.isAndroid){
+          platform = 'android';
+        }else {
+          platform = 'ios';
+        }
+        DeviceBe deviceBe = DeviceBe(playerId: playerId!, authToken: '', token: '', platform: platform, appVersion: version, udid: '', language: '');
+        final responseBePut = await municipalityBeService.putDevices(deviceBe);
+        deviceBe.udid = responseBePut.udid;
+        await secureStorage.setDeviceKeyInStorage(deviceMapper.from(deviceBe));
+        Map<String, dynamic> map = {
+          "municipalityId" : municipalityId,
+          "udid" : deviceBe.udid
+        };
+        OneSignal.User.addTags(map);
+      } else {
+        Map<String, dynamic> map = {
+          "municipalityId" : municipalityId,
+          "udid" : deviceBeStorage.udid
+        };
+        OneSignal.User.addTags(map);
+      }
+
+      final Configurations configurations = await municipalityService.getMunicipalityConfigurations();
+      secureStorage.setConfigurationsKeyInStorage(configurationsMapper.from(configurations));
       return municipality;
     } catch (error, stackTrace) {
       logger.e('Error in getting municipality');
@@ -186,8 +220,16 @@ class MunicipalityRepository {
     if(municipality != null) {
       print(municipality);
     }else {
-      print('no old muniicipality');
+      print('no old municipality');
     }
+  }
+
+  Future<Configurations?> getMunicipalityConfigurations() async {
+     final json = await secureStorage.getConfigurationsFromStorage();
+    if(json != null) {
+      return configurationsMapper.to(json);
+    }
+    return null;
   }
 
   Future<DeviceBe?> getCurrentDevice() async {

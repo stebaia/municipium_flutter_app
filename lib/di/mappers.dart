@@ -7,6 +7,9 @@ final List<SingleChildWidget> _mappers = [
   Provider<Mapper<DeviceBe, String>>(
     create: (_) => DeviceSecureMapper(),
   ),
+  Provider<Mapper<Configurations, String>>(
+    create: (_) => ConfigurationsMapper(),
+  ),
   Provider<DTOMapper<MunicipalityDTO, Municipality>>(
     create: (_) => MunicipalityMapper(),
   ),

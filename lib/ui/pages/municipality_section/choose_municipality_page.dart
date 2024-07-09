@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
+import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
@@ -83,6 +84,7 @@ class ChooseMunicipalityPage extends StatelessWidget
             BlocConsumer<MunicipalityBloc, MunicipalityState>(
               listener: (context, state) {
                 if(state is FetchedMunicipalityState) {
+                  context.read<MunicipalityUrlCubit>().fetchMunicipalityInStorage();
                   context.pushRoute(WelcomeRoute(municipalityId: state.municipality.muninicipalityId));
                 }
               },

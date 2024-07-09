@@ -43,9 +43,15 @@ class _SplashPageState extends State<SplashPage> {
       },
       child: const Scaffold(
         backgroundColor: ThemeHelper.blueMunicipium,
-        body: Center(
-          child: Icon(Icons.ac_unit),
-        ),
+        body: Column(
+          children: [
+            LinearProgressIndicator(),
+            Text('Bentornato su Municipium!', style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+            ),)
+          ],
+        )
       ),
     );
   }
