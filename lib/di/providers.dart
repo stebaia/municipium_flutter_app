@@ -4,6 +4,8 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
   List<SingleChildWidget> providers = [];
 
   String baseUrlBe = "https://api.municipiumapp.it/";
+  String baseUrlGastone = "https://staging.municipiumapp.it/api/gastone/";
+  
 
   return [
     Provider<Logger>(
