@@ -9,7 +9,7 @@ Future<List<SingleChildWidget>> providersFun() async {
   String baseUrlGastone = "https://staging.municipiumapp.it/api/gastone/";
   try {
     final municipality = await secureStorage.getMunicipalityObjectFromStorage();
-    baseUrl = "https://${municipality!.subdomain}/api/v2/";
+    baseUrl = "https://staging.municipiumapp.it/api/v2/";
   } catch (e) {
     baseUrl = "https://staging.municipiumapp.it/api/v2/";
   }

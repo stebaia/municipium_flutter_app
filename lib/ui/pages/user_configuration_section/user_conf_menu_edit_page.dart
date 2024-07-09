@@ -37,6 +37,11 @@ class UserConfMenuEditPage extends StatelessWidget {
           listener: (context, state) {},
           builder: (context, state) {
             List<UserConfigurationMenu> configurationMenus = state;
+            if(configurationMenus.isEmpty) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,

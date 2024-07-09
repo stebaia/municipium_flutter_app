@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
@@ -33,8 +34,11 @@ class HomePage extends StatelessWidget {
         
         },
         builder: (context, state) {
-          
+            
             List<UserConfigurationMenu> configurationMenus = state;
+            if(configurationMenus.isEmpty) {
+              return Center(child: CircularProgressIndicator(),);
+            }
             return Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -76,4 +80,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+  
+ 
 }

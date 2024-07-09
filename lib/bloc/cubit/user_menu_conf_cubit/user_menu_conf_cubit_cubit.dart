@@ -11,14 +11,18 @@ class UserMenuConfigurationCubit extends HydratedCubit<List<UserConfigurationMen
   final UserRepository userRepository;
 
   UserMenuConfigurationCubit(this.userRepository) : super([]) {
-    _initialize();
+    initialize();
   }
 
-  Future<void> _initialize() async {
-    if (state.isEmpty) {
+  Future<void> initialize() async {
+    
       List<UserConfigurationMenu> conf = await userRepository.initUserMenuInShared();
       emit(conf);
-    }
+    
+  }
+
+  void resetConf() {
+    emit([]);
   }
 
   void addConfiguration(UserConfigurationMenu config) {

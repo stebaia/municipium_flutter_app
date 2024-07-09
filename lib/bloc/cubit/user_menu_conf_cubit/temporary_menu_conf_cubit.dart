@@ -5,14 +5,14 @@ import 'package:municipium/repositories/user_repository.dart';
 class TemporaryConfigurationCubit extends Cubit<List<UserConfigurationMenu>> {
   UserRepository userRepository;
   TemporaryConfigurationCubit(this.userRepository) : super([]) {
-    _initialize();
+    initialize();
   }
 
-  Future<void> _initialize() async {
-    if (state.isEmpty) {
+  Future<void> initialize() async {
+   
       List<UserConfigurationMenu> conf = await userRepository.initUserMenuInShared();
       emit(conf);
-    }
+    
   }
   
   void addConfiguration(UserConfigurationMenu config) {

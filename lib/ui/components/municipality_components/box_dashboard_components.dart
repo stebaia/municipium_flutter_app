@@ -66,7 +66,7 @@ class BoxHorizzontalDashboardComponents extends StatelessWidget {
         color: Colors.amber,
         borderRadius: BorderRadius.circular(20)
       ),
-      child: Text(name),
+      child: Center(child: Text(name, style: TextStyle(color: Colors.black),)),
     );
   }
 }
