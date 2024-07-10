@@ -30,6 +30,7 @@ class _App extends State<App> {
     OneSignal.initialize("c1cd13b0-124b-441e-bc9f-309961066d16");
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('first_run') ?? true) {
+      // need this for IOS app deleting, securestorage is not deleted with app
       SecureStorage storage = SecureStorage();
 
       storage.deleteAll();
