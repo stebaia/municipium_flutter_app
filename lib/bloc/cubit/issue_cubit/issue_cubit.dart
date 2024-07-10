@@ -55,9 +55,12 @@ class IssueCubit extends Cubit<ProgressIssue> {
     emit(updatedIssue);
   }
 
-  void setAddress(String value) {
-    final updatedIssue = state.copyWith(address: value);
+  void setAddress(String value, {double? lat, double? lng}) {
+    final updatedIssue = (lat != null && lng != null)
+        ? state.copyWith(address: value, latitude: '$lat', longitude: '$lng')
+        : state.copyWith(address: value);
     emit(updatedIssue);
+    print("New state emitted: ${updatedIssue.address}");
   }
 
   void setMessage(String value) {

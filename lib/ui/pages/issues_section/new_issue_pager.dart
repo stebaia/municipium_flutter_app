@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
+import 'package:municipium/bloc/geolocation_bloc/geolocation_bloc_bloc.dart';
 import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/device/device_be.dart';
@@ -247,6 +248,7 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
           create: (context) =>
               MunicipalityBloc(municipalityRepository: context.read())
                 ..getDevice(),
-        )
+        ),
+        BlocProvider<GeolocationBloc>(create: (context) => GeolocationBloc())
       ], child: this);
 }

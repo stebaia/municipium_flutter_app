@@ -87,12 +87,14 @@ class NewIssueCategorySection extends StatelessWidget {
                             .isNotEmpty)
                     ? Row(
                         children: [
-                          Text(
-                              fetchedTags
-                                  .getFromIssueCategoryId(
-                                      state.issueCategoryId)!
-                                  .description,
-                              style: const TextStyle(letterSpacing: -0.4)),
+                          Expanded(
+                            child: Text(
+                                fetchedTags
+                                    .getFromIssueCategoryId(
+                                        state.issueCategoryId)!
+                                    .description,
+                                style: const TextStyle(letterSpacing: -0.4)),
+                          ),
                           const SizedBox()
                         ],
                       )

@@ -25,10 +25,11 @@ class NewIssueRecapSection extends StatelessWidget {
 
     return BlocBuilder<IssueCubit, ProgressIssue>(
       builder: (context, state) {
-        IssueMappedCategory category = fetchedTags.getFromIssueCategoryId(
-            (state.issueSubCategoryId! > 0
-                ? state.issueSubCategoryId
-                : state.issueCategoryId!))!;
+        IssueMappedCategory category = state.issueSubCategoryId! > 0
+            ? state.subList!
+                .where((element) => element.id == state.issueSubCategoryId)
+                .first
+            : fetchedTags.getFromIssueCategoryId(state.issueCategoryId!)!;
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -110,6 +111,37 @@ class NewIssueRecapSection extends StatelessWidget {
                         children: [
                           Text(
                             '${(state.name ?? '')} ${(state.surname ?? '')}',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 17,
+                                letterSpacing: -0.4),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'EMAIL',
+                            style: TextStyle(
+                                color: ThemeHelper.darkGrey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                letterSpacing: -0.4),
+                          ),
+                          SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            state.email ?? '',
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 17,

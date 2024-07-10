@@ -33,9 +33,11 @@ class PostIssueMapper extends DTOMapper<PostIssueDto, ProgressIssue> {
         ));
   }
 
-  ImageIssueDto createImageToSend(String? base64) {
+  ImageIssueDto? createImageToSend(String? base64) {
     String name = MunicipiumUtility.getDateForName();
-    return ImageIssueDto(
-        file: base64, filename: '$name.png', originalFilename: name);
+    return name != ''
+        ? ImageIssueDto(
+            file: base64, filename: '$name.png', originalFilename: name)
+        : null;
   }
 }
