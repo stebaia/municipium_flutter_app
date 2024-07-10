@@ -25,7 +25,9 @@ class PostIssueMapper extends DTOMapper<PostIssueDto, ProgressIssue> {
           name: model.name,
           surname: model.surname,
           email: model.email,
-          issueCategoryId: model.issueSubCategoryId ?? model.issueCategoryId,
+          issueCategoryId: (model.issueSubCategoryId ?? -1) > 0
+              ? model.issueSubCategoryId
+              : model.issueCategoryId,
           image1: createImageToSend(model.image1),
           image2: createImageToSend(model.image2),
           image3: createImageToSend(model.image3),
@@ -35,7 +37,7 @@ class PostIssueMapper extends DTOMapper<PostIssueDto, ProgressIssue> {
 
   ImageIssueDto? createImageToSend(String? base64) {
     String name = MunicipiumUtility.getDateForName();
-    return name != ''
+    return base64 != ''
         ? ImageIssueDto(
             file: base64, filename: '$name.png', originalFilename: name)
         : null;

@@ -8,21 +8,21 @@ part 'municipality_url_state.dart';
 class MunicipalityUrlCubit extends Cubit<MunicipalityUrlState> {
   final SecureStorage secureStorage;
   final BaseUrlType baseUrl;
-  MunicipalityUrlCubit({required this.secureStorage, required this.baseUrl}) : super(MunicipalityUrlState());
-
-  
+  MunicipalityUrlCubit({required this.secureStorage, required this.baseUrl})
+      : super(MunicipalityUrlState());
 
   Future<void> fetchMunicipalityInStorage() async {
     try {
       emit(MunicipalityUrlLoading());
-      final municipality = await secureStorage.getMunicipalityObjectFromStorage();
-      if(municipality != null) {
+      final municipality =
+          await secureStorage.getMunicipalityObjectFromStorage();
+      if (municipality != null) {
         final baseUrlEnv = 'https://${municipality.subdomain}/api/v2/';
         emit(MunicipalityUrlLoaded(baseUrlEnv));
-      }else {
+      } else {
         emit(MunicipalityUrlEmpty());
       }
-    }catch (e) {
+    } catch (e) {
       print(e);
       emit(MunicipalityUrlEmpty());
     }

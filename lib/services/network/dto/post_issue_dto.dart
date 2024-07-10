@@ -95,23 +95,33 @@ class IssueContentDto {
 
   // toJson method
   Map<String, dynamic> toJson() {
-    return {
-      'municipality_id': municipalityId,
-      'municipalityName': municipalityName,
-      'latitude': latitude,
-      'longitude': longitude,
-      'address': address,
-      'content': content,
-      'phone': phone,
-      'name': name,
-      'surname': surname,
-      'email': email,
-      'issue_category_id': issueCategoryId,
-      'image1': image1?.toJson(),
-      'image2': image2?.toJson(),
-      'image3': image3?.toJson(),
-      'image4': image4?.toJson(),
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['municipality_id'] = municipalityId;
+    data['municipalityName'] = municipalityName;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['address'] = address;
+    data['content'] = content;
+    data['phone'] = phone;
+    data['name'] = name;
+    data['surname'] = surname;
+    data['email'] = email;
+    data['issue_category_id'] = issueCategoryId;
+    if (image1 != null) {
+      data['image_data'] = image1?.toJson();
+    }
+    if (image2 != null) {
+      data['image2_data'] = image2?.toJson();
+    }
+    if (image3 != null) {
+      data['image3_data'] = image3?.toJson();
+    }
+    if (image4 != null) {
+      data['image4_data'] = image4?.toJson();
+    }
+
+    return data;
   }
 }
 

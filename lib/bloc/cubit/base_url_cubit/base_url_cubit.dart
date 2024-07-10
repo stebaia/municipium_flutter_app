@@ -7,15 +7,15 @@ part 'base_url_state.dart';
 
 class BaseUrlCubit extends HydratedCubit<BaseUrlState> {
   BaseUrlCubit() : super(const BaseUrlState());
-  
+
   @override
-  BaseUrlState? fromJson(Map<String, dynamic> json) => BaseUrlState(BaseUrlType.values.byName(json['baseUrl'] as String));
-  
-   @override
-  Map<String, dynamic>? toJson(BaseUrlState state) => {'baseUrl': state.baseUrlType.name};
+  BaseUrlState? fromJson(Map<String, dynamic> json) =>
+      BaseUrlState(BaseUrlType.values.byName(json['baseUrl'] as String));
 
-  void setBaseUrl(BaseUrlType? baseUrl) => emit(BaseUrlState(baseUrl ?? BaseUrlType.prod));
+  @override
+  Map<String, dynamic>? toJson(BaseUrlState state) =>
+      {'baseUrl': state.baseUrlType.name};
 
-  
-
+  void setBaseUrl(BaseUrlType? baseUrl) =>
+      emit(BaseUrlState(baseUrl ?? BaseUrlType.staging));
 }

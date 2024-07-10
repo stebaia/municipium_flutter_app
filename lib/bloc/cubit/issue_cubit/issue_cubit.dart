@@ -8,6 +8,7 @@ import 'package:municipium/model/municipality.dart';
 import 'package:municipium/repositories/issues_repository.dart';
 import 'package:municipium/services/network/dto/post_issue_dto.dart';
 import 'package:municipium/utils/municipium_utility.dart';
+import 'dart:convert';
 import 'package:path/path.dart' as p;
 
 class IssueCubit extends Cubit<ProgressIssue> {
@@ -140,7 +141,8 @@ class IssueCubit extends Cubit<ProgressIssue> {
     return updatedIssue;
   }
 
-  Future<bool> postIssue(DeviceBe? device, Municipality? municipality) async {
+  Future<Map<String, bool>> postIssue(
+      DeviceBe? device, Municipality? municipality) async {
     ProgressIssue issue = await buildMissingFields(device, municipality);
     PostIssueDto issueDto = issuesRepository.postIssueMapper.toDTO(issue);
     return issuesRepository.postIssue(issueDto);

@@ -15,7 +15,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MunicipiumUtility {
-
   static String BASEURL_PROD = 'https://cloud.municipiumapp.it/api/v2/';
 
   static String BASEURL_STAGING = 'https://staging.municipiumapp.it/api/v2/';
@@ -86,8 +85,11 @@ class MunicipiumUtility {
     List<String> base64List = [];
     for (XFile file in list) {
       File imageFile = File(file.path);
-      List<int> imageBytes = await imageFile.readAsBytes();
-      String base64 = base64Encode(imageBytes);
+      List<int> imageBytes = await imageFile.readAsBytesSync();
+      String base64 = base64Encode(imageBytes)
+          .replaceAll('+', '-')
+          .replaceAll('/', '_')
+          .replaceAll('=', '');
       base64List.add(base64);
     }
     return base64List;

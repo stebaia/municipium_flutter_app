@@ -56,9 +56,9 @@ class IssuesRepository {
     }
   }
 
-  Future<bool> postIssue(PostIssueDto issueDto) async {
+  Future<Map<String, bool>> postIssue(PostIssueDto issueDto) async {
     try {
-      bool response = await issueService.postIssue(issueDto);
+      Map<String, bool> response = await issueService.postIssue(issueDto);
       print(response);
       return response;
     } catch (error, stackTrace) {

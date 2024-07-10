@@ -25,5 +25,5 @@ abstract class IssueService {
   Future<List<IssueCategoryTagDto>> getIssueCategoriesTags();
 
   @POST('issues')
-  Future<bool> postIssue(@Body() PostIssueDto issue);
+  Future<Map<String, bool>> postIssue(@Body() PostIssueDto issue);
 }
