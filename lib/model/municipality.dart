@@ -11,8 +11,11 @@ class Municipality extends Equatable {
   final double lng;
   final MunicipiumImage background;
   final MunicipiumImage logo;
-  final NewMenuDTO new_menu;
-
+  final NewMenuDTO newMenu;
+  final String appServiceOne;
+  final String appServiceTwo;
+  final String appServiceThree;
+  final String appServiceFour;
   const Municipality(
       {required this.municipalityName,
       required this.muninicipalityId,
@@ -21,7 +24,11 @@ class Municipality extends Equatable {
       required this.lat,
       required this.lng,
       required this.subdomain,
-      required this.new_menu});
+      required this.appServiceOne,
+      required this.appServiceTwo,
+      required this.appServiceThree,
+      required this.appServiceFour,
+      required this.newMenu});
 
   @override
   List<Object?> get props => [
@@ -32,6 +39,10 @@ class Municipality extends Equatable {
         logo,
         lat,
         lng,
-        new_menu
+        newMenu,
+        appServiceOne,
+        appServiceTwo,
+        appServiceThree,
+        appServiceFour
       ];
 }

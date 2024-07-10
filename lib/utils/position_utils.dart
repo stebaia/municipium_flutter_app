@@ -37,3 +37,8 @@ static Future<Position> getCurrentPosition() async {
 }
 
 }
+
+enum BaseUrlType {
+  prod,
+  staging
+}

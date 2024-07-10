@@ -14,47 +14,47 @@ import 'package:auto_route/auto_route.dart';
 class MenuHelper {
   static List<MenuItem> getIterableMenu(Municipality municipality) {
     List<MenuItem> list = [];
-    if (municipality.new_menu.news != null) {
+    if (municipality.newMenu.news != null) {
       list.add(MenuItem(type: MenuItemType.news));
     }
-    if (municipality.new_menu.events != null) {
+    if (municipality.newMenu.events != null) {
       list.add(MenuItem(type: MenuItemType.events));
     }
-    if (municipality.new_menu.issue != null) {
+    if (municipality.newMenu.issue != null) {
       list.add(MenuItem(type: MenuItemType.issue));
     }
-    if (municipality.new_menu.penalties != null) {
+    if (municipality.newMenu.penalties != null) {
       list.add(MenuItem(type: MenuItemType.penalties));
     }
-    if (municipality.new_menu.surveys != null) {
+    if (municipality.newMenu.surveys != null) {
       list.add(MenuItem(type: MenuItemType.surveys));
     }
-    if (municipality.new_menu.garbage != null) {
+    if (municipality.newMenu.garbage != null) {
       list.add(MenuItem(
-          type: MenuItemType.garbage, subMenu: municipality.new_menu.garbage));
+          type: MenuItemType.garbage, subMenu: municipality.newMenu.garbage));
     }
-    if (municipality.new_menu.ecoattivi != null) {
+    if (municipality.newMenu.ecoattivi != null) {
       list.add(MenuItem(type: MenuItemType.ecoattivi));
     }
-    if (municipality.new_menu.sportelloTelematico != null) {
+    if (municipality.newMenu.sportelloTelematico != null) {
       list.add(MenuItem(type: MenuItemType.sportelloTelematico));
     }
-    if (municipality.new_menu.poi != null) {
+    if (municipality.newMenu.poi != null) {
       list.add(MenuItem(type: MenuItemType.poi));
     }
-    if (municipality.new_menu.services != null) {
+    if (municipality.newMenu.services != null) {
       list.add(MenuItem(type: MenuItemType.services));
     }
-    if (municipality.new_menu.dms != null) {
+    if (municipality.newMenu.dms != null) {
       list.add(
-          MenuItem(type: MenuItemType.dms, subMenu: municipality.new_menu.dms));
+          MenuItem(type: MenuItemType.dms, subMenu: municipality.newMenu.dms));
     }
-    if (municipality.new_menu.civilDefence != null) {
+    if (municipality.newMenu.civilDefence != null) {
       list.add(MenuItem(
           type: MenuItemType.civilDefence,
-          subMenu: municipality.new_menu.civilDefence));
+          subMenu: municipality.newMenu.civilDefence));
     }
-    if (municipality.new_menu.payment != null) {
+    if (municipality.newMenu.payment != null) {
       list.add(MenuItem(type: MenuItemType.payment));
     }
     return list;

@@ -39,7 +39,7 @@ class MenuDrawer extends StatelessWidget {
                       onTap: () => scaffoldKey.currentState?.closeDrawer())
                 ],
               ),
-              if (municipality.new_menu.digitalDossier != null) ...[
+              if (municipality.newMenu.digitalDossier != null) ...[
                 MenuRow(
                     textToShow: AppLocalizations.of(context)!.spid_login_menu,
                     onTapMethod: () {},

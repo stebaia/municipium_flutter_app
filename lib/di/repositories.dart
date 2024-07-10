@@ -3,8 +3,10 @@ part of 'dependency_injector.dart';
 final List<RepositoryProvider> _repositories = [
   RepositoryProvider<MunicipalityRepository>(
       create: (context) => MunicipalityRepository(
+          configurationsMapper: context.read(),
           munMapper: context.read(),
           deviceMapper: context.read(),
+          baseMunicipalityService: context.read(),
           municipalityBeService: context.read(),
           secureStorage: context.read(),
           municipalityService: context.read(),
@@ -40,6 +42,11 @@ final List<RepositoryProvider> _repositories = [
         issueService: context.read(),
         postIssueMapper: context.read(),
         logger: context.read()),
+  ),
+  RepositoryProvider<UserRepository>(
+    create: (context) => UserRepository(
+        municipalityRepository: context.read(),
+       secureStorage: context.read())
   ),
   RepositoryProvider<PnrrServiceRepository>(
     create: (context) => PnrrServiceRepository(

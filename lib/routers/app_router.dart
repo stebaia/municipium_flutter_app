@@ -36,6 +36,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: WelcomeRoute.page),
         AutoRoute(page: NewsDetailRoute.page),
         AutoRoute(page: PointOfInterestListRoute.page),
-        AutoRoute(page: SettingsRoute.page)
+        AutoRoute(page: SettingsRoute.page),
+        AutoRoute(page: UserConfMenuEditRoute.page)
       ];
 }

@@ -9,5 +9,7 @@ final List<BlocProvider> _blocs = [
   BlocProvider<IssueCubit>(
     create: (context) => IssueCubit(issuesRepository: context.read()),
   ),
-  BlocProvider<ThemeCubit>(create: (_) => ThemeCubit())
+  BlocProvider<ThemeCubit>(create: (_) => ThemeCubit()),
+  BlocProvider<TemporaryConfigurationCubit>(create: (context) => TemporaryConfigurationCubit(context.read())),
+  BlocProvider<UserMenuConfigurationCubit>(create: (context) => UserMenuConfigurationCubit(context.read())),
 ];

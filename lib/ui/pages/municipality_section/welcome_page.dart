@@ -45,7 +45,13 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<MunicipalityBloc, MunicipalityState>(
+      body: BlocConsumer<MunicipalityBloc, MunicipalityState>(
+          listener: (context, state) {
+            if(state is ErrorMunicipalityState) {
+              
+              context.pushRoute(const OnboardingRoute());
+            }
+          },
           builder: ((context, state) {
         if (state is FetchingMunicipalityState) {
           return Center(
@@ -120,7 +126,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           fillColor: ThemeHelper.blueMunicipium,
                           isEnabled: true,
                           onTap: () {
-                            context.pushRoute(CoreMunicipalityRoute());
+                            context.pushRoute(CoreMunicipalityRoute(municipalityId: widget.municipalityId));
                           },
                           text: AppLocalizations.of(context)!
                               .btn_go_to_municipium,

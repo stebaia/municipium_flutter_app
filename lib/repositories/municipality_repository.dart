@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:logger/logger.dart';
 import 'package:municipium/model/device/device_be.dart';
+import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/model/user/user_configuration_menu.dart';
+import 'package:municipium/services/network/api/base_municipality_service/base_municipality_service.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
@@ -16,8 +19,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MunicipalityRepository {
   final Mapper<Municipality, String> munMapper;
   final Mapper<DeviceBe, String> deviceMapper;
+  final Mapper<Configurations, String> configurationsMapper;
   final SecureStorage secureStorage;
   final MunicipalityService municipalityService;
+  final BaseMunicipalityService baseMunicipalityService;
   final MunicipalityBeService municipalityBeService;
   final DTOMapper<MunicipalityDTO, Municipality> municipalityMapper;
   final Logger logger;
@@ -29,13 +34,15 @@ class MunicipalityRepository {
       required this.deviceMapper,
       required this.municipalityService,
       required this.municipalityMapper,
+      required this.baseMunicipalityService,
       required this.municipalityBeService,
+      required this.configurationsMapper,
       required this.logger});
 
   Future<List<Municipality>> getMunicipalityList() async {
     try {
       final municipalityResponse =
-          await municipalityService.getListMunicipality();
+          await baseMunicipalityService.getListMunicipality();
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
@@ -51,7 +58,7 @@ class MunicipalityRepository {
       double lat, double lng) async {
     try {
       final municipalityResponse =
-          await municipalityService.getListMunicipalityWithLatLng(lat, lng);
+          await baseMunicipalityService.getListMunicipalityWithLatLng(lat, lng);
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
@@ -63,6 +70,65 @@ class MunicipalityRepository {
     }
   }
 
+  void addUserConfigurationMenus(Municipality municipality, List<UserConfigurationMenu> listWrapped) {
+  // Aggiungi news
+  if (municipality.newMenu.news != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.news!, isMandatory: false, position: 0));
+  }
+  // Aggiungi issue
+  if (municipality.newMenu.issue != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.issue!, isMandatory: false, position: 1));
+  }
+  // Aggiungi penalties
+  if (municipality.newMenu.penalties != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.penalties!, isMandatory: false, position: 2));
+  }
+  // Aggiungi surveys
+  if (municipality.newMenu.surveys != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.surveys!, isMandatory: false, position: 3));
+  }
+  // Aggiungi garbage
+  if (municipality.newMenu.garbage != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.garbage!.toString(), isMandatory: false, position: 4));
+  }
+  // Aggiungi ecoattivi
+  if (municipality.newMenu.ecoattivi != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.ecoattivi!, isMandatory: false, position: 5));
+  }
+  // Aggiungi poi
+  if (municipality.newMenu.poi != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.poi!, isMandatory: false, position: 6));
+  }
+  // Aggiungi services
+  if (municipality.newMenu.services != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.services!, isMandatory: false, position: 7));
+  }
+  // Aggiungi dms
+  if (municipality.newMenu.dms != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.dms!.toString(), isMandatory: false, position: 8));
+  }
+  // Aggiungi digitalDossier
+  if (municipality.newMenu.digitalDossier != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.digitalDossier!, isMandatory: false, position: 9));
+  }
+  // Aggiungi civilDefence
+  if (municipality.newMenu.civilDefence != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.civilDefence!.toString(), isMandatory: false, position: 10));
+  }
+  // Aggiungi payment
+  if (municipality.newMenu.payment != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.payment!, isMandatory: false, position: 11));
+  }
+  // Aggiungi events
+  if (municipality.newMenu.events != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.events!, isMandatory: false, position: 12));
+  }
+  // Aggiungi sportelloTelematico
+  if (municipality.newMenu.sportelloTelematico != null) {
+    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.sportelloTelematico!, isMandatory: false, position: 13));
+  }
+}
+
   Future<Municipality> saveMunicipality(int municipalityId) async {
     try {
       final municipalityResponse =
@@ -70,6 +136,37 @@ class MunicipalityRepository {
       final municipality = municipalityMapper.fromDTO(municipalityResponse);
       await secureStorage
           .setMunicipalityKeyInStorage(munMapper.from(municipality));
+      final deviceBeStorage = await getCurrentDevice();
+      final String? playerId = await OneSignal.User.getOnesignalId();
+      if(deviceBeStorage == null) {
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        String version = packageInfo.version;
+        String code = packageInfo.buildNumber;
+        String platform = '';
+        if(Platform.isAndroid){
+          platform = 'android';
+        }else {
+          platform = 'ios';
+        }
+        DeviceBe deviceBe = DeviceBe(playerId: playerId!, authToken: '', token: '', platform: platform, appVersion: version, udid: '', language: '');
+        final responseBePut = await municipalityBeService.putDevices(deviceBe);
+        deviceBe.udid = responseBePut.udid;
+        await secureStorage.setDeviceKeyInStorage(deviceMapper.from(deviceBe));
+        Map<String, dynamic> map = {
+          "municipalityId" : municipalityId,
+          "udid" : deviceBe.udid
+        };
+        OneSignal.User.addTags(map);
+      } else {
+        Map<String, dynamic> map = {
+          "municipalityId" : municipalityId,
+          "udid" : deviceBeStorage.udid
+        };
+        OneSignal.User.addTags(map);
+      }
+
+      final Configurations configurations = await municipalityService.getMunicipalityConfigurations();
+      secureStorage.setConfigurationsKeyInStorage(configurationsMapper.from(configurations));
       return municipality;
     } catch (error, stackTrace) {
       logger.e('Error in getting municipality');
@@ -126,8 +223,16 @@ class MunicipalityRepository {
     if(municipality != null) {
       print(municipality);
     }else {
-      print('no old muniicipality');
+      print('no old municipality');
     }
+  }
+
+  Future<Configurations?> getMunicipalityConfigurations() async {
+     final json = await secureStorage.getConfigurationsFromStorage();
+    if(json != null) {
+      return configurationsMapper.to(json);
+    }
+    return null;
   }
 
   Future<DeviceBe?> getCurrentDevice() async {
