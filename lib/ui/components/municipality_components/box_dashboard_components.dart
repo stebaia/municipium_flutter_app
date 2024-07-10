@@ -9,7 +9,7 @@ class BoxVerticalDashboardComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isRemoved ? Container(
+  return (isRemoved || name.isEmpty) ? Container(
       margin: const EdgeInsets.all(6),
           height: MediaQuery.of(context).size.height * 0.27,
           width: MediaQuery.of(context).size.width * 0.45,
@@ -55,7 +55,7 @@ class BoxHorizzontalDashboardComponents extends StatelessWidget {
   final bool isRemoved;
   @override
   Widget build(BuildContext context) {
-    return isRemoved ? Container(
+    return (isRemoved || name.isEmpty)? Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       height: MediaQuery.of(context).size.height * 0.14,
       width: MediaQuery.of(context).size.width,) : Container(

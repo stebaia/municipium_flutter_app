@@ -56,6 +56,12 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
         baseUrl: baseUrl,
       ),
     ),
+    Provider<BaseMunicipalityService>(
+      create: (context) => BaseMunicipalityService(
+        context.read<Dio>(),
+        baseUrl: MunicipiumUtility.BASEURL_STAGING,
+      ),
+    ),
     Provider<MunicipalityBeService>(create: (context) => MunicipalityBeService(context.read<Dio>(), baseUrl: baseUrlBe),),
     Provider<IssueService>(
         create: (context) =>

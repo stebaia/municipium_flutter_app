@@ -18,7 +18,7 @@ class BoxVerticalEditableDashboardComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isRemoved
+    return (isRemoved || name.isEmpty)
         ? _emptyWidgetContainer(context)
         : _completeWidgetContainer(context, name);
   }
@@ -104,7 +104,7 @@ class BoxHorizzontalEditableDashboardComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isRemoved ? _emptyWidgetContainer(context) : _completeHorizzotalWidget(context);
+    return (isRemoved || name.isEmpty) ? _emptyWidgetContainer(context) : _completeHorizzotalWidget(context);
   }
 
   Widget _completeHorizzotalWidget(BuildContext context) {

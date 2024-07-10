@@ -6,6 +6,7 @@ final List<RepositoryProvider> _repositories = [
           configurationsMapper: context.read(),
           munMapper: context.read(),
           deviceMapper: context.read(),
+          baseMunicipalityService: context.read(),
           municipalityBeService: context.read(),
           secureStorage: context.read(),
           municipalityService: context.read(),

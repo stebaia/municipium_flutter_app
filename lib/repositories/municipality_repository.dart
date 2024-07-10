@@ -5,6 +5,7 @@ import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
+import 'package:municipium/services/network/api/base_municipality_service/base_municipality_service.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
@@ -21,6 +22,7 @@ class MunicipalityRepository {
   final Mapper<Configurations, String> configurationsMapper;
   final SecureStorage secureStorage;
   final MunicipalityService municipalityService;
+  final BaseMunicipalityService baseMunicipalityService;
   final MunicipalityBeService municipalityBeService;
   final DTOMapper<MunicipalityDTO, Municipality> municipalityMapper;
   final Logger logger;
@@ -32,6 +34,7 @@ class MunicipalityRepository {
       required this.deviceMapper,
       required this.municipalityService,
       required this.municipalityMapper,
+      required this.baseMunicipalityService,
       required this.municipalityBeService,
       required this.configurationsMapper,
       required this.logger});
@@ -39,7 +42,7 @@ class MunicipalityRepository {
   Future<List<Municipality>> getMunicipalityList() async {
     try {
       final municipalityResponse =
-          await municipalityService.getListMunicipality();
+          await baseMunicipalityService.getListMunicipality();
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
@@ -55,7 +58,7 @@ class MunicipalityRepository {
       double lat, double lng) async {
     try {
       final municipalityResponse =
-          await municipalityService.getListMunicipalityWithLatLng(lat, lng);
+          await baseMunicipalityService.getListMunicipalityWithLatLng(lat, lng);
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));

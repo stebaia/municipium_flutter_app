@@ -126,7 +126,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           fillColor: ThemeHelper.blueMunicipium,
                           isEnabled: true,
                           onTap: () {
-                            context.pushRoute(CoreMunicipalityRoute());
+                            context.pushRoute(CoreMunicipalityRoute(municipalityId: widget.municipalityId));
                           },
                           text: AppLocalizations.of(context)!
                               .btn_go_to_municipium,

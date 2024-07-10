@@ -13,12 +13,6 @@ abstract class MunicipalityService {
   Future<MunicipalityDTO> getMunicipality(
       @Path('municipalityId') int municipalityId);
 
-  @GET('municipalities/')
-  Future<List<MunicipalityDTO>> getListMunicipality();
-
-  @GET('municipalities/all=true&latitude={lat}&longitude={lng}&radius=50000')
-  Future<List<MunicipalityDTO>> getListMunicipalityWithLatLng(
-      @Path('lat') double lat, @Path('lng') double lng);
 
   @GET('digital_dossier/configurations')
   Future<Configurations> getMunicipalityConfigurations();

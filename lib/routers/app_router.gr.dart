@@ -65,12 +65,14 @@ abstract class $AppRouter extends _i25.RootStackRouter {
       );
     },
     CoreMunicipalityRoute.name: (routeData) {
-      final args = routeData.argsAs<CoreMunicipalityRouteArgs>(
-          orElse: () => const CoreMunicipalityRouteArgs());
+      final args = routeData.argsAs<CoreMunicipalityRouteArgs>();
       return _i25.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child:
-            _i25.WrappedRoute(child: _i2.CoreMunicipalityPage(key: args.key)),
+        child: _i25.WrappedRoute(
+            child: _i2.CoreMunicipalityPage(
+          key: args.key,
+          municipalityId: args.municipalityId,
+        )),
       );
     },
     DetailPoiRoute.name: (routeData) {
@@ -287,10 +289,14 @@ class CoreMunicipalityRoute
     extends _i25.PageRouteInfo<CoreMunicipalityRouteArgs> {
   CoreMunicipalityRoute({
     _i26.Key? key,
+    required int municipalityId,
     List<_i25.PageRouteInfo>? children,
   }) : super(
           CoreMunicipalityRoute.name,
-          args: CoreMunicipalityRouteArgs(key: key),
+          args: CoreMunicipalityRouteArgs(
+            key: key,
+            municipalityId: municipalityId,
+          ),
           initialChildren: children,
         );
 
@@ -301,13 +307,18 @@ class CoreMunicipalityRoute
 }
 
 class CoreMunicipalityRouteArgs {
-  const CoreMunicipalityRouteArgs({this.key});
+  const CoreMunicipalityRouteArgs({
+    this.key,
+    required this.municipalityId,
+  });
 
   final _i26.Key? key;
 
+  final int municipalityId;
+
   @override
   String toString() {
-    return 'CoreMunicipalityRouteArgs{key: $key}';
+    return 'CoreMunicipalityRouteArgs{key: $key, municipalityId: $municipalityId}';
   }
 }
 

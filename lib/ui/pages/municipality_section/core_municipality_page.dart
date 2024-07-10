@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/app.dart';
+import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
@@ -17,14 +18,15 @@ import 'package:municipium/utils/theme_helper.dart';
 @RoutePage()
 class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  CoreMunicipalityPage({super.key});
+  final int municipalityId;
+  CoreMunicipalityPage({super.key, required this.municipalityId});
 
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<MunicipalityBloc>(
           create: (context) =>
               MunicipalityBloc(municipalityRepository: context.read())
-                ..fetchMunicipality(8093),
+                ..fetchMunicipality(municipalityId),
         ),
       ], child: this);
   @override
@@ -48,6 +50,7 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
             if(state is FetchedMunicipalityState) {
               context.read<UserMenuConfigurationCubit>().initialize();
               context.read<TemporaryConfigurationCubit>().initialize();
+              context.read<MunicipalityGlobalCubit>().getStoredMunicipalityGlobalState();
             }
           },
           child: Scaffold(

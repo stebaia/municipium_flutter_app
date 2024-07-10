@@ -60,6 +60,7 @@ import 'package:municipium/repositories/pnrr_service_repository.dart';
 import 'package:municipium/repositories/point_of_interest_repository.dart';
 import 'package:municipium/repositories/reservations_repository.dart';
 import 'package:municipium/repositories/user_repository.dart';
+import 'package:municipium/services/network/api/base_municipality_service/base_municipality_service.dart';
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/api/event_service/event_service.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
