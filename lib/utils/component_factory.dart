@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:municipium/ui/components/autocomplete_textfield.dart';
 import 'package:municipium/ui/components/bordered_textfield.dart';
 import 'package:municipium/ui/components/custom_row.dart';
 import 'package:municipium/ui/components/horizzontal_gallery.dart';
@@ -107,9 +110,14 @@ class ComponentFactory {
       IconButton? customIcon,
       String? placeHolder,
       Function(String)? onChanged,
+      Function(String)? onFieldSubmitted,
       double? height,
       String? value,
       TextInputType? keyboardType}) {
+    TextEditingController controller = TextEditingController(text: value);
+    controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: controller.text.length));
+
     return Column(
       children: [
         Row(
@@ -132,8 +140,85 @@ class ComponentFactory {
           customIcon: customIcon,
           placeHolder: placeHolder,
           onChanged: onChanged,
+          onFieldSubmitted: onFieldSubmitted,
           height: height,
-          value: value,
+          controller: controller,
+          keyboardType: keyboardType,
+        )
+      ],
+    );
+  }
+
+  static Widget getAutocompleteTextField(
+      {String? title,
+      IconButton? customIcon,
+      String? placeHolder,
+      Function(String)? onFieldSubmitted,
+      double? height,
+      String? value,
+      TextInputType? keyboardType}) {
+    TextEditingController controller = TextEditingController(text: value);
+    controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: controller.text.length));
+    String apiKey = Platform.isAndroid
+        ? "AIzaSyDQiFkb2LQuyamAtqPf6W3ATjwsuNpEPtA"
+        : "AIzaSyAU7KLScKSuOC94Kdvq_BnK3pmTaXu4vOk";
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              (title ?? placeHolder ?? '').toUpperCase(),
+              style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  letterSpacing: -0.4),
+            ),
+            const SizedBox()
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        /*GooglePlaceAutoCompleteTextField(
+            textEditingController: controller,
+            googleAPIKey: apiKey,
+            inputDecoration: InputDecoration(),
+            debounceTime: 800, // default 600 ms,
+            countries: ["in", "fr"], // optional by default null is set
+            isLatLngRequired:
+                true, // if you required coordinates from place detail
+            getPlaceDetailWithLatLng: (Prediction prediction) {
+              // this method will return latlng with place detail
+              print("placeDetails" + prediction.lng.toString());
+            }, // this callback is called when isLatLngRequired is true
+            itemClick: (Prediction prediction) {
+              controller.text = prediction.description ?? '';
+              controller.selection = TextSelection.fromPosition(
+                  TextPosition(offset: (prediction.description ?? '').length));
+            },
+            // if we want to make custom list item builder
+            itemBuilder: (context, index, Prediction prediction) {
+              return Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    Icon(Icons.location_on),
+                    SizedBox(
+                      width: 7,
+                    ),
+                    Expanded(child: Text("${prediction.description ?? ""}"))
+                  ],
+                ),
+              );
+            })*/
+        AutocompleteTextfield(
+          title: title,
+          customIcon: customIcon,
+          placeHolder: placeHolder,
+          onFieldSubmitted: onFieldSubmitted,
+          height: height,
+          controller: controller,
           keyboardType: keyboardType,
         )
       ],

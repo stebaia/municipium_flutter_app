@@ -11,7 +11,6 @@ class SecureStorage {
 
   final String _deviceKey = "DEVICE_KEY";
 
-
   Future setMunicipalityKeyInStorage(String municipality) async {
     await storage.write(key: _municipalityKey, value: municipality);
   }
@@ -72,5 +71,10 @@ class SecureStorage {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  void deleteAll() {
+    deleteOneSignalKeySecureData();
+    deleteMunicipalitylKeySecureData();
   }
 }

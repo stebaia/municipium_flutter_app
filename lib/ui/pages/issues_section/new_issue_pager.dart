@@ -3,9 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
+import 'package:municipium/bloc/geolocation_bloc/geolocation_bloc_bloc.dart';
 import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
+import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
+import 'package:municipium/model/municipality.dart';
 import 'package:municipium/ui/components/buttons/rounded_shape_button.dart';
 import 'package:municipium/ui/components/pager/progress_pager_stepper.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_category_section.dart';
@@ -63,7 +68,7 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
     final PageController pageController = PageController();
     totalPage = pages.length;
     final issueCubit = context.read<IssueCubit>();
-
+    final municipalityBloc = context.read<MunicipalityBloc>();
     return Scaffold(
       appBar: AppBar(
         // Rimuovi il titolo
@@ -135,7 +140,7 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                           controller: pageController,
                           itemCount: pages.length,
                           onPageChanged: (value) {
-                            context.read<IssueCubit>().setCurrentPage(value);
+                            issueCubit.setCurrentPage(value);
                           },
                           itemBuilder: ((context, index) {
                             return pages[index];
@@ -168,15 +173,26 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                           const SizedBox(),
                           TextButton(
                             onPressed: checkStep
-                                ? (() {
-                                    FocusScope.of(context).unfocus();
-                                    pageController.nextPage(
-                                      duration: const Duration(
-                                          milliseconds:
-                                              500), // Durata dell'animazione
-                                      curve:
-                                          Curves.ease, // Curva dell'animazione
-                                    );
+                                ? (() async {
+                                    if (stateIssue.currentPage == 3) {
+                                      final DeviceBe? device =
+                                          await municipalityBloc.getDevice();
+                                      final Municipality? municipality =
+                                          await municipalityBloc
+                                              .getMunicipality();
+                                      issueCubit.postIssue(
+                                          device, municipality);
+                                      print('');
+                                    } else {
+                                      FocusScope.of(context).unfocus();
+                                      pageController.nextPage(
+                                        duration: const Duration(
+                                            milliseconds:
+                                                500), // Durata dell'animazione
+                                        curve: Curves
+                                            .ease, // Curva dell'animazione
+                                      );
+                                    }
                                   })
                                 : null,
                             child: RoundedShapeButton(
@@ -226,7 +242,13 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
             ..fetchIssueTagsCategories(),
         ),
         BlocProvider<IssueCubit>(
-          create: (context) => IssueCubit(),
-        )
+          create: (context) => IssueCubit(issuesRepository: context.read()),
+        ),
+        BlocProvider<MunicipalityBloc>(
+          create: (context) =>
+              MunicipalityBloc(municipalityRepository: context.read())
+                ..getDevice(),
+        ),
+        BlocProvider<GeolocationBloc>(create: (context) => GeolocationBloc())
       ], child: this);
 }

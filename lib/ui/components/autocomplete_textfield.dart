@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
-class BorderedTextfield extends StatelessWidget {
-  BorderedTextfield(
+class AutocompleteTextfield extends StatelessWidget {
+  AutocompleteTextfield(
       {Key? key,
       this.controller,
       this.title,
       this.customIcon,
       this.placeHolder,
-      this.onChanged,
       this.onFieldSubmitted,
       this.height,
       this.value,
@@ -20,7 +20,6 @@ class BorderedTextfield extends StatelessWidget {
   String? title;
   IconButton? customIcon;
   String? placeHolder;
-  Function(String)? onChanged;
   Function(String)? onFieldSubmitted;
   double? height;
   String? value;
@@ -37,13 +36,35 @@ class BorderedTextfield extends StatelessWidget {
       child: TextFormField(
         keyboardType: keyboardType ?? TextInputType.text,
         controller: controller,
-        onChanged: onChanged,
         onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
             suffixIcon: customIcon,
             hintText: placeHolder,
             border: InputBorder.none,
             hintStyle: const TextStyle(color: ThemeHelper.lightGrey)),
+        onChanged: (value) async {
+          /*Prediction? prediction = await PlacesAutocomplete.show(
+            radius: 500000,
+            startText: value,
+            context: context,
+            apiKey: 'AIzaSyDQiFkb2LQuyamAtqPf6W3ATjwsuNpEPtA',
+            mode: Mode.overlay,
+            language: 'it',
+            //components: [Component(Component.country, 'it')],
+          );
+
+          if (prediction != null) {
+            PlacesDetailsResponse detail = await GoogleMapsPlaces(
+                    apiKey: 'AIzaSyDQiFkb2LQuyamAtqPf6W3ATjwsuNpEPtA')
+                .getDetailsByPlaceId(prediction.placeId!);
+            double lat = detail.result.geometry!.location.lat;
+            double lng = detail.result.geometry!.location.lng;
+            String formattedAddress = detail.result.formattedAddress ?? '';
+
+            controller!.text = formattedAddress;
+            //onFieldSubmitted!(formattedAddress);
+          }*/
+        },
       ),
     );
   }
