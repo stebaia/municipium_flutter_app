@@ -44,6 +44,14 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
     }
   }
 
+  FutureOr<void> getConfigurationForMunicipality() async {
+    try {
+      await municipalityRepository.getConfigurationsAndSave();
+    } catch (ex) {
+      print(ex);
+    }
+  }
+
   Future<Municipality?> getMunicipality() async {
     try {
       final municipality = await municipalityRepository.currentMunicipality;

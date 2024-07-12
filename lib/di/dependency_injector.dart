@@ -118,7 +118,8 @@ class DependencyInjector extends StatelessWidget {
           builder: (context, state) {
             return BlocProvider(
               create: (context) => MunicipalityUrlCubit(
-                  secureStorage: context.read(), baseUrl: state)..fetchMunicipalityInStorage(),
+                  secureStorage: context.read(), baseUrl: state)
+                ..fetchMunicipalityInStorage(),
               child: BlocBuilder<MunicipalityUrlCubit, MunicipalityUrlState>(
                 builder: (context, muincipalityUrlState) {
                   String baseUrl;
@@ -127,7 +128,9 @@ class DependencyInjector extends StatelessWidget {
                   if (muincipalityUrlState is MunicipalityUrlLoaded) {
                     baseUrl = muincipalityUrlState.baseUrl;
                   } else if (muincipalityUrlState is MunicipalityUrlEmpty) {
-                    baseUrl = state.name == 'prod' ? MunicipiumUtility.BASEURL_PROD : MunicipiumUtility.BASEURL_STAGING;
+                    baseUrl = state.name == 'prod'
+                        ? MunicipiumUtility.BASEURL_PROD
+                        : MunicipiumUtility.BASEURL_STAGING;
                   } else {
                     baseUrl = ''; // or some default value if needed
                   }

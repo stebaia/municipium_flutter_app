@@ -27,7 +27,6 @@ class MunicipalityRepository {
   final DTOMapper<MunicipalityDTO, Municipality> municipalityMapper;
   final Logger logger;
 
-
   MunicipalityRepository(
       {required this.munMapper,
       required this.secureStorage,
@@ -70,64 +69,107 @@ class MunicipalityRepository {
     }
   }
 
-  void addUserConfigurationMenus(Municipality municipality, List<UserConfigurationMenu> listWrapped) {
-  // Aggiungi news
-  if (municipality.newMenu.news != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.news!, isMandatory: false, position: 0));
+  void addUserConfigurationMenus(
+      Municipality municipality, List<UserConfigurationMenu> listWrapped) {
+    // Aggiungi news
+    if (municipality.newMenu.news != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.news!,
+          isMandatory: false,
+          position: 0));
+    }
+    // Aggiungi issue
+    if (municipality.newMenu.issue != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.issue!,
+          isMandatory: false,
+          position: 1));
+    }
+    // Aggiungi penalties
+    if (municipality.newMenu.penalties != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.penalties!,
+          isMandatory: false,
+          position: 2));
+    }
+    // Aggiungi surveys
+    if (municipality.newMenu.surveys != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.surveys!,
+          isMandatory: false,
+          position: 3));
+    }
+    // Aggiungi garbage
+    if (municipality.newMenu.garbage != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.garbage!.toString(),
+          isMandatory: false,
+          position: 4));
+    }
+    // Aggiungi ecoattivi
+    if (municipality.newMenu.ecoattivi != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.ecoattivi!,
+          isMandatory: false,
+          position: 5));
+    }
+    // Aggiungi poi
+    if (municipality.newMenu.poi != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.poi!,
+          isMandatory: false,
+          position: 6));
+    }
+    // Aggiungi services
+    if (municipality.newMenu.services != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.services!,
+          isMandatory: false,
+          position: 7));
+    }
+    // Aggiungi dms
+    if (municipality.newMenu.dms != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.dms!.toString(),
+          isMandatory: false,
+          position: 8));
+    }
+    // Aggiungi digitalDossier
+    if (municipality.newMenu.digitalDossier != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.digitalDossier!,
+          isMandatory: false,
+          position: 9));
+    }
+    // Aggiungi civilDefence
+    if (municipality.newMenu.civilDefence != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.civilDefence!.toString(),
+          isMandatory: false,
+          position: 10));
+    }
+    // Aggiungi payment
+    if (municipality.newMenu.payment != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.payment!,
+          isMandatory: false,
+          position: 11));
+    }
+    // Aggiungi events
+    if (municipality.newMenu.events != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.events!,
+          isMandatory: false,
+          position: 12));
+    }
+    // Aggiungi sportelloTelematico
+    if (municipality.newMenu.sportelloTelematico != null) {
+      listWrapped.add(UserConfigurationMenu(
+          serviceName: municipality.newMenu.sportelloTelematico!,
+          isMandatory: false,
+          position: 13));
+    }
   }
-  // Aggiungi issue
-  if (municipality.newMenu.issue != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.issue!, isMandatory: false, position: 1));
-  }
-  // Aggiungi penalties
-  if (municipality.newMenu.penalties != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.penalties!, isMandatory: false, position: 2));
-  }
-  // Aggiungi surveys
-  if (municipality.newMenu.surveys != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.surveys!, isMandatory: false, position: 3));
-  }
-  // Aggiungi garbage
-  if (municipality.newMenu.garbage != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.garbage!.toString(), isMandatory: false, position: 4));
-  }
-  // Aggiungi ecoattivi
-  if (municipality.newMenu.ecoattivi != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.ecoattivi!, isMandatory: false, position: 5));
-  }
-  // Aggiungi poi
-  if (municipality.newMenu.poi != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.poi!, isMandatory: false, position: 6));
-  }
-  // Aggiungi services
-  if (municipality.newMenu.services != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.services!, isMandatory: false, position: 7));
-  }
-  // Aggiungi dms
-  if (municipality.newMenu.dms != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.dms!.toString(), isMandatory: false, position: 8));
-  }
-  // Aggiungi digitalDossier
-  if (municipality.newMenu.digitalDossier != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.digitalDossier!, isMandatory: false, position: 9));
-  }
-  // Aggiungi civilDefence
-  if (municipality.newMenu.civilDefence != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.civilDefence!.toString(), isMandatory: false, position: 10));
-  }
-  // Aggiungi payment
-  if (municipality.newMenu.payment != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.payment!, isMandatory: false, position: 11));
-  }
-  // Aggiungi events
-  if (municipality.newMenu.events != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.events!, isMandatory: false, position: 12));
-  }
-  // Aggiungi sportelloTelematico
-  if (municipality.newMenu.sportelloTelematico != null) {
-    listWrapped.add(UserConfigurationMenu(serviceName: municipality.newMenu.sportelloTelematico!, isMandatory: false, position: 13));
-  }
-}
 
   Future<Municipality> saveMunicipality(int municipalityId) async {
     try {
@@ -138,39 +180,55 @@ class MunicipalityRepository {
           .setMunicipalityKeyInStorage(munMapper.from(municipality));
       final deviceBeStorage = await getCurrentDevice();
       final String? playerId = await OneSignal.User.getOnesignalId();
-      if(deviceBeStorage == null) {
+      if (deviceBeStorage == null) {
         PackageInfo packageInfo = await PackageInfo.fromPlatform();
         String version = packageInfo.version;
         String code = packageInfo.buildNumber;
         String platform = '';
-        if(Platform.isAndroid){
+        if (Platform.isAndroid) {
           platform = 'android';
-        }else {
+        } else {
           platform = 'ios';
         }
-        DeviceBe deviceBe = DeviceBe(playerId: playerId!, authToken: '', token: '', platform: platform, appVersion: version, udid: '', language: '');
+        DeviceBe deviceBe = DeviceBe(
+            playerId: playerId!,
+            authToken: '',
+            token: '',
+            platform: platform,
+            appVersion: version,
+            udid: '',
+            language: '');
         final responseBePut = await municipalityBeService.putDevices(deviceBe);
         deviceBe.udid = responseBePut.udid;
         await secureStorage.setDeviceKeyInStorage(deviceMapper.from(deviceBe));
         Map<String, dynamic> map = {
-          "municipalityId" : municipalityId,
-          "udid" : deviceBe.udid
+          "municipalityId": municipalityId,
+          "udid": deviceBe.udid
         };
         OneSignal.User.addTags(map);
       } else {
         Map<String, dynamic> map = {
-          "municipalityId" : municipalityId,
-          "udid" : deviceBeStorage.udid
+          "municipalityId": municipalityId,
+          "udid": deviceBeStorage.udid
         };
         OneSignal.User.addTags(map);
       }
 
-      final Configurations configurations = await municipalityService.getMunicipalityConfigurations();
-      secureStorage.setConfigurationsKeyInStorage(configurationsMapper.from(configurations));
       return municipality;
     } catch (error, stackTrace) {
       logger.e('Error in getting municipality');
       rethrow;
+    }
+  }
+
+  Future<void> getConfigurationsAndSave() async {
+    try {
+      final Configurations configurations =
+          await municipalityService.getMunicipalityConfigurations();
+      secureStorage.setConfigurationsKeyInStorage(
+          configurationsMapper.from(configurations));
+    } catch (ex) {
+      logger.e(ex);
     }
   }
 
@@ -180,56 +238,64 @@ class MunicipalityRepository {
     final String? pushId = await OneSignal.User.getExternalId();
     Map<String, String> oneSignalTag = await OneSignal.User.getTags();
     final deviceBeStorage = await getCurrentDevice();
-    if(oneSignalTag['municipalityId'] != null) {
-      int municipalityIdFromOS = int.parse(oneSignalTag['municipalityId']!);     
-      if(deviceBeStorage == null) {
+    if (oneSignalTag['municipalityId'] != null) {
+      int municipalityIdFromOS = int.parse(oneSignalTag['municipalityId']!);
+      if (deviceBeStorage == null) {
         //HO LA MUNICIPALITY MA NON HO L'ID
         PackageInfo packageInfo = await PackageInfo.fromPlatform();
         String version = packageInfo.version;
         String code = packageInfo.buildNumber;
         String platform = '';
-        if(Platform.isAndroid){
+        if (Platform.isAndroid) {
           platform = 'android';
-        }else {
+        } else {
           platform = 'ios';
         }
-        DeviceBe deviceBe = DeviceBe(playerId: playerId!, authToken: '', token: '', platform: platform, appVersion: version, udid: '', language: '');
+        DeviceBe deviceBe = DeviceBe(
+            playerId: playerId!,
+            authToken: '',
+            token: '',
+            platform: platform,
+            appVersion: version,
+            udid: '',
+            language: '');
         final responseBePut = await municipalityBeService.putDevices(deviceBe);
         deviceBe.udid = responseBePut.udid;
         await secureStorage.setDeviceKeyInStorage(deviceMapper.from(deviceBe));
         //GET MUNICIPALITY AND RETURN
-        final municipality = saveMunicipality(int.parse(oneSignalTag['municipalityId']!));
+        final municipality =
+            saveMunicipality(int.parse(oneSignalTag['municipalityId']!));
         return municipality;
       } else {
-        final municipality = saveMunicipality(int.parse(oneSignalTag['municipalityId']!));
+        final municipality =
+            saveMunicipality(int.parse(oneSignalTag['municipalityId']!));
         return municipality;
-         //HO TUTTO E SONO A POSTO
-         //GET MUNICIPALITY AND RETURN
+        //HO TUTTO E SONO A POSTO
+        //GET MUNICIPALITY AND RETURN
       }
-    }else if(oneSignalTag['municipalityId'] == null && deviceBeStorage != null) {
-      final responseBePost = await municipalityBeService.postDevices(deviceBeStorage);
+    } else if (oneSignalTag['municipalityId'] == null &&
+        deviceBeStorage != null) {
+      final responseBePost =
+          await municipalityBeService.postDevices(deviceBeStorage);
       //RICHIAMO LA POST A DEVICES
       //RICHIAMO LA MUNICIPALITY SUBSCRIPTION
-      //SE RITORNA 
+      //SE RITORNA
     }
   }
-
-
-
 
   Future<Municipality?> getMunicipalityFromSharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? municipality = preferences.getString('municipality-object');
-    if(municipality != null) {
+    if (municipality != null) {
       print(municipality);
-    }else {
+    } else {
       print('no old municipality');
     }
   }
 
   Future<Configurations?> getMunicipalityConfigurations() async {
-     final json = await secureStorage.getConfigurationsFromStorage();
-    if(json != null) {
+    final json = await secureStorage.getConfigurationsFromStorage();
+    if (json != null) {
       return configurationsMapper.to(json);
     }
     return null;
@@ -237,12 +303,11 @@ class MunicipalityRepository {
 
   Future<DeviceBe?> getCurrentDevice() async {
     final json = await secureStorage.getDeviceFromStorage();
-    if(json != null) {
+    if (json != null) {
       return deviceMapper.to(json);
     }
     return null;
   }
-
 
   Future<Municipality?> get currentMunicipality async {
     final json = await secureStorage.getMunicipalityFromStorage();

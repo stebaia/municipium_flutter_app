@@ -20,7 +20,6 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final int municipalityId;
   CoreMunicipalityPage({super.key, required this.municipalityId});
-
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<MunicipalityBloc>(
@@ -29,6 +28,7 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                 ..fetchMunicipality(municipalityId),
         ),
       ], child: this);
+
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
@@ -47,10 +47,16 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
         final tabsRouter = AutoTabsRouter.of(context);
         return BlocListener<MunicipalityBloc, MunicipalityState>(
           listener: (context, state) {
-            if(state is FetchedMunicipalityState) {
+            if (state is FetchedMunicipalityState) {
               context.read<UserMenuConfigurationCubit>().initialize();
               context.read<TemporaryConfigurationCubit>().initialize();
-              context.read<MunicipalityGlobalCubit>().getStoredMunicipalityGlobalState();
+
+              context
+                  .read<MunicipalityGlobalCubit>()
+                  .getStoredMunicipalityGlobalState();
+              context
+                  .read<MunicipalityBloc>()
+                  .getConfigurationForMunicipality();
             }
           },
           child: Scaffold(

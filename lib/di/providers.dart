@@ -5,7 +5,6 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
 
   String baseUrlBe = "https://api.municipiumapp.it/";
   String baseUrlGastone = "https://staging.municipiumapp.it/api/gastone/";
-  
 
   return [
     Provider<Logger>(
@@ -25,7 +24,6 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
           if (kDebugMode) context.read<PrettyDioLogger>(),
         ]),
     ),
-   
     Provider<MunicipalityService>(
       create: (context) => MunicipalityService(
         context.read<Dio>(),
@@ -62,7 +60,10 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
         baseUrl: MunicipiumUtility.BASEURL_STAGING,
       ),
     ),
-    Provider<MunicipalityBeService>(create: (context) => MunicipalityBeService(context.read<Dio>(), baseUrl: baseUrlBe),),
+    Provider<MunicipalityBeService>(
+      create: (context) =>
+          MunicipalityBeService(context.read<Dio>(), baseUrl: baseUrlBe),
+    ),
     Provider<IssueService>(
         create: (context) =>
             IssueService(context.read<Dio>(), baseUrl: baseUrl)),
