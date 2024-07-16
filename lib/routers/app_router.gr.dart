@@ -114,9 +114,14 @@ abstract class $AppRouter extends _i25.RootStackRouter {
       );
     },
     IssuesListRoute.name: (routeData) {
+      final args = routeData.argsAs<IssuesListRouteArgs>();
       return _i25.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i25.WrappedRoute(child: const _i7.IssuesListPage()),
+        child: _i25.WrappedRoute(
+            child: _i7.IssuesListPage(
+          key: args.key,
+          udid: args.udid,
+        )),
       );
     },
     MainRoute.name: (routeData) {
@@ -452,16 +457,40 @@ class HomeRouteArgs {
 
 /// generated route for
 /// [_i7.IssuesListPage]
-class IssuesListRoute extends _i25.PageRouteInfo<void> {
-  const IssuesListRoute({List<_i25.PageRouteInfo>? children})
-      : super(
+class IssuesListRoute extends _i25.PageRouteInfo<IssuesListRouteArgs> {
+  IssuesListRoute({
+    _i27.Key? key,
+    required String udid,
+    List<_i25.PageRouteInfo>? children,
+  }) : super(
           IssuesListRoute.name,
+          args: IssuesListRouteArgs(
+            key: key,
+            udid: udid,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'IssuesListRoute';
 
-  static const _i25.PageInfo<void> page = _i25.PageInfo<void>(name);
+  static const _i25.PageInfo<IssuesListRouteArgs> page =
+      _i25.PageInfo<IssuesListRouteArgs>(name);
+}
+
+class IssuesListRouteArgs {
+  const IssuesListRouteArgs({
+    this.key,
+    required this.udid,
+  });
+
+  final _i27.Key? key;
+
+  final String udid;
+
+  @override
+  String toString() {
+    return 'IssuesListRouteArgs{key: $key, udid: $udid}';
+  }
 }
 
 /// generated route for

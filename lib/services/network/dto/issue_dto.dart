@@ -64,18 +64,18 @@ class IssueDto extends DTO with EquatableMixin {
           : null;
     }
     if (json['image2'] != null) {
-      image2 = json['image2']['image2'] != null
-          ? MImagesDTO.fromJson(json['image2']['image2'])
+      image2 = json['image2']['image'] != null
+          ? MImagesDTO.fromJson(json['image2']['image'])
           : null;
     }
     if (json['image3'] != null) {
-      image3 = json['image3']['image3'] != null
-          ? MImagesDTO.fromJson(json['image3']['image3'])
+      image3 = json['image3']['image'] != null
+          ? MImagesDTO.fromJson(json['image3']['image'])
           : null;
     }
     if (json['image4'] != null) {
-      image4 = json['image4']['image4'] != null
-          ? MImagesDTO.fromJson(json['image4']['image4'])
+      image4 = json['image4']['image'] != null
+          ? MImagesDTO.fromJson(json['image4']['image'])
           : null;
     }
     if (json['email'] != null) {

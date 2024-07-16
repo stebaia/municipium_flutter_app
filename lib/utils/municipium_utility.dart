@@ -23,15 +23,30 @@ class MunicipiumUtility {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }
 
-  static String convertDate(String dateString, String endFormat) {
+  static String convertDate(String dateString, String endFormat,
+      {bool? todayYesterdayIncluded}) {
     DateTime date = DateTime.parse(dateString);
-    String formattedDate = DateFormat(endFormat).format(date);
-    return formattedDate;
+    if (todayYesterdayIncluded != null && todayYesterdayIncluded) {
+      final now = DateTime.now();
+      final difference = now.difference(date).inDays;
+      final timeFormat = DateFormat('HH:mm', 'it');
+      if (difference == 0) {
+        return 'oggi ${timeFormat.format(date)}';
+      } else if (difference == 1) {
+        return 'ieri ${timeFormat.format(date)}';
+      } else {
+        return DateFormat(endFormat, 'it').format(date);
+      }
+    } else {
+      String formattedDate = DateFormat(endFormat, 'it').format(date);
+      return formattedDate;
+    }
   }
 
   static String getDateForName() {
     DateTime date = DateTime.now();
-    String formattedDate = DateFormat('yyyy-MM-dd\'T\'HH:mm:ssZ').format(date);
+    String formattedDate =
+        DateFormat('yyyy-MM-dd\'T\'HH:mm:ssZ', 'it').format(date);
     return formattedDate;
   }
 

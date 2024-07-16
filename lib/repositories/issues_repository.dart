@@ -27,9 +27,10 @@ class IssuesRepository {
       required this.issueService,
       required this.logger});
 
-  Future<List<IssueItemList>> getIssuesList() async {
+  Future<List<IssueItemList>> getIssuesList(String udid) async {
     try {
-      final List<IssueDto> issuesResponse = await issueService.getIssuesList();
+      final List<IssueDto> issuesResponse =
+          await issueService.getIssuesList(udid);
       final List<IssueItemList> list = [];
       for (var element in issuesResponse) {
         list.add(issueItemMapper.fromDTO(element));

@@ -8,7 +8,8 @@ abstract class IssueListEvent extends Equatable {
 }
 
 class FetchIssueListEvent extends IssueListEvent {
-  const FetchIssueListEvent();
+  String udid;
+  FetchIssueListEvent(this.udid);
   @override
   List<Object> get props => [];
 }

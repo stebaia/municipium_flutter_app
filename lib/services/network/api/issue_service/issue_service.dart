@@ -15,8 +15,8 @@ abstract class IssueService {
   @GET('issues/{issueId}')
   Future<IssueDto> getIssueDetail(@Path('issueId') int issueId);
 
-  @GET('issues/')
-  Future<List<IssueDto>> getIssuesList();
+  @GET('issues?udid={udid}')
+  Future<List<IssueDto>> getIssuesList(@Path('udid') String udid);
 
   @GET('tags/')
   Future<List<IssueTagDto>> getIssueTags();

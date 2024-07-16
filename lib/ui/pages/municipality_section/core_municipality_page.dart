@@ -28,6 +28,11 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
               MunicipalityBloc(municipalityRepository: context.read())
                 ..fetchMunicipality(municipalityId),
         ),
+        BlocProvider<MunicipalityBloc>(
+          create: (context) =>
+              MunicipalityBloc(municipalityRepository: context.read())
+                ..getDevice(),
+        ),
       ], child: this);
   @override
   Widget build(BuildContext context) {
@@ -47,10 +52,12 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
         final tabsRouter = AutoTabsRouter.of(context);
         return BlocListener<MunicipalityBloc, MunicipalityState>(
           listener: (context, state) {
-            if(state is FetchedMunicipalityState) {
+            if (state is FetchedMunicipalityState) {
               context.read<UserMenuConfigurationCubit>().initialize();
               context.read<TemporaryConfigurationCubit>().initialize();
-              context.read<MunicipalityGlobalCubit>().getStoredMunicipalityGlobalState();
+              context
+                  .read<MunicipalityGlobalCubit>()
+                  .getStoredMunicipalityGlobalState();
             }
           },
           child: Scaffold(

@@ -46,7 +46,7 @@ class _IssueService implements IssueService {
   }
 
   @override
-  Future<List<IssueDto>> getIssuesList() async {
+  Future<List<IssueDto>> getIssuesList(String udid) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -59,7 +59,7 @@ class _IssueService implements IssueService {
     )
             .compose(
               _dio.options,
-              'issues/',
+              'issues?udid=${udid}',
               queryParameters: queryParameters,
               data: _data,
             )
