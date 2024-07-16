@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:municipium/model/issue/issue_Detail.dart';
 import 'package:municipium/model/issue/issue_category_tag.dart';
 import 'package:municipium/model/issue/issue_item_list.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
@@ -6,6 +7,7 @@ import 'package:municipium/model/issue/issue_tag.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
+import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_tag_dto.dart';
 import 'package:municipium/services/network/dto/post_issue_dto.dart';
@@ -13,6 +15,7 @@ import 'package:pine/utils/dto_mapper.dart';
 
 class IssuesRepository {
   final DTOMapper<IssueDto, IssueItemList> issueItemMapper;
+  final DTOMapper<IssueDetailDto, IssueDetail> issueDetailMapper;
   final DTOMapper<IssueTagDto, IssueTag> issueTagMapper;
   final DTOMapper<IssueCategoryTagDto, IssueCategoryTag> issueCategoryTagMapper;
   final DTOMapper<PostIssueDto, ProgressIssue> postIssueMapper;
@@ -21,6 +24,7 @@ class IssuesRepository {
 
   IssuesRepository(
       {required this.issueItemMapper,
+      required this.issueDetailMapper,
       required this.issueTagMapper,
       required this.issueCategoryTagMapper,
       required this.postIssueMapper,
@@ -38,6 +42,18 @@ class IssuesRepository {
       return list;
     } catch (error, stackTrace) {
       logger.e('Error in getting issues list municipality-object');
+      rethrow;
+    }
+  }
+
+  Future<IssueDetail> getIssueDetail(int id, String udid) async {
+    try {
+      final IssueDetailDto issuesResponse =
+          await issueService.getIssueDetail(id, udid);
+      IssueDetail detail = issueDetailMapper.fromDTO(issuesResponse);
+      return detail;
+    } catch (error, stackTrace) {
+      logger.e('Error in getting issue detail: $error -- $stackTrace');
       rethrow;
     }
   }

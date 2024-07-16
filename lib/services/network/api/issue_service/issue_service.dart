@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
+import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_tag_dto.dart';
 import 'package:municipium/services/network/dto/post_issue_dto.dart';
@@ -12,8 +13,9 @@ part 'issue_service.g.dart';
 abstract class IssueService {
   factory IssueService(Dio dio, {String baseUrl}) = _IssueService;
 
-  @GET('issues/{issueId}')
-  Future<IssueDto> getIssueDetail(@Path('issueId') int issueId);
+  @GET('issues/{issueId}?udid={udid}')
+  Future<IssueDetailDto> getIssueDetail(
+      @Path('issueId') int issueId, @Path('udid') String udid);
 
   @GET('issues?udid={udid}')
   Future<List<IssueDto>> getIssuesList(@Path('udid') String udid);

@@ -2,29 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/issue_list_bloc/issue_list_bloc.dart';
-import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/ui/components/tag_label_bkg.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
 @RoutePage()
-class IssuesListPage extends StatefulWidget implements AutoRouteWrapper {
+class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
   IssuesListPage({super.key, required this.udid});
   String udid;
-  @override
-  State<IssuesListPage> createState() => _IssuesListPageState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<IssueListBloc>(
-          create: (context) => IssueListBloc(issuesRepository: context.read())
-            ..fetchIssueList(udid),
-        )
-      ], child: this);
-}
-
-class _IssuesListPageState extends State<IssuesListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,16 +25,16 @@ class _IssuesListPageState extends State<IssuesListPage> {
         actions: <Widget>[
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.info_sharp,
-              color: Colors.white,
+            icon: Icon(
+              Icons.info_outlined,
+              color: Theme.of(context).iconTheme.color,
             ),
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.message,
-              color: Colors.white,
+            icon: Icon(
+              Icons.message_outlined,
+              color: Theme.of(context).iconTheme.color,
             ),
           ),
         ],
@@ -114,51 +101,21 @@ class _IssuesListPageState extends State<IssuesListPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                            color: const Color.fromRGBO(
-                                                204, 223, 255, 1)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 16, horizontal: 24),
-                                          child: Text(
-                                            state.issueItemList[index].closed
-                                                ? 'Chiusa'
-                                                : 'Aperta',
-                                            style: const TextStyle(
-                                                color:
-                                                    ThemeHelper.blueMunicipium,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                        ),
-                                      ),
+                                      TagLabelBkg(
+                                          title: state.issueItemList[index]
+                                                      .closed ??
+                                                  false
+                                              ? 'Chiusa'
+                                              : 'Aperta'),
                                       const SizedBox(
                                         width: 16,
                                       ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                            color: const Color.fromRGBO(
-                                                204, 223, 255, 1)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 16, horizontal: 24),
-                                          child: Text(
-                                            state.issueItemList[index].merged
-                                                ? 'Sincronizzato'
-                                                : 'Da sincronizzare',
-                                            style: const TextStyle(
-                                                color:
-                                                    ThemeHelper.blueMunicipium,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                        ),
-                                      )
+                                      TagLabelBkg(
+                                          title: state.issueItemList[index]
+                                                      .merged ??
+                                                  false
+                                              ? 'Sincronizzato'
+                                              : 'Da sincronizzare')
                                     ],
                                   )
                                 ],
@@ -166,6 +123,8 @@ class _IssuesListPageState extends State<IssuesListPage> {
                             ),
                           ),
                         ),
+                        onTap: () => context.pushRoute(IssueDetailRoute(
+                            id: state.issueItemList[index].id, udid: udid)),
                       )));
             } else if (state is NoIssueListState) {
               return Text('non issues');
@@ -175,6 +134,38 @@ class _IssuesListPageState extends State<IssuesListPage> {
           },
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        margin:
+            const EdgeInsets.symmetric(horizontal: 16.0), // Optional padding
+        child: ElevatedButton(
+          onPressed: () {
+            context.pushRoute(NewIssueRouter());
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ThemeHelper.blueMunicipium,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            padding: EdgeInsets.zero,
+          ),
+          child: const Text(
+            'Nuova segnalazione',
+            style: TextStyle(
+                color: Colors.white, fontSize: 17, fontWeight: FontWeight.w400),
+          ),
+        ),
+      ),
     );
   }
+
+  @override
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
+        BlocProvider<IssueListBloc>(
+          create: (context) => IssueListBloc(issuesRepository: context.read())
+            ..fetchIssueList(udid),
+        )
+      ], child: this);
 }

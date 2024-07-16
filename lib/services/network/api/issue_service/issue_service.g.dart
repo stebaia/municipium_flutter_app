@@ -19,20 +19,23 @@ class _IssueService implements IssueService {
   String? baseUrl;
 
   @override
-  Future<IssueDto> getIssueDetail(int issueId) async {
+  Future<IssueDetailDto> getIssueDetail(
+    int issueId,
+    String udid,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<IssueDto>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<IssueDetailDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'issues/${issueId}',
+              'issues/${issueId}?udid=${udid}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,7 +44,7 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = IssueDto.fromJson(_result.data!);
+    final value = IssueDetailDto.fromJson(_result.data!);
     return value;
   }
 

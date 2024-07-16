@@ -17,6 +17,7 @@ import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/events/event_detail.dart';
 import 'package:municipium/model/events/event_item_list.dart';
+import 'package:municipium/model/issue/issue_Detail.dart';
 import 'package:municipium/model/issue/issue_category_tag.dart';
 import 'package:municipium/model/issue/issue_item_list.dart';
 import 'package:municipium/model/issue/issue_tag.dart';
@@ -43,6 +44,7 @@ import 'package:municipium/repositories/mappers/event_mapper/event_detail_mapper
 import 'package:municipium/repositories/mappers/event_mapper/event_item_mapper.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/issue_mapper/issue_category_tag_mapper.dart';
+import 'package:municipium/repositories/mappers/issue_mapper/issue_detail_mapper.dart';
 import 'package:municipium/repositories/mappers/issue_mapper/issue_item_mapper.dart';
 import 'package:municipium/repositories/mappers/issue_mapper/issue_tag_mapper.dart';
 import 'package:municipium/repositories/mappers/issue_mapper/post_issue_mapper.dart';
@@ -76,6 +78,7 @@ import 'package:municipium/services/network/dto/civild_defence_emergency_call_dt
 import 'package:municipium/services/network/dto/event_detail_dto.dart';
 import 'package:municipium/services/network/dto/event_dto.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
+import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_tag_dto.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
@@ -118,7 +121,8 @@ class DependencyInjector extends StatelessWidget {
           builder: (context, state) {
             return BlocProvider(
               create: (context) => MunicipalityUrlCubit(
-                  secureStorage: context.read(), baseUrl: state)..fetchMunicipalityInStorage(),
+                  secureStorage: context.read(), baseUrl: state)
+                ..fetchMunicipalityInStorage(),
               child: BlocBuilder<MunicipalityUrlCubit, MunicipalityUrlState>(
                 builder: (context, muincipalityUrlState) {
                   String baseUrl;
@@ -127,7 +131,9 @@ class DependencyInjector extends StatelessWidget {
                   if (muincipalityUrlState is MunicipalityUrlLoaded) {
                     baseUrl = muincipalityUrlState.baseUrl;
                   } else if (muincipalityUrlState is MunicipalityUrlEmpty) {
-                    baseUrl = state.name == 'prod' ? MunicipiumUtility.BASEURL_PROD : MunicipiumUtility.BASEURL_STAGING;
+                    baseUrl = state.name == 'prod'
+                        ? MunicipiumUtility.BASEURL_PROD
+                        : MunicipiumUtility.BASEURL_STAGING;
                   } else {
                     baseUrl = ''; // or some default value if needed
                   }
