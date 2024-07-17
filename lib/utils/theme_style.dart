@@ -5,10 +5,12 @@ import 'package:municipium/utils/theme_helper.dart';
 class LightTheme {
   static const primaryColor = Color(0xff2140E9);
   static const lightBlue = Color(0xFFE3F2FD);
+  static const baseColor = Colors.black;
 
   static get make => ThemeData(
         brightness: Brightness.light,
         primaryColor: primaryColor,
+        dividerColor: baseColor,
         colorScheme: const ColorScheme.light(
           primary: primaryColor,
           secondary: lightBlue,
@@ -51,6 +53,7 @@ class LightTheme {
             surfaceTintColor: const Color.fromRGBO(245, 248, 253, 1)),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
+            foregroundColor: Colors.black,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
@@ -72,7 +75,7 @@ class LightTheme {
         textTheme: const TextTheme(
           titleLarge: TextStyle(
             fontSize: 32,
-            color: primaryColor,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
           titleSmall: TextStyle(
@@ -96,11 +99,12 @@ class LightTheme {
 class DarkTheme {
   static const primaryColor = Color(0xff2140E9);
   static const darkBlack = Color.fromARGB(40, 41, 40, 40);
+  static const baseColor = Colors.white;
 
   static get make => ThemeData(
         brightness: Brightness.dark,
         primaryColor: primaryColor,
-        
+        dividerColor: baseColor,
         colorScheme: const ColorScheme.dark(
           primary: primaryColor,
           secondary: darkBlack,
@@ -142,6 +146,7 @@ class DarkTheme {
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
+            foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),

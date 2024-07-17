@@ -3,26 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/issue_list_bloc/issue_list_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/ui/components/tag_label_bkg.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
+import 'package:municipium/utils/theme_helper.dart';
 
 @RoutePage()
-class IssuesListPage extends StatefulWidget implements AutoRouteWrapper {
-  const IssuesListPage({super.key});
-
-  @override
-  State<IssuesListPage> createState() => _IssuesListPageState();
-
-  @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<IssueListBloc>(
-          create: (context) =>
-              IssueListBloc(issuesRepository: context.read())..fetchIssueList(),
-        )
-      ], child: this);
-}
-
-class _IssuesListPageState extends State<IssuesListPage> {
+class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
+  IssuesListPage({super.key, required this.udid});
+  String udid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,16 +25,16 @@ class _IssuesListPageState extends State<IssuesListPage> {
         actions: <Widget>[
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.info_sharp,
-              color: Colors.white,
+            icon: Icon(
+              Icons.info_outlined,
+              color: Theme.of(context).iconTheme.color,
             ),
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.message,
-              color: Colors.white,
+            icon: Icon(
+              Icons.message_outlined,
+              color: Theme.of(context).iconTheme.color,
             ),
           ),
         ],
@@ -59,31 +48,82 @@ class _IssuesListPageState extends State<IssuesListPage> {
               return ListView.builder(
                   itemCount: state.issueItemList.length,
                   itemBuilder: ((context, index) => GestureDetector(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 248, 253, 1),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(245, 248, 253, 1),
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 16),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                      'Segnalazione #${state.issueItemList[index].id}'),
-                                  Text(MunicipiumUtility.convertDate(
-                                      state.issueItemList[index].createdAt,
-                                      'dd.MM hh:mm'))
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Segnalazione #${state.issueItemList[index].id}',
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      Text(
+                                          MunicipiumUtility.convertDate(
+                                              state.issueItemList[index]
+                                                  .createdAt,
+                                              'd MMM HH:mm',
+                                              todayYesterdayIncluded: true),
+                                          style: const TextStyle(
+                                              color: Color.fromRGBO(
+                                                  141, 144, 152, 1),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400))
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Text(state.issueItemList[index].content,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          color:
+                                              Color.fromRGBO(141, 144, 152, 1),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400)),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                      TagLabelBkg(
+                                          title:
+                                              state.issueItemList[index].closed
+                                                  ? 'Chiusa'
+                                                  : 'Aperta'),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      TagLabelBkg(
+                                          title:
+                                              state.issueItemList[index].merged
+                                                  ? 'Sincronizzato'
+                                                  : 'Da sincronizzare')
+                                    ],
+                                  )
                                 ],
                               ),
-                              Text(
-                                state.issueItemList[index].content,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            ],
+                            ),
                           ),
                         ),
+                        onTap: () => context.pushRoute(IssueDetailRoute(
+                            id: state.issueItemList[index].id, udid: udid)),
                       )));
             } else if (state is NoIssueListState) {
               return Text('non issues');
@@ -93,6 +133,34 @@ class _IssuesListPageState extends State<IssuesListPage> {
           },
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        child: ElevatedButton(
+          onPressed: () {
+            context.pushRoute(NewIssueRouter());
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ThemeHelper.blueMunicipium,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.all(20),
+          ),
+          child: const Text(
+            'Nuova segnalazione',
+            style: TextStyle(
+                color: Colors.white, fontSize: 17, fontWeight: FontWeight.w400),
+          ),
+        ),
+      ),
     );
   }
+
+  @override
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
+        BlocProvider<IssueListBloc>(
+          create: (context) => IssueListBloc(issuesRepository: context.read())
+            ..fetchIssueList(udid),
+        )
+      ], child: this);
 }

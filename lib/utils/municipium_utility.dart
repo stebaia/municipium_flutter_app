@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,8 +13,12 @@ import 'package:municipium/model/municipality.dart';
 import 'package:municipium/services/network/dto/post_issue_dto.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:image/image.dart' as img;
 
 class MunicipiumUtility {
   static String BASEURL_PROD = 'https://cloud.municipiumapp.it/api/v2/';
@@ -23,15 +29,30 @@ class MunicipiumUtility {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }
 
-  static String convertDate(String dateString, String endFormat) {
+  static String convertDate(String dateString, String endFormat,
+      {bool? todayYesterdayIncluded}) {
     DateTime date = DateTime.parse(dateString);
-    String formattedDate = DateFormat(endFormat).format(date);
-    return formattedDate;
+    if (todayYesterdayIncluded != null && todayYesterdayIncluded) {
+      final now = DateTime.now();
+      final difference = now.difference(date).inDays;
+      final timeFormat = DateFormat('HH:mm', 'it');
+      if (difference == 0) {
+        return 'oggi ${timeFormat.format(date)}';
+      } else if (difference == 1) {
+        return 'ieri ${timeFormat.format(date)}';
+      } else {
+        return DateFormat(endFormat, 'it').format(date);
+      }
+    } else {
+      String formattedDate = DateFormat(endFormat, 'it').format(date);
+      return formattedDate;
+    }
   }
 
   static String getDateForName() {
     DateTime date = DateTime.now();
-    String formattedDate = DateFormat('yyyy-MM-dd\'T\'HH:mm:ssZ').format(date);
+    String formattedDate =
+        DateFormat('yyyy-MM-dd\'T\'HH:mm:ssZ', 'it').format(date);
     return formattedDate;
   }
 
@@ -85,14 +106,65 @@ class MunicipiumUtility {
     List<String> base64List = [];
     for (XFile file in list) {
       File imageFile = File(file.path);
-      List<int> imageBytes = await imageFile.readAsBytesSync();
-      String base64 = base64Encode(imageBytes)
-          .replaceAll('+', '-')
+      Uint8List imageBytes = await imageFile.readAsBytes();
+      img.Image? image = img.decodeImage(imageBytes);
+      if (image == null) {
+        throw Exception("Impossibile decodificare l'immagine");
+      }
+      img.Image? resized = img.copyResize(image, width: 800);
+      List<int> resizedImageBytes = img.encodePng(resized);
+      String base64 = base64Encode(resizedImageBytes)
+          /*.replaceAll('+', '-')
           .replaceAll('/', '_')
-          .replaceAll('=', '');
+          .replaceAll('=', '')*/
+          ;
       base64List.add(base64);
     }
     return base64List;
+  }
+
+  static Future<XFile> downloadFile(String url) async {
+    // Crea un client Dio per effettuare la richiesta HTTP
+    Dio dio = Dio();
+
+    try {
+      // Esegui la richiesta HTTP per scaricare il file
+      Response response = await dio.get(url,
+          options: Options(responseType: ResponseType.bytes));
+
+      // Ottieni il percorso della directory temporanea
+      Directory tempDir = await getTemporaryDirectory();
+
+      // Crea il percorso completo del file nella directory temporanea
+      String filePath = '${tempDir.path}/${Uri.parse(url).pathSegments.last}';
+
+      // Scrivi i byte della risposta nel file
+      File file = File(filePath);
+      await file.writeAsBytes(response.data as List<int>);
+
+      // Restituisci l'oggetto XFile del file scaricato
+      return XFile(filePath);
+    } catch (e) {
+      print('Errore durante il download del file: $e');
+      throw e; // Gestisci l'errore appropriatamente nella tua applicazione
+    }
+  }
+
+  static Future<List<XFile>> downloadFilesFromUrls(List<String> urls) async {
+    List<XFile> xFiles = [];
+
+    // Itera attraverso ogni URL e scarica il file corrispondente
+    for (String url in urls) {
+      try {
+        XFile xFile = await downloadFile(url);
+        xFiles.add(xFile);
+      } catch (e) {
+        print('Errore durante il download del file da $url: $e');
+        // Gestisci l'errore come preferisci (es. salta questo URL, mostra un messaggio d'errore, ecc.)
+      }
+    }
+
+    return xFiles;
   }
 
   static Future<PostIssueDto> createPostIssue(

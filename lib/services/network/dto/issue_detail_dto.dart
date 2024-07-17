@@ -1,12 +1,12 @@
-import 'package:equatable/equatable.dart';
+import 'package:municipium/services/network/dto/issue_dto.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
 import 'package:pine/dto/dto.dart';
 
-class IssueDto extends DTO with EquatableMixin {
+class IssueDetailDto extends DTO {
   int? id;
   String? content;
-  String? latitude;
-  String? longitude;
+  double? latitude;
+  double? longitude;
   String? address;
   String? createdAt;
   int? stato;
@@ -20,9 +20,10 @@ class IssueDto extends DTO with EquatableMixin {
   MImagesDTO? image2;
   MImagesDTO? image3;
   MImagesDTO? image4;
+  List<String>? attachments;
   List<String>? email;
 
-  IssueDto(
+  IssueDetailDto(
       {this.id,
       this.content,
       this.latitude,
@@ -40,9 +41,10 @@ class IssueDto extends DTO with EquatableMixin {
       this.image2,
       this.image3,
       this.image4,
+      this.attachments,
       this.email});
 
-  IssueDto.fromJson(Map<String, dynamic> json) {
+  IssueDetailDto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     content = json['content'];
     latitude = json['latitude'];
@@ -52,7 +54,7 @@ class IssueDto extends DTO with EquatableMixin {
     stato = json['stato'];
     merged = json['merged'];
     issueCategory = json['issue_category'] != null
-        ? IssueCategoryDTO.fromJson(json['issue_category'])
+        ? new IssueCategoryDTO.fromJson(json['issue_category'])
         : null;
     closed = json['closed'];
     archived = json['archived'];
@@ -77,6 +79,18 @@ class IssueDto extends DTO with EquatableMixin {
       image4 = json['image4']['image'] != null
           ? MImagesDTO.fromJson(json['image4']['image'])
           : null;
+    }
+    if (json['email'] != null) {
+      email = <String>[];
+      json['email'].forEach((v) {
+        email!.add(v);
+      });
+    }
+    if (json['attachments'] != null) {
+      attachments = <String>[];
+      json['attachments'].forEach((v) {
+        attachments!.add(v);
+      });
     }
     if (json['email'] != null) {
       email = <String>[];
@@ -115,36 +129,12 @@ class IssueDto extends DTO with EquatableMixin {
     if (this.image4 != null) {
       data['image4'] = this.image4!.toJson();
     }
+    if (this.attachments != null) {
+      data['attachments'] = this.attachments!.toList();
+    }
     if (this.email != null) {
       data['email'] = this.email!.toList();
     }
     return data;
   }
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-}
-
-class IssueCategoryDTO extends DTO with EquatableMixin {
-  String? name;
-  int? id;
-
-  IssueCategoryDTO({this.name, this.id});
-
-  IssueCategoryDTO.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    id = json['id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['id'] = this.id;
-    return data;
-  }
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
 }

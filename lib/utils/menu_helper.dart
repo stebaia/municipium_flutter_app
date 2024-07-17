@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/menu/menu_item.dart';
 import 'package:municipium/model/menu/submenu_type.dart';
 import 'package:municipium/model/municipality.dart';
@@ -241,7 +244,7 @@ class MenuHelper {
     }
   }
 
-  static void checkAndPushRoute(BuildContext context, MenuItem menuItem) {
+  static void checkAndPushRoute(BuildContext context, MenuItem menuItem) async {
     switch (menuItem.type) {
       case MenuItemType.news:
         context.pushRoute(const NewsListRoute());
@@ -250,7 +253,8 @@ class MenuHelper {
         context.pushRoute(const EventListRoute());
         break;
       case MenuItemType.issue:
-        context.pushRoute(const IssuesListRoute());
+        DeviceBe? deviceBe = await context.read<MunicipalityBloc>().getDevice();
+        context.pushRoute(IssuesListRoute(udid: deviceBe!.udid));
         break;
       case MenuItemType.penalties:
         // TODO: Handle this case.

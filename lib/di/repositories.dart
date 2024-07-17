@@ -37,6 +37,7 @@ final List<RepositoryProvider> _repositories = [
   RepositoryProvider<IssuesRepository>(
     create: (context) => IssuesRepository(
         issueItemMapper: context.read(),
+        issueDetailMapper: context.read(),
         issueTagMapper: context.read(),
         issueCategoryTagMapper: context.read(),
         issueService: context.read(),
@@ -44,10 +45,9 @@ final List<RepositoryProvider> _repositories = [
         logger: context.read()),
   ),
   RepositoryProvider<UserRepository>(
-    create: (context) => UserRepository(
-        municipalityRepository: context.read(),
-       secureStorage: context.read())
-  ),
+      create: (context) => UserRepository(
+          municipalityRepository: context.read(),
+          secureStorage: context.read())),
   RepositoryProvider<PnrrServiceRepository>(
     create: (context) => PnrrServiceRepository(
         pnrrMapper: context.read(),

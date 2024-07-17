@@ -55,5 +55,7 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<ReservableUnitDto, ReservableUnit>>(
       create: (_) => ReservableUnitMapper()),
   Provider<DTOMapper<PostIssueDto, ProgressIssue>>(
-      create: (_) => PostIssueMapper())
+      create: (_) => PostIssueMapper()),
+  Provider<DTOMapper<IssueDetailDto, IssueDetail>>(
+      create: (_) => IssueDetailMapper())
 ];

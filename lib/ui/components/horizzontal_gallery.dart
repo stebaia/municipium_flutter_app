@@ -7,17 +7,22 @@ import 'package:municipium/utils/theme_helper.dart';
 
 class HorizzontalGallery extends StatelessWidget {
   HorizzontalGallery(
-      {super.key, required this.imageList, this.title, this.onDeletePressed});
+      {super.key,
+      required this.imageList,
+      this.title,
+      this.onDeletePressed,
+      this.height});
 
   List<XFile> imageList;
   Widget? title;
   Function(BuildContext context, int index)? onDeletePressed;
+  double? height;
 
   @override
   Widget build(BuildContext context) {
     ScrollController controller = ScrollController();
     return SizedBox(
-      height: 150,
+      height: height ?? 150,
       child: Column(
         children: [
           title ?? Container(),
@@ -35,8 +40,8 @@ class HorizzontalGallery extends StatelessWidget {
                       child: Stack(
                         children: [
                           Container(
-                            width: 120,
-                            height: 120,
+                            width: (height != null) ? height! - 120 : 120,
+                            height: (height != null) ? height! - 120 : 120,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                             ),

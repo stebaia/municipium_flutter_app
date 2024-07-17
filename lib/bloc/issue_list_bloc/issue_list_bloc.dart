@@ -17,14 +17,15 @@ class IssueListBloc extends Bloc<IssueListEvent, IssueListState> {
     on<FetchIssueListEvent>(_fetchIssueList);
   }
 
-  void fetchIssueList() => add(const FetchIssueListEvent());
+  void fetchIssueList(String udid) => add(FetchIssueListEvent(udid));
 
   FutureOr<void> _fetchIssueList(FetchIssueListEvent fetchIssueListEvent,
       Emitter<IssueListState> emit) async {
     emit(const FetchingIssueListState());
     try {
-      final issueItemList = await issuesRepository.getIssuesList();
-      final issueCategoryList = await issuesRepository.getIssueCategoryList();
+      final issueItemList =
+          await issuesRepository.getIssuesList(fetchIssueListEvent.udid);
+      //final issueCategoryList = await issuesRepository.getIssueCategoryList();
       if (issueItemList.isNotEmpty) {
         emit(FetchedIssueListState(issueItemList));
       } else {

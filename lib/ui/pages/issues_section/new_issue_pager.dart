@@ -11,6 +11,7 @@ import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/rounded_shape_button.dart';
 import 'package:municipium/ui/components/pager/progress_pager_stepper.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_category_section.dart';
@@ -92,122 +93,141 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
               bloc: issueCubit,
               builder: (issueContext, stateIssue) {
                 bool checkStep = checkRuleForStep(context, stateIssue);
-                return Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(children: [
-                    Row(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.new_issue.toUpperCase(),
-                          style: const TextStyle(
-                              color: ThemeHelper.lightGrey,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: -0.4),
-                        ),
-                        const SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          getTitle(context, stateIssue.currentPage!),
-                          style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -0.4,
-                          ),
-                        ),
-                        const SizedBox()
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    ProgressPagerStepper(
-                        totalPage: totalPage,
-                        currentPage: stateIssue.currentPage!),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    Expanded(
-                      child: PageView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          controller: pageController,
-                          itemCount: pages.length,
-                          onPageChanged: (value) {
-                            issueCubit.setCurrentPage(value);
-                          },
-                          itemBuilder: ((context, index) {
-                            return pages[index];
-                          })),
-                    ),
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
                     Container(
-                      height: 100,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          stateIssue.currentPage != 0
-                              ? TextButton(
-                                  onPressed: (() {
-                                    FocusScope.of(context).unfocus();
-                                    pageController.previousPage(
-                                      duration: const Duration(
-                                          milliseconds:
-                                              500), // Durata dell'animazione
-                                      curve:
-                                          Curves.ease, // Curva dell'animazione
-                                    );
-                                  }),
-                                  child: RoundedShapeButton(
-                                      title: AppLocalizations.of(context)!
-                                          .back_desc,
-                                      color: ThemeHelper.blueMunicipium,
-                                      textColor: Colors.white),
-                                )
-                              : Container(),
-                          const SizedBox(),
-                          TextButton(
-                            onPressed: checkStep
-                                ? (() async {
-                                    if (stateIssue.currentPage == 3) {
-                                      final DeviceBe? device =
-                                          await municipalityBloc.getDevice();
-                                      final Municipality? municipality =
-                                          await municipalityBloc
-                                              .getMunicipality();
-                                      issueCubit.postIssue(
-                                          device, municipality);
-                                      print('');
-                                    } else {
-                                      FocusScope.of(context).unfocus();
-                                      pageController.nextPage(
-                                        duration: const Duration(
-                                            milliseconds:
-                                                500), // Durata dell'animazione
-                                        curve: Curves
-                                            .ease, // Curva dell'animazione
-                                      );
-                                    }
-                                  })
-                                : null,
-                            child: RoundedShapeButton(
-                                title: stateIssue.currentPage! != totalPage - 1
-                                    ? AppLocalizations.of(context)!.next_desc
-                                    : AppLocalizations.of(context)!.send_desc,
-                                color: checkStep
-                                    ? ThemeHelper.blueMunicipium
-                                    : Colors.grey,
-                                textColor: Colors.white),
-                          )
-                        ],
-                      ),
-                    )
-                  ]),
+                      padding: const EdgeInsets.all(16),
+                      child: Column(children: [
+                        Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!
+                                  .new_issue
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                  color: ThemeHelper.lightGrey,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: -0.4),
+                            ),
+                            const SizedBox()
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              getTitle(context, stateIssue.currentPage!),
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.4,
+                              ),
+                            ),
+                            const SizedBox()
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        ProgressPagerStepper(
+                            totalPage: totalPage,
+                            currentPage: stateIssue.currentPage!),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Expanded(
+                          child: PageView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              controller: pageController,
+                              itemCount: pages.length,
+                              onPageChanged: (value) {
+                                issueCubit.setCurrentPage(value);
+                              },
+                              itemBuilder: ((context, index) {
+                                return pages[index];
+                              })),
+                        ),
+                        Container(
+                          height: 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              stateIssue.currentPage != 0
+                                  ? TextButton(
+                                      onPressed: (() {
+                                        FocusScope.of(context).unfocus();
+                                        pageController.previousPage(
+                                          duration: const Duration(
+                                              milliseconds:
+                                                  500), // Durata dell'animazione
+                                          curve: Curves
+                                              .ease, // Curva dell'animazione
+                                        );
+                                      }),
+                                      child: RoundedShapeButton(
+                                          title: AppLocalizations.of(context)!
+                                              .back_desc,
+                                          color: ThemeHelper.blueMunicipium,
+                                          textColor: Colors.white),
+                                    )
+                                  : Container(),
+                              const SizedBox(),
+                              TextButton(
+                                onPressed: checkStep
+                                    ? (() async {
+                                        if (stateIssue.currentPage == 3) {
+                                          final DeviceBe? device =
+                                              await municipalityBloc
+                                                  .getDevice();
+                                          final Municipality? municipality =
+                                              await municipalityBloc
+                                                  .getMunicipality();
+                                          issueCubit.setLoading(true);
+                                          issueCubit.postIssue(
+                                              device, municipality, () {
+                                            issueCubit.setLoading(false);
+                                            context.pushRoute(
+                                                NewissueCompletedRoute(
+                                                    udid: device!.udid));
+                                          });
+                                        } else {
+                                          FocusScope.of(context).unfocus();
+                                          pageController.nextPage(
+                                            duration: const Duration(
+                                                milliseconds:
+                                                    500), // Durata dell'animazione
+                                            curve: Curves
+                                                .ease, // Curva dell'animazione
+                                          );
+                                        }
+                                      })
+                                    : null,
+                                child: RoundedShapeButton(
+                                    title:
+                                        stateIssue.currentPage! != totalPage - 1
+                                            ? AppLocalizations.of(context)!
+                                                .next_desc
+                                            : AppLocalizations.of(context)!
+                                                .send_desc,
+                                    color: checkStep
+                                        ? ThemeHelper.blueMunicipium
+                                        : Colors.grey,
+                                    textColor: Colors.white),
+                              )
+                            ],
+                          ),
+                        )
+                      ]),
+                    ),
+                    stateIssue.loading ?? false
+                        ? const Center(child: CircularProgressIndicator())
+                        : Container(),
+                  ],
                 );
               },
             );

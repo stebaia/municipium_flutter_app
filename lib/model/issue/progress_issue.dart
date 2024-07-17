@@ -28,6 +28,7 @@ class ProgressIssue extends Equatable {
   bool? noPhoto;
   List<XFile>? imageList;
   bool? privacy;
+  bool? loading;
 
   ProgressIssue(
       {this.address,
@@ -48,6 +49,7 @@ class ProgressIssue extends Equatable {
       this.udid,
       this.userAgent,
       this.municipalityName,
+      bool? loading,
       int? currentPage, // Aggiunto currentPage come parametro opzionale
       this.totalPage,
       List<IssueMappedCategory>? subList,
@@ -58,7 +60,8 @@ class ProgressIssue extends Equatable {
         subList = subList ?? [],
         noPhoto = noPhoto ?? false,
         imageList = imageList ?? [],
-        privacy = privacy ?? false;
+        privacy = privacy ?? false,
+        loading = loading ?? false;
 
   ProgressIssue copyWith(
       {String? address,
@@ -84,7 +87,8 @@ class ProgressIssue extends Equatable {
       List<IssueMappedCategory>? subList,
       bool? noPhoto,
       List<XFile>? imageList,
-      bool? privacy}) {
+      bool? privacy,
+      bool? loading}) {
     return ProgressIssue(
         address: address ?? this.address,
         email: email ?? this.email,
@@ -109,7 +113,8 @@ class ProgressIssue extends Equatable {
         subList: subList ?? this.subList,
         noPhoto: noPhoto ?? this.noPhoto,
         imageList: imageList ?? this.imageList,
-        privacy: privacy ?? this.privacy);
+        privacy: privacy ?? this.privacy,
+        loading: loading ?? this.loading);
   }
 
   @override
@@ -137,6 +142,7 @@ class ProgressIssue extends Equatable {
         subList,
         noPhoto,
         imageList,
-        privacy
+        privacy,
+        loading
       ];
 }

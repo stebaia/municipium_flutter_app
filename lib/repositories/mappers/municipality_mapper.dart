@@ -25,7 +25,8 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
                 i300x300: '',
                 baseUrl: '',
                 i720x960: '',
-                i1920x1280: ''),
+                i1920x1280: '',
+                i640: ''),
         background: dto.image != null
             ? mapperImages.fromDTO(dto.image!)
             : const MunicipiumImage(
@@ -33,7 +34,8 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
                 i300x300: '',
                 baseUrl: '',
                 i720x960: '',
-                i1920x1280: ''),
+                i1920x1280: '',
+                i640: ''),
         subdomain: dto.subdomain != null ? dto.subdomain! : '',
         newMenu: dto.newMenu ?? NewMenuDTO());
   }
