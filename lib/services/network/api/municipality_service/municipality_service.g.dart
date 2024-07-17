@@ -6,7 +6,7 @@ part of 'municipality_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _MunicipalityService implements MunicipalityService {
   _MunicipalityService(
@@ -17,6 +17,67 @@ class _MunicipalityService implements MunicipalityService {
   final Dio _dio;
 
   String? baseUrl;
+
+  @override
+  Future<List<MunicipalityDTO>> getListMunicipality() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<MunicipalityDTO>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'municipalities/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) => MunicipalityDTO.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  Future<List<MunicipalityDTO>> getListMunicipalityWithLatLng(
+    double lat,
+    double lng,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<MunicipalityDTO>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'municipalities/all=true&latitude=${lat}&longitude=${lng}&radius=50000',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) => MunicipalityDTO.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
 
   @override
   Future<MunicipalityDTO> getMunicipality(int municipalityId) async {
@@ -41,25 +102,25 @@ class _MunicipalityService implements MunicipalityService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = MunicipalityDTO.fromJson(_result.data!);
-    return _value;
+    final value = MunicipalityDTO.fromJson(_result.data!);
+    return value;
   }
 
   @override
-  Future<Configurations> getMunicipalityConfigurations() async {
+  Future<MunicipalityDTO> getIdpList() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<Configurations>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<MunicipalityDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'digital_dossier/configurations',
+              'get_idps',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -68,8 +129,8 @@ class _MunicipalityService implements MunicipalityService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = Configurations.fromJson(_result.data!);
-    return _value;
+    final value = MunicipalityDTO.fromJson(_result.data!);
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

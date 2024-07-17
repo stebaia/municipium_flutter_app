@@ -6,7 +6,7 @@ final List<RepositoryProvider> _repositories = [
           configurationsMapper: context.read(),
           munMapper: context.read(),
           deviceMapper: context.read(),
-          baseMunicipalityService: context.read(),
+          configurationService: context.read(),
           municipalityBeService: context.read(),
           secureStorage: context.read(),
           municipalityService: context.read(),
@@ -44,10 +44,9 @@ final List<RepositoryProvider> _repositories = [
         logger: context.read()),
   ),
   RepositoryProvider<UserRepository>(
-    create: (context) => UserRepository(
-        municipalityRepository: context.read(),
-       secureStorage: context.read())
-  ),
+      create: (context) => UserRepository(
+          municipalityRepository: context.read(),
+          secureStorage: context.read())),
   RepositoryProvider<PnrrServiceRepository>(
     create: (context) => PnrrServiceRepository(
         pnrrMapper: context.read(),

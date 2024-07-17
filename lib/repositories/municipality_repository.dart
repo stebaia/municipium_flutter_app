@@ -5,8 +5,9 @@ import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
-import 'package:municipium/services/network/api/base_municipality_service/base_municipality_service.dart';
+
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
+import 'package:municipium/services/network/api/municipality_configuration_service/municipality_configuration_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
 import 'package:municipium/utils/secure_storage.dart';
@@ -21,8 +22,8 @@ class MunicipalityRepository {
   final Mapper<DeviceBe, String> deviceMapper;
   final Mapper<Configurations, String> configurationsMapper;
   final SecureStorage secureStorage;
+  final MunicipalityConfigurationService configurationService;
   final MunicipalityService municipalityService;
-  final BaseMunicipalityService baseMunicipalityService;
   final MunicipalityBeService municipalityBeService;
   final DTOMapper<MunicipalityDTO, Municipality> municipalityMapper;
   final Logger logger;
@@ -33,7 +34,7 @@ class MunicipalityRepository {
       required this.deviceMapper,
       required this.municipalityService,
       required this.municipalityMapper,
-      required this.baseMunicipalityService,
+      required this.configurationService,
       required this.municipalityBeService,
       required this.configurationsMapper,
       required this.logger});
@@ -41,7 +42,7 @@ class MunicipalityRepository {
   Future<List<Municipality>> getMunicipalityList() async {
     try {
       final municipalityResponse =
-          await baseMunicipalityService.getListMunicipality();
+          await municipalityService.getListMunicipality();
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
@@ -57,7 +58,7 @@ class MunicipalityRepository {
       double lat, double lng) async {
     try {
       final municipalityResponse =
-          await baseMunicipalityService.getListMunicipalityWithLatLng(lat, lng);
+          await municipalityService.getListMunicipalityWithLatLng(lat, lng);
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
@@ -213,7 +214,7 @@ class MunicipalityRepository {
         };
         OneSignal.User.addTags(map);
       }
-
+      getConfigurationsAndSave("https://${municipality.subdomain}/api/v2/");
       return municipality;
     } catch (error, stackTrace) {
       logger.e('Error in getting municipality');
@@ -221,10 +222,10 @@ class MunicipalityRepository {
     }
   }
 
-  Future<void> getConfigurationsAndSave() async {
+  Future<void> getConfigurationsAndSave(String baseUrl) async {
     try {
       final Configurations configurations =
-          await municipalityService.getMunicipalityConfigurations();
+          await configurationService.getMunicipalityConfigurations(baseUrl);
       secureStorage.setConfigurationsKeyInStorage(
           configurationsMapper.from(configurations));
     } catch (ex) {

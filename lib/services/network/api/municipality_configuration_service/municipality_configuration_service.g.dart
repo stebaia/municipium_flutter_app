@@ -1,15 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'base_municipality_service.dart';
+part of 'municipality_configuration_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _BaseMunicipalityService implements BaseMunicipalityService {
-  _BaseMunicipalityService(
+class _MunicipalityConfigurationService
+    implements MunicipalityConfigurationService {
+  _MunicipalityConfigurationService(
     this._dio, {
     this.baseUrl,
   });
@@ -19,20 +20,20 @@ class _BaseMunicipalityService implements BaseMunicipalityService {
   String? baseUrl;
 
   @override
-  Future<List<MunicipalityDTO>> getListMunicipality() async {
+  Future<Configurations> getMunicipalityConfigurations(dynamic baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<MunicipalityDTO>>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<Configurations>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'municipalities/',
+              '${baseUrl}digital_dossier/configurations',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,42 +42,8 @@ class _BaseMunicipalityService implements BaseMunicipalityService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var _value = _result.data!
-        .map((dynamic i) => MunicipalityDTO.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return _value;
-  }
-
-  @override
-  Future<List<MunicipalityDTO>> getListMunicipalityWithLatLng(
-    double lat,
-    double lng,
-  ) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<MunicipalityDTO>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'municipalities/all=true&latitude=${lat}&longitude=${lng}&radius=50000',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    var _value = _result.data!
-        .map((dynamic i) => MunicipalityDTO.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return _value;
+    final value = Configurations.fromJson(_result.data!);
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

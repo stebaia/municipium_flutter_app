@@ -54,9 +54,6 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
               context
                   .read<MunicipalityGlobalCubit>()
                   .getStoredMunicipalityGlobalState();
-              context
-                  .read<MunicipalityBloc>()
-                  .getConfigurationForMunicipality();
             }
           },
           child: Scaffold(
