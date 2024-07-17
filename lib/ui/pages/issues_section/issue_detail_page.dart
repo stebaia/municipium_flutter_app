@@ -49,12 +49,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              'Segnalazione #${detail.id}',
-                              style: const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: -0.4),
+                            Expanded(
+                              child: Text(
+                                'Segnalazione #${detail.id}',
+                                style: const TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: -0.4),
+                              ),
                             ),
                             const SizedBox()
                           ],
@@ -64,11 +66,13 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         Row(
                           children: [
-                            Text(detail.issueCategory?.name ?? '',
-                                style: const TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: -0.4))
+                            Expanded(
+                              child: Text(detail.issueCategory?.name ?? '',
+                                  style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.4)),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -94,11 +98,13 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         const Row(
                           children: [
-                            Text('Dettagli segnalazione',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    letterSpacing: -0.4))
+                            Expanded(
+                              child: Text('Dettagli segnalazione',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: -0.4)),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -106,12 +112,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         const Row(
                           children: [
-                            Text('DATA D\'INVIO',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(141, 144, 152, 1),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: -0.4))
+                            Expanded(
+                              child: Text('DATA D\'INVIO',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(141, 144, 152, 1),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.4)),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -119,14 +127,16 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         Row(
                           children: [
-                            Text(
-                                MunicipiumUtility.convertDate(
-                                    detail.createdAt ?? '', 'd MMM HH:mm',
-                                    todayYesterdayIncluded: true),
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: -0.4))
+                            Expanded(
+                              child: Text(
+                                  MunicipiumUtility.convertDate(
+                                      detail.createdAt ?? '', 'd MMM HH:mm',
+                                      todayYesterdayIncluded: true),
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.4)),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -134,12 +144,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         const Row(
                           children: [
-                            Text('POSIZIONE',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(141, 144, 152, 1),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: -0.4))
+                            Expanded(
+                              child: Text('POSIZIONE',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(141, 144, 152, 1),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.4)),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -150,15 +162,17 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                               detail.address ?? ''),
                           child: Row(
                             children: [
-                              Text(detail.address ?? '',
-                                  style: const TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          ThemeHelper.blueMunicipium,
-                                      color: ThemeHelper.blueMunicipium,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: -0.4))
+                              Expanded(
+                                child: Text(detail.address ?? '',
+                                    style: const TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        decorationColor:
+                                            ThemeHelper.blueMunicipium,
+                                        color: ThemeHelper.blueMunicipium,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: -0.4)),
+                              )
                             ],
                           ),
                         ),
@@ -167,12 +181,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         const Row(
                           children: [
-                            Text('TESTO SEGNALAZIONE',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(141, 144, 152, 1),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: -0.4))
+                            Expanded(
+                              child: Text('TESTO SEGNALAZIONE',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(141, 144, 152, 1),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.4)),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -196,13 +212,15 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                                 detail.image!.i1920x1280 != null)
                             ? const Row(
                                 children: [
-                                  Text('FOTO SEGNALAZIONE',
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromRGBO(141, 144, 152, 1),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: -0.4))
+                                  Expanded(
+                                    child: Text('FOTO SEGNALAZIONE',
+                                        style: TextStyle(
+                                            color: Color.fromRGBO(
+                                                141, 144, 152, 1),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: -0.4)),
+                                  )
                                 ],
                               )
                             : Container(),
@@ -216,9 +234,12 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
-                                    return const CircularProgressIndicator();
+                                    return const Padding(
+                                      padding: EdgeInsets.all(48.0),
+                                      child: CircularProgressIndicator(),
+                                    );
                                   } else if (snapshot.hasError) {
-                                    return Text(
+                                    return const Text(
                                         'Errore nel caricamento delle immagini');
                                   } else if (snapshot.hasData) {
                                     return HorizzontalGallery(

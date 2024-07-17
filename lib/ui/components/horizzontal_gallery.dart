@@ -40,8 +40,8 @@ class HorizzontalGallery extends StatelessWidget {
                       child: Stack(
                         children: [
                           Container(
-                            width: (height ?? 150) - 120,
-                            height: (height ?? 150) - 120,
+                            width: (height != null) ? height! - 120 : 120,
+                            height: (height != null) ? height! - 120 : 120,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                             ),

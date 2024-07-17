@@ -11,6 +11,7 @@ import 'package:municipium/utils/enum.dart';
 import 'package:municipium/utils/menu_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:path/path.dart';
 
 class MenuDrawer extends StatelessWidget {
   MenuDrawer({super.key, required this.mContext, required this.scaffoldKey});
@@ -56,8 +57,8 @@ class MenuDrawer extends StatelessWidget {
                   },
                   sizeFont: 20,
                   icon: Icons.location_on_outlined),
-              const Divider(
-                color: Colors.white,
+              Divider(
+                color: Theme.of(context).dividerColor,
               ),
               ListView.builder(
                   padding: const EdgeInsets.only(top: 0),
@@ -82,8 +83,8 @@ class MenuDrawer extends StatelessWidget {
                   itemCount: menuList.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics()),
-              const Divider(
-                color: Colors.white,
+              Divider(
+                color: Theme.of(context).dividerColor,
               ),
               MenuRow(
                   textToShow: AppLocalizations.of(context)!.settings_menu,

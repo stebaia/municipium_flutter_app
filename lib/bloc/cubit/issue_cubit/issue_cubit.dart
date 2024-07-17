@@ -102,6 +102,11 @@ class IssueCubit extends Cubit<ProgressIssue> {
     emit(updatedIssue);
   }
 
+  void setLoading(bool value) {
+    final updatedIssue = state.copyWith(loading: value);
+    emit(updatedIssue);
+  }
+
   Future<ProgressIssue> buildMissingFields(
       DeviceBe? device, Municipality? municipality) async {
     String image1 = '';

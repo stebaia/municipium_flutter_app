@@ -69,6 +69,7 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
                                       Text(
                                         'Segnalazione #${state.issueItemList[index].id}',
                                         style: const TextStyle(
+                                            color: Colors.black,
                                             fontSize: 17,
                                             fontWeight: FontWeight.w400),
                                       ),
