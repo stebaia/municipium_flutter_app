@@ -6,7 +6,7 @@ part of 'municipality_be_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _MunicipalityBeService implements MunicipalityBeService {
   _MunicipalityBeService(
@@ -42,8 +42,8 @@ class _MunicipalityBeService implements MunicipalityBeService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = ResponseDevicePut.fromJson(_result.data!);
-    return _value;
+    final value = ResponseDevicePut.fromJson(_result.data!);
+    return value;
   }
 
   @override
@@ -70,8 +70,8 @@ class _MunicipalityBeService implements MunicipalityBeService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = _result.data;
-    final httpResponse = HttpResponse(_value, _result);
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 

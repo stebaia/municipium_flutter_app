@@ -32,3 +32,12 @@ class NoMunicipalityState extends MunicipalityState {
 class ErrorMunicipalityState extends MunicipalityState {
   const ErrorMunicipalityState();
 }
+
+class ConfigurationFetchedState extends MunicipalityState {
+  final Configurations configurations;
+  const ConfigurationFetchedState(this.configurations);
+}
+
+class NoConfigurationState extends MunicipalityState {
+  const NoConfigurationState();
+}

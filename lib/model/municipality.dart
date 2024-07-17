@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/model/menu/municipium_menu.dart';
 import 'package:municipium/services/network/dto/new_menu_dto.dart';
@@ -16,19 +17,22 @@ class Municipality extends Equatable {
   final String appServiceTwo;
   final String appServiceThree;
   final String appServiceFour;
-  const Municipality(
-      {required this.municipalityName,
-      required this.muninicipalityId,
-      required this.background,
-      required this.logo,
-      required this.lat,
-      required this.lng,
-      required this.subdomain,
-      required this.appServiceOne,
-      required this.appServiceTwo,
-      required this.appServiceThree,
-      required this.appServiceFour,
-      required this.newMenu});
+  Configurations? configurations;
+  Municipality({
+    required this.municipalityName,
+    required this.muninicipalityId,
+    required this.background,
+    required this.logo,
+    required this.lat,
+    required this.lng,
+    required this.subdomain,
+    required this.appServiceOne,
+    required this.appServiceTwo,
+    required this.appServiceThree,
+    required this.appServiceFour,
+    required this.newMenu,
+    this.configurations,
+  });
 
   @override
   List<Object?> get props => [

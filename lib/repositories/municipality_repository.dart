@@ -177,6 +177,8 @@ class MunicipalityRepository {
       final municipalityResponse =
           await municipalityService.getMunicipality(municipalityId);
       final municipality = municipalityMapper.fromDTO(municipalityResponse);
+      municipality.configurations = await getConfigurationsAndSave(
+          "https://${municipality.subdomain}/api/v2/");
       await secureStorage
           .setMunicipalityKeyInStorage(munMapper.from(municipality));
       final deviceBeStorage = await getCurrentDevice();
@@ -214,7 +216,7 @@ class MunicipalityRepository {
         };
         OneSignal.User.addTags(map);
       }
-      getConfigurationsAndSave("https://${municipality.subdomain}/api/v2/");
+
       return municipality;
     } catch (error, stackTrace) {
       logger.e('Error in getting municipality');
@@ -222,12 +224,11 @@ class MunicipalityRepository {
     }
   }
 
-  Future<void> getConfigurationsAndSave(String baseUrl) async {
+  Future<Configurations?> getConfigurationsAndSave(String baseUrl) async {
     try {
       final Configurations configurations =
           await configurationService.getMunicipalityConfigurations(baseUrl);
-      secureStorage.setConfigurationsKeyInStorage(
-          configurationsMapper.from(configurations));
+      return configurations;
     } catch (ex) {
       logger.e(ex);
     }

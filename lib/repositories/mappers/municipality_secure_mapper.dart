@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/municipium_image.dart';
 import 'package:municipium/services/network/dto/new_menu_dto.dart';
@@ -11,15 +12,18 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         'name': from.municipalityName,
         'id': from.muninicipalityId,
         'subdomain': from.subdomain,
-        'lat' : from.lat,
-        'lng' : from.lng,
+        'lat': from.lat,
+        'lng': from.lng,
         'logo': from.logo.toJson(),
         'background': from.background.toJson(),
-        'appServiceOne' : from.appServiceOne,
-        'appServiceTwo' : from.appServiceTwo,
-        'appServiceThree' : from.appServiceThree,
-        'appServiceFour' : from.appServiceFour,
-        'new_menu': from.newMenu.toJson() // Serializza l'oggetto MunicipiumImage
+        'appServiceOne': from.appServiceOne,
+        'appServiceTwo': from.appServiceTwo,
+        'appServiceThree': from.appServiceThree,
+        'appServiceFour': from.appServiceFour,
+        'new_menu': from.newMenu.toJson(),
+        'configurations': from.configurations ??
+            from.configurations!
+                .toJson() // Serializza l'oggetto MunicipiumImage
       });
 
   @override
@@ -38,6 +42,9 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         appServiceTwo: json['appServiceTwo'],
         appServiceThree: json['appServiceThree'],
         appServiceFour: json['appServiceFour'],
-        newMenu: NewMenuDTO.fromJson(json['new_menu']));
+        newMenu: NewMenuDTO.fromJson(
+          json['new_menu'],
+        ),
+        configurations: Configurations.fromJson(json['configurations']));
   }
 }
