@@ -9,12 +9,17 @@ part 'municipality_service.g.dart';
 abstract class MunicipalityService {
   factory MunicipalityService(Dio dio, {String baseUrl}) = _MunicipalityService;
 
+  @GET('municipalities/')
+  Future<List<MunicipalityDTO>> getListMunicipality();
+
+  @GET('municipalities/all=true&latitude={lat}&longitude={lng}&radius=50000')
+  Future<List<MunicipalityDTO>> getListMunicipalityWithLatLng(
+      @Path('lat') double lat, @Path('lng') double lng);
+
   @GET('municipalities/show_mobile/{municipalityId}')
   Future<MunicipalityDTO> getMunicipality(
       @Path('municipalityId') int municipalityId);
 
-
-  @GET('digital_dossier/configurations')
-  Future<Configurations> getMunicipalityConfigurations();
-  
+  @GET('get_idps')
+  Future<MunicipalityDTO> getIdpList();
 }

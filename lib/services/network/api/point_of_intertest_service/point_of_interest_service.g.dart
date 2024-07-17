@@ -6,7 +6,7 @@ part of 'point_of_interest_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _PointOfInterestService implements PointOfInterestService {
   _PointOfInterestService(
@@ -44,8 +44,8 @@ class _PointOfInterestService implements PointOfInterestService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PointOfInterestsDTO.fromJson(_result.data!);
-    return value;
+    final _value = PointOfInterestsDTO.fromJson(_result.data!);
+    return _value;
   }
 
   @override
@@ -71,8 +71,8 @@ class _PointOfInterestService implements PointOfInterestService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PointOfInterestsDTO.fromJson(_result.data!);
-    return value;
+    final _value = PointOfInterestsDTO.fromJson(_result.data!);
+    return _value;
   }
 
   @override
@@ -98,10 +98,10 @@ class _PointOfInterestService implements PointOfInterestService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) => CategoryPoiDTO.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   @override
@@ -127,8 +127,8 @@ class _PointOfInterestService implements PointOfInterestService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PoiDetailDTO.fromJson(_result.data!);
-    return value;
+    final _value = PoiDetailDTO.fromJson(_result.data!);
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

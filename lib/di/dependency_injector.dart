@@ -62,11 +62,11 @@ import 'package:municipium/repositories/pnrr_service_repository.dart';
 import 'package:municipium/repositories/point_of_interest_repository.dart';
 import 'package:municipium/repositories/reservations_repository.dart';
 import 'package:municipium/repositories/user_repository.dart';
-import 'package:municipium/services/network/api/base_municipality_service/base_municipality_service.dart';
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/api/event_service/event_service.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
+import 'package:municipium/services/network/api/municipality_configuration_service/municipality_configuration_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/api/news_service/news_service.dart';
 import 'package:municipium/services/network/api/pnrr_service/pnrr_service.dart';
@@ -118,7 +118,8 @@ class DependencyInjector extends StatelessWidget {
           builder: (context, state) {
             return BlocProvider(
               create: (context) => MunicipalityUrlCubit(
-                  secureStorage: context.read(), baseUrl: state)..fetchMunicipalityInStorage(),
+                  secureStorage: context.read(), baseUrl: state)
+                ..fetchMunicipalityInStorage(),
               child: BlocBuilder<MunicipalityUrlCubit, MunicipalityUrlState>(
                 builder: (context, muincipalityUrlState) {
                   String baseUrl;
@@ -127,7 +128,9 @@ class DependencyInjector extends StatelessWidget {
                   if (muincipalityUrlState is MunicipalityUrlLoaded) {
                     baseUrl = muincipalityUrlState.baseUrl;
                   } else if (muincipalityUrlState is MunicipalityUrlEmpty) {
-                    baseUrl = state.name == 'prod' ? MunicipiumUtility.BASEURL_PROD : MunicipiumUtility.BASEURL_STAGING;
+                    baseUrl = state.name == 'prod'
+                        ? MunicipiumUtility.BASEURL_PROD
+                        : MunicipiumUtility.BASEURL_STAGING;
                   } else {
                     baseUrl = ''; // or some default value if needed
                   }
