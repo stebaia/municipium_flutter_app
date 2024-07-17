@@ -60,14 +60,32 @@ class IssueDetailDto extends DTO {
     archived = json['archived'];
     started = json['started'];
     canceled = json['canceled'];
-    image =
-        json['image'] != null ? new MImagesDTO.fromJson(json['image']) : null;
-    image2 =
-        json['image2'] != null ? new MImagesDTO.fromJson(json['image2']) : null;
-    image3 =
-        json['image3'] != null ? new MImagesDTO.fromJson(json['image3']) : null;
-    image4 =
-        json['image4'] != null ? new MImagesDTO.fromJson(json['image4']) : null;
+    if (json['image'] != null) {
+      image = json['image']['image'] != null
+          ? MImagesDTO.fromJson(json['image']['image'])
+          : null;
+    }
+    if (json['image2'] != null) {
+      image2 = json['image2']['image'] != null
+          ? MImagesDTO.fromJson(json['image2']['image'])
+          : null;
+    }
+    if (json['image3'] != null) {
+      image3 = json['image3']['image'] != null
+          ? MImagesDTO.fromJson(json['image3']['image'])
+          : null;
+    }
+    if (json['image4'] != null) {
+      image4 = json['image4']['image'] != null
+          ? MImagesDTO.fromJson(json['image4']['image'])
+          : null;
+    }
+    if (json['email'] != null) {
+      email = <String>[];
+      json['email'].forEach((v) {
+        email!.add(v);
+      });
+    }
     if (json['attachments'] != null) {
       attachments = <String>[];
       json['attachments'].forEach((v) {

@@ -141,10 +141,10 @@ class IssueCubit extends Cubit<ProgressIssue> {
     return updatedIssue;
   }
 
-  Future<Map<String, bool>> postIssue(
-      DeviceBe? device, Municipality? municipality) async {
+  void postIssue(
+      DeviceBe? device, Municipality? municipality, Function()? action) async {
     ProgressIssue issue = await buildMissingFields(device, municipality);
     PostIssueDto issueDto = issuesRepository.postIssueMapper.toDTO(issue);
-    return issuesRepository.postIssue(issueDto);
+    issuesRepository.postIssue(issueDto, action);
   }
 }

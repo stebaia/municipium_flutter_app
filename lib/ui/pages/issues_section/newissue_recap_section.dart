@@ -221,13 +221,15 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!.content_desc,
-                            style: const TextStyle(
-                                color: ThemeHelper.darkGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              AppLocalizations.of(context)!.content_desc,
+                              style: const TextStyle(
+                                  color: ThemeHelper.darkGrey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],

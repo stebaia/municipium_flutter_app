@@ -73,11 +73,15 @@ class IssuesRepository {
     }
   }
 
-  Future<Map<String, bool>> postIssue(PostIssueDto issueDto) async {
+  void postIssue(PostIssueDto issueDto, Function()? action) async {
     try {
       Map<String, bool> response = await issueService.postIssue(issueDto);
       print(response);
-      return response;
+      if (response['success'] == true) {
+        if (action != null) {
+          action();
+        }
+      }
     } catch (error, stackTrace) {
       logger.e('Error in getting tags categories list');
       rethrow;

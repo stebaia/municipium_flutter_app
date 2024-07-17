@@ -102,20 +102,18 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
                                   Row(
                                     children: [
                                       TagLabelBkg(
-                                          title: state.issueItemList[index]
-                                                      .closed ??
-                                                  false
-                                              ? 'Chiusa'
-                                              : 'Aperta'),
+                                          title:
+                                              state.issueItemList[index].closed
+                                                  ? 'Chiusa'
+                                                  : 'Aperta'),
                                       const SizedBox(
                                         width: 16,
                                       ),
                                       TagLabelBkg(
-                                          title: state.issueItemList[index]
-                                                      .merged ??
-                                                  false
-                                              ? 'Sincronizzato'
-                                              : 'Da sincronizzare')
+                                          title:
+                                              state.issueItemList[index].merged
+                                                  ? 'Sincronizzato'
+                                                  : 'Da sincronizzare')
                                     ],
                                   )
                                 ],
@@ -136,10 +134,6 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 50,
-        margin:
-            const EdgeInsets.symmetric(horizontal: 16.0), // Optional padding
         child: ElevatedButton(
           onPressed: () {
             context.pushRoute(NewIssueRouter());
@@ -147,9 +141,9 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
           style: ElevatedButton.styleFrom(
             backgroundColor: ThemeHelper.blueMunicipium,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(12),
             ),
-            padding: EdgeInsets.zero,
+            padding: const EdgeInsets.all(20),
           ),
           child: const Text(
             'Nuova segnalazione',

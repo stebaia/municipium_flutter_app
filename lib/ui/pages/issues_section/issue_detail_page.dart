@@ -3,15 +3,17 @@ import 'dart:ffi';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/issue_detail_bloc/issue_detail_bloc.dart';
 import 'package:municipium/model/issue/issue_Detail.dart';
+import 'package:municipium/model/municipality.dart';
 import 'package:municipium/ui/components/horizzontal_gallery.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/ui/components/tag_label_bkg.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
@@ -22,6 +24,9 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
+    Municipality municipality = (context.watch<MunicipalityGlobalCubit>().state
+            as StoredMunicipalityGlobalState)
+        .municipality;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -90,7 +95,7 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         const Row(
                           children: [
                             Text('Dettagli segnalazione',
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w700,
                                     letterSpacing: -0.4))
@@ -175,11 +180,13 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         Row(
                           children: [
-                            Text(detail.content ?? '',
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: -0.4))
+                            Expanded(
+                              child: Text(detail.content ?? '',
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.4)),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -204,20 +211,31 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         (detail.image != null &&
                                 detail.image!.i1920x1280 != null)
-                            ? HorizzontalGallery(
-                                imageList: [],
-                                title: const Row(
-                                  children: [
-                                    Text(
-                                      '',
-                                      style: const TextStyle(
+                            ? FutureBuilder<List<XFile>>(
+                                future: createImageList(detail, municipality),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text(
+                                        'Errore nel caricamento delle immagini');
+                                  } else if (snapshot.hasData) {
+                                    return HorizzontalGallery(
+                                      imageList: snapshot.data!,
+                                      height: 300,
+                                      title: const Text(
+                                        '',
+                                        style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w700,
-                                          letterSpacing: -0.4),
-                                    ),
-                                    SizedBox()
-                                  ],
-                                ),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                },
                               )
                             : Container()
                       ],
@@ -232,18 +250,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          margin:
-              const EdgeInsets.symmetric(horizontal: 16.0), // Optional padding
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               backgroundColor: ThemeHelper.blueMunicipium,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(12),
               ),
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.all(20),
             ),
             child: const Text(
               'Aggiungi commento',
@@ -256,7 +270,28 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
         ));
   }
 
-  //List<> createImageList() {}
+  Future<List<XFile>> createImageList(
+      IssueDetail detail, Municipality municipality) async {
+    List<String> listUrl = [];
+    if (detail.image != null) {
+      listUrl
+          .add('http://${municipality.subdomain}${detail.image!.i640 ?? ''}');
+    }
+    if (detail.image2 != null) {
+      listUrl
+          .add('http://${municipality.subdomain}${detail.image2!.i640 ?? ''}');
+    }
+    if (detail.image3 != null) {
+      listUrl
+          .add('http://${municipality.subdomain}${detail.image3!.i640 ?? ''}');
+    }
+    if (detail.image4 != null) {
+      listUrl
+          .add('http://${municipality.subdomain}${detail.image4!.i640 ?? ''}');
+    }
+    List<XFile> xfiles = await MunicipiumUtility.downloadFilesFromUrls(listUrl);
+    return xfiles;
+  }
 
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [

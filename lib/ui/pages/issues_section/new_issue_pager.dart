@@ -11,6 +11,7 @@ import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/rounded_shape_button.dart';
 import 'package:municipium/ui/components/pager/progress_pager_stepper.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_category_section.dart';
@@ -181,7 +182,13 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                                           await municipalityBloc
                                               .getMunicipality();
                                       issueCubit.postIssue(
-                                          device, municipality);
+                                          device,
+                                          municipality,
+                                          () => {
+                                                context.pushRoute(
+                                                    NewissueCompletedRoute(
+                                                        udid: device!.udid))
+                                              });
                                       print('');
                                     } else {
                                       FocusScope.of(context).unfocus();
