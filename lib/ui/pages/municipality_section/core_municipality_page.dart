@@ -20,7 +20,6 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final int municipalityId;
   CoreMunicipalityPage({super.key, required this.municipalityId});
-
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<MunicipalityBloc>(
@@ -34,6 +33,7 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                 ..getDevice(),
         ),
       ], child: this);
+
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(

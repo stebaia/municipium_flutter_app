@@ -6,7 +6,7 @@ part of 'issue_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _IssueService implements IssueService {
   _IssueService(
@@ -71,10 +71,10 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) => IssueDto.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   @override
@@ -100,10 +100,10 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) => IssueTagDto.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   @override
@@ -129,11 +129,11 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) =>
             IssueCategoryTagDto.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   @override
@@ -160,8 +160,8 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = _result.data!.cast<String, bool>();
-    return value;
+    final _value = _result.data!.cast<String, bool>();
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

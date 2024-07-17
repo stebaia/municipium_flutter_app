@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:municipium/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
@@ -27,18 +28,20 @@ class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
   State<WelcomePage> createState() => _WelcomePageState();
 
   @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<MunicipalityBloc>(
-          create: (context) =>
-              MunicipalityBloc(municipalityRepository: context.read())
-                ..fetchMunicipality(municipalityId),
-        ),
-        BlocProvider<EmergencyCallBloc>(
-          create: (context) =>
-              EmergencyCallBloc(civilDefenceRepository: context.read())
-                ..fetchEmergencyCallList(),
-        )
-      ], child: this);
+  Widget wrappedRoute(BuildContext context) {
+    return MultiBlocProvider(providers: [
+      BlocProvider<MunicipalityBloc>(
+        create: (context) =>
+            MunicipalityBloc(municipalityRepository: context.read())
+              ..fetchMunicipality(municipalityId),
+      ),
+      BlocProvider<EmergencyCallBloc>(
+        create: (context) =>
+            EmergencyCallBloc(civilDefenceRepository: context.read())
+              ..fetchEmergencyCallList(),
+      )
+    ], child: this);
+  }
 }
 
 class _WelcomePageState extends State<WelcomePage> {
@@ -47,18 +50,17 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
       body: BlocConsumer<MunicipalityBloc, MunicipalityState>(
           listener: (context, state) {
-            if(state is ErrorMunicipalityState) {
-              
-              context.pushRoute(const OnboardingRoute());
-            }
-          },
-          builder: ((context, state) {
+        if (state is ErrorMunicipalityState) {
+          context.pushRoute(const OnboardingRoute());
+        }
+      }, builder: ((context, state) {
         if (state is FetchingMunicipalityState) {
           return Center(
             child: CircularProgressIndicator(),
           );
         } else if (state is FetchedMunicipalityState) {
           Municipality municipality = state.municipality;
+          context.read<MunicipalityUrlCubit>().fetchMunicipalityInStorage();
           context.read<MunicipalityGlobalCubit>().authenticated(municipality);
           return Stack(
             children: [
@@ -126,7 +128,8 @@ class _WelcomePageState extends State<WelcomePage> {
                           fillColor: ThemeHelper.blueMunicipium,
                           isEnabled: true,
                           onTap: () {
-                            context.pushRoute(CoreMunicipalityRoute(municipalityId: widget.municipalityId));
+                            context.pushRoute(CoreMunicipalityRoute(
+                                municipalityId: widget.municipalityId));
                           },
                           text: AppLocalizations.of(context)!
                               .btn_go_to_municipium,
