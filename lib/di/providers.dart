@@ -71,6 +71,9 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
             PnrrService(context.read<Dio>(), baseUrl: baseUrl)),
     Provider<ReservationsService>(
         create: (context) =>
-            ReservationsService(context.read<Dio>(), baseUrl: baseUrlGastone))
+            ReservationsService(context.read<Dio>(), baseUrl: baseUrlGastone)),
+    Provider<AuthSpidService>(
+        create: (context) =>
+            AuthSpidService(context.read<Dio>(), baseUrl: baseUrl))
   ];
 }

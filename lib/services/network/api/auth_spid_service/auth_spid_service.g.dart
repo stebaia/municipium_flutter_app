@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pnrr_service.dart';
+part of 'auth_spid_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'pnrr_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _PnrrService implements PnrrService {
-  _PnrrService(
+class _AuthSpidService implements AuthSpidService {
+  _AuthSpidService(
     this._dio, {
     this.baseUrl,
   });
@@ -19,20 +19,20 @@ class _PnrrService implements PnrrService {
   String? baseUrl;
 
   @override
-  Future<ServicePnrrDTOResponse> getServices(String type) async {
+  Future<List<IdpModel>> getIdps() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ServicePnrrDTOResponse>(Options(
+    final _result =
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<IdpModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'paged_pnrr?type=${type}&orderByName=1',
+              'get_idps',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,37 +41,9 @@ class _PnrrService implements PnrrService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ServicePnrrDTOResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<PnrrBodyResponseDto> getPnrrDetail(
-    String type,
-    int id,
-  ) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PnrrBodyResponseDto>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'pnrr/${type}/${id}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = PnrrBodyResponseDto.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => IdpModel.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

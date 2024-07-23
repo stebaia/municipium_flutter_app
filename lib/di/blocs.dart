@@ -12,4 +12,5 @@ final List<BlocProvider> _blocs = [
   BlocProvider<ThemeCubit>(create: (_) => ThemeCubit()),
   BlocProvider<TemporaryConfigurationCubit>(create: (context) => TemporaryConfigurationCubit(context.read())),
   BlocProvider<UserMenuConfigurationCubit>(create: (context) => UserMenuConfigurationCubit(context.read())),
+  BlocProvider<DeviceCubit>(create: (context) => DeviceCubit(context.read())),
 ];

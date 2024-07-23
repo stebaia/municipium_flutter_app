@@ -6,7 +6,7 @@ part of 'event_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _EventService implements EventService {
   _EventService(
@@ -41,8 +41,8 @@ class _EventService implements EventService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = EventDetailDto.fromJson(_result.data!);
-    return _value;
+    final value = EventDetailDto.fromJson(_result.data!);
+    return value;
   }
 
   @override
@@ -68,10 +68,10 @@ class _EventService implements EventService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var _value = _result.data!
+    var value = _result.data!
         .map((dynamic i) => EventDTO.fromJson(i as Map<String, dynamic>))
         .toList();
-    return _value;
+    return value;
   }
 
   @override
@@ -100,8 +100,8 @@ class _EventService implements EventService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = EventPagedDTO.fromJson(_result.data!);
-    return _value;
+    final value = EventPagedDTO.fromJson(_result.data!);
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
