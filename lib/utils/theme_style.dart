@@ -6,6 +6,8 @@ class LightTheme {
   static const primaryColor = Color(0xff2140E9);
   static const lightBlue = Color(0xFFE3F2FD);
   static const baseColor = Colors.black;
+  static const greyFine = Color.fromRGBO(245, 248, 253, 1);
+  static const lightGrey = Color.fromRGBO(234, 238, 247, 1);
 
   static get make => ThemeData(
         brightness: Brightness.light,
@@ -48,9 +50,8 @@ class LightTheme {
             borderSide: BorderSide(color: Colors.red),
           ),
         ),
-        cardColor: const Color.fromRGBO(245, 248, 253, 1),
-        cardTheme: const CardTheme(
-            surfaceTintColor: const Color.fromRGBO(245, 248, 253, 1)),
+        cardColor: greyFine,
+        cardTheme: const CardTheme(surfaceTintColor: greyFine),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             foregroundColor: Colors.black,

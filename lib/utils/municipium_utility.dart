@@ -30,16 +30,18 @@ class MunicipiumUtility {
   }
 
   static String convertDate(String dateString, String endFormat,
-      {bool? todayYesterdayIncluded}) {
-    DateTime date = DateTime.parse(dateString);
+      {bool? todayYesterdayIncluded, String? startFormat, bool? withHours}) {
+    DateTime date = startFormat != null
+        ? DateFormat(startFormat).parse(dateString)
+        : DateTime.parse(dateString);
     if (todayYesterdayIncluded != null && todayYesterdayIncluded) {
       final now = DateTime.now();
       final difference = now.difference(date).inDays;
       final timeFormat = DateFormat('HH:mm', 'it');
       if (difference == 0) {
-        return 'oggi ${timeFormat.format(date)}';
+        return 'oggi ${withHours ?? false ? timeFormat.format(date) : ''}';
       } else if (difference == 1) {
-        return 'ieri ${timeFormat.format(date)}';
+        return 'ieri ${withHours ?? false ? timeFormat.format(date) : ''}';
       } else {
         return DateFormat(endFormat, 'it').format(date);
       }

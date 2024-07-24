@@ -7,7 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/issue_detail_bloc/issue_detail_bloc.dart';
 import 'package:municipium/model/issue/issue_Detail.dart';
+import 'package:municipium/model/issue/issue_chat.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/ui/components/horizzontal_gallery.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/ui/components/tag_label_bkg.dart';
@@ -21,6 +24,7 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
 
   int id;
   String udid;
+  IssueDetail? detail;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,26 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
             onPressed: () => context.router.maybePop(),
             icon: const Icon(Icons.arrow_back_ios),
           ),
+          actions: [
+            BlocBuilder<IssueDetailBloc, IssueDetailState>(
+              builder: (context, state) {
+                if (state is FetchedIssueDetailState) {
+                  detail = state.issueDetail;
+                  if (detail != null && detail!.email != null) {
+                    return IconButton(
+                      onPressed: () => context.pushRoute(ChatMessageRoute(
+                          messages: detail!.email!.reversed.toList(),
+                          title: 'Segnalazione #${detail!.id}',
+                          issueId: detail!.id!,
+                          municName: municipality.municipalityName)),
+                      icon: const Icon(Icons.message_outlined),
+                    );
+                  }
+                }
+                return Container();
+              },
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: BlocBuilder<IssueDetailBloc, IssueDetailState>(
@@ -40,7 +64,7 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
               if (state is FetchingIssueDetailState) {
                 return const ShimmerDetailComponent();
               } else if (state is FetchedIssueDetailState) {
-                IssueDetail detail = (context.read<IssueDetailBloc>().state
+                detail = (context.read<IssueDetailBloc>().state
                         as FetchedIssueDetailState)
                     .issueDetail;
                 return Container(
@@ -51,7 +75,7 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                           children: [
                             Expanded(
                               child: Text(
-                                'Segnalazione #${detail.id}',
+                                'Segnalazione #${detail!.id}',
                                 style: const TextStyle(
                                     fontSize: 28,
                                     fontWeight: FontWeight.w700,
@@ -67,7 +91,7 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         Row(
                           children: [
                             Expanded(
-                              child: Text(detail.issueCategory?.name ?? '',
+                              child: Text(detail!.issueCategory?.name ?? '',
                                   style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w400,
@@ -81,14 +105,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         Row(
                           children: [
                             TagLabelBkg(
-                                title: detail.closed ?? false
+                                title: detail!.closed ?? false
                                     ? 'Chiusa'
                                     : 'Aperta'),
                             const SizedBox(
                               width: 16,
                             ),
                             TagLabelBkg(
-                                title: detail.merged ?? false
+                                title: detail!.merged ?? false
                                     ? 'Sincronizzato'
                                     : 'Da sincronizzare')
                           ],
@@ -130,7 +154,7 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                             Expanded(
                               child: Text(
                                   MunicipiumUtility.convertDate(
-                                      detail.createdAt ?? '', 'd MMM HH:mm',
+                                      detail!.createdAt ?? '', 'd MMM HH:mm',
                                       todayYesterdayIncluded: true),
                                   style: const TextStyle(
                                       fontSize: 16,
@@ -159,11 +183,11 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         GestureDetector(
                           onTap: () => MunicipiumUtility.launchMapUrl(
-                              detail.address ?? ''),
+                              detail!.address ?? ''),
                           child: Row(
                             children: [
                               Expanded(
-                                child: Text(detail.address ?? '',
+                                child: Text(detail!.address ?? '',
                                     style: const TextStyle(
                                         decoration: TextDecoration.underline,
                                         decorationColor:
@@ -197,7 +221,7 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         Row(
                           children: [
                             Expanded(
-                              child: Text(detail.content ?? '',
+                              child: Text(detail!.content ?? '',
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -208,8 +232,8 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         const SizedBox(
                           height: 32,
                         ),
-                        (detail.image != null &&
-                                detail.image!.i1920x1280 != null)
+                        (detail!.image != null &&
+                                detail!.image!.i1920x1280 != null)
                             ? const Row(
                                 children: [
                                   Expanded(
@@ -227,10 +251,10 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         const SizedBox(
                           height: 8,
                         ),
-                        (detail.image != null &&
-                                detail.image!.i1920x1280 != null)
+                        (detail!.image != null &&
+                                detail!.image!.i1920x1280 != null)
                             ? FutureBuilder<List<XFile>>(
-                                future: createImageList(detail, municipality),
+                                future: createImageList(detail!, municipality),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
