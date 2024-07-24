@@ -6,6 +6,7 @@ import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/issue_tag.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
+import 'package:municipium/services/network/dto/chat_post_issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
 import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
@@ -41,7 +42,7 @@ class IssuesRepository {
       }
       return list;
     } catch (error, stackTrace) {
-      logger.e('Error in getting issues list municipality-object');
+      logger.e('Error in getting issues list');
       rethrow;
     }
   }
@@ -78,6 +79,21 @@ class IssuesRepository {
       Map<String, bool> response = await issueService.postIssue(issueDto);
       print(response);
       if (response['success'] == true) {
+        if (action != null) {
+          action();
+        }
+      }
+    } catch (error, stackTrace) {
+      logger.e('Error in getting tags categories list');
+      rethrow;
+    }
+  }
+
+  void postMessage(ChatPostIssueDto item, Function()? action) async {
+    try {
+      ChatResponse response = await issueService.postMessageIssue(item);
+      print(response);
+      if (response.success == true) {
         if (action != null) {
           action();
         }

@@ -53,7 +53,7 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
                               horizontal: 16, vertical: 8),
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Color.fromRGBO(245, 248, 253, 1),
+                                color: ThemeHelper.greyFine,
                                 borderRadius: BorderRadius.circular(10.0)),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(

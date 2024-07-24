@@ -40,5 +40,6 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: UserConfMenuEditRoute.page),
         AutoRoute(page: IssueDetailRoute.page),
         AutoRoute(page: NewissueCompletedRoute.page),
+        AutoRoute(page: ChatMessageRoute.page)
       ];
 }

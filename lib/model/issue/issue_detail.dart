@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:municipium/model/issue/issue_category.dart';
 import 'package:municipium/model/municipium_image.dart';
+import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 
 class IssueDetail extends Equatable {
   final int? id;
@@ -20,7 +21,7 @@ class IssueDetail extends Equatable {
   final MunicipiumImage? image2;
   final MunicipiumImage? image3;
   final MunicipiumImage? image4;
-  final List<String>? email;
+  final List<IssueChatItem>? email;
 
   const IssueDetail(
       {required this.id,

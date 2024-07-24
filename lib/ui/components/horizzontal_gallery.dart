@@ -63,8 +63,7 @@ class HorizzontalGallery extends StatelessWidget {
                                     margin: const EdgeInsets.all(4),
                                     decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color:
-                                            Color.fromRGBO(245, 248, 253, 1)),
+                                        color: ThemeHelper.greyFine),
                                     child: Center(
                                       child: IconButton(
                                         onPressed: () {

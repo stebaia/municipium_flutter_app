@@ -6,7 +6,7 @@ part of 'news_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _NewsService implements NewsService {
   _NewsService(
@@ -41,8 +41,8 @@ class _NewsService implements NewsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = NewsDTO.fromJson(_result.data!);
-    return _value;
+    final value = NewsDTO.fromJson(_result.data!);
+    return value;
   }
 
   @override
@@ -71,8 +71,8 @@ class _NewsService implements NewsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = NewsPagedDto.fromJson(_result.data!);
-    return _value;
+    final value = NewsPagedDto.fromJson(_result.data!);
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

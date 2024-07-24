@@ -4,6 +4,9 @@ class ThemeHelper {
   static const blueMunicipium = Color(0xff2140E9);
   static const lightGrey = Color.fromRGBO(188, 191, 200, 1);
   static const darkGrey = Color.fromRGBO(127, 127, 127, 1);
+
+  static const greyFine = Color.fromRGBO(245, 248, 253, 1);
+  static const greyAccent = Color.fromRGBO(234, 238, 247, 1);
   static final lightTheme = ThemeData(
       brightness: Brightness.light,
       useMaterial3: true,
@@ -19,7 +22,7 @@ class ThemeHelper {
       ),
       colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blue, background: Colors.white),
-      cardColor: const Color.fromRGBO(245, 248, 253, 1));
+      cardColor: ThemeHelper.greyFine);
 
   static final darkTheme = ThemeData(
       brightness: Brightness.dark,

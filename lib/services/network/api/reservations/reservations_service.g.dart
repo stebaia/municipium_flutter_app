@@ -6,7 +6,7 @@ part of 'reservations_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _ReservationsService implements ReservationsService {
   _ReservationsService(
@@ -42,11 +42,11 @@ class _ReservationsService implements ReservationsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var _value = _result.data!
+    var value = _result.data!
         .map((dynamic i) =>
             ReservableUnitDto.fromJson(i as Map<String, dynamic>))
         .toList();
-    return _value;
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

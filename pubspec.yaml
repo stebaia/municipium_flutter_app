@@ -84,6 +84,7 @@ dependencies:
   google_places_flutter: ^2.0.8
   timezone: ^0.9.4
   image: ^4.2.0
+  bubble: ^1.2.1
 http: ^0.13.3
 
 dev_dependencies:

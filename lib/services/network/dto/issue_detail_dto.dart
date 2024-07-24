@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
 import 'package:pine/dto/dto.dart';
@@ -21,7 +22,7 @@ class IssueDetailDto extends DTO {
   MImagesDTO? image3;
   MImagesDTO? image4;
   List<String>? attachments;
-  List<String>? email;
+  List<IssueChatItem>? email;
 
   IssueDetailDto(
       {this.id,
@@ -81,21 +82,15 @@ class IssueDetailDto extends DTO {
           : null;
     }
     if (json['email'] != null) {
-      email = <String>[];
+      email = <IssueChatItem>[];
       json['email'].forEach((v) {
-        email!.add(v);
+        email!.add(IssueChatItem.fromJson(v));
       });
     }
     if (json['attachments'] != null) {
       attachments = <String>[];
       json['attachments'].forEach((v) {
         attachments!.add(v);
-      });
-    }
-    if (json['email'] != null) {
-      email = <String>[];
-      json['email'].forEach((v) {
-        email!.add(v);
       });
     }
   }
@@ -136,5 +131,20 @@ class IssueDetailDto extends DTO {
       data['email'] = this.email!.toList();
     }
     return data;
+  }
+}
+
+class IssueChatItem extends DTO {
+  String? email;
+  String? emailDate;
+  bool? isByUser;
+
+  IssueChatItem(
+      {required this.email, required this.emailDate, required this.isByUser});
+
+  IssueChatItem.fromJson(Map<String, dynamic> json) {
+    email = json['email'] as String;
+    emailDate = json['email_date'] as String;
+    isByUser = json['is_by_user'] as bool;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:municipium/services/network/dto/chat_post_issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
 import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
@@ -28,4 +29,7 @@ abstract class IssueService {
 
   @POST('issues')
   Future<Map<String, bool>> postIssue(@Body() PostIssueDto issue);
+
+  @POST('issues/comment_issue')
+  Future<ChatResponse> postMessageIssue(@Body() ChatPostIssueDto item);
 }

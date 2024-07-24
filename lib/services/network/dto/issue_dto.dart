@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/m_images_dto.dart';
 import 'package:pine/dto/dto.dart';
 
@@ -20,7 +21,7 @@ class IssueDto extends DTO with EquatableMixin {
   MImagesDTO? image2;
   MImagesDTO? image3;
   MImagesDTO? image4;
-  List<String>? email;
+  List<IssueChatItem>? email;
 
   IssueDto(
       {this.id,
@@ -77,12 +78,6 @@ class IssueDto extends DTO with EquatableMixin {
       image4 = json['image4']['image'] != null
           ? MImagesDTO.fromJson(json['image4']['image'])
           : null;
-    }
-    if (json['email'] != null) {
-      email = <String>[];
-      json['email'].forEach((v) {
-        email!.add(v);
-      });
     }
   }
 
