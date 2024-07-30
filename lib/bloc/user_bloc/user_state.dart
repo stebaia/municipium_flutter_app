@@ -20,4 +20,18 @@ class NoListIdpState extends UserState {
   const NoListIdpState();
 }
 
+class FetchingUserDataState extends UserState {
+  const FetchingUserDataState();
+}
+
+
+class FetchedUserDataState extends UserState {
+  final SpidUserModel userSpidModel;
+  const FetchedUserDataState(this.userSpidModel);
+}
+
+class NoSpidUserState extends UserState {
+  const NoSpidUserState();
+}
+
 

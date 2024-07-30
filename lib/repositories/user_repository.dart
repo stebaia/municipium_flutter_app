@@ -5,14 +5,17 @@ import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/user/idp_model.dart';
 import 'package:municipium/model/user/spid_object.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
+import 'package:municipium/model/user/user_spid_model.dart';
 import 'package:municipium/repositories/municipality_repository.dart';
 import 'package:municipium/services/network/api/auth_spid_service/auth_spid_service.dart';
+import 'package:municipium/services/network/api/mmc_municipium_service/mmc_municipium_service.dart';
 import 'package:municipium/utils/secure_storage.dart';
 
 class UserRepository {
-  UserRepository({required this.secureStorage, required this.municipalityRepository, required this.authSpidService});
+  UserRepository({required this.secureStorage, required this.municipalityRepository, required this.authSpidService, required this.mmcMunicipiumService});
   final SecureStorage secureStorage;
   final MunicipalityRepository municipalityRepository;
+  final MmcMunicipiumService mmcMunicipiumService;
   final AuthSpidService authSpidService;
   
   
@@ -53,6 +56,15 @@ class UserRepository {
     }
   }
 
+  Future<SpidUserModel> getUserSpid(String authId, String municipalityId, String authSystem, String authIdOld) async {
+    try {
+      final spidUser = await mmcMunicipiumService.retriveUserData(authId, municipalityId, authSystem, authIdOld);
+      return spidUser;
+    }catch(ex) {
+      rethrow;
+    }
+  }
+  
   
 
 

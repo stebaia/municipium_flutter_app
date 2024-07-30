@@ -5,6 +5,7 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
 
   String baseUrlBe = "https://api.municipiumapp.it/";
   String baseUrlGastone = "https://staging.municipiumapp.it/api/gastone/";
+  String baseUrlMmc = "https://mmc.maggiolicloud.it/";
 
   return [
     Provider<Logger>(
@@ -74,6 +75,9 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
             ReservationsService(context.read<Dio>(), baseUrl: baseUrlGastone)),
     Provider<AuthSpidService>(
         create: (context) =>
-            AuthSpidService(context.read<Dio>(), baseUrl: baseUrl))
+            AuthSpidService(context.read<Dio>(), baseUrl: baseUrl)),
+    Provider<MmcMunicipiumService>(
+        create: (context) =>
+            MmcMunicipiumService(context.read<Dio>(),baseUrl: baseUrlMmc))
   ];
 }

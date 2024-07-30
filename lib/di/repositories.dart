@@ -45,6 +45,7 @@ final List<RepositoryProvider> _repositories = [
   ),
   RepositoryProvider<UserRepository>(
       create: (context) => UserRepository(
+          mmcMunicipiumService: context.read(),
           authSpidService: context.read(),
           municipalityRepository: context.read(),
           secureStorage: context.read())),

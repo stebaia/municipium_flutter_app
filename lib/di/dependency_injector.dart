@@ -67,6 +67,7 @@ import 'package:municipium/services/network/api/auth_spid_service/auth_spid_serv
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/api/event_service/event_service.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
+import 'package:municipium/services/network/api/mmc_municipium_service/mmc_municipium_service.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
 import 'package:municipium/services/network/api/municipality_configuration_service/municipality_configuration_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';

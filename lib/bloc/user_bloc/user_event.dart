@@ -12,5 +12,13 @@ class FetchListIdpEvent extends UserEvent {
 }
 
 
+class FetchUserDataEvent extends UserEvent {
+  final String authId;
+  final String municipalityId;
+  final String authSystem;
+  final String authIdOld;
+  const FetchUserDataEvent(this.authId, this.municipalityId, this.authSystem, this.authIdOld);
+}
+
 
 

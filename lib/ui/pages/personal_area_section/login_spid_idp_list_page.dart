@@ -42,7 +42,7 @@ class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
 
                 if(deviceBe != null) {
                   String urlSpid = SpidObject.getWebSpidUrl(municipality.muninicipalityId.toString(), listIdp[index].entityId.toString(), deviceBe.playerId.toString(), deviceBe.udid, listIdp[index].organizationDisplayName.toString());
-                  context.pushRoute(WebViewSpidAuthRoute(urlSpid: urlSpid));
+                  context.pushRoute(WebViewSpidAuthRoute(urlSpid: urlSpid,municipalityId: municipality.muninicipalityId.toString(), authSystem: 'spid'));
                 }
                 
               },),
