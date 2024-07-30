@@ -40,7 +40,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         appServiceThree: json['appServiceThree'],
         appServiceFour: json['appServiceFour'],
         newMenu: NewMenuDTO.fromJson(json['new_menu']),
-        jcityGovEnte: json['jcityGovEnte'],
-        jcityGovUrl: json['jcityGovUrl']);
+        jcityGovEnte: json['jcityGovEnte'] ?? '',
+        jcityGovUrl: json['jcityGovUrl'] ?? '');
   }
 }
