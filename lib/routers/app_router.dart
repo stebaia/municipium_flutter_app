@@ -42,6 +42,8 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: NewissueCompletedRoute.page),
         AutoRoute(page: ChatMessageRoute.page),
         AutoRoute(page: PaymentChoiceRoute.page),
-        AutoRoute(page: SelfPaymentsRoute.page)
+        AutoRoute(page: SelfPaymentsRoute.page),
+        AutoRoute(page: NewSelfPaymentRouter.page),
+        AutoRoute(page: PersonTypePaymentRoute.page)
       ];
 }

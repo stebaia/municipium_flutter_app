@@ -21,8 +21,8 @@ class PaymentsRepository {
   Future<List<SelfPayment>> getSelfPaymentsList(
       String baseUrl, String ente, String area, String codice) async {
     try {
-      final selfPaymentsResponse = await paymentService.getSelfPayments(
-          'https://collaudo-multe.comune-online.it/', ente, area, codice);
+      final selfPaymentsResponse =
+          await paymentService.getSelfPayments(baseUrl, ente, area, codice);
       List<SelfPayment> list = [];
       if (selfPaymentsResponse.isNotEmpty) {
         for (var element in selfPaymentsResponse) {
@@ -40,8 +40,8 @@ class PaymentsRepository {
   Future<PaymentResponse> getPaymentResponse(
       String baseUrl, String ente, String codice) async {
     try {
-      final selfPaymentsResponse = await paymentService.getPaymentResponse(
-          'https://collaudo-multe.comune-online.it/', ente, codice);
+      final selfPaymentsResponse =
+          await paymentService.getPaymentResponse(baseUrl, ente, codice);
 
       final paymentResponse =
           paymentResponseMapper.fromDTO(selfPaymentsResponse);

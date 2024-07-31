@@ -10,8 +10,8 @@ import 'package:municipium/ui/components/pager/progress_pager_stepper.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
 @RoutePage()
-class SelfPaymentPager extends StatelessWidget implements AutoRouteWrapper {
-  SelfPaymentPager(
+class NewSelfPaymentPager extends StatelessWidget implements AutoRouteWrapper {
+  NewSelfPaymentPager(
       {super.key,
       required this.baseUrl,
       required this.ente,
@@ -206,7 +206,8 @@ class SelfPaymentPager extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<PaymentResponseBloc>(
           create: (context) => PaymentResponseBloc(
             paymentRepository: context.read(),
-          )..fetchPaymentResponse(baseUrl, ente, codice),
+          )..fetchPaymentResponse(
+              'https://collaudo-multe.comune-online.it/', ente, codice),
         )
       ], child: this);
 }
