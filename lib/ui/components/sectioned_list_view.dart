@@ -3,41 +3,71 @@ import 'package:flutter/material.dart';
 class SectionedListView<T> extends StatelessWidget {
   final List<Section<T>> sections;
   final Widget Function(BuildContext, String) sectionHeaderBuilder;
-  final Widget Function(BuildContext, T) itemBuilder;
-  final BoxDecoration? itemsCombinedDecoration;
+  final Widget Function(BuildContext, T, int index, int sectionIndex)
+      itemBuilder;
+  final Widget? separator;
+  final Widget? sectionSeparator;
+  final BoxDecoration? sectionItemsDecoration;
+  final ScrollController? controller;
 
-  SectionedListView(
-      {required this.sections,
+  const SectionedListView(
+      {super.key,
+      required this.sections,
       required this.sectionHeaderBuilder,
       required this.itemBuilder,
-      this.itemsCombinedDecoration});
+      this.separator,
+      this.sectionSeparator,
+      this.sectionItemsDecoration,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      controller: controller,
+      shrinkWrap: true,
       itemCount: sections.fold<int>(
-          0, (count, section) => count + section.items.length + 1),
+        0,
+        (count, section) => count + section.items.length + 1,
+      ),
       itemBuilder: (context, index) {
-        int sectionIndex = 0;
-        for (var section in sections) {
-          if (index == sectionIndex) {
+        int currentIndex = 0;
+        for (var sectionIndex = 0;
+            sectionIndex < sections.length;
+            sectionIndex++) {
+          final section = sections[sectionIndex];
+          if (index == currentIndex) {
             return Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: sectionHeaderBuilder(context, section.title),
             );
-          } else if (index < sectionIndex + section.items.length + 1) {
-            var item = section.items[index - sectionIndex - 1];
-            return Padding(
-              padding: itemsCombinedDecoration != null
-                  ? EdgeInsets.symmetric(horizontal: 8, vertical: 0)
-                  : EdgeInsets.zero,
-              child: Container(
-                child: itemBuilder(context, item),
-                decoration: itemsCombinedDecoration ?? BoxDecoration(),
-              ),
-            );
+          } else if (index < currentIndex + section.items.length + 1) {
+            final itemIndex = index - currentIndex - 1;
+            if (itemIndex < section.items.length) {
+              final item = section.items[itemIndex];
+              return Padding(
+                padding: sectionItemsDecoration != null
+                    ? const EdgeInsets.symmetric(horizontal: 8)
+                    : EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    Container(
+                      decoration:
+                          sectionItemsDecoration ?? const BoxDecoration(),
+                      child:
+                          itemBuilder(context, item, itemIndex, sectionIndex),
+                    ),
+                    if (separator != null &&
+                        itemIndex < section.items.length - 1)
+                      separator!,
+                    if (sectionSeparator != null &&
+                        itemIndex == section.items.length - 1)
+                      sectionSeparator!
+                  ],
+                ),
+              );
+            }
           }
-          sectionIndex += section.items.length + 1;
+          currentIndex += section.items.length + 1;
         }
         return Container(); // Fallback, should never reach here.
       },
@@ -56,21 +86,4 @@ class ListItem {
   final String title;
   final String description;
   ListItem({required this.title, required this.description});
-}
-
-class ListItemWidget extends StatelessWidget {
-  final ListItem item;
-  final VoidCallback onTap;
-
-  const ListItemWidget({required this.item, required this.onTap, Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(item.title),
-      subtitle: Text(item.description),
-      onTap: onTap,
-    );
-  }
 }
