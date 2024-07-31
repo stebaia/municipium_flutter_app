@@ -57,5 +57,7 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<PostIssueDto, ProgressIssue>>(
       create: (_) => PostIssueMapper()),
   Provider<DTOMapper<IssueDetailDto, IssueDetail>>(
-      create: (_) => IssueDetailMapper())
+      create: (_) => IssueDetailMapper()),
+  Provider<DTOMapper<SelfPaymentDTO, SelfPayment>>(
+      create: (_) => SelfPaymentMapper())
 ];

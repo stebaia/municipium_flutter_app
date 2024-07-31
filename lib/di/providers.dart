@@ -59,6 +59,11 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
         context.read<Dio>(),
       ),
     ),
+    Provider<PaymentService>(
+      create: (context) => PaymentService(
+        context.read<Dio>(),
+      ),
+    ),
     Provider<MunicipalityBeService>(
       create: (context) =>
           MunicipalityBeService(context.read<Dio>(), baseUrl: baseUrlBe),

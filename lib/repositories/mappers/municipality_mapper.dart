@@ -37,7 +37,9 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
                 i1920x1280: '',
                 i640: ''),
         subdomain: dto.subdomain != null ? dto.subdomain! : '',
-        newMenu: dto.newMenu ?? NewMenuDTO());
+        newMenu: dto.newMenu ?? NewMenuDTO(),
+        jcityGovUrl: dto.jcityGovUrl ?? '',
+        jcityGovEnte: dto.jcityGovEnte ?? '');
   }
 
   @override

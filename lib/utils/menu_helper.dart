@@ -257,7 +257,8 @@ class MenuHelper {
         context.pushRoute(IssuesListRoute(udid: deviceBe!.udid));
         break;
       case MenuItemType.penalties:
-        // TODO: Handle this case.
+        context.pushRoute(
+            PaymentChoiceRoute()); //in attesa che i pagamenti vengano giu
         break;
       case MenuItemType.surveys:
         // TODO: Handle this case.
@@ -281,10 +282,9 @@ class MenuHelper {
         // TODO: Handle this case.
         break;
       case MenuItemType.civilDefence:
-        // TODO: Handle this case.
         break;
       case MenuItemType.payment:
-        // TODO: Handle this case.
+        context.pushRoute(PaymentChoiceRoute());
         break;
       case MenuItemType.sportelloTelematico:
         context.pushRoute(PnrrServicesRoute(type: 'services'));
