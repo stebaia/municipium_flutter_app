@@ -1,8 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/bloc/user_bloc/user_bloc.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class WebViewSpidAuthPage extends StatefulWidget implements AutoRouteWrapper {
@@ -42,33 +46,20 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.of(context).pop(); // Close the dialog
+          context.router.popUntilRouteWithName(CoreMunicipalityRoute.name);
+        });
         return AlertDialog(
-          content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Disable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Enable'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          content: Container(height: 300, width: MediaQuery.of(context).size.width, child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(AppLocalizations.of(context)!.dialog_success_account_spid, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+              Lottie.asset('assets/lottie/success.json', width: 160, height: 160),
+            ],
+          )),
+          
         );
       },
     );
@@ -128,6 +119,7 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
           if(state is FetchedUserDataState) {
+            context.read<UserDataCubit>().auth(state.userSpidModel);
             _dialogBuilder(context);
           }
         },

@@ -9,6 +9,7 @@ import 'package:municipium/bloc/cubit/device_cubit/device_cubit.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/theme_cubit/theme_cubit.dart';
+import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';

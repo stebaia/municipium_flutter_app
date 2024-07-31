@@ -95,5 +95,18 @@
     "text_select_municipality" : "Seleziona i comuni",
     "theme_system" : "System",
     "theme_dark" : "Dark",
-    "theme_light" : "Light"
+    "theme_light" : "Light",
+
+    "title_personal_area" : "Personal Area",
+    "text_section_account_data" : "Account data",
+    "text_section_payment" : "Payment",
+    "text_section_online_service" : "Online service",
+    "text_section_personal_messages" : "Personal messages",
+    "text_section_reservation" : "Reservations",
+    "text_section_issues" : "Issues",
+    "text_section_surveys" : "Surveys",
+    "text_section_account_preferences" : "Account preferences",
+    "text_section_logout" : "Logout",
+
+    "dialog_success_account_spid" : "Autenticazione avvenuta con successo"
 }
