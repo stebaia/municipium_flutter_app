@@ -52,6 +52,37 @@ class _PaymentService implements PaymentService {
     return value;
   }
 
+  @override
+  Future<PaymentResponseDTO> getPaymentResponse(
+    String baseUrl,
+    String ente,
+    String codice,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<PaymentResponseDTO>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '${baseUrl}api/jsonws/jcitygov-pagamenti-spontanei-portlet.tipopagamento/get-config-by-ente-tipo-pagamento?ente=${ente}&codiceTipoPagamento=${codice}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = PaymentResponseDTO.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
