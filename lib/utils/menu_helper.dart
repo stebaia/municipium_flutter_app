@@ -268,7 +268,7 @@ class MenuHelper {
         // TODO: Handle this case.
         break;
       case MenuItemType.services:
-        // TODO: Handle this case.
+        context.pushRoute(ServiceOnlineListRoute());
         break;
       case MenuItemType.dms:
         // TODO: Handle this case.

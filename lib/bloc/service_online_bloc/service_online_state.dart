@@ -20,7 +20,7 @@ final class FetchedServiceOnlineState extends ServiceOnlineState {
 
   const FetchedServiceOnlineState(this.onlineServiceList);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [onlineServiceList];
 }
 
 final class ErrorServiceOnlineState extends ServiceOnlineState {

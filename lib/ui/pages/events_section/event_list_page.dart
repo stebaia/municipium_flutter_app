@@ -42,7 +42,7 @@ class _EventListPageState extends State<EventListPage> {
           scaffoldKey: _scaffoldKey,
         ),
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+          
           title: context.read<EventListBloc>().isSearching
               ? TextField(
                   controller: _searchController,

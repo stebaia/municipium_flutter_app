@@ -17,3 +17,11 @@ class FetchServiceListEvent extends ServiceOnlineEvent {
   List<Object> get props => [];
 }
 
+class FilterServiceListEvent extends ServiceOnlineEvent {
+  final String query;
+
+  const FilterServiceListEvent(this.query);
+
+  @override
+  List<Object> get props => [query];
+}

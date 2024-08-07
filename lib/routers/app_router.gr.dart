@@ -35,7 +35,7 @@ import 'package:municipium/ui/pages/onboarding_section/onboarding_page.dart'
     as _i17;
 import 'package:municipium/ui/pages/onboarding_section/onboarding_search_municipality_page.dart'
     as _i18;
-import 'package:municipium/ui/pages/online_service_detail_webview.dart' as _i21;
+import 'package:municipium/ui/pages/online_service_detail_webview.dart' as _i19;
 import 'package:municipium/ui/pages/personal_area_section/account_data_page.dart'
     as _i1;
 import 'package:municipium/ui/pages/personal_area_section/account_preferece_page.dart'
@@ -45,11 +45,11 @@ import 'package:municipium/ui/pages/personal_area_section/confirm_auth_spid_page
 import 'package:municipium/ui/pages/personal_area_section/login_spid_idp_list_page.dart'
     as _i10;
 import 'package:municipium/ui/pages/personal_area_section/personal_area_menu_page.dart'
-    as _i19;
+    as _i20;
 import 'package:municipium/ui/pages/personal_area_section/webview_spid_auth_page.dart'
     as _i30;
 import 'package:municipium/ui/pages/pnrr_services_section/pnrr_detail_page.dart'
-    as _i20;
+    as _i21;
 import 'package:municipium/ui/pages/pnrr_services_section/pnrr_services_page.dart'
     as _i22;
 import 'package:municipium/ui/pages/point_of_interest_section/point_of_interest_list_page.dart'
@@ -222,11 +222,22 @@ abstract class $AppRouter extends _i32.RootStackRouter {
             child: _i18.OnboardingSearchMunicipalityPage(key: args.key)),
       );
     },
+    OnlineServiceDetailWebviewRoute.name: (routeData) {
+      final args = routeData.argsAs<OnlineServiceDetailWebviewRouteArgs>();
+      return _i32.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i19.OnlineServiceDetailWebviewPage(
+          key: args.key,
+          url: args.url,
+          name: args.name,
+        ),
+      );
+    },
     PersonalAreaMenuRoute.name: (routeData) {
       final args = routeData.argsAs<PersonalAreaMenuRouteArgs>();
       return _i32.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i19.PersonalAreaMenuPage(
+        child: _i20.PersonalAreaMenuPage(
           key: args.key,
           scaffoldKey: args.scaffoldKey,
         ),
@@ -237,21 +248,11 @@ abstract class $AppRouter extends _i32.RootStackRouter {
       return _i32.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i32.WrappedRoute(
-            child: _i20.PnrrDetailPage(
+            child: _i21.PnrrDetailPage(
           key: args.key,
           type: args.type,
           id: args.id,
         )),
-      );
-    },
-    PnrrDetailWebviewRoute.name: (routeData) {
-      final args = routeData.argsAs<PnrrDetailWebviewRouteArgs>();
-      return _i32.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i21.PnrrDetailWebviewPage(
-          key: args.key,
-          url: args.url,
-        ),
       );
     },
     PnrrServicesRoute.name: (routeData) {
@@ -278,14 +279,12 @@ abstract class $AppRouter extends _i32.RootStackRouter {
       );
     },
     ServiceOnlineListRoute.name: (routeData) {
-      final args = routeData.argsAs<ServiceOnlineListRouteArgs>();
+      final args = routeData.argsAs<ServiceOnlineListRouteArgs>(
+          orElse: () => const ServiceOnlineListRouteArgs());
       return _i32.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i32.WrappedRoute(
-            child: _i25.ServiceOnlineListPage(
-          key: args.key,
-          scaffoldKey: args.scaffoldKey,
-        )),
+        child:
+            _i32.WrappedRoute(child: _i25.ServiceOnlineListPage(key: args.key)),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -821,7 +820,51 @@ class OnboardingSearchMunicipalityRouteArgs {
 }
 
 /// generated route for
-/// [_i19.PersonalAreaMenuPage]
+/// [_i19.OnlineServiceDetailWebviewPage]
+class OnlineServiceDetailWebviewRoute
+    extends _i32.PageRouteInfo<OnlineServiceDetailWebviewRouteArgs> {
+  OnlineServiceDetailWebviewRoute({
+    _i33.Key? key,
+    required String url,
+    required String name,
+    List<_i32.PageRouteInfo>? children,
+  }) : super(
+          OnlineServiceDetailWebviewRoute.name,
+          args: OnlineServiceDetailWebviewRouteArgs(
+            key: key,
+            url: url,
+            name: name,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'OnlineServiceDetailWebviewRoute';
+
+  static const _i32.PageInfo<OnlineServiceDetailWebviewRouteArgs> page =
+      _i32.PageInfo<OnlineServiceDetailWebviewRouteArgs>(name);
+}
+
+class OnlineServiceDetailWebviewRouteArgs {
+  const OnlineServiceDetailWebviewRouteArgs({
+    this.key,
+    required this.url,
+    required this.name,
+  });
+
+  final _i33.Key? key;
+
+  final String url;
+
+  final String name;
+
+  @override
+  String toString() {
+    return 'OnlineServiceDetailWebviewRouteArgs{key: $key, url: $url, name: $name}';
+  }
+}
+
+/// generated route for
+/// [_i20.PersonalAreaMenuPage]
 class PersonalAreaMenuRoute
     extends _i32.PageRouteInfo<PersonalAreaMenuRouteArgs> {
   PersonalAreaMenuRoute({
@@ -860,7 +903,7 @@ class PersonalAreaMenuRouteArgs {
 }
 
 /// generated route for
-/// [_i20.PnrrDetailPage]
+/// [_i21.PnrrDetailPage]
 class PnrrDetailRoute extends _i32.PageRouteInfo<PnrrDetailRouteArgs> {
   PnrrDetailRoute({
     _i33.Key? key,
@@ -899,45 +942,6 @@ class PnrrDetailRouteArgs {
   @override
   String toString() {
     return 'PnrrDetailRouteArgs{key: $key, type: $type, id: $id}';
-  }
-}
-
-/// generated route for
-/// [_i21.PnrrDetailWebviewPage]
-class PnrrDetailWebviewRoute
-    extends _i32.PageRouteInfo<PnrrDetailWebviewRouteArgs> {
-  PnrrDetailWebviewRoute({
-    _i33.Key? key,
-    required String url,
-    List<_i32.PageRouteInfo>? children,
-  }) : super(
-          PnrrDetailWebviewRoute.name,
-          args: PnrrDetailWebviewRouteArgs(
-            key: key,
-            url: url,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PnrrDetailWebviewRoute';
-
-  static const _i32.PageInfo<PnrrDetailWebviewRouteArgs> page =
-      _i32.PageInfo<PnrrDetailWebviewRouteArgs>(name);
-}
-
-class PnrrDetailWebviewRouteArgs {
-  const PnrrDetailWebviewRouteArgs({
-    this.key,
-    required this.url,
-  });
-
-  final _i33.Key? key;
-
-  final String url;
-
-  @override
-  String toString() {
-    return 'PnrrDetailWebviewRouteArgs{key: $key, url: $url}';
   }
 }
 
@@ -1013,14 +1017,10 @@ class ServiceOnlineListRoute
     extends _i32.PageRouteInfo<ServiceOnlineListRouteArgs> {
   ServiceOnlineListRoute({
     _i35.Key? key,
-    required _i35.GlobalKey<_i33.ScaffoldState> scaffoldKey,
     List<_i32.PageRouteInfo>? children,
   }) : super(
           ServiceOnlineListRoute.name,
-          args: ServiceOnlineListRouteArgs(
-            key: key,
-            scaffoldKey: scaffoldKey,
-          ),
+          args: ServiceOnlineListRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -1031,18 +1031,13 @@ class ServiceOnlineListRoute
 }
 
 class ServiceOnlineListRouteArgs {
-  const ServiceOnlineListRouteArgs({
-    this.key,
-    required this.scaffoldKey,
-  });
+  const ServiceOnlineListRouteArgs({this.key});
 
   final _i35.Key? key;
 
-  final _i35.GlobalKey<_i33.ScaffoldState> scaffoldKey;
-
   @override
   String toString() {
-    return 'ServiceOnlineListRouteArgs{key: $key, scaffoldKey: $scaffoldKey}';
+    return 'ServiceOnlineListRouteArgs{key: $key}';
   }
 }
 

@@ -37,7 +37,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: ChooseMunicipalityRoute.page),
         AutoRoute(page: PnrrServicesRoute.page),
         AutoRoute(page: PnrrDetailRoute.page),
-        AutoRoute(page: PnrrDetailWebviewRoute.page),
+        AutoRoute(page: OnlineServiceDetailWebviewRoute.page),
         AutoRoute(page: EventDetailRoute.page),
         AutoRoute(page: DetailPoiRoute.page),
         AutoRoute(page: IssuesListRoute.page),

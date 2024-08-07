@@ -186,9 +186,10 @@ class PnrrDetailPage extends StatelessWidget implements AutoRouteWrapper {
                                                 if (body.urlPrenotazione !=
                                                     null) {
                                                   context.pushRoute(
-                                                      PnrrDetailWebviewRoute(
+                                                     OnlineServiceDetailWebviewRoute(
+                                                          
                                                           url: body
-                                                              .urlPrenotazione!));
+                                                              .urlPrenotazione!, name: ''));
                                                 }
                                               };
                                             },

@@ -135,7 +135,7 @@ class DependencyInjector extends StatelessWidget {
                     baseUrl = muincipalityUrlState.baseUrl;
                   } else if (muincipalityUrlState is MunicipalityUrlEmpty) {
                     baseUrl = state.name == 'prod'
-                        ? MunicipiumUtility.BASEURL_PROD
+                        ? MunicipiumUtility.BASEURL_STAGING
                         : MunicipiumUtility.BASEURL_STAGING;
                   } else {
                     baseUrl = ''; // or some default value if needed

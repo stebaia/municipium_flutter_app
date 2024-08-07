@@ -43,7 +43,7 @@ class PersonalAreaMenuPage extends StatelessWidget {
                 CustomRowMenu(title: AppLocalizations.of(context)!.text_section_payment, icon: CupertinoIcons.creditcard, tap: (){}) ,
                 municipality.newMenu.services != null ?
                 CustomRowMenu(title: AppLocalizations.of(context)!.text_section_online_service, icon: CupertinoIcons.device_desktop, tap: (){
-                  context.pushRoute(ServiceOnlineListRoute(scaffoldKey: scaffoldKey));
+                  context.pushRoute(ServiceOnlineListRoute());
                 }) : Container(),
 
                 CustomRowMenu(title: AppLocalizations.of(context)!.text_section_personal_messages, icon: CupertinoIcons.bell, tap: (){}),
