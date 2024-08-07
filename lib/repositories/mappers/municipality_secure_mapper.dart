@@ -45,7 +45,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         newMenu: NewMenuDTO.fromJson(
           json['new_menu'],
         ),
-        configurations: Configurations.fromJson(json['configurations']));
+        configurations: Configurations.fromJson(json['configurations']),
         jcityGovEnte: json['jcityGovEnte'] ?? '',
         jcityGovUrl: json['jcityGovUrl'] ?? '');
   }
