@@ -43,7 +43,7 @@ class _NewsListPageState extends State<NewsListPage> {
           scaffoldKey: _scaffoldKey,
         ),
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+          
           title: context.read<NewsListBloc>().isSearching
               ? TextField(
                   controller: _searchController,

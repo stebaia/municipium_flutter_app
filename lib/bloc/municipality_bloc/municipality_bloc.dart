@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:municipium/model/device/device_be.dart';
+import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/repositories/municipality_repository.dart';
 import 'package:municipium/repositories/user_repository.dart';
@@ -48,6 +49,16 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
     try {
       final municipality = await municipalityRepository.currentMunicipality;
       return municipality;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Configurations?> getConfigurations() async {
+    try {
+      final config =
+          await municipalityRepository.getMunicipalityConfigurations();
+      return config;
     } catch (e) {
       return null;
     }

@@ -93,5 +93,27 @@
     "text_no_municipality_search" : "Non trovi il tuo comune?",
     "text_issue_now" : "Segnalacelo ora",
     "text_notify_from_other_municipality" : "Vuoi ricever notifiche anche di altri comuni?",
-    "text_select_municipality" : "Seleziona i comuni"
+    "text_select_municipality" : "Seleziona i comuni",
+
+    "title_personal_area" : "Area personale",
+    "text_section_account_data" : "Dati account",
+    "text_section_payment" : "Pagamenti",
+    "text_section_online_service" : "Servizi online",
+    "text_section_personal_messages" : "Messaggi personali",
+    "text_section_reservation" : "Prenotazioni",
+    "text_section_issues" : "Segnalazioni",
+    "text_section_surveys" : "Sondaggi",
+    "text_section_account_preferences" : "Preferenze account",
+    "text_section_logout" : "Logout",
+
+    "dialog_success_account_spid" : "Autenticazione avvenuta con successo",
+    "text_account_data" : "dati account",
+    "text_name_surname" : "nome e cognome",
+    "text_fiscal_code" : "codice fiscale",
+    "text_born_date" : "data di nascita",
+    "text_residence" : "indirizzo di residenza",
+    "text_email" : "email",
+
+    "text_avaiable_services" : "servizi disponibili",
+    "text_search_desired_service" : "Cerca il servizio online desiderato"
 }   

@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:municipium/ui/components/webview/custom_webview.dart';
 
 @RoutePage()
-class PnrrDetailWebviewPage extends StatefulWidget {
-  PnrrDetailWebviewPage({Key? key, required this.url}) : super(key: key);
+class OnlineServiceDetailWebviewPage extends StatefulWidget {
+  OnlineServiceDetailWebviewPage({Key? key, required this.url, required this.name}) : super(key: key);
   String url;
+  String name;
 
   @override
-  State<PnrrDetailWebviewPage> createState() => _PnrrDetailWebviewState();
+  State<OnlineServiceDetailWebviewPage> createState() => _OnlineServiceDetailWebviewPage();
 }
 
-class _PnrrDetailWebviewState extends State<PnrrDetailWebviewPage> {
+class _OnlineServiceDetailWebviewPage extends State<OnlineServiceDetailWebviewPage> {
   CustomWebView? webView;
   bool pageLoaded = false;
   double? progressValue;
@@ -38,7 +39,12 @@ class _PnrrDetailWebviewState extends State<PnrrDetailWebviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        
+        centerTitle: true,
+            title: Text(
+              widget.name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.maybePop(),

@@ -46,6 +46,8 @@ final List<RepositoryProvider> _repositories = [
   ),
   RepositoryProvider<UserRepository>(
       create: (context) => UserRepository(
+          mmcMunicipiumService: context.read(),
+          authSpidService: context.read(),
           municipalityRepository: context.read(),
           secureStorage: context.read())),
   RepositoryProvider<PnrrServiceRepository>(
@@ -59,6 +61,11 @@ final List<RepositoryProvider> _repositories = [
     create: (context) => ReservationsRepository(
         resarvableUnitsMapper: context.read(),
         service: context.read(),
+        logger: context.read()),
+  ),
+  RepositoryProvider<OnlineServiceRepository>(
+    create: (context) => OnlineServiceRepository(
+        onlineServiceService: context.read(),
         logger: context.read()),
   ),
   RepositoryProvider<PaymentsRepository>(
