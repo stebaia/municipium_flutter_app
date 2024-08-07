@@ -23,6 +23,8 @@ class MunicipiumUtility {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }
 
+  
+
   static String convertDate(String dateString, String endFormat) {
     DateTime date = DateTime.parse(dateString);
     String formattedDate = DateFormat(endFormat).format(date);

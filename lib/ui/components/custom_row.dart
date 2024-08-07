@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:municipium/utils/municipium_utility.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomRow extends StatelessWidget {
   CustomRow(
@@ -77,6 +78,24 @@ class CustomRowMenu extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomRowWithHeader extends StatelessWidget {
+  const CustomRowWithHeader({super.key, required this.name, required this.value});
+  final String name;
+  final String value;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(name.toUpperCase(), style: Theme.of(context).textTheme.titleSmall,),
+        const SizedBox(height: 6,),
+        Text(value)
+      ],
     );
   }
 }

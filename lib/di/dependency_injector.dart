@@ -60,6 +60,7 @@ import 'package:municipium/repositories/mappers/point_of_interests_list_mapper.d
 import 'package:municipium/repositories/mappers/reservations_mapper/reservable_unit_mapper.dart';
 import 'package:municipium/repositories/municipality_repository.dart';
 import 'package:municipium/repositories/news_repository.dart';
+import 'package:municipium/repositories/online_service_repository.dart';
 import 'package:municipium/repositories/pnrr_service_repository.dart';
 import 'package:municipium/repositories/point_of_interest_repository.dart';
 import 'package:municipium/repositories/reservations_repository.dart';
@@ -73,6 +74,7 @@ import 'package:municipium/services/network/api/municipality_be_service/municipa
 import 'package:municipium/services/network/api/municipality_configuration_service/municipality_configuration_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/api/news_service/news_service.dart';
+import 'package:municipium/services/network/api/online_service_service/online_service_service.dart';
 import 'package:municipium/services/network/api/pnrr_service/pnrr_service.dart';
 import 'package:municipium/services/network/api/point_of_intertest_service/point_of_interest_service.dart';
 import 'package:municipium/services/network/api/reservations/reservations_service.dart';

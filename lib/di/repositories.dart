@@ -61,5 +61,10 @@ final List<RepositoryProvider> _repositories = [
         resarvableUnitsMapper: context.read(),
         service: context.read(),
         logger: context.read()),
+  ),
+  RepositoryProvider<OnlineServiceRepository>(
+    create: (context) => OnlineServiceRepository(
+        onlineServiceService: context.read(),
+        logger: context.read()),
   )
 ];

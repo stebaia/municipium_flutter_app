@@ -78,6 +78,9 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
             AuthSpidService(context.read<Dio>(), baseUrl: baseUrl)),
     Provider<MmcMunicipiumService>(
         create: (context) =>
-            MmcMunicipiumService(context.read<Dio>(),baseUrl: baseUrlMmc))
+            MmcMunicipiumService(context.read<Dio>(),baseUrl: baseUrlMmc)),
+    Provider<OnlineServiceService>(
+        create: (context) =>
+            OnlineServiceService(context.read<Dio>(),baseUrl: baseUrl))
   ];
 }

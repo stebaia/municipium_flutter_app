@@ -106,5 +106,11 @@
     "text_section_account_preferences" : "Preferenze account",
     "text_section_logout" : "Logout",
 
-     "dialog_success_account_spid" : "Autenticazione avvenuta con successo"
+     "dialog_success_account_spid" : "Autenticazione avvenuta con successo",
+     "text_account_data" : "dati account",
+     "text_name_surname" : "nome e cognome",
+     "text_fiscal_code" : "codice fiscale",
+     "text_born_date" : "data di nascita",
+     "text_residence" : "indirizzo di residenza",
+     "text_email" : "email"
 }   

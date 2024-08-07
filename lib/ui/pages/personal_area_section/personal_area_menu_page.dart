@@ -36,14 +36,27 @@ class PersonalAreaMenuPage extends StatelessWidget {
             if(userSpid != null) {
               return Column(
               children: [
-                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_account_data, icon: CupertinoIcons.person, tap: (){}),
-                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_payment, icon: CupertinoIcons.creditcard, tap: (){}),
-                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_online_service, icon: CupertinoIcons.device_desktop, tap: (){}),
+                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_account_data, icon: CupertinoIcons.person, tap: (){
+                  context.pushRoute(AccountDataRoute(userModel: userSpid));
+                }),
+               
+                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_payment, icon: CupertinoIcons.creditcard, tap: (){}) ,
+                municipality.newMenu.services != null ?
+                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_online_service, icon: CupertinoIcons.device_desktop, tap: (){
+                  context.pushRoute(ServiceOnlineListRoute(scaffoldKey: scaffoldKey));
+                }) : Container(),
+
                 CustomRowMenu(title: AppLocalizations.of(context)!.text_section_personal_messages, icon: CupertinoIcons.bell, tap: (){}),
+                
                 CustomRowMenu(title: AppLocalizations.of(context)!.text_section_reservation, icon: CupertinoIcons.calendar_today, tap: (){}),
-                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_issues, icon: Icons.warning_amber_rounded, tap: (){}),
-                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_surveys, icon: CupertinoIcons.chart_bar, tap: (){}),
-                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_account_preferences, icon: FontAwesomeIcons.userCheck, tap: (){})
+                municipality.newMenu.issue != null ?
+                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_issues, icon: Icons.warning_amber_rounded, tap: (){}) : Container(),
+                municipality.newMenu.surveys != null ?
+                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_surveys, icon: CupertinoIcons.chart_bar, tap: (){}) : Container(),
+
+                CustomRowMenu(title: AppLocalizations.of(context)!.text_section_account_preferences, icon: FontAwesomeIcons.userCheck, tap: (){
+                  context.pushRoute(const AccountPrefereceRoute());
+                })
               ],
             );
             }else {

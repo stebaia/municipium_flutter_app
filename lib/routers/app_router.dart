@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:municipium/routers/app_router.gr.dart';
-import 'package:municipium/ui/pages/settings_section/settings_page.dart';
 
 @AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
@@ -26,7 +25,14 @@ class AppRouter extends $AppRouter {
         AutoRoute(
           page: EventListRoute.page,
         ),
+        AutoRoute(
+          page: AccountDataRoute.page,
+        ),
+        AutoRoute(
+          page: AccountPrefereceRoute.page,
+        ),
         AutoRoute(page: WebViewSpidAuthRoute.page),
+        AutoRoute(page: ServiceOnlineListRoute.page),
         AutoRoute(page: LoginSpidIdpListRoute.page),
         AutoRoute(page: ChooseMunicipalityRoute.page),
         AutoRoute(page: PnrrServicesRoute.page),

@@ -6,7 +6,7 @@ import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
-import 'package:municipium/ui/pages/pnrr_services_section/pnrr_detail_webview.dart';
+import 'package:municipium/ui/pages/online_service_detail_webview.dart';
 import 'package:municipium/utils/enum.dart';
 
 @RoutePage()
