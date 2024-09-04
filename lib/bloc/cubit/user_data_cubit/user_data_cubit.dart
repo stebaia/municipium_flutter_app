@@ -5,21 +5,24 @@ import 'package:municipium/model/user/user_spid_model.dart';
 
 part 'user_data_state.dart';
 
-class UserDataCubit extends HydratedCubit<SpidUserModel?> {
-  UserDataCubit() : super(null);
+class UserDataCubit extends HydratedCubit<SpidUserModel> {
+  UserDataCubit() : super(SpidUserModel());
 
+  // Autentica l'utente emettendo il nuovo modello utente
   void auth(SpidUserModel spidUserModel) => emit(spidUserModel);
-  void delete() => emit(null);
+
+  // Cancella l'utente impostando lo stato a null
+  void delete() => emit(SpidUserModel());
 
   @override
   SpidUserModel? fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-    return SpidUserModel.fromJson(json);
+    // Torna null se il json è null, altrimenti deserializza l'oggetto
+    return json == null ? null : SpidUserModel.fromJson(json);
   }
 
   @override
   Map<String, dynamic>? toJson(SpidUserModel? state) {
-    if (state == null) return null;
-    return state.toJson();
+    // Torna null se lo stato è null (indica che non c'è nulla da salvare)
+    return state?.toJson();
   }
 }

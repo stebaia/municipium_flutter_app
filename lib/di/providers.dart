@@ -8,6 +8,11 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
   String baseUrlMmc = "https://mmc.maggiolicloud.it/";
 
   return [
+    Provider<LocalAuthentication>(
+      create: (_) => LocalAuthentication(),
+    ),
+    
+
     Provider<Logger>(
       create: (_) => Logger(),
     ),

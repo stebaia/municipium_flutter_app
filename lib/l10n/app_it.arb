@@ -115,5 +115,15 @@
     "text_email" : "email",
 
     "text_avaiable_services" : "servizi disponibili",
-    "text_search_desired_service" : "Cerca il servizio online desiderato"
+    "text_search_desired_service" : "Cerca il servizio online desiderato",
+
+    "text_login_title_personal_area" : "Accedi tramite Spid",
+    "text_login_subtitle_personal_area" : "Vuoi accedere alla tua identità digitale? allora clicca qui sotto!",
+    "text_cie_title" : "Accedi con Cie",
+    "text_spid_title" : "Accedi con Spid",
+    "text_logout" : "logout",
+    "text_logout_title" : "Logout",
+    "text_logout_description" : "Sei sicuro di volerti disconnettere?",
+    "text_yes" : "Si",
+    "text_no" : "No"
 }   

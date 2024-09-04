@@ -110,10 +110,11 @@ class DarkTheme {
           primary: primaryColor,
           secondary: darkBlack,
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Colors.white,
         ),
-        appBarTheme: AppBarTheme(elevation: 0, surfaceTintColor: darkBlack),
+        
+        appBarTheme: const AppBarTheme(elevation: 0, surfaceTintColor: darkBlack),
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -171,7 +172,7 @@ class DarkTheme {
         textTheme: const TextTheme(
           titleLarge: TextStyle(
             fontSize: 32,
-            color: primaryColor,
+            
             fontWeight: FontWeight.bold,
           ),
           titleSmall: TextStyle(

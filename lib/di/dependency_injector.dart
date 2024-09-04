@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:logger/logger.dart';
 import 'package:municipium/bloc/cubit/base_url_cubit/base_url_cubit.dart';
 import 'package:municipium/bloc/cubit/device_cubit/device_cubit.dart';
@@ -14,6 +15,7 @@ import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_c
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/di/custom_di_helpert.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
@@ -70,6 +72,8 @@ import 'package:municipium/repositories/pnrr_service_repository.dart';
 import 'package:municipium/repositories/point_of_interest_repository.dart';
 import 'package:municipium/repositories/reservations_repository.dart';
 import 'package:municipium/repositories/user_repository.dart';
+import 'package:municipium/services/auth/auth_service.dart';
+import 'package:municipium/services/auth/service_manager.dart';
 import 'package:municipium/services/network/api/auth_spid_service/auth_spid_service.dart';
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/api/event_service/event_service.dart';
@@ -116,6 +120,7 @@ part 'blocs.dart';
 part 'mappers.dart';
 part 'providers.dart';
 part 'repositories.dart';
+part 'custom_service.dart';
 
 class DependencyInjector extends StatelessWidget {
   final Widget child;
@@ -155,11 +160,12 @@ class DependencyInjector extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   } else {
-                    content = DependencyInjectorHelper(
+                    content = CustomDiHelper(
                       repositories: _repositories,
                       mappers: _mappers,
                       blocs: _blocs,
                       providers: providersFun(baseUrl: baseUrl),
+                      customService: _customService,
                       child: child,
                     );
                   }

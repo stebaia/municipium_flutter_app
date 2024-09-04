@@ -87,6 +87,7 @@ dependencies:
   timezone: ^0.9.4
   image: ^4.2.0
   bubble: ^1.2.1
+  local_auth: ^2.3.0
 http: ^0.13.3
 
 dev_dependencies:

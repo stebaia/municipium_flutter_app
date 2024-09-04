@@ -117,5 +117,14 @@
     "text_email" : "email",
 
     "text_avaiable_services" : "avaiable services",
-    "text_search_desired_service" : "Search the desired service"
+    "text_search_desired_service" : "Search the desired service",
+    "text_login_title_personal_area" : "Sign in via Spid",
+    "text_login_subtitle_personal_area" : "Would you like to access your digital data? Then click here!",
+    "text_cie_title" : "Sign in via Cie",
+    "text_spid_title" : "Sign in via Spid",
+    "text_logout" : "logout",
+    "text_logout_title" : "Logout",
+    "text_logout_description" : "Are you sure you want to log off?",
+    "text_yes" : "Yes",
+    "text_no" : "No"
 }
