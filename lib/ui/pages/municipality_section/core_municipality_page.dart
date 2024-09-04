@@ -36,7 +36,8 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
         routes: [
           HomeRoute(scaffoldKey: scaffoldKey),
           MapsRoute(scaffoldKey: scaffoldKey),
-          HomeRoute(scaffoldKey: scaffoldKey),
+          CalendarRoute(scaffoldKey: scaffoldKey),
+          
           if (municipality.configurations != null)
             PersonalAreaMenuRoute(scaffoldKey: scaffoldKey),
         ],

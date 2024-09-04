@@ -13,6 +13,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: CoreMunicipalityRoute.page, children: [
           AutoRoute(page: HomeRoute.page),
           AutoRoute(page: MapsRoute.page),
+          AutoRoute(page: CalendarRoute.page),
           AutoRoute(page: PersonalAreaMenuRoute.page),
         ]),
         AutoRoute(page: SubMenuRoute.page),

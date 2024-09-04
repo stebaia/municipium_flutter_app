@@ -88,6 +88,7 @@ dependencies:
   image: ^4.2.0
   bubble: ^1.2.1
   local_auth: ^2.3.0
+  table_calendar: ^3.1.2
 http: ^0.13.3
 
 dev_dependencies:

@@ -126,5 +126,7 @@
     "text_logout_title" : "Logout",
     "text_logout_description" : "Are you sure you want to log off?",
     "text_yes" : "Yes",
-    "text_no" : "No"
+    "text_no" : "No",
+
+     "text_calendar_title" : "Agenda"
 }
