@@ -47,8 +47,12 @@ class SetMunicipalityTempEvent extends MunicipalityEvent {
 class FetchMunicipalityListWithPositionEvent extends MunicipalityEvent {
   final double lat;
   final double lng;
-  const FetchMunicipalityListWithPositionEvent({required this.lat, required this.lng});
+  const FetchMunicipalityListWithPositionEvent(
+      {required this.lat, required this.lng});
   @override
   List<Object> get props => [];
 }
 
+class CheckConfigurationEvent extends MunicipalityEvent {
+  const CheckConfigurationEvent();
+}

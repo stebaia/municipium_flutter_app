@@ -3,15 +3,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:logger/logger.dart';
 import 'package:municipium/bloc/cubit/base_url_cubit/base_url_cubit.dart';
+import 'package:municipium/bloc/cubit/device_cubit/device_cubit.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/theme_cubit/theme_cubit.dart';
+import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/di/custom_di_helpert.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
@@ -68,18 +72,24 @@ import 'package:municipium/repositories/mappers/point_of_interests_list_mapper.d
 import 'package:municipium/repositories/mappers/reservations_mapper/reservable_unit_mapper.dart';
 import 'package:municipium/repositories/municipality_repository.dart';
 import 'package:municipium/repositories/news_repository.dart';
+import 'package:municipium/repositories/online_service_repository.dart';
 import 'package:municipium/repositories/payments_repository.dart';
 import 'package:municipium/repositories/pnrr_service_repository.dart';
 import 'package:municipium/repositories/point_of_interest_repository.dart';
 import 'package:municipium/repositories/reservations_repository.dart';
 import 'package:municipium/repositories/user_repository.dart';
+import 'package:municipium/services/auth/auth_service.dart';
+import 'package:municipium/services/auth/service_manager.dart';
+import 'package:municipium/services/network/api/auth_spid_service/auth_spid_service.dart';
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/api/event_service/event_service.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
+import 'package:municipium/services/network/api/mmc_municipium_service/mmc_municipium_service.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
 import 'package:municipium/services/network/api/municipality_configuration_service/municipality_configuration_service.dart';
 import 'package:municipium/services/network/api/municipality_service/municipality_service.dart';
 import 'package:municipium/services/network/api/news_service/news_service.dart';
+import 'package:municipium/services/network/api/online_service_service/online_service_service.dart';
 import 'package:municipium/services/network/api/payment_service/payment_service.dart';
 import 'package:municipium/services/network/api/pnrr_service/pnrr_service.dart';
 import 'package:municipium/services/network/api/point_of_intertest_service/point_of_interest_service.dart';
@@ -117,6 +127,7 @@ part 'blocs.dart';
 part 'mappers.dart';
 part 'providers.dart';
 part 'repositories.dart';
+part 'custom_service.dart';
 
 class DependencyInjector extends StatelessWidget {
   final Widget child;
@@ -144,7 +155,7 @@ class DependencyInjector extends StatelessWidget {
                     baseUrl = muincipalityUrlState.baseUrl;
                   } else if (muincipalityUrlState is MunicipalityUrlEmpty) {
                     baseUrl = state.name == 'prod'
-                        ? MunicipiumUtility.BASEURL_PROD
+                        ? MunicipiumUtility.BASEURL_STAGING
                         : MunicipiumUtility.BASEURL_STAGING;
                   } else {
                     baseUrl = ''; // or some default value if needed
@@ -156,11 +167,12 @@ class DependencyInjector extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   } else {
-                    content = DependencyInjectorHelper(
+                    content = CustomDiHelper(
                       repositories: _repositories,
                       mappers: _mappers,
                       blocs: _blocs,
                       providers: providersFun(baseUrl: baseUrl),
+                      customService: _customService,
                       child: child,
                     );
                   }

@@ -136,7 +136,8 @@ class _PnrrServicesPageState extends State<PnrrServicesPage> {
                                         '',
                                     id: state.servicesList[index].sitePageId!));
                               } else {
-                                context.pushRoute(PnrrDetailWebviewRoute(
+                                context.pushRoute(OnlineServiceDetailWebviewRoute(
+                                    name: '',
                                     url: state.servicesList[index].url ?? ''));
                               }
                             },

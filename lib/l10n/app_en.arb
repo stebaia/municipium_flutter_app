@@ -95,5 +95,36 @@
     "text_select_municipality" : "Seleziona i comuni",
     "theme_system" : "System",
     "theme_dark" : "Dark",
-    "theme_light" : "Light"
+    "theme_light" : "Light",
+
+    "title_personal_area" : "Personal Area",
+    "text_section_account_data" : "Account data",
+    "text_section_payment" : "Payment",
+    "text_section_online_service" : "Online service",
+    "text_section_personal_messages" : "Personal messages",
+    "text_section_reservation" : "Reservations",
+    "text_section_issues" : "Issues",
+    "text_section_surveys" : "Surveys",
+    "text_section_account_preferences" : "Account preferences",
+    "text_section_logout" : "Logout",
+
+    "dialog_success_account_spid" : "Autenticazione avvenuta con successo",
+    "text_account_data" : "account data",
+    "text_name_surname"  : "first name and last name",
+    "text_fiscal_code" : "fiscal code",
+    "text_born_date" : "date of birth",
+    "text_residence" : "residence address",
+    "text_email" : "email",
+
+    "text_avaiable_services" : "avaiable services",
+    "text_search_desired_service" : "Search the desired service",
+    "text_login_title_personal_area" : "Sign in via Spid",
+    "text_login_subtitle_personal_area" : "Would you like to access your digital data? Then click here!",
+    "text_cie_title" : "Sign in via Cie",
+    "text_spid_title" : "Sign in via Spid",
+    "text_logout" : "logout",
+    "text_logout_title" : "Logout",
+    "text_logout_description" : "Are you sure you want to log off?",
+    "text_yes" : "Yes",
+    "text_no" : "No"
 }

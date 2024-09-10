@@ -212,9 +212,9 @@ class _MapsPageState extends State<MapsPage> {
                     child: Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.blueGrey)),
+                            border: Border.all(color: Theme.of(context).disabledColor)),
                         child: const Center(
                             child: FaIcon(
                           FontAwesomeIcons.sliders,
@@ -225,9 +225,9 @@ class _MapsPageState extends State<MapsPage> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.blueGrey)),
+                          border: Border.all(color: Theme.of(context).disabledColor)),
                       child: const TextField(
                         decoration: InputDecoration(
                           hintStyle: TextStyle(fontSize: 16),
@@ -250,9 +250,9 @@ class _MapsPageState extends State<MapsPage> {
                     child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.blueGrey)),
+                            border: Border.all(color: Theme.of(context).disabledColor)),
                         child: const Center(child: Icon(Icons.menu))),
                   ),
                 ],
