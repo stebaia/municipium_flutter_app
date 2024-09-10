@@ -14,7 +14,7 @@ import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
-import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/di/custom_di_helpert.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/device/device_be.dart';

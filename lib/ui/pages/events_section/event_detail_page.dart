@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:municipium/bloc/event_detail_bloc/event_detail_bloc.dart';
+import 'package:municipium/bloc/bloc/event_detail_bloc/event_detail_bloc.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';

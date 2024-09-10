@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
+import 'package:municipium/bloc/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
 import 'package:municipium/model/point_of_interests_item.dart';
 
 

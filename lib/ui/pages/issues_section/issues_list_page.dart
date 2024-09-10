@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/issue_list_bloc/issue_list_bloc.dart';
+import 'package:municipium/bloc/bloc/issue_list_bloc/issue_list_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/tag_label_bkg.dart';
 import 'package:municipium/utils/municipium_utility.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/menu/menu_item.dart';
 import 'package:municipium/model/menu/submenu_type.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
-import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
+import 'package:municipium/bloc/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/ui/components/dropdown/dropdown_outlined.dart';

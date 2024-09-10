@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_id_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/cubit/visibility_cubit/visibility_cubit.dart';
-import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';

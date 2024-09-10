@@ -105,10 +105,11 @@ abstract class $AppRouter extends _i38.RootStackRouter {
       final args = routeData.argsAs<CalendarRouteArgs>();
       return _i38.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.CalendarPage(
+        child: _i38.WrappedRoute(
+            child: _i3.CalendarPage(
           key: args.key,
           scaffoldKey: args.scaffoldKey,
-        ),
+        )),
       );
     },
     ChatMessageRoute.name: (routeData) {

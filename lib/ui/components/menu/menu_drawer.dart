@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
-import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/menu/menu_item.dart';
 import 'package:municipium/routers/app_router.gr.dart';

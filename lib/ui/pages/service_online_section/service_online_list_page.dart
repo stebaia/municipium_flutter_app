@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:municipium/bloc/service_online_bloc/service_online_bloc.dart';
+import 'package:municipium/bloc/bloc/service_online_bloc/service_online_bloc.dart';
 import 'package:municipium/model/online_service/online_service.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 
