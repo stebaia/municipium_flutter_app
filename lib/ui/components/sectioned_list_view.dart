@@ -82,8 +82,10 @@ class Section<T> {
   Section({required this.title, required this.items});
 }
 
-class ListItem {
+class ListItem<T> {
   final String title;
   final String description;
-  ListItem({required this.title, required this.description});
+  final T item;
+  ListItem(
+      {required this.title, required this.description, required this.item});
 }

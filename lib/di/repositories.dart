@@ -64,6 +64,7 @@ final List<RepositoryProvider> _repositories = [
   RepositoryProvider<PaymentsRepository>(
     create: (context) => PaymentsRepository(
         selfPaymentsMapper: context.read(),
+        paymentResponseMapper: context.read(),
         paymentService: context.read(),
         logger: context.read()),
   )

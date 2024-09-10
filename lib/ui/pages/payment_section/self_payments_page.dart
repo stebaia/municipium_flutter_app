@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/self_payment_bloc/self_payment_bloc.dart';
+import 'package:municipium/model/payment/payment_type.dart';
 import 'package:municipium/model/payment/self_payment.dart';
+import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/sectioned_list_view.dart';
+import 'package:municipium/ui/pages/payment_section/new_self_payment_pager.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
 
 @RoutePage()
@@ -151,7 +154,20 @@ class SelfPaymentsPage extends StatelessWidget implements AutoRouteWrapper {
                                   item.description,
                                   style: const TextStyle(color: Colors.black),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  context.pushRoute(PersonTypePaymentRoute(
+                                      baseUrl: baseUrl,
+                                      ente: 'MOL',
+                                      codice:
+                                          (item.item as PaymentType).codice ??
+                                              ''));
+                                  /*context.pushRoute(NewSelfPaymentRouter(
+                                      baseUrl: baseUrl,
+                                      ente: 'MOL',
+                                      codice:
+                                          (item.item as PaymentType).codice ??
+                                              ''));*/
+                                },
                               ),
                             ),
                           );
@@ -201,9 +217,9 @@ class SelfPaymentsPage extends StatelessWidget implements AutoRouteWrapper {
             title: area.area ?? '',
             items: (area.tipoPagamenti ?? [])
                 .map<ListItem>((tipoPagamento) => ListItem(
-                      title: tipoPagamento.descrizione ?? '',
-                      description: tipoPagamento.codiceDebitoJppa ?? '',
-                    ))
+                    title: tipoPagamento.descrizione ?? '',
+                    description: tipoPagamento.codiceDebitoJppa ?? '',
+                    item: tipoPagamento))
                 .toList()))
         .toList();
     return returnList;
@@ -214,7 +230,8 @@ class SelfPaymentsPage extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<SelfPaymentBloc>(
           create: (context) =>
               SelfPaymentBloc(paymentRepository: context.read())
-                ..fetchSelfPayments(baseUrl, ente, area, codice),
+                ..fetchSelfPayments('https://collaudo-multe.comune-online.it/',
+                    'MOL', area, codice),
         )
       ], child: this);
 }
