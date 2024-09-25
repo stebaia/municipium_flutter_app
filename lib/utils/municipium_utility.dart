@@ -29,6 +29,45 @@ class MunicipiumUtility {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }
 
+
+  static String getLastDayOfMonth() {
+    final now = DateTime.now();
+    final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+    return DateFormat('yyyy-MM-dd').format(lastDayOfMonth);
+  }
+
+  static String getDateFiveDaysAgo() {
+    final fiveDaysAgo = DateTime.now().subtract(const Duration(days: 5));
+    return DateFormat('yyyy-MM-dd').format(fiveDaysAgo);
+  }
+
+  static String getDatePlusThirtyDays() {
+    final datePlusThirtyDays = DateTime.now().add(const Duration(days: 30));
+    return DateFormat('yyyy-MM-dd').format(datePlusThirtyDays);
+  }
+
+  static String getFirstDayOfMonth() {
+    final now = DateTime.now();
+    final firstDayOfMonth = DateTime(now.year, now.month, 1);
+    return DateFormat('yyyy-MM-dd').format(firstDayOfMonth);
+  }
+
+  static String getCurrentDay() {
+    final now = DateTime.now();
+    return DateFormat('yyyy-MM-dd').format(now);
+  }
+
+  static String getFormatDayFromDate(String dateString) {
+    DateTime date = DateTime.parse(dateString);
+    return date.isAtSameMomentAs(DateTime.now())
+                            ? 'oggi'
+                            : date.isAtSameMomentAs(DateTime.now().subtract(Duration(days: 1)))
+                                ? 'ieri'
+                                : date.isAtSameMomentAs(DateTime.now().add(Duration(days: 1)))
+                                    ? 'domani'
+                                    : DateFormat('EEE, d MMMM').format(date);
+  }
+
   static String convertDate(String dateString, String endFormat,
       {bool? todayYesterdayIncluded, String? startFormat, bool? withHours}) {
     DateTime date = startFormat != null

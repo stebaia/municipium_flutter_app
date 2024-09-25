@@ -14,4 +14,6 @@ final List<BlocProvider> _blocs = [
   BlocProvider<UserMenuConfigurationCubit>(create: (context) => UserMenuConfigurationCubit(context.read())),
   BlocProvider<DeviceCubit>(create: (context) => DeviceCubit(context.read())),
   BlocProvider<UserDataCubit>(create: (context) => UserDataCubit()),
+  BlocProvider<CalendarBloc>(create:(context) => CalendarBloc(calendarEventRepository: context.read()),),
+  BlocProvider<FilterCubit>(create: (context) => FilterCubit()) 
 ];

@@ -16,12 +16,12 @@ class CalendarBloc extends Bloc<CalendarEventBlocEvent, CalendarEventBlocState> 
     on<FetchCalendarEvent>(_fetchCalendarEvents);
   }
 
-  void fetchCalendarEvents(DateTime date) => add(FetchCalendarEvent(date: date));
+  void fetchCalendarEvents({ required String date, String? endDate, String? name, String? type}) => add(FetchCalendarEvent(date: date, endDate: endDate, name: name, type: type));
 
   FutureOr<void> _fetchCalendarEvents(FetchCalendarEvent event, Emitter<CalendarEventBlocState> emit) async {
     emit(TryCalendarState());
     try {
-      final calendar = await calendarEventRepository.getCalendarEvents(event.date);
+      final calendar = await calendarEventRepository.getCalendarEvents(date: event.date, endDate: event.endDate, type: event.type, name: event.name);
       emit(FetchedCalendarState(calendar: calendar));
     } catch (e) {
       emit(ErrorCalendarState());

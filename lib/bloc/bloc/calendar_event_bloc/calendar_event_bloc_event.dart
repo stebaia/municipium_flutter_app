@@ -8,9 +8,12 @@ sealed class CalendarEventBlocEvent extends Equatable {
 }
 
 final class FetchCalendarEvent extends CalendarEventBlocEvent {
-  final DateTime date;
+  final String date;
+  final String? endDate;
+  final String? type;
+  final String? name;
 
-  const FetchCalendarEvent({required this.date});
+  const FetchCalendarEvent({required this.date,  this.endDate, this.name, this.type});
 
   @override
   List<Object> get props => [date];

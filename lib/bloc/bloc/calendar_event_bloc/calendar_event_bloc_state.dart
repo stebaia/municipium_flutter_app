@@ -10,7 +10,7 @@ sealed class CalendarEventBlocState extends Equatable {
 final class TryCalendarState extends CalendarEventBlocState {}
 
 final class FetchedCalendarState extends CalendarEventBlocState {
-  final List<Calendar> calendar;
+  final List<CalendarEvent> calendar;
 
   const FetchedCalendarState({required this.calendar});
 

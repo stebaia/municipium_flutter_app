@@ -2,14 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:municipium/bloc/bloc/calendar_event_bloc/calendar_event_bloc_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/services/auth/service_manager.dart';
-import 'package:municipium/ui/components/custom_bottomsheet.dart';
+import 'package:municipium/ui/components/bottom_sheet/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/municipality_components/modal_rapid_action_component.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
 @RoutePage()
@@ -37,7 +39,6 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
           HomeRoute(scaffoldKey: scaffoldKey),
           MapsRoute(scaffoldKey: scaffoldKey),
           CalendarRoute(scaffoldKey: scaffoldKey),
-          
           if (municipality.configurations != null)
             PersonalAreaMenuRoute(scaffoldKey: scaffoldKey),
         ],
@@ -60,7 +61,10 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                   ? FloatingActionButton.extended(
                       onPressed: (() =>
                           context.pushRoute(const UserConfMenuEditRoute())),
-                      label: Text('Personalizza', style: TextStyle(color: Colors.white),),
+                      label: Text(
+                        'Personalizza',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       icon: Icon(Icons.edit, color: Colors.white),
                     )
                   : FloatingActionButton(
@@ -70,7 +74,10 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                               height: MediaQuery.of(context).size.height * 0.3,
                               title: 'azioni rapide',
                               body: const ModalRapidActionComponent()))),
-                      child: const Icon(Icons.add, color: Colors.white,),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
                     ),
               bottomNavigationBar: BottomNavigationBar(
                   elevation: 0,
@@ -81,14 +88,19 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                   currentIndex: tabsRouter.activeIndex,
                   onTap: (index) async {
                     // here we switch between tabs
-                    
-                    if(index == 3) {
-                    
-                      bool isEnabled = await context.read<ServiceAccessManager>().handleServiceAccess('Area Personale', context);
-                      if(isEnabled) {
+                    if (index == 2) {
+                      context.read<CalendarBloc>().fetchCalendarEvents(
+                            date: MunicipiumUtility.getFirstDayOfMonth(),
+                            endDate: MunicipiumUtility.getLastDayOfMonth());
+                    }
+                    if (index == 3) {
+                      bool isEnabled = await context
+                          .read<ServiceAccessManager>()
+                          .handleServiceAccess('Area Personale', context);
+                      if (isEnabled) {
                         tabsRouter.setActiveIndex(index);
                       }
-                    }else {
+                    } else {
                       tabsRouter.setActiveIndex(index);
                     }
                   },

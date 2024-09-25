@@ -17,7 +17,7 @@ import 'package:municipium/bloc/bloc/point_of_interest_list_bloc/point_of_intere
 import 'package:municipium/model/item_category.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
-import 'package:municipium/ui/components/custom_bottomsheet.dart';
+import 'package:municipium/ui/components/bottom_sheet/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/maps_component/filter_modal_bottomsheet.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/point_of_interests/custom_info_window.dart';
