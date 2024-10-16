@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 part 'civil_defence_service.g.dart';
 

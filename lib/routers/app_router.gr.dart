@@ -82,367 +82,6 @@ import 'package:municipium/ui/pages/submenu_page.dart' as _i35;
 import 'package:municipium/ui/pages/user_configuration_section/user_conf_menu_edit_page.dart'
     as _i36;
 
-abstract class $AppRouter extends _i39.RootStackRouter {
-  $AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, _i39.PageFactory> pagesMap = {
-    AccountDataRoute.name: (routeData) {
-      final args = routeData.argsAs<AccountDataRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i1.AccountDataPage(
-          key: args.key,
-          userModel: args.userModel,
-        ),
-      );
-    },
-    AccountPrefereceRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i2.AccountPreferecePage(),
-      );
-    },
-    ChatMessageRoute.name: (routeData) {
-      final args = routeData.argsAs<ChatMessageRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i3.ChatMessagePage(
-          key: args.key,
-          messages: args.messages,
-          title: args.title,
-          issueId: args.issueId,
-          municName: args.municName,
-        )),
-      );
-    },
-    ChooseMunicipalityRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(child: const _i4.ChooseMunicipalityPage()),
-      );
-    },
-    CoreMunicipalityRoute.name: (routeData) {
-      final args = routeData.argsAs<CoreMunicipalityRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i5.CoreMunicipalityPage(
-          key: args.key,
-          municipalityId: args.municipalityId,
-        ),
-      );
-    },
-    DetailPoiRoute.name: (routeData) {
-      final args = routeData.argsAs<DetailPoiRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i6.DetailPoiPage(
-          key: args.key,
-          poiId: args.poiId,
-        )),
-      );
-    },
-    EventDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<EventDetailRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i7.EventDetailPage(
-          key: args.key,
-          eventId: args.eventId,
-        )),
-      );
-    },
-    EventListRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(child: const _i8.EventListPage()),
-      );
-    },
-    HomeRoute.name: (routeData) {
-      final args = routeData.argsAs<HomeRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i9.HomePage(
-          key: args.key,
-          scaffoldKey: args.scaffoldKey,
-        ),
-      );
-    },
-    IssueDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<IssueDetailRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i10.IssueDetailPage(
-          key: args.key,
-          id: args.id,
-          udid: args.udid,
-        )),
-      );
-    },
-    IssuesListRoute.name: (routeData) {
-      final args = routeData.argsAs<IssuesListRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i11.IssuesListPage(
-          key: args.key,
-          udid: args.udid,
-        )),
-      );
-    },
-    LoginSpidIdpListRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(child: const _i12.LoginSpidIdpListPage()),
-      );
-    },
-    MainRoute.name: (routeData) {
-      final args = routeData.argsAs<MainRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i13.MainPage(
-          key: args.key,
-          municipalityId: args.municipalityId,
-        )),
-      );
-    },
-    MapsRoute.name: (routeData) {
-      final args = routeData.argsAs<MapsRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i14.MapsPage(
-          key: args.key,
-          scaffoldKey: args.scaffoldKey,
-        )),
-      );
-    },
-    MyWidget.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i15.MyWidget(),
-      );
-    },
-    NewIssueRouter.name: (routeData) {
-      final args = routeData.argsAs<NewIssueRouterArgs>(
-          orElse: () => const NewIssueRouterArgs());
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(child: _i16.NewIssuePager(key: args.key)),
-      );
-    },
-    NewSelfPaymentRouter.name: (routeData) {
-      final args = routeData.argsAs<NewSelfPaymentRouterArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i17.NewSelfPaymentPager(
-          key: args.key,
-          baseUrl: args.baseUrl,
-          ente: args.ente,
-          codice: args.codice,
-        )),
-      );
-    },
-    NewissueCompletedRoute.name: (routeData) {
-      final args = routeData.argsAs<NewissueCompletedRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i18.NewissueCompletedPage(
-          key: args.key,
-          udid: args.udid,
-        ),
-      );
-    },
-    NewsDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<NewsDetailRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i19.NewsDetailPage(
-          key: args.key,
-          newsId: args.newsId,
-        )),
-      );
-    },
-    NewsListRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(child: const _i20.NewsListPage()),
-      );
-    },
-    OnboardingRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i21.OnboardingPage(),
-      );
-    },
-    OnboardingSearchMunicipalityRoute.name: (routeData) {
-      final args = routeData.argsAs<OnboardingSearchMunicipalityRouteArgs>(
-          orElse: () => const OnboardingSearchMunicipalityRouteArgs());
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i22.OnboardingSearchMunicipalityPage(key: args.key)),
-      );
-    },
-    OnlineServiceDetailWebviewRoute.name: (routeData) {
-      final args = routeData.argsAs<OnlineServiceDetailWebviewRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i23.OnlineServiceDetailWebviewPage(
-          key: args.key,
-          url: args.url,
-          name: args.name,
-        ),
-      );
-    },
-    PaymentChoiceRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i24.PaymentChoicePage(),
-      );
-    },
-    PersonTypePaymentRoute.name: (routeData) {
-      final args = routeData.argsAs<PersonTypePaymentRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i25.PersonTypePaymentPage(
-          key: args.key,
-          baseUrl: args.baseUrl,
-          ente: args.ente,
-          codice: args.codice,
-        )),
-      );
-    },
-    PersonalAreaMenuRoute.name: (routeData) {
-      final args = routeData.argsAs<PersonalAreaMenuRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i26.PersonalAreaMenuPage(
-          key: args.key,
-          scaffoldKey: args.scaffoldKey,
-        ),
-      );
-    },
-    PnrrDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<PnrrDetailRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i27.PnrrDetailPage(
-          key: args.key,
-          type: args.type,
-          id: args.id,
-        )),
-      );
-    },
-    PnrrServicesRoute.name: (routeData) {
-      final args = routeData.argsAs<PnrrServicesRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i28.PnrrServicesPage(
-          key: args.key,
-          type: args.type,
-        )),
-      );
-    },
-    PointOfInterestListRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(child: const _i29.PointOfInterestListPage()),
-      );
-    },
-    ReservationsRouter.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(child: const _i30.ReservationsPager()),
-      );
-    },
-    SelfPaymentsRoute.name: (routeData) {
-      final args = routeData.argsAs<SelfPaymentsRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i31.SelfPaymentsPage(
-          key: args.key,
-          baseUrl: args.baseUrl,
-          ente: args.ente,
-        )),
-      );
-    },
-    ServiceOnlineListRoute.name: (routeData) {
-      final args = routeData.argsAs<ServiceOnlineListRouteArgs>(
-          orElse: () => const ServiceOnlineListRouteArgs());
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child:
-            _i39.WrappedRoute(child: _i32.ServiceOnlineListPage(key: args.key)),
-      );
-    },
-    SettingsRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i33.SettingsPage(),
-      );
-    },
-    SplashRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i34.SplashPage(),
-      );
-    },
-    SubMenuRoute.name: (routeData) {
-      final args = routeData.argsAs<SubMenuRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i35.SubMenuPage(
-          key: args.key,
-          menu: args.menu,
-          item: args.item,
-        ),
-      );
-    },
-    UserConfMenuEditRoute.name: (routeData) {
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i36.UserConfMenuEditPage(),
-      );
-    },
-    WebViewSpidAuthRoute.name: (routeData) {
-      final args = routeData.argsAs<WebViewSpidAuthRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i37.WebViewSpidAuthPage(
-          key: args.key,
-          urlSpid: args.urlSpid,
-          municipalityId: args.municipalityId,
-          authSystem: args.authSystem,
-        )),
-      );
-    },
-    WelcomeRoute.name: (routeData) {
-      final args = routeData.argsAs<WelcomeRouteArgs>();
-      return _i39.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i39.WrappedRoute(
-            child: _i38.WelcomePage(
-          key: args.key,
-          municipalityId: args.municipalityId,
-        )),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [_i1.AccountDataPage]
 class AccountDataRoute extends _i39.PageRouteInfo<AccountDataRouteArgs> {
@@ -461,8 +100,16 @@ class AccountDataRoute extends _i39.PageRouteInfo<AccountDataRouteArgs> {
 
   static const String name = 'AccountDataRoute';
 
-  static const _i39.PageInfo<AccountDataRouteArgs> page =
-      _i39.PageInfo<AccountDataRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<AccountDataRouteArgs>();
+      return _i1.AccountDataPage(
+        key: args.key,
+        userModel: args.userModel,
+      );
+    },
+  );
 }
 
 class AccountDataRouteArgs {
@@ -492,7 +139,12 @@ class AccountPrefereceRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'AccountPrefereceRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.AccountPreferecePage();
+    },
+  );
 }
 
 /// generated route for
@@ -519,8 +171,20 @@ class ChatMessageRoute extends _i39.PageRouteInfo<ChatMessageRouteArgs> {
 
   static const String name = 'ChatMessageRoute';
 
-  static const _i39.PageInfo<ChatMessageRouteArgs> page =
-      _i39.PageInfo<ChatMessageRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ChatMessageRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i3.ChatMessagePage(
+        key: args.key,
+        messages: args.messages,
+        title: args.title,
+        issueId: args.issueId,
+        municName: args.municName,
+      ));
+    },
+  );
 }
 
 class ChatMessageRouteArgs {
@@ -559,7 +223,12 @@ class ChooseMunicipalityRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'ChooseMunicipalityRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return _i39.WrappedRoute(child: const _i4.ChooseMunicipalityPage());
+    },
+  );
 }
 
 /// generated route for
@@ -581,8 +250,16 @@ class CoreMunicipalityRoute
 
   static const String name = 'CoreMunicipalityRoute';
 
-  static const _i39.PageInfo<CoreMunicipalityRouteArgs> page =
-      _i39.PageInfo<CoreMunicipalityRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CoreMunicipalityRouteArgs>();
+      return _i5.CoreMunicipalityPage(
+        key: args.key,
+        municipalityId: args.municipalityId,
+      );
+    },
+  );
 }
 
 class CoreMunicipalityRouteArgs {
@@ -619,8 +296,17 @@ class DetailPoiRoute extends _i39.PageRouteInfo<DetailPoiRouteArgs> {
 
   static const String name = 'DetailPoiRoute';
 
-  static const _i39.PageInfo<DetailPoiRouteArgs> page =
-      _i39.PageInfo<DetailPoiRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<DetailPoiRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i6.DetailPoiPage(
+        key: args.key,
+        poiId: args.poiId,
+      ));
+    },
+  );
 }
 
 class DetailPoiRouteArgs {
@@ -657,8 +343,17 @@ class EventDetailRoute extends _i39.PageRouteInfo<EventDetailRouteArgs> {
 
   static const String name = 'EventDetailRoute';
 
-  static const _i39.PageInfo<EventDetailRouteArgs> page =
-      _i39.PageInfo<EventDetailRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EventDetailRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i7.EventDetailPage(
+        key: args.key,
+        eventId: args.eventId,
+      ));
+    },
+  );
 }
 
 class EventDetailRouteArgs {
@@ -688,7 +383,12 @@ class EventListRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'EventListRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return _i39.WrappedRoute(child: const _i8.EventListPage());
+    },
+  );
 }
 
 /// generated route for
@@ -709,8 +409,16 @@ class HomeRoute extends _i39.PageRouteInfo<HomeRouteArgs> {
 
   static const String name = 'HomeRoute';
 
-  static const _i39.PageInfo<HomeRouteArgs> page =
-      _i39.PageInfo<HomeRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<HomeRouteArgs>();
+      return _i9.HomePage(
+        key: args.key,
+        scaffoldKey: args.scaffoldKey,
+      );
+    },
+  );
 }
 
 class HomeRouteArgs {
@@ -749,8 +457,18 @@ class IssueDetailRoute extends _i39.PageRouteInfo<IssueDetailRouteArgs> {
 
   static const String name = 'IssueDetailRoute';
 
-  static const _i39.PageInfo<IssueDetailRouteArgs> page =
-      _i39.PageInfo<IssueDetailRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<IssueDetailRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i10.IssueDetailPage(
+        key: args.key,
+        id: args.id,
+        udid: args.udid,
+      ));
+    },
+  );
 }
 
 class IssueDetailRouteArgs {
@@ -790,8 +508,17 @@ class IssuesListRoute extends _i39.PageRouteInfo<IssuesListRouteArgs> {
 
   static const String name = 'IssuesListRoute';
 
-  static const _i39.PageInfo<IssuesListRouteArgs> page =
-      _i39.PageInfo<IssuesListRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<IssuesListRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i11.IssuesListPage(
+        key: args.key,
+        udid: args.udid,
+      ));
+    },
+  );
 }
 
 class IssuesListRouteArgs {
@@ -821,7 +548,12 @@ class LoginSpidIdpListRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'LoginSpidIdpListRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return _i39.WrappedRoute(child: const _i12.LoginSpidIdpListPage());
+    },
+  );
 }
 
 /// generated route for
@@ -842,8 +574,17 @@ class MainRoute extends _i39.PageRouteInfo<MainRouteArgs> {
 
   static const String name = 'MainRoute';
 
-  static const _i39.PageInfo<MainRouteArgs> page =
-      _i39.PageInfo<MainRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<MainRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i13.MainPage(
+        key: args.key,
+        municipalityId: args.municipalityId,
+      ));
+    },
+  );
 }
 
 class MainRouteArgs {
@@ -880,8 +621,17 @@ class MapsRoute extends _i39.PageRouteInfo<MapsRouteArgs> {
 
   static const String name = 'MapsRoute';
 
-  static const _i39.PageInfo<MapsRouteArgs> page =
-      _i39.PageInfo<MapsRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<MapsRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i14.MapsPage(
+        key: args.key,
+        scaffoldKey: args.scaffoldKey,
+      ));
+    },
+  );
 }
 
 class MapsRouteArgs {
@@ -911,7 +661,12 @@ class MyWidget extends _i39.PageRouteInfo<void> {
 
   static const String name = 'MyWidget';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return const _i15.MyWidget();
+    },
+  );
 }
 
 /// generated route for
@@ -928,8 +683,14 @@ class NewIssueRouter extends _i39.PageRouteInfo<NewIssueRouterArgs> {
 
   static const String name = 'NewIssueRouter';
 
-  static const _i39.PageInfo<NewIssueRouterArgs> page =
-      _i39.PageInfo<NewIssueRouterArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<NewIssueRouterArgs>(
+          orElse: () => const NewIssueRouterArgs());
+      return _i39.WrappedRoute(child: _i16.NewIssuePager(key: args.key));
+    },
+  );
 }
 
 class NewIssueRouterArgs {
@@ -966,8 +727,19 @@ class NewSelfPaymentRouter
 
   static const String name = 'NewSelfPaymentRouter';
 
-  static const _i39.PageInfo<NewSelfPaymentRouterArgs> page =
-      _i39.PageInfo<NewSelfPaymentRouterArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<NewSelfPaymentRouterArgs>();
+      return _i39.WrappedRoute(
+          child: _i17.NewSelfPaymentPager(
+        key: args.key,
+        baseUrl: args.baseUrl,
+        ente: args.ente,
+        codice: args.codice,
+      ));
+    },
+  );
 }
 
 class NewSelfPaymentRouterArgs {
@@ -1011,8 +783,16 @@ class NewissueCompletedRoute
 
   static const String name = 'NewissueCompletedRoute';
 
-  static const _i39.PageInfo<NewissueCompletedRouteArgs> page =
-      _i39.PageInfo<NewissueCompletedRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<NewissueCompletedRouteArgs>();
+      return _i18.NewissueCompletedPage(
+        key: args.key,
+        udid: args.udid,
+      );
+    },
+  );
 }
 
 class NewissueCompletedRouteArgs {
@@ -1049,8 +829,17 @@ class NewsDetailRoute extends _i39.PageRouteInfo<NewsDetailRouteArgs> {
 
   static const String name = 'NewsDetailRoute';
 
-  static const _i39.PageInfo<NewsDetailRouteArgs> page =
-      _i39.PageInfo<NewsDetailRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<NewsDetailRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i19.NewsDetailPage(
+        key: args.key,
+        newsId: args.newsId,
+      ));
+    },
+  );
 }
 
 class NewsDetailRouteArgs {
@@ -1080,7 +869,12 @@ class NewsListRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'NewsListRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return _i39.WrappedRoute(child: const _i20.NewsListPage());
+    },
+  );
 }
 
 /// generated route for
@@ -1094,7 +888,12 @@ class OnboardingRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'OnboardingRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return const _i21.OnboardingPage();
+    },
+  );
 }
 
 /// generated route for
@@ -1112,8 +911,15 @@ class OnboardingSearchMunicipalityRoute
 
   static const String name = 'OnboardingSearchMunicipalityRoute';
 
-  static const _i39.PageInfo<OnboardingSearchMunicipalityRouteArgs> page =
-      _i39.PageInfo<OnboardingSearchMunicipalityRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OnboardingSearchMunicipalityRouteArgs>(
+          orElse: () => const OnboardingSearchMunicipalityRouteArgs());
+      return _i39.WrappedRoute(
+          child: _i22.OnboardingSearchMunicipalityPage(key: args.key));
+    },
+  );
 }
 
 class OnboardingSearchMunicipalityRouteArgs {
@@ -1148,8 +954,17 @@ class OnlineServiceDetailWebviewRoute
 
   static const String name = 'OnlineServiceDetailWebviewRoute';
 
-  static const _i39.PageInfo<OnlineServiceDetailWebviewRouteArgs> page =
-      _i39.PageInfo<OnlineServiceDetailWebviewRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OnlineServiceDetailWebviewRouteArgs>();
+      return _i23.OnlineServiceDetailWebviewPage(
+        key: args.key,
+        url: args.url,
+        name: args.name,
+      );
+    },
+  );
 }
 
 class OnlineServiceDetailWebviewRouteArgs {
@@ -1182,7 +997,12 @@ class PaymentChoiceRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'PaymentChoiceRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return const _i24.PaymentChoicePage();
+    },
+  );
 }
 
 /// generated route for
@@ -1208,8 +1028,19 @@ class PersonTypePaymentRoute
 
   static const String name = 'PersonTypePaymentRoute';
 
-  static const _i39.PageInfo<PersonTypePaymentRouteArgs> page =
-      _i39.PageInfo<PersonTypePaymentRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PersonTypePaymentRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i25.PersonTypePaymentPage(
+        key: args.key,
+        baseUrl: args.baseUrl,
+        ente: args.ente,
+        codice: args.codice,
+      ));
+    },
+  );
 }
 
 class PersonTypePaymentRouteArgs {
@@ -1253,8 +1084,16 @@ class PersonalAreaMenuRoute
 
   static const String name = 'PersonalAreaMenuRoute';
 
-  static const _i39.PageInfo<PersonalAreaMenuRouteArgs> page =
-      _i39.PageInfo<PersonalAreaMenuRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PersonalAreaMenuRouteArgs>();
+      return _i26.PersonalAreaMenuPage(
+        key: args.key,
+        scaffoldKey: args.scaffoldKey,
+      );
+    },
+  );
 }
 
 class PersonalAreaMenuRouteArgs {
@@ -1293,8 +1132,18 @@ class PnrrDetailRoute extends _i39.PageRouteInfo<PnrrDetailRouteArgs> {
 
   static const String name = 'PnrrDetailRoute';
 
-  static const _i39.PageInfo<PnrrDetailRouteArgs> page =
-      _i39.PageInfo<PnrrDetailRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PnrrDetailRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i27.PnrrDetailPage(
+        key: args.key,
+        type: args.type,
+        id: args.id,
+      ));
+    },
+  );
 }
 
 class PnrrDetailRouteArgs {
@@ -1334,8 +1183,17 @@ class PnrrServicesRoute extends _i39.PageRouteInfo<PnrrServicesRouteArgs> {
 
   static const String name = 'PnrrServicesRoute';
 
-  static const _i39.PageInfo<PnrrServicesRouteArgs> page =
-      _i39.PageInfo<PnrrServicesRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PnrrServicesRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i28.PnrrServicesPage(
+        key: args.key,
+        type: args.type,
+      ));
+    },
+  );
 }
 
 class PnrrServicesRouteArgs {
@@ -1365,7 +1223,12 @@ class PointOfInterestListRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'PointOfInterestListRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return _i39.WrappedRoute(child: const _i29.PointOfInterestListPage());
+    },
+  );
 }
 
 /// generated route for
@@ -1379,7 +1242,12 @@ class ReservationsRouter extends _i39.PageRouteInfo<void> {
 
   static const String name = 'ReservationsRouter';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return _i39.WrappedRoute(child: const _i30.ReservationsPager());
+    },
+  );
 }
 
 /// generated route for
@@ -1402,8 +1270,18 @@ class SelfPaymentsRoute extends _i39.PageRouteInfo<SelfPaymentsRouteArgs> {
 
   static const String name = 'SelfPaymentsRoute';
 
-  static const _i39.PageInfo<SelfPaymentsRouteArgs> page =
-      _i39.PageInfo<SelfPaymentsRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SelfPaymentsRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i31.SelfPaymentsPage(
+        key: args.key,
+        baseUrl: args.baseUrl,
+        ente: args.ente,
+      ));
+    },
+  );
 }
 
 class SelfPaymentsRouteArgs {
@@ -1440,8 +1318,15 @@ class ServiceOnlineListRoute
 
   static const String name = 'ServiceOnlineListRoute';
 
-  static const _i39.PageInfo<ServiceOnlineListRouteArgs> page =
-      _i39.PageInfo<ServiceOnlineListRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ServiceOnlineListRouteArgs>(
+          orElse: () => const ServiceOnlineListRouteArgs());
+      return _i39.WrappedRoute(
+          child: _i32.ServiceOnlineListPage(key: args.key));
+    },
+  );
 }
 
 class ServiceOnlineListRouteArgs {
@@ -1466,7 +1351,12 @@ class SettingsRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'SettingsRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return const _i33.SettingsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -1480,7 +1370,12 @@ class SplashRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'SplashRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return const _i34.SplashPage();
+    },
+  );
 }
 
 /// generated route for
@@ -1503,8 +1398,17 @@ class SubMenuRoute extends _i39.PageRouteInfo<SubMenuRouteArgs> {
 
   static const String name = 'SubMenuRoute';
 
-  static const _i39.PageInfo<SubMenuRouteArgs> page =
-      _i39.PageInfo<SubMenuRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SubMenuRouteArgs>();
+      return _i35.SubMenuPage(
+        key: args.key,
+        menu: args.menu,
+        item: args.item,
+      );
+    },
+  );
 }
 
 class SubMenuRouteArgs {
@@ -1537,7 +1441,12 @@ class UserConfMenuEditRoute extends _i39.PageRouteInfo<void> {
 
   static const String name = 'UserConfMenuEditRoute';
 
-  static const _i39.PageInfo<void> page = _i39.PageInfo<void>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      return const _i36.UserConfMenuEditPage();
+    },
+  );
 }
 
 /// generated route for
@@ -1563,8 +1472,19 @@ class WebViewSpidAuthRoute
 
   static const String name = 'WebViewSpidAuthRoute';
 
-  static const _i39.PageInfo<WebViewSpidAuthRouteArgs> page =
-      _i39.PageInfo<WebViewSpidAuthRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<WebViewSpidAuthRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i37.WebViewSpidAuthPage(
+        key: args.key,
+        urlSpid: args.urlSpid,
+        municipalityId: args.municipalityId,
+        authSystem: args.authSystem,
+      ));
+    },
+  );
 }
 
 class WebViewSpidAuthRouteArgs {
@@ -1607,8 +1527,17 @@ class WelcomeRoute extends _i39.PageRouteInfo<WelcomeRouteArgs> {
 
   static const String name = 'WelcomeRoute';
 
-  static const _i39.PageInfo<WelcomeRouteArgs> page =
-      _i39.PageInfo<WelcomeRouteArgs>(name);
+  static _i39.PageInfo page = _i39.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<WelcomeRouteArgs>();
+      return _i39.WrappedRoute(
+          child: _i38.WelcomePage(
+        key: args.key,
+        municipalityId: args.municipalityId,
+      ));
+    },
+  );
 }
 
 class WelcomeRouteArgs {

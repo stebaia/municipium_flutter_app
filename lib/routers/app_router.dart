@@ -4,7 +4,7 @@ import 'package:municipium/routers/app_router.gr.dart';
 @AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
 )
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: SplashRoute.page, initial: true),
