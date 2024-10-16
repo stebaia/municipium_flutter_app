@@ -15,7 +15,8 @@ class FetchMunicipalityEvent extends MunicipalityEvent {
 }
 
 class FetchMunicipalityListEvent extends MunicipalityEvent {
-  const FetchMunicipalityListEvent();
+  const FetchMunicipalityListEvent(this.name);
+  final String? name;
   @override
   List<Object> get props => [];
 }

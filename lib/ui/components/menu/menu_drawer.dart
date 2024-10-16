@@ -53,7 +53,7 @@ class MenuDrawer extends StatelessWidget {
                   textToShow:
                       AppLocalizations.of(context)!.municipality_change_menu,
                   onTapMethod: () {
-                    context.pushRoute(const ChooseMunicipalityRoute());
+                    context.pushRoute(ChooseMunicipalityRoute());
                   },
                   sizeFont: 20,
                   icon: Icons.location_on_outlined),

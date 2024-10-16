@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/model/municipality_list.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
 
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
@@ -301,6 +302,36 @@ class MunicipalityRepository {
       return configurationsMapper.to(json);
     }
     return null;
+  }
+
+  Future<List<Municipality>> getMunicipalityListPaged({required int pageIndex, required int pageSize}) async {
+    try {
+      final MunicipalityListDTO municipalityResponse = await municipalityService.getMunicipalityListPaged(pageIndex, pageSize);
+      final List<Municipality> municipalityList = [];
+      if(municipalityResponse.results != null ) {
+        for (var municipality in municipalityResponse.results!) {
+          municipalityList.add(municipalityMapper.fromDTO(municipality));
+        }
+      }
+      return municipalityList;
+    }catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Municipality>> getMunicipalityFilterByName({required String name}) async {
+    try {
+      final List<MunicipalityDTO> municipalityResponse = await municipalityService.getMunicipalityListFilterByName(name);
+      final List<Municipality> municipalityList = [];
+      if(municipalityResponse.isNotEmpty ) {
+        for (var municipality in municipalityResponse) {
+          municipalityList.add(municipalityMapper.fromDTO(municipality));
+        }
+      }
+      return municipalityList;
+    }catch (e) {
+      rethrow;
+    }
   }
 
   Future<DeviceBe?> getCurrentDevice() async {

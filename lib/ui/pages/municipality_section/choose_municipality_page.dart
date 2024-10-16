@@ -8,13 +8,18 @@ import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/mun
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
 
 @RoutePage()
 class ChooseMunicipalityPage extends StatelessWidget
     implements AutoRouteWrapper {
-  const ChooseMunicipalityPage({super.key});
+  ChooseMunicipalityPage({super.key});
+
+  final ScrollController _scrollController = ScrollController();
+  final List<Municipality> _municipalityList = [];
+  final TextEditingController municipalityController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +39,17 @@ class ChooseMunicipalityPage extends StatelessWidget
         child: Column(
           children: [
             TextField(
+              controller: municipalityController,
+                              onChanged: (value) {
+                                if (value.length >= 3) {
+                                  
+                                  context
+                                      .read<MunicipalityBloc>()
+                                      .filterMunicipalityList(value);
+                                } else if (value.isEmpty) {
+                                  
+                                }
+                              },
               decoration: InputDecoration(
                   hintText:
                       AppLocalizations.of(context)!.text_search_municipality,
@@ -61,8 +77,8 @@ class ChooseMunicipalityPage extends StatelessWidget
                 ],
               ),
             ),
-            Divider(),
-            Container(
+            const Divider(),
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 70,
               child: Row(
@@ -80,26 +96,54 @@ class ChooseMunicipalityPage extends StatelessWidget
                 ],
               ),
             ),
-            Divider(),
+            const Divider(),
             BlocConsumer<MunicipalityBloc, MunicipalityState>(
               listener: (context, state) {
-                if(state is FetchedMunicipalityState) {
-                  context.read<MunicipalityUrlCubit>().fetchMunicipalityInStorage();
-                  context.pushRoute(WelcomeRoute(municipalityId: state.municipality.muninicipalityId));
+                if (state is FetchedMunicipalityState) {
+
+                  context
+                      .read<MunicipalityUrlCubit>()
+                      .fetchMunicipalityInStorage();
+                  context.pushRoute(WelcomeRoute(
+                      municipalityId: state.municipality.muninicipalityId));
+                }
+                if(state is FetchedMunicipalityListState) {
+                  _municipalityList.addAll(state.municipalityList);
+
+                  context.read<MunicipalityBloc>().isFetching = false;
+                }
+                if(state is ErrorMunicipalityState) {
+                  context.read<MunicipalityBloc>().isFetching = false;
+                }
+
+                if(state is FetchedFilteredMunicipalityListState) {
+                  _municipalityList.clear();
+                  _municipalityList.addAll(state.municipalityList);
+                  context.read<MunicipalityBloc>().isFetching = false;
                 }
               },
               builder: (context, state) {
-                if (state is FetchedMunicipalityListState) {
+                
                   return Expanded(
                     child: ListView.builder(
+                      controller: _scrollController
+                        ..addListener(() {
+                          if (_scrollController.offset ==
+                                  _scrollController.position.maxScrollExtent &&
+                              !context.read<MunicipalityBloc>().isFetching) {
+                            context.read<MunicipalityBloc>()
+                              ..isFetching = true
+                              ..add(const FetchMunicipalityListEvent(null));
+                          }
+                        }),
                       shrinkWrap: true,
-                      itemCount: state.municipalityList.length,
+                      itemCount: _municipalityList.length,
                       itemBuilder: (context, index) => InkWell(
                         onTap: () {
                           HapticFeedback.mediumImpact();
-                          
-                          
-                          context.read<MunicipalityBloc>().fetchMunicipality(state.municipalityList[index].muninicipalityId);
+
+                          context.read<MunicipalityBloc>().fetchMunicipality(
+                              _municipalityList[index].muninicipalityId);
                         },
                         child: Container(
                           height: 60,
@@ -113,7 +157,7 @@ class ChooseMunicipalityPage extends StatelessWidget
                                 width: 10,
                               ),
                               Text(
-                                state.municipalityList[index].municipalityName,
+                                _municipalityList[index].municipalityName,
                                 style: const TextStyle(fontSize: 18),
                               ),
                             ],
@@ -122,9 +166,7 @@ class ChooseMunicipalityPage extends StatelessWidget
                       ),
                     ),
                   );
-                } else {
-                  return ShimmerUtils.buildIconRow(20);
-                }
+                
               },
             )
           ],

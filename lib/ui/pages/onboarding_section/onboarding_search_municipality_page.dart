@@ -20,6 +20,8 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
   OnboardingSearchMunicipalityPage({super.key});
   final GlobalKey globalKeyTextField = GlobalKey();
   final TextEditingController municipalityController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final List<Municipality> _municipalityList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,10 +120,11 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                 builder: (context, state) {
                                   if (state == VisibilityState.visible) {
                                     if (municipalityState
-                                        is FetchedMunicipalityListState) {
+                                        is FetchedFilteredMunicipalityListState) {
                                       List<Municipality> _municipalityList =
                                           municipalityState.municipalityList;
                                       return Container(
+                                        height: _municipalityList.length > 4 ? 240 : (60 * _municipalityList.length).toDouble(),
                                         decoration: BoxDecoration(
                                             color:
                                                 Theme.of(context).primaryColor,
@@ -136,6 +139,8 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                                     bottomRight:
                                                         Radius.circular(10))),
                                         child: ListView.separated(
+                                          
+                        
                                           padding: EdgeInsets.zero,
                                           separatorBuilder: (context, index) =>
                                               Divider(),
