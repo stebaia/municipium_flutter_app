@@ -65,7 +65,7 @@ class BottomSheetFilter extends StatelessWidget {
                         context.read<CalendarBloc>().fetchCalendarEvents(
                             date: MunicipiumUtility.getFirstDayOfMonth(),
                             endDate: MunicipiumUtility.getLastDayOfMonth(),
-                            type: CalendarUtility.getIntFromFilter(context.read<FilterCubit>().state.first).toString()
+                            type: CalendarUtility.getIntFromFilter(context.read<FilterCubit>().state).toString()
                             );
                         // Logica per applicare i filtri, es. aggiornare lista eventi
                         Navigator.pop(context);

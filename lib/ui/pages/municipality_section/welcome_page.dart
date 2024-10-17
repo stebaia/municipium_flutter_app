@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:municipium/bloc/bloc/calendar_event_bloc/calendar_event_bloc_bloc.dart';
 import 'package:municipium/bloc/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:municipium/ui/components/municipality_components/emergency_call_
 import 'package:municipium/ui/components/municipality_components/info_municipality_box.dart';
 import 'package:municipium/ui/components/municipality_components/last_update_box.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:intl/intl.dart';
 
 @RoutePage()
 class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
@@ -26,6 +28,10 @@ class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
+    
+    DateTime today = DateTime.now();
+    DateTime tomorrow = DateTime(today.year, today.month, today.day + 1);
+
     return MultiBlocProvider(providers: [
       BlocProvider<MunicipalityBloc>(
         create: (context) =>
@@ -36,6 +42,11 @@ class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
         create: (context) =>
             EmergencyCallBloc(civilDefenceRepository: context.read())
               ..fetchEmergencyCallList(),
+      ),
+      BlocProvider<CalendarBloc>(
+        create: (context) =>
+            CalendarBloc(calendarEventRepository: context.read())
+              ..fetchCalendarEvents(date: DateFormat('yyyy-MM-dd').format(today), endDate:  DateFormat('yyyy-MM-dd').format(tomorrow)),
       )
     ], child: this);
   }
@@ -44,109 +55,81 @@ class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<MunicipalityBloc, MunicipalityState>(
-          listener: (context, state) {
-        if (state is ErrorMunicipalityState) {
-          context.pushRoute(const OnboardingRoute());
-        }
-      }, builder: ((context, state) {
-        if (state is FetchingMunicipalityState) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is FetchedMunicipalityState) {
-          Municipality municipality = state.municipality;
-          context.read<MunicipalityUrlCubit>().fetchMunicipalityInStorage();
-          context.read<MunicipalityGlobalCubit>().authenticated(municipality);
-          return Stack(
-            children: [
-              SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Image.network(
-                    '${municipality.background.baseUrl}${municipality.background.i1280}',
-                    fit: BoxFit.cover,
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(child: Container()),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        StaggeredGrid.count(
-                          crossAxisCount: 6,
-                          mainAxisSpacing: 6,
-                          crossAxisSpacing: 10,
-                          children: [
-                            StaggeredGridTile.count(
-                                crossAxisCellCount: 4,
-                                mainAxisCellCount: 3,
-                                child: InfoMunicipalityBox(
-                                  municipality: municipality,
-                                )),
-                            StaggeredGridTile.count(
-                                crossAxisCellCount: 2,
-                                mainAxisCellCount: 3,
-                                child: GestureDetector(
-                                  child: const EmergencyCallBox(),
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        builder: ((modalContext) =>
-                                            CustomBaseBottomSheet(
-                                              title:
-                                                  AppLocalizations.of(context)!
-                                                      .btn_go_to_municipium,
-                                              body:
-                                                  CivilDefenceEmergencyPhoneNumberComponent(
-                                                      mContext: context),
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.85,
-                                            )));
-                                  },
-                                )),
-                            const StaggeredGridTile.count(
-                                crossAxisCellCount: 6,
-                                mainAxisCellCount: 3,
-                                child: LastUpdateBox()),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        FullWidthConfirmButton(
-                          fillColor: ThemeHelper.blueMunicipium,
-                          isEnabled: true,
-                          onTap: () {
-                            context.replaceRoute(CoreMunicipalityRoute(
-                                municipalityId: widget.municipalityId));
-                          },
-                          text: AppLocalizations.of(context)!
-                              .btn_go_to_municipium,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: BlocConsumer<MunicipalityBloc, MunicipalityState>(
+            listener: (context, state) {
+          if (state is ErrorMunicipalityState) {
+            context.pushRoute(const OnboardingRoute());
+          }
+        }, builder: ((context, state) {
+          if (state is FetchingMunicipalityState) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is FetchedMunicipalityState) {
+            Municipality municipality = state.municipality;
+            context.read<MunicipalityUrlCubit>().fetchMunicipalityInStorage();
+            context.read<MunicipalityGlobalCubit>().authenticated(municipality);
+            return Stack(
+              children: [
+                SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 2,
+                    child: Image.network(
+                      '${municipality.background.baseUrl}${municipality.background.i1280}',
+                      fit: BoxFit.cover,
+                    )),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(child: Container()),
+                    Container(
+                      decoration: BoxDecoration(                     
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(16)
+                      ),
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          InfoMunicipalityBox(municipality: municipality),
+                          
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const LastUpdateBox(),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          FullWidthConfirmButton(
+                            fillColor: ThemeHelper.blueMunicipium,
+                            isEnabled: true,
+                            onTap: () {
+                              context.replaceRoute(CoreMunicipalityRoute(
+                                  municipalityId: widget.municipalityId));
+                            },
+                            text: AppLocalizations.of(context)!
+                                .btn_go_to_municipium,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              )
-            ],
-          );
-        } else {
-          return Center(
-            child: Text(AppLocalizations.of(context)!.error_get_municipality),
-          );
-        }
-      })),
+                  ],
+                )
+              ],
+            );
+          } else {
+            return Center(
+              child: Text(AppLocalizations.of(context)!.error_get_municipality),
+            );
+          }
+        })),
+      ),
     );
   }
 }

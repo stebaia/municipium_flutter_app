@@ -100,9 +100,11 @@ class LightTheme {
 class DarkTheme {
   static const primaryColor = Color(0xff2140E9);
   static const darkBlack = Color.fromARGB(40, 41, 40, 40);
+  static const scaffoldBackgroundColor = Color.fromARGB(255, 3, 3, 3);
   static const baseColor = Colors.white;
 
   static get make => ThemeData(
+    scaffoldBackgroundColor: scaffoldBackgroundColor,
         brightness: Brightness.dark,
         primaryColor: primaryColor,
         dividerColor: baseColor,
@@ -167,7 +169,7 @@ class DarkTheme {
             foregroundColor: Colors.white,
           ),
         ),
-        cardColor: Color(0xFF303030),
+        cardColor: Color.fromARGB(255, 30, 30, 30),
         cardTheme: const CardTheme(surfaceTintColor: Color(0xFF303030)),
         textTheme: const TextTheme(
           titleLarge: TextStyle(

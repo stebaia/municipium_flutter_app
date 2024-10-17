@@ -6,6 +6,7 @@ import 'package:municipium/model/calendar_event/calendar_event.dart';
 
 class CalendarUtility {
   static List<int> filterList = [1, 2, 3, 4, 5];
+  static List<int> getFilter = [];
 
   static Color getColorFromType(int type) {
     switch (type) {
@@ -29,24 +30,35 @@ class CalendarUtility {
     }
   }
 
-  static int getIntFromFilter(FilterType type) {
+  static String getIntFromFilter(Set<FilterType> types) {
+  List<int> getFilter = [];
+
+  for (var type in types) {
     switch (type) {
       case FilterType.news:
-        return 1;
-
+        getFilter.add(1);
+        break;
       case FilterType.eventi:
-        return 2;
-
+        getFilter.add(2);
+        break;
       case FilterType.rifiuti:
-        return 3;
+        getFilter.add(3);
+        break;
       case FilterType.emergenze:
-        return 4;
+        getFilter.add(4);
+        break;
       case FilterType.prenotazioni:
-        return 5;
+        getFilter.add(5);
+        break;
       default:
-        return 1;
+        getFilter.add(1); // Valore di default
+        break;
     }
   }
+
+  // Restituisce la lista concatenata in una stringa separata da virgola
+  return getFilter.join(',');
+}
 
   static String getNameFromType(int type) {
     switch (type) {

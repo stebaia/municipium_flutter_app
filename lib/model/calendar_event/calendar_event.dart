@@ -2,7 +2,7 @@ class CalendarEvent {
   final String title;
   final int type;
   final String startDate;
-  final String endDate;
+  final String? endDate;
 
   CalendarEvent({required this.title, required this.type, required this.startDate, required this.endDate});
 
@@ -14,6 +14,7 @@ class CalendarEvent {
       startDate: json['start_date'],
       endDate: json['end_date'],
     );
+     
   }
 
   // Metodo per convertire un'istanza di CalendarEvent in un oggetto JSON

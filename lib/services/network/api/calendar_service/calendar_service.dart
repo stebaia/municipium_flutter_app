@@ -14,6 +14,6 @@ abstract class CalendarService {
     @Query('date') String date,
     @Query('date_end') String? endDate,
     @Query('name') String? name,
-    @Query('type') String? type
+    @Query('type', encoded: true) String? type
   );
 }
