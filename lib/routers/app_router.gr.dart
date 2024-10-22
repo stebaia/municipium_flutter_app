@@ -214,10 +214,14 @@ class ChatMessageRouteArgs {
 
 /// generated route for
 /// [_i4.ChooseMunicipalityPage]
-class ChooseMunicipalityRoute extends _i39.PageRouteInfo<void> {
-  const ChooseMunicipalityRoute({List<_i39.PageRouteInfo>? children})
-      : super(
+class ChooseMunicipalityRoute
+    extends _i39.PageRouteInfo<ChooseMunicipalityRouteArgs> {
+  ChooseMunicipalityRoute({
+    _i43.Key? key,
+    List<_i39.PageRouteInfo>? children,
+  }) : super(
           ChooseMunicipalityRoute.name,
+          args: ChooseMunicipalityRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -226,9 +230,23 @@ class ChooseMunicipalityRoute extends _i39.PageRouteInfo<void> {
   static _i39.PageInfo page = _i39.PageInfo(
     name,
     builder: (data) {
-      return _i39.WrappedRoute(child: const _i4.ChooseMunicipalityPage());
+      final args = data.argsAs<ChooseMunicipalityRouteArgs>(
+          orElse: () => const ChooseMunicipalityRouteArgs());
+      return _i39.WrappedRoute(
+          child: _i4.ChooseMunicipalityPage(key: args.key));
     },
   );
+}
+
+class ChooseMunicipalityRouteArgs {
+  const ChooseMunicipalityRouteArgs({this.key});
+
+  final _i43.Key? key;
+
+  @override
+  String toString() {
+    return 'ChooseMunicipalityRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

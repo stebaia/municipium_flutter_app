@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/position_utils.dart';
 import 'package:municipium/utils/secure_storage.dart';
 
@@ -25,6 +26,16 @@ class MunicipalityUrlCubit extends Cubit<MunicipalityUrlState> {
     } catch (e) {
       print(e);
       emit(MunicipalityUrlEmpty());
+    }
+  }
+
+  void changeEnvironnement(BaseUrlType type) {
+    emit(MunicipalityUrlLoading());
+    switch (type) {
+      case BaseUrlType.prod:
+        emit(MunicipalityUrlLoaded(MunicipiumUtility.BASEURL_PROD));
+      case BaseUrlType.staging:
+        emit(MunicipalityUrlLoaded(MunicipiumUtility.BASEURL_STAGING));
     }
   }
 }
