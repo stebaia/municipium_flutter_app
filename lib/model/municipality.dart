@@ -19,6 +19,7 @@ class Municipality extends Equatable {
   final String appServiceFour;
   final String jcityGovEnte;
   final String jcityGovUrl;
+  final String province;
   Configurations? configurations;
   Municipality({
     required this.municipalityName,
@@ -35,7 +36,8 @@ class Municipality extends Equatable {
     required this.newMenu,
     this.configurations,
     required this.jcityGovEnte,
-    required this.jcityGovUrl});
+    required this.jcityGovUrl,
+    required this.province});
 
   @override
   List<Object?> get props => [
@@ -52,6 +54,7 @@ class Municipality extends Equatable {
         appServiceThree,
         appServiceFour,
         jcityGovEnte,
-        jcityGovUrl
+        jcityGovUrl,
+        province
       ];
 }

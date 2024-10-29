@@ -45,7 +45,7 @@ class LastUpdateBox extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 137, 0, 0),
                             borderRadius: BorderRadius.circular(100)),
-                        child: Center(child: Text(state.calendar.length.toString())),
+                        child: Center(child: Text(state.calendar.length.toString(),style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),)),
                       );
                       }else {
                         return Container();

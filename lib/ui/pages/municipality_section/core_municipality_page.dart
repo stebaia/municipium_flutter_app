@@ -81,9 +81,8 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                     ),
               bottomNavigationBar: BottomNavigationBar(
                   elevation: 0,
-                  backgroundColor: ThemeHelper.blueMunicipium,
-                  selectedItemColor: Colors.white,
-                  unselectedItemColor: Colors.white,
+                  
+                 
                   type: BottomNavigationBarType.fixed,
                   currentIndex: tabsRouter.activeIndex,
                   onTap: (index) async {
@@ -110,11 +109,11 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.home,
-                            color: Colors.white,
+                            
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: ThemeHelper.blueMunicipiumBackground,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           width: 50,
@@ -130,11 +129,11 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.map,
-                            color: Colors.white,
+                            
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: ThemeHelper.blueMunicipiumBackground,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           width: 50,
@@ -150,11 +149,11 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.calendar,
-                            color: Colors.white,
+                        
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: ThemeHelper.blueMunicipiumBackground,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           width: 50,
@@ -173,11 +172,11 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                               height: 30,
                               child: Icon(
                                 CupertinoIcons.person,
-                                color: Colors.white,
+                                
                               )),
                           activeIcon: Container(
                               decoration: const BoxDecoration(
-                                  color: Colors.white,
+                                  color: ThemeHelper.blueMunicipiumBackground,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
                               width: 50,

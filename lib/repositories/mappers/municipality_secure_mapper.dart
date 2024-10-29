@@ -20,6 +20,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         'appServiceTwo': from.appServiceTwo,
         'appServiceThree': from.appServiceThree,
         'appServiceFour': from.appServiceFour,
+        'province' : from.province,
         'new_menu': from.newMenu.toJson(),
         'configurations': from.configurations ??
             from.configurations!
@@ -42,6 +43,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         appServiceTwo: json['appServiceTwo'],
         appServiceThree: json['appServiceThree'],
         appServiceFour: json['appServiceFour'],
+        province: json['province'],
         newMenu: NewMenuDTO.fromJson(
           json['new_menu'],
         ),

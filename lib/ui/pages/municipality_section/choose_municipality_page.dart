@@ -11,6 +11,7 @@ import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
+import 'package:municipium/utils/theme_helper.dart';
 
 @RoutePage()
 class ChooseMunicipalityPage extends StatelessWidget
@@ -27,18 +28,80 @@ class ChooseMunicipalityPage extends StatelessWidget
         as StoredMunicipalityGlobalState);
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
+          
           title: Text(
             AppLocalizations.of(context)!
                 .text_list_of_municipality_title
                 .toUpperCase(),
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 20),
           )),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
         child: Column(
           children: [
+            
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor,
+              ),
+              height: 120,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  
+                  const Icon(CupertinoIcons.text_bubble, color: Colors.orange,),
+                  const SizedBox(height: 10,),
+                  Text(AppLocalizations.of(context)!
+                      .text_no_municipality_search),
+                  
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(AppLocalizations.of(context)!.text_issue_now.toUpperCase(),
+                    style:
+                         const TextStyle(color: ThemeHelper.blueMunicipium, letterSpacing: 1),
+                    )
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10,),
+            
+            
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor,
+              ),
+              height: 120,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  
+                  const Icon(CupertinoIcons.bell, color: Colors.orange,),
+                  const SizedBox(height: 10,),
+                  Text(AppLocalizations.of(context)!
+                      .text_notify_from_other_municipality),
+                  
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(AppLocalizations.of(context)!.text_select_municipality.toUpperCase(),
+                    style:
+                         const TextStyle(color: ThemeHelper.blueMunicipium, letterSpacing: 1),
+                    )
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10,),  
             TextField(
+              
               controller: municipalityController,
                               onChanged: (value) {
                                 if (value.length >= 3) {
@@ -51,52 +114,36 @@ class ChooseMunicipalityPage extends StatelessWidget
                                 }
                               },
               decoration: InputDecoration(
+                fillColor: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor,
+                  contentPadding: const EdgeInsets.all(16),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color!,
+                                ),
+                              ),
+                              errorBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .color!),
+                              ),
+                              filled: true,
                   hintText:
                       AppLocalizations.of(context)!.text_search_municipality,
                   prefixIcon: const Icon(CupertinoIcons.search),
-                  suffixIcon: const Icon(CupertinoIcons.radiowaves_left)),
+                  suffixIcon: const Icon(Icons.gps_fixed)),
             ),
-            SizedBox(
-              height: 50,
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  const Icon(CupertinoIcons.bubble_left),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(AppLocalizations.of(context)!
-                      .text_no_municipality_search),
-                  Text(
-                    AppLocalizations.of(context)!.text_issue_now,
-                    style:
-                        const TextStyle(decoration: TextDecoration.underline),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 70,
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  const Icon(CupertinoIcons.bell),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                      child: Text(
-                          '${AppLocalizations.of(context)!.text_notify_from_other_municipality} ${AppLocalizations.of(context)!.text_issue_now}')),
-                ],
-              ),
-            ),
-            const Divider(),
             BlocConsumer<MunicipalityBloc, MunicipalityState>(
               listener: (context, state) {
                 if (state is FetchedMunicipalityState) {

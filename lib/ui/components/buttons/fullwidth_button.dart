@@ -18,7 +18,7 @@ class FullWidthConfirmButton extends StatelessWidget {
         decoration: BoxDecoration(color: fillColor, borderRadius: BorderRadius.circular(20)),
         width: MediaQuery.of(context).size.width,
         height: height,
-        child: Center(child: Text(text, style: TextStyle(color: textColor),)),
+        child: Center(child: Text(text.toUpperCase(), style: TextStyle(color: textColor, fontWeight: FontWeight.bold, letterSpacing: 1),)),
         
       ),
     );
@@ -26,9 +26,9 @@ class FullWidthConfirmButton extends StatelessWidget {
 }
 
 class FullWidthConfirmSecondButton extends StatelessWidget {
-  FullWidthConfirmSecondButton({super.key, this.fillColor = ThemeHelper.blueMunicipium, this.textColor = Colors.white, required this.isEnabled, required this.onTap, this.text = 'Conferma', this.height = 40, this.iconData} );
+  FullWidthConfirmSecondButton({super.key, this.fillColor = ThemeHelper.blueMunicipium,  required this.isEnabled, required this.onTap, this.text = 'Conferma', this.height = 40, this.iconData} );
   final Color fillColor;
-  final Color textColor;
+  Color? textColor;
   final bool isEnabled;
   final double height;
   final IconData? iconData;
