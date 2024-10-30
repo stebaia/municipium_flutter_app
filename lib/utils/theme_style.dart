@@ -9,6 +9,7 @@ class LightTheme {
   static const greyFine = Color(0xffeeeff7);
   static const lightGrey = Color.fromRGBO(234, 238, 247, 1);
   static const elementColor = Color(0xffF6F7FE);
+  static const calendarColor = Color(0xffF0F1FA);
   static get make => ThemeData(
     scaffoldBackgroundColor: Colors.white,
         brightness: Brightness.light,
@@ -59,6 +60,7 @@ class LightTheme {
             borderSide: BorderSide(color: Colors.red),
           ),
         ),
+        unselectedWidgetColor: calendarColor,
         cardColor: greyFine,
         cardTheme: const CardTheme(surfaceTintColor: greyFine),
         textButtonTheme: TextButtonThemeData(

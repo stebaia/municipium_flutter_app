@@ -48,8 +48,8 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    BoxVerticalDashboardComponents(
-                      name: configurationMenus[0].serviceName,                      
+                    BoxVerticalInfoDashboardComponents(
+                      municipality: municipality,                   
                     ),
                     
                     BoxVerticalDashboardComponents(

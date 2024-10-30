@@ -12,6 +12,7 @@ import 'package:municipium/ui/components/bottom_sheet/bottom_sheet_calendar_filt
 import 'package:municipium/ui/components/bottom_sheet/bottom_sheet_calendar_search.dart';
 import 'package:municipium/utils/calendar_utility.dart';
 import 'package:municipium/utils/municipium_utility.dart';
+import 'package:municipium/utils/theme_helper.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 @RoutePage()
@@ -62,7 +63,7 @@ class CalendarPage extends StatelessWidget implements AutoRouteWrapper {
                     calendar = state.calendar;
                   }
         return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.secondary,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
             centerTitle: true,
             title: Text(
@@ -101,8 +102,9 @@ class CalendarPage extends StatelessWidget implements AutoRouteWrapper {
                         children: [
                           Container(
                             height: calendarHeight,
-                            color: Theme.of(context).canvasColor,
+                            color: Theme.of(context).unselectedWidgetColor,
                             child: TableCalendar<CalendarEvent>(
+                              
                               headerStyle: const HeaderStyle(
                                 titleCentered: true,
                               ),
@@ -124,6 +126,11 @@ class CalendarPage extends StatelessWidget implements AutoRouteWrapper {
                                     selectedDay.day));
                               },
                               calendarStyle: const CalendarStyle(
+                                selectedDecoration: BoxDecoration(
+                                  color: ThemeHelper.blueMunicipium, // Colore dell'indicatore
+                                  shape: BoxShape
+                                      .circle, 
+                                ),
                                 markerDecoration: BoxDecoration(
                                   color: Color.fromARGB(255, 164, 181,
                                       190), // Colore dell'indicatore
@@ -144,6 +151,7 @@ class CalendarPage extends StatelessWidget implements AutoRouteWrapper {
                               },
                             ),
                           ),
+                          
                           events[caledarCubitState] != null
                               ? Container(
                                   child: Column(
@@ -152,22 +160,20 @@ class CalendarPage extends StatelessWidget implements AutoRouteWrapper {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 16),
+                                        padding: EdgeInsets.all(20),
                                         child: Text(
                                             // Controlla se la data corrisponde a oggi, ieri o domani
                                             MunicipiumUtility
                                                 .getFormatDayFromDate(
                                                     events[caledarCubitState]!
                                                         .first
-                                                        .startDate)),
+                                                        .startDate), style: Theme.of(context).textTheme.titleMedium,),
                                       ),
                                       Container(
-                                        height: 240,
-                                        child: ListView.separated(
+                                        height: MediaQuery.of(context).size.height - appBarHeight - calendarHeight - 170,
+                                        child: ListView.builder(
                                           shrinkWrap: true,
-                                          separatorBuilder: (context, index) =>
-                                              Divider(),
+                                          
                                           itemCount:
                                               events[caledarCubitState]!.length,
                                           itemBuilder: (context, index) {
