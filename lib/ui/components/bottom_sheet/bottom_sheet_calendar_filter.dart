@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/bloc/calendar_event_bloc/calendar_event_bloc_bloc.dart';
 import 'package:municipium/bloc/cubit/calendar_filter_cubit/calendar_filter_cubit.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/calendar_utility.dart';
 import 'package:municipium/utils/municipium_utility.dart';
+import 'package:provider/provider.dart';
 
 class BottomSheetFilter extends StatelessWidget {
   const BottomSheetFilter({super.key, required this.filterIdList});
@@ -63,6 +65,7 @@ class BottomSheetFilter extends StatelessWidget {
                       onPressed: () {
                         context.read<FilterCubit>().applyFilters();
                         context.read<CalendarBloc>().fetchCalendarEvents(
+                            baseUrl: Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
                             date: MunicipiumUtility.getFirstDayOfMonth(),
                             endDate: MunicipiumUtility.getLastDayOfMonth(),
                             type: CalendarUtility.getIntFromFilter(context.read<FilterCubit>().state).toString()

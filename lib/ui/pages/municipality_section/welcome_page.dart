@@ -2,7 +2,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:municipium/bloc/bloc/calendar_event_bloc/calendar_event_bloc_bloc.dart';
 import 'package:municipium/bloc/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
@@ -11,14 +10,13 @@ import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
-import 'package:municipium/ui/components/civil_defence/civil_defence_emergency_phone_number_component.dart';
-import 'package:municipium/ui/components/bottom_sheet/custom_bottomsheet.dart';
-import 'package:municipium/ui/components/municipality_components/emergency_call_box.dart';
 import 'package:municipium/ui/components/municipality_components/info_municipality_box.dart';
 import 'package:municipium/ui/components/municipality_components/last_update_box.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
 
 @RoutePage()
 class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
@@ -47,10 +45,11 @@ class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
             EmergencyCallBloc(civilDefenceRepository: context.read())
               ..fetchEmergencyCallList(
                   Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
+      ),
       BlocProvider<CalendarBloc>(
         create: (context) =>
             CalendarBloc(calendarEventRepository: context.read())
-              ..fetchCalendarEvents(date: DateFormat('yyyy-MM-dd').format(today), endDate:  DateFormat('yyyy-MM-dd').format(tomorrow)),
+              ..fetchCalendarEvents(baseUrl: Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,date: DateFormat('yyyy-MM-dd').format(today), endDate:  DateFormat('yyyy-MM-dd').format(tomorrow)),
       )
     ], child: this);
   }
@@ -74,7 +73,7 @@ class _WelcomePageState extends State<WelcomePage> {
             );
           } else if (state is FetchedMunicipalityState) {
             Municipality municipality = state.municipality;
-            context.read<MunicipalityUrlCubit>().fetchMunicipalityInStorage();
+            
             context.read<MunicipalityGlobalCubit>().authenticated(municipality);
             return Stack(
               children: [

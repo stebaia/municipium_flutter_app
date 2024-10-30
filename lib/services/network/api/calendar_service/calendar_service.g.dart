@@ -23,6 +23,7 @@ class _CalendarService implements CalendarService {
 
   @override
   Future<List<CalendarEvent>> getCalendar(
+    String baseUrl,
     String date,
     String? endDate,
     String? name,
@@ -45,7 +46,7 @@ class _CalendarService implements CalendarService {
     )
         .compose(
           _dio.options,
-          'municipality_event',
+          '${baseUrl}/municipality_event',
           queryParameters: queryParameters,
           data: _data,
         )

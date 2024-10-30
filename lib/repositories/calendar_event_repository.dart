@@ -13,9 +13,9 @@ class CalendarEventRepository {
   final Logger logger;
 
 
-  Future<List<CalendarEvent>> getCalendarEvents({required String date, String? endDate, String? name, String? type}) async {
+  Future<List<CalendarEvent>> getCalendarEvents({required String baseUrl,required String date, String? endDate, String? name, String? type}) async {
     try {
-      final response = await calendarService.getCalendar(date, endDate, name, type);
+      final response = await calendarService.getCalendar(baseUrl ,date, endDate, name, type);
       return response;
     }catch (e) {
       rethrow;

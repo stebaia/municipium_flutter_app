@@ -37,11 +37,7 @@ class _ReservationsService implements ReservationsService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/actions?id=${municipalityId}&action=preno_unita',
-=======
-          'actions?id=${municipalityId}&action=preno_unita',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )

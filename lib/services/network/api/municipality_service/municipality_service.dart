@@ -25,21 +25,19 @@ abstract class MunicipalityService {
   Future<MunicipalityDTO> getMunicipality(@Path('baseUrl') String baseUrl,
       @Path('municipalityId') int municipalityId);
 
-<<<<<<< HEAD
   @GET('{baseUrl}/get_idps')
   Future<MunicipalityDTO> getIdpList(@Path('baseUrl') String baseUrl);
-=======
-  @GET('get_idps')
-  Future<MunicipalityDTO> getIdpList();
 
-  @GET('paged_municipalities?page_index={page_index}&page_size={page_size}')
+  @GET(
+      '{baseUrl}/paged_municipalities?page_index={page_index}&page_size={page_size}')
   Future<MunicipalityListDTO> getMunicipalityListPaged(
-    @Path('page_index') int pageIndex, @Path('page_size') int pageSize
-  );
+      @Path('baseUrl') String baseUrl,
+      @Path('page_index') int pageIndex,
+      @Path('page_size') int pageSize);
 
-  @GET('municipalities_by_name?municipality_name={municipality_name}')
+  @GET('{baseUrl}/municipalities_by_name?municipality_name={municipality_name}')
   Future<List<MunicipalityDTO>> getMunicipalityListFilterByName(
-    @Path('municipality_name') String municipalityName, 
+    @Path('baseUrl') String baseUrl,
+    @Path('municipality_name') String municipalityName,
   );
->>>>>>> feature/calendar_section
 }

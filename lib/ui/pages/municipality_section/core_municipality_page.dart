@@ -11,8 +11,10 @@ import 'package:municipium/services/auth/service_manager.dart';
 import 'package:municipium/ui/components/bottom_sheet/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/municipality_components/modal_rapid_action_component.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class CoreMunicipalityPage extends StatefulWidget {
@@ -61,7 +63,7 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                   ? FloatingActionButton.extended(
                       onPressed: (() =>
                           context.pushRoute(const UserConfMenuEditRoute())),
-                      label: Text(
+                      label: const Text(
                         'Personalizza',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -89,6 +91,7 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                     // here we switch between tabs
                     if (index == 2) {
                       context.read<CalendarBloc>().fetchCalendarEvents(
+                            baseUrl: Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
                             date: MunicipiumUtility.getFirstDayOfMonth(),
                             endDate: MunicipiumUtility.getLastDayOfMonth());
                     }

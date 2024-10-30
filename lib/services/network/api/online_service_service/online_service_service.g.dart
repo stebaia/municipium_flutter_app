@@ -34,11 +34,7 @@ class _OnlineServiceService implements OnlineServiceService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/municipality_services',
-=======
-          'municipality_services',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )

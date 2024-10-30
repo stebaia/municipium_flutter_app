@@ -34,8 +34,8 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
   void fetchMunicipalityList(String baseUrl) =>
       add(FetchMunicipalityListEvent(baseUrl));
 
-  void filterMunicipalityList(String filterText) =>
-      add(FilterMunicipalityListEvent(filterText: filterText));
+  void filterMunicipalityList(String baseUrl,String filterText,) =>
+      add(FilterMunicipalityListEvent(baseUrl: baseUrl,filterText: filterText));
 
   void checkMunicipalityState() async {
     try {
@@ -82,7 +82,7 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
       Emitter<MunicipalityState> emit) async {
     try {
       // Eseguire il filtro sulla lista completa delle municipalità
-      final filteredList = await municipalityRepository.getMunicipalityFilterByName(name: event.filterText);
+      final filteredList = await municipalityRepository.getMunicipalityFilterByName(baseUrl: event.baseUrl,name: event.filterText);
       emit(FetchedFilteredMunicipalityListState(filteredList));
     } catch (error) {
       emit(const ErrorMunicipalityState());

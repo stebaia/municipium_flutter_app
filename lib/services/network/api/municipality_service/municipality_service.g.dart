@@ -34,11 +34,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/municipalities/',
-=======
-          'municipalities/',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -78,11 +74,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/municipalities/all=true&latitude=${lat}&longitude=${lng}&radius=50000',
-=======
-          'municipalities/all=true&latitude=${lat}&longitude=${lng}&radius=50000',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -121,11 +113,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/municipalities/show_mobile/${municipalityId}',
-=======
-          'municipalities/show_mobile/${municipalityId}',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -158,11 +146,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/get_idps',
-=======
-          'get_idps',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -180,12 +164,11 @@ class _MunicipalityService implements MunicipalityService {
       rethrow;
     }
     return _value;
-<<<<<<< HEAD
-=======
   }
 
   @override
   Future<MunicipalityListDTO> getMunicipalityListPaged(
+    String baseUrl,
     int pageIndex,
     int pageSize,
   ) async {
@@ -200,7 +183,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-          'paged_municipalities?page_index=${pageIndex}&page_size=${pageSize}',
+          '${baseUrl}/paged_municipalities?page_index=${pageIndex}&page_size=${pageSize}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -222,7 +205,9 @@ class _MunicipalityService implements MunicipalityService {
 
   @override
   Future<List<MunicipalityDTO>> getMunicipalityListFilterByName(
-      String municipalityName) async {
+    String baseUrl,
+    String municipalityName,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -234,7 +219,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-          'municipalities_by_name?municipality_name=${municipalityName}',
+          '${baseUrl}/municipalities_by_name?municipality_name=${municipalityName}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -255,7 +240,6 @@ class _MunicipalityService implements MunicipalityService {
       rethrow;
     }
     return _value;
->>>>>>> feature/calendar_section
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

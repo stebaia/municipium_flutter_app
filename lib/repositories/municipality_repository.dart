@@ -308,9 +308,9 @@ class MunicipalityRepository {
     return null;
   }
 
-  Future<List<Municipality>> getMunicipalityListPaged({required int pageIndex, required int pageSize}) async {
+  Future<List<Municipality>> getMunicipalityListPaged({required String baseUrl,required int pageIndex, required int pageSize}) async {
     try {
-      final MunicipalityListDTO municipalityResponse = await municipalityService.getMunicipalityListPaged(pageIndex, pageSize);
+      final MunicipalityListDTO municipalityResponse = await municipalityService.getMunicipalityListPaged(baseUrl,pageIndex, pageSize);
       final List<Municipality> municipalityList = [];
       if(municipalityResponse.results != null ) {
         for (var municipality in municipalityResponse.results!) {
@@ -323,9 +323,9 @@ class MunicipalityRepository {
     }
   }
 
-  Future<List<Municipality>> getMunicipalityFilterByName({required String name}) async {
+  Future<List<Municipality>> getMunicipalityFilterByName({required String baseUrl,required String name}) async {
     try {
-      final List<MunicipalityDTO> municipalityResponse = await municipalityService.getMunicipalityListFilterByName(name);
+      final List<MunicipalityDTO> municipalityResponse = await municipalityService.getMunicipalityListFilterByName(baseUrl,name);
       final List<Municipality> municipalityList = [];
       if(municipalityResponse.isNotEmpty ) {
         for (var municipality in municipalityResponse) {

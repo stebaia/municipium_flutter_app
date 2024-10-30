@@ -37,11 +37,7 @@ class _EventService implements EventService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/events/${eventId}',
-=======
-          'events/${eventId}',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -74,11 +70,7 @@ class _EventService implements EventService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/events/',
-=======
-          'events/',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -117,11 +109,7 @@ class _EventService implements EventService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/events/paged_events?page_index=${page_index}&page_size=${page_size}',
-=======
-          'events/paged_events?page_index=${page_index}&page_size=${page_size}',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )

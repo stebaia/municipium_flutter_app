@@ -42,10 +42,9 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                       children: [
                         Spacer(),
                         Text(
-                          AppLocalizations.of(context)!
-                              .text_search_municipality,
-                          style: Theme.of(context).textTheme.titleLarge
-                        ),
+                            AppLocalizations.of(context)!
+                                .text_search_municipality,
+                            style: Theme.of(context).textTheme.titleLarge),
                         const SizedBox(
                           height: 10,
                         ),
@@ -58,7 +57,11 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                 context.read<VisibilityCubit>().show();
                                 context
                                     .read<MunicipalityBloc>()
-                                    .filterMunicipalityList(value);
+                                    .filterMunicipalityList(
+                                        Provider.of<BaseUrlNotifier>(context,
+                                                listen: false)
+                                            .baseUrl,
+                                        value);
                               } else if (value.isEmpty) {
                                 context.read<VisibilityCubit>().hide();
                               }
@@ -75,6 +78,9 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                   context
                                       .read<MunicipalityBloc>()
                                       .fetchMunicipalityListWithPosition(
+                                          Provider.of<BaseUrlNotifier>(context,
+                                                  listen: false)
+                                              .baseUrl,
                                           position.latitude,
                                           position.longitude);
                                 },
@@ -114,36 +120,37 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20,),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         SizedBox(
                             child: DropdownButtonFormField<int>(
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Theme.of(context)
-                                  .bottomNavigationBarTheme
-                                  .backgroundColor,
+                                .bottomNavigationBarTheme
+                                .backgroundColor,
                             enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
+                              borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .color!,
+                              ),
+                            ),
+                            errorBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
                                   color: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
-                                      .color!,
-                                ),
-                              ),
-                              errorBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .color!),
-                              ),
-                              ),
-                          
+                                      .color!),
+                            ),
+                          ),
                           items: const <DropdownMenuItem<int>>[
                             DropdownMenuItem<int>(
                               value: 1,
@@ -188,8 +195,10 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                       final municipality = municipalityState
                                           .municipalityList[index];
                                       return ListTile(
-                                        title:
-                                            Text(municipality.municipalityName, style: TextStyle(color: Colors.white),),
+                                        title: Text(
+                                          municipality.municipalityName,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                         // Aggiungi qui altre informazioni che vuoi mostrare
                                         onTap: () {
                                           municipalityController.text =

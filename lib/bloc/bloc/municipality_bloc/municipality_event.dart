@@ -33,9 +33,10 @@ class GetMunicipalityTemp extends MunicipalityEvent {
 }
 
 class FilterMunicipalityListEvent extends MunicipalityEvent {
+  final String baseUrl;
   final String filterText;
 
-  const FilterMunicipalityListEvent({required this.filterText});
+  const FilterMunicipalityListEvent({required this.baseUrl,required this.filterText});
 
   @override
   List<Object> get props => [filterText];

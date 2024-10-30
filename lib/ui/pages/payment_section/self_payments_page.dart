@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/self_payment_bloc/self_payment_bloc.dart';
+import 'package:municipium/bloc/bloc/self_payment_bloc/self_payment_bloc.dart';
 import 'package:municipium/model/payment/payment_type.dart';
 import 'package:municipium/model/payment/self_payment.dart';
 import 'package:municipium/routers/app_router.gr.dart';

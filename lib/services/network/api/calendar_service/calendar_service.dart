@@ -7,10 +7,11 @@ part 'calendar_service.g.dart';
 
 @RestApi()
 abstract class CalendarService {
-  factory CalendarService(Dio dio, {String baseUrl}) = _CalendarService;
+  factory CalendarService(Dio dio) = _CalendarService;
 
-  @GET('municipality_event')
+  @GET('{baseUrl}/municipality_event')
   Future<List<CalendarEvent>> getCalendar(
+    @Path('baseUrl') String baseUrl,
     @Query('date') String date,
     @Query('date_end') String? endDate,
     @Query('name') String? name,

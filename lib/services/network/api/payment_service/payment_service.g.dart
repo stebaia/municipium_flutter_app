@@ -60,7 +60,6 @@ class _PaymentService implements PaymentService {
       rethrow;
     }
     return _value;
-<<<<<<< HEAD
   }
 
   @override
@@ -98,8 +97,6 @@ class _PaymentService implements PaymentService {
       rethrow;
     }
     return _value;
-=======
->>>>>>> feature/calendar_section
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

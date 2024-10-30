@@ -15,6 +15,7 @@ import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/position_utils.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
+import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
@@ -115,7 +116,9 @@ class ChooseMunicipalityPage extends StatelessWidget
                                   
                                   context
                                       .read<MunicipalityBloc>()
-                                      .filterMunicipalityList(value);
+                                      .filterMunicipalityList(Provider.of<BaseUrlNotifier>(context,
+                                      listen: false)
+                                  .baseUrl,value);
                                 } else if (value.isEmpty) {
                                   
                                 }
@@ -183,7 +186,9 @@ class ChooseMunicipalityPage extends StatelessWidget
                               !context.read<MunicipalityBloc>().isFetching) {
                             context.read<MunicipalityBloc>()
                               ..isFetching = true
-                              ..add(const FetchMunicipalityListEvent(null));
+                              ..add(FetchMunicipalityListEvent(Provider.of<BaseUrlNotifier>(context,
+                                      listen: false)
+                                  .baseUrl));
                           }
                         }),
                       shrinkWrap: true,
@@ -199,7 +204,7 @@ class ChooseMunicipalityPage extends StatelessWidget
                               Provider.of<BaseUrlNotifier>(context,
                                       listen: false)
                                   .baseUrlBe,
-                              state.municipalityList[index].muninicipalityId);
+                             _municipalityList[index].muninicipalityId);
                         },
                         child: Container(
                           height: 60,

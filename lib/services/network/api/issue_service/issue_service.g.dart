@@ -38,11 +38,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/issues/${issueId}?udid=${udid}',
-=======
-          'issues/${issueId}?udid=${udid}',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -78,11 +74,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/issues?udid=${udid}',
-=======
-          'issues?udid=${udid}',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -117,11 +109,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/tags/',
-=======
-          'tags/',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -157,11 +145,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/issue_categories/',
-=======
-          'issue_categories/',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -201,11 +185,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/issues',
-=======
-          'issues',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -242,11 +222,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-<<<<<<< HEAD
           '${baseUrl}/issues/comment_issue',
-=======
-          'issues/comment_issue',
->>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
