@@ -37,7 +37,11 @@ class _PnrrService implements PnrrService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/paged_pnrr?type=${type}&orderByName=1',
+=======
+          'paged_pnrr?type=${type}&orderByName=1',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -74,7 +78,11 @@ class _PnrrService implements PnrrService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/pnrr/${type}/${id}',
+=======
+          'pnrr/${type}/${id}',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
 part 'civil_defence_service.g.dart';
 
 @RestApi()

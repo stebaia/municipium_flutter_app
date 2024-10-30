@@ -125,5 +125,7 @@
     "text_logout_title" : "Logout",
     "text_logout_description" : "Sei sicuro di volerti disconnettere?",
     "text_yes" : "Si",
-    "text_no" : "No"
+    "text_no" : "No",
+
+    "text_calendar_title" : "Agenda"
 }   

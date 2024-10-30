@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/issue_chat_cubit/issue_chat_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
-import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/issue/issue_chat.dart';
 import 'package:municipium/model/municipality.dart';

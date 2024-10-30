@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:municipium/bloc/news_detail_bloc/news_detail_bloc.dart';
+import 'package:municipium/bloc/bloc/news_detail_bloc/news_detail_bloc.dart';
 import 'package:municipium/model/news/news_detail.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';

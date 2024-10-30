@@ -40,7 +40,11 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
+=======
+          'retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )

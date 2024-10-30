@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
+import 'package:municipium/bloc/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CivilDefenceEmergencyPhoneNumberComponent extends StatelessWidget {

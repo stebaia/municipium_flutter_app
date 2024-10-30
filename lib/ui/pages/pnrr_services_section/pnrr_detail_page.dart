@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/pnrr_body_bloc/pnrr_body_bloc.dart';
+import 'package:municipium/bloc/bloc/pnrr_body_bloc/pnrr_body_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';

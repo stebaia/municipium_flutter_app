@@ -34,7 +34,11 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/municipalities/',
+=======
+          'municipalities/',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -74,7 +78,11 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/municipalities/all=true&latitude=${lat}&longitude=${lng}&radius=50000',
+=======
+          'municipalities/all=true&latitude=${lat}&longitude=${lng}&radius=50000',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -113,7 +121,11 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/municipalities/show_mobile/${municipalityId}',
+=======
+          'municipalities/show_mobile/${municipalityId}',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -146,7 +158,11 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/get_idps',
+=======
+          'get_idps',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -164,6 +180,82 @@ class _MunicipalityService implements MunicipalityService {
       rethrow;
     }
     return _value;
+<<<<<<< HEAD
+=======
+  }
+
+  @override
+  Future<MunicipalityListDTO> getMunicipalityListPaged(
+    int pageIndex,
+    int pageSize,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<MunicipalityListDTO>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'paged_municipalities?page_index=${pageIndex}&page_size=${pageSize}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MunicipalityListDTO _value;
+    try {
+      _value = MunicipalityListDTO.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<MunicipalityDTO>> getMunicipalityListFilterByName(
+      String municipalityName) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<MunicipalityDTO>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'municipalities_by_name?municipality_name=${municipalityName}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<MunicipalityDTO> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) =>
+              MunicipalityDTO.fromJson(i as Map<String, dynamic>))
+          .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+>>>>>>> feature/calendar_section
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

@@ -38,7 +38,11 @@ class _PointOfInterestService implements PointOfInterestService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/point_of_interests/paged_pois_with_filter?page_index=${pageIndex}&page_size=${pageSize}',
+=======
+          'point_of_interests/paged_pois_with_filter?page_index=${pageIndex}&page_size=${pageSize}',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -71,7 +75,11 @@ class _PointOfInterestService implements PointOfInterestService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/point_of_interests/paged_pois_with_filter',
+=======
+          'point_of_interests/paged_pois_with_filter',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -104,7 +112,11 @@ class _PointOfInterestService implements PointOfInterestService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/point_of_interest_categories/categories_with_poi',
+=======
+          'point_of_interest_categories/categories_with_poi',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -143,7 +155,11 @@ class _PointOfInterestService implements PointOfInterestService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/point_of_interests/${poiID}',
+=======
+          'point_of_interests/${poiID}',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )

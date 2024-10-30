@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
           centerTitle: true,
           title: Text(
-            municipality.municipalityName.toUpperCase(),
+            '${municipality.municipalityName.toUpperCase()} (${municipality.province.toUpperCase()})',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           leading: GestureDetector(
@@ -42,14 +42,14 @@ class HomePage extends StatelessWidget {
             return Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    BoxVerticalDashboardComponents(
-                      name: configurationMenus[0].serviceName,                      
+                    BoxVerticalInfoDashboardComponents(
+                      municipality: municipality,                   
                     ),
                     
                     BoxVerticalDashboardComponents(

@@ -37,7 +37,11 @@ class _NewsService implements NewsService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/news/${newsId}',
+=======
+          'news/${newsId}',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -74,7 +78,11 @@ class _NewsService implements NewsService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/news/paged_news?page_index=${page_index}&page_size=${page_size}',
+=======
+          'news/paged_news?page_index=${page_index}&page_size=${page_size}',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )

@@ -25,8 +25,20 @@ class FetchedMunicipalityListState extends MunicipalityState {
   List<Object> get props => [municipalityList];
 }
 
+
+class FetchedFilteredMunicipalityListState extends MunicipalityState {
+  final List<Municipality> municipalityList;
+  const FetchedFilteredMunicipalityListState(this.municipalityList);
+
+  List<Object> get props => [municipalityList];
+}
+
 class NoMunicipalityState extends MunicipalityState {
   const NoMunicipalityState();
+}
+
+class NoMunicipalityListState extends MunicipalityState {
+  const NoMunicipalityListState();
 }
 
 class ErrorMunicipalityState extends MunicipalityState {

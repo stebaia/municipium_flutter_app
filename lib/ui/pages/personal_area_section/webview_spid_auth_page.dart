@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
-import 'package:municipium/bloc/user_bloc/user_bloc.dart';
+import 'package:municipium/bloc/bloc/user_bloc/user_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:provider/provider.dart';

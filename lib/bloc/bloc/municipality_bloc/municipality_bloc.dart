@@ -12,6 +12,8 @@ part 'municipality_event.dart';
 part 'municipality_state.dart';
 
 class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
+  int page = 0;
+  bool isFetching = true;
   final MunicipalityRepository municipalityRepository;
   List<Municipality> _municipalityList = [];
 
@@ -80,12 +82,8 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
       Emitter<MunicipalityState> emit) async {
     try {
       // Eseguire il filtro sulla lista completa delle municipalità
-      final filteredList = _municipalityList
-          .where((municipality) => municipality.municipalityName
-              .toLowerCase()
-              .contains(event.filterText.toLowerCase()))
-          .toList();
-      emit(FetchedMunicipalityListState(filteredList));
+      final filteredList = await municipalityRepository.getMunicipalityFilterByName(name: event.filterText);
+      emit(FetchedFilteredMunicipalityListState(filteredList));
     } catch (error) {
       emit(const ErrorMunicipalityState());
     }
@@ -95,10 +93,15 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
       FetchMunicipalityListEvent event, Emitter<MunicipalityState> emit) async {
     emit(const FetchingMunicipalityState());
     try {
+    
       final municipalityList =
           await municipalityRepository.getMunicipalityList(event.baseUrl);
       _municipalityList = municipalityList;
-      emit(FetchedMunicipalityListState(municipalityList));
+      if(_municipalityList.isNotEmpty) {
+        emit(FetchedMunicipalityListState(municipalityList));
+        page ++;
+      } 
+      
     } catch (ex) {
       emit(const ErrorMunicipalityState());
     }

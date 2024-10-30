@@ -13,7 +13,7 @@ part 'point_of_interest_list_state.dart';
 class PointOfInterestBloc
     extends Bloc<PointOfInterestEvent, PointOfInterestState> {
   final PointOfInterestRepository pointOfInterestRepository;
-  int page = 1;
+  int page = 0;
   bool isFetching = true;
   PointOfInterestBloc({required this.pointOfInterestRepository})
       : super(const FetchingPointOfInterestListState()) {

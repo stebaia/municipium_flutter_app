@@ -38,7 +38,11 @@ class _MunicipalityBeService implements MunicipalityBeService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/devices',
+=======
+          'devices',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
@@ -75,7 +79,11 @@ class _MunicipalityBeService implements MunicipalityBeService {
     )
         .compose(
           _dio.options,
+<<<<<<< HEAD
           '${baseUrl}/devices',
+=======
+          'devices',
+>>>>>>> feature/calendar_section
           queryParameters: queryParameters,
           data: _data,
         )
