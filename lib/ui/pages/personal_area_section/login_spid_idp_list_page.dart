@@ -11,6 +11,8 @@ import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/user/idp_model.dart';
 import 'package:municipium/model/user/spid_object.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
@@ -23,44 +25,69 @@ class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
         .municipality;
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          municipality.municipalityName.toUpperCase(),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            municipality.municipalityName.toUpperCase(),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
         ),
-      ),
-      body: BlocBuilder<UserBloc, UserState>(builder:(context, state) {
-        if(state is FetchedListIdpState) {
-          List<IdpModel> listIdp = state.idps;
-          return ListView.builder(
-            itemCount: listIdp.length,
-            itemBuilder:(context, index) => Card(color: Colors.grey,surfaceTintColor: Colors.white , margin: const EdgeInsets.all(10),child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(child: Image.network(width: MediaQuery.of(context).size.width,height: 60,listIdp[index].logoUri!.replaceAll('.svg', '.png')), onTap: () async {
-                DeviceBe? deviceBe = await context.read<DeviceCubit>().getDeviceBeFromStorage();
+        body: BlocBuilder<UserBloc, UserState>(
+          builder: (context, state) {
+            if (state is FetchedListIdpState) {
+              List<IdpModel> listIdp = state.idps;
+              return ListView.builder(
+                itemCount: listIdp.length,
+                itemBuilder: (context, index) => Card(
+                    color: Colors.grey,
+                    surfaceTintColor: Colors.white,
+                    margin: const EdgeInsets.all(10),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        child: Image.network(
+                            width: MediaQuery.of(context).size.width,
+                            height: 60,
+                            listIdp[index].logoUri!.replaceAll('.svg', '.png')),
+                        onTap: () async {
+                          DeviceBe? deviceBe = await context
+                              .read<DeviceCubit>()
+                              .getDeviceBeFromStorage();
 
-                if(deviceBe != null) {
-                  String urlSpid = SpidObject.getWebSpidUrl(municipality.muninicipalityId.toString(), listIdp[index].entityId.toString(), deviceBe.playerId.toString(), deviceBe.udid, listIdp[index].organizationDisplayName.toString());
-                  context.pushRoute(WebViewSpidAuthRoute(urlSpid: urlSpid,municipalityId: municipality.muninicipalityId.toString(), authSystem: 'spid'));
-                }
-                
-              },),
-            )),);
-        }else if(state is FetchingListIdpState){
-          return const Center(child: CircularProgressIndicator());
-        }else {
-          return Container();
-        }
-      },)
-    );
+                          if (deviceBe != null) {
+                            String urlSpid = SpidObject.getWebSpidUrl(
+                                municipality.muninicipalityId.toString(),
+                                listIdp[index].entityId.toString(),
+                                deviceBe.playerId.toString(),
+                                deviceBe.udid,
+                                listIdp[index]
+                                    .organizationDisplayName
+                                    .toString());
+                            context.pushRoute(WebViewSpidAuthRoute(
+                                urlSpid: urlSpid,
+                                municipalityId:
+                                    municipality.muninicipalityId.toString(),
+                                authSystem: 'spid'));
+                          }
+                        },
+                      ),
+                    )),
+              );
+            } else if (state is FetchingListIdpState) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return Container();
+            }
+          },
+        ));
   }
-  
+
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-    BlocProvider<UserBloc>(
-          create: (context) =>
-              UserBloc(userRepository: context.read())..fetchListIdp(),
+        BlocProvider<UserBloc>(
+          create: (context) => UserBloc(userRepository: context.read())
+            ..fetchListIdp(Provider.of<BaseUrlNotifier>(context, listen: false)
+                .baseUrlMmc),
         )
-  ], child: this);
+      ], child: this);
 }

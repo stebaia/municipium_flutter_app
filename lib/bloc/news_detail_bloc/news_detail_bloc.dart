@@ -16,14 +16,15 @@ class NewsDetailBloc extends Bloc<NewsDetailEvent, NewsDetailState> {
     on<FetchNewsDetailEvent>(_fetchNewsDetail);
   }
 
-  void fetchNewsDetail(int newsId) => add(FetchNewsDetailEvent(newsId: newsId));
+  void fetchNewsDetail(String baseUrl, int newsId) =>
+      add(FetchNewsDetailEvent(baseUrl: baseUrl, newsId: newsId));
 
   FutureOr<void> _fetchNewsDetail(FetchNewsDetailEvent fetchNewsDetailEvent,
       Emitter<NewsDetailState> emit) async {
     emit(const FetchingNewsDetailState());
     try {
-      final newsDetail =
-          await newsRepository.getNewsDetail(fetchNewsDetailEvent.newsId);
+      final newsDetail = await newsRepository.getNewsDetail(
+          fetchNewsDetailEvent.baseUrl, fetchNewsDetailEvent.newsId);
       emit(FetchedNewsDetailState(newsDetail));
     } catch (error) {
       emit(const ErrorNewsDetailState());

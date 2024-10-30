@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/user/idp_model.dart';
 import 'package:municipium/model/user/spid_object.dart';
@@ -12,60 +11,81 @@ import 'package:municipium/services/network/api/mmc_municipium_service/mmc_munic
 import 'package:municipium/utils/secure_storage.dart';
 
 class UserRepository {
-  UserRepository({required this.secureStorage, required this.municipalityRepository, required this.authSpidService, required this.mmcMunicipiumService});
+  UserRepository(
+      {required this.secureStorage,
+      required this.municipalityRepository,
+      required this.authSpidService,
+      required this.mmcMunicipiumService});
   final SecureStorage secureStorage;
   final MunicipalityRepository municipalityRepository;
   final MmcMunicipiumService mmcMunicipiumService;
   final AuthSpidService authSpidService;
-  
-  
+
   Future<List<UserConfigurationMenu>> initUserMenuInShared() async {
     //PRENDERE I MENU DALLA NEW MOBILE
     //CREAZIONE DELL'OGGETTO DA SALVARE NELLE SHARED
-    Municipality? municipality = await municipalityRepository.currentMunicipality;
+    Municipality? municipality =
+        await municipalityRepository.currentMunicipality;
     List<UserConfigurationMenu> listOfConfiguration = [];
-    if(municipality != null) {
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: 'Info comune', isMandatory: true, position: 1));
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: municipality.appServiceOne, isMandatory: false, position: 2));
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: municipality.appServiceTwo, isMandatory: false, position: 3));
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: municipality.appServiceThree, isMandatory: false, position: 4));
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: municipality.appServiceFour, isMandatory: false, position: 5));
-      
-    }else {
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: 'Info', isMandatory: true, position: 1));
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: 'Notizie', isMandatory: false, position: 2));
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: 'Eventi', isMandatory: false, position: 3));
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: 'Poi', isMandatory: false, position: 4));
-      listOfConfiguration.add(UserConfigurationMenu(serviceName: 'Segnalazioni', isMandatory: false, position: 5));
+    if (municipality != null) {
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: 'Info comune', isMandatory: true, position: 1));
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: municipality.appServiceOne,
+          isMandatory: false,
+          position: 2));
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: municipality.appServiceTwo,
+          isMandatory: false,
+          position: 3));
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: municipality.appServiceThree,
+          isMandatory: false,
+          position: 4));
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: municipality.appServiceFour,
+          isMandatory: false,
+          position: 5));
+    } else {
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: 'Info', isMandatory: true, position: 1));
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: 'Notizie', isMandatory: false, position: 2));
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: 'Eventi', isMandatory: false, position: 3));
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: 'Poi', isMandatory: false, position: 4));
+      listOfConfiguration.add(UserConfigurationMenu(
+          serviceName: 'Segnalazioni', isMandatory: false, position: 5));
     }
-    
-    
-    String jsonListOfConfiguration = jsonEncode(listOfConfiguration.map((e) => e.toJson()).toList());
+
+    String jsonListOfConfiguration =
+        jsonEncode(listOfConfiguration.map((e) => e.toJson()).toList());
 
     secureStorage.setConfigurationMenu(jsonListOfConfiguration);
 
     return listOfConfiguration;
   }
 
-  Future<List<IdpModel>> getIdps() async {
+  Future<List<IdpModel>> getIdps(
+    String baseUrlMmc,
+  ) async {
     try {
-      final responseIdps = await authSpidService.getIdps();
+      final responseIdps = await authSpidService.getIdps(baseUrlMmc);
       return responseIdps;
-    }catch (e) {
+    } catch (e) {
       rethrow;
     }
   }
 
-  Future<SpidUserModel> getUserSpid(String authId, String municipalityId, String authSystem, String authIdOld) async {
+  Future<SpidUserModel> getUserSpid(String baseUrlMmc, String authId,
+      String municipalityId, String authSystem, String authIdOld) async {
     try {
-      final spidUser = await mmcMunicipiumService.retriveUserData(authId, municipalityId, authSystem, authIdOld);
+      final spidUser = await mmcMunicipiumService.retriveUserData(
+          baseUrlMmc, authId, municipalityId, authSystem, authIdOld);
       return spidUser;
-    }catch(ex) {
+    } catch (ex) {
       rethrow;
     }
   }
-  
-  
-
-
 }

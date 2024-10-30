@@ -12,24 +12,28 @@ part 'issue_service.g.dart';
 
 @RestApi()
 abstract class IssueService {
-  factory IssueService(Dio dio, {String baseUrl}) = _IssueService;
+  factory IssueService(Dio dio) = _IssueService;
 
-  @GET('issues/{issueId}?udid={udid}')
-  Future<IssueDetailDto> getIssueDetail(
+  @GET('{baseUrl}/issues/{issueId}?udid={udid}')
+  Future<IssueDetailDto> getIssueDetail(@Path('baseUrl') String baseUrl,
       @Path('issueId') int issueId, @Path('udid') String udid);
 
-  @GET('issues?udid={udid}')
-  Future<List<IssueDto>> getIssuesList(@Path('udid') String udid);
+  @GET('{baseUrl}/issues?udid={udid}')
+  Future<List<IssueDto>> getIssuesList(
+      @Path('baseUrl') String baseUrl, @Path('udid') String udid);
 
-  @GET('tags/')
-  Future<List<IssueTagDto>> getIssueTags();
+  @GET('{baseUrl}/tags/')
+  Future<List<IssueTagDto>> getIssueTags(@Path('baseUrl') String baseUrl);
 
-  @GET('issue_categories/')
-  Future<List<IssueCategoryTagDto>> getIssueCategoriesTags();
+  @GET('{baseUrl}/issue_categories/')
+  Future<List<IssueCategoryTagDto>> getIssueCategoriesTags(
+      @Path('baseUrl') String baseUrl);
 
-  @POST('issues')
-  Future<Map<String, bool>> postIssue(@Body() PostIssueDto issue);
+  @POST('{baseUrl}/issues')
+  Future<Map<String, bool>> postIssue(
+      @Path('baseUrl') String baseUrl, @Body() PostIssueDto issue);
 
-  @POST('issues/comment_issue')
-  Future<ChatResponse> postMessageIssue(@Body() ChatPostIssueDto item);
+  @POST('{baseUrl}/issues/comment_issue')
+  Future<ChatResponse> postMessageIssue(
+      @Path('baseUrl') String baseUrl, @Body() ChatPostIssueDto item);
 }

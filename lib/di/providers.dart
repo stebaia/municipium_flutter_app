@@ -1,6 +1,6 @@
 part of 'dependency_injector.dart';
 
-List<SingleChildWidget> providersFun({required String baseUrl}) {
+List<SingleChildWidget> providersFun() {
   List<SingleChildWidget> providers = [];
 
   String baseUrlBe = "https://api.municipiumapp.it/";
@@ -11,8 +11,6 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
     Provider<LocalAuthentication>(
       create: (_) => LocalAuthentication(),
     ),
-    
-
     Provider<Logger>(
       create: (_) => Logger(),
     ),
@@ -30,34 +28,37 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
           if (kDebugMode) context.read<PrettyDioLogger>(),
         ]),
     ),
+    /*ChangeNotifierProvider<BaseUrlNotifier>(
+      lazy: false,
+      create: (context) {
+        return BaseUrlNotifier()..initializeBaseUrl();
+      },
+    ),*/
     Provider<MunicipalityService>(
-      create: (context) => MunicipalityService(
-        context.read<Dio>(),
-        baseUrl: baseUrl,
-      ),
+      create: (context) {
+        return MunicipalityService(
+          context.read<Dio>(),
+        );
+      },
     ),
     Provider<NewsService>(
       create: (context) => NewsService(
         context.read<Dio>(),
-        baseUrl: baseUrl,
       ),
     ),
     Provider<EventService>(
       create: (context) => EventService(
         context.read<Dio>(),
-        baseUrl: baseUrl,
       ),
     ),
     Provider<PointOfInterestService>(
       create: (context) => PointOfInterestService(
         context.read<Dio>(),
-        baseUrl: baseUrl,
       ),
     ),
     Provider<CivilDefenceService>(
       create: (context) => CivilDefenceService(
         context.read<Dio>(),
-        baseUrl: baseUrl,
       ),
     ),
     Provider<MunicipalityConfigurationService>(
@@ -72,25 +73,22 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
     ),
     Provider<MunicipalityBeService>(
       create: (context) =>
-          MunicipalityBeService(context.read<Dio>(), baseUrl: baseUrlBe),
+          MunicipalityBeService(context.read<Dio>()), //baseUrlBe
     ),
     Provider<IssueService>(
-        create: (context) =>
-            IssueService(context.read<Dio>(), baseUrl: baseUrl)),
+        create: (context) => IssueService(context.read<Dio>())), //baseUrl
     Provider<PnrrService>(
-        create: (context) =>
-            PnrrService(context.read<Dio>(), baseUrl: baseUrl)),
+        create: (context) => PnrrService(context.read<Dio>())), //baseUrl
     Provider<ReservationsService>(
         create: (context) =>
-            ReservationsService(context.read<Dio>(), baseUrl: baseUrlGastone)),
+            ReservationsService(context.read<Dio>())), //baseUrlGastone
     Provider<AuthSpidService>(
-        create: (context) =>
-            AuthSpidService(context.read<Dio>(), baseUrl: baseUrl)),
+        create: (context) => AuthSpidService(context.read<Dio>())),
     Provider<MmcMunicipiumService>(
         create: (context) =>
-            MmcMunicipiumService(context.read<Dio>(),baseUrl: baseUrlMmc)),
+            MmcMunicipiumService(context.read<Dio>())), //baseUrlMmc
     Provider<OnlineServiceService>(
         create: (context) =>
-            OnlineServiceService(context.read<Dio>(),baseUrl: baseUrl))
+            OnlineServiceService(context.read<Dio>())) //baseUrl
   ];
 }

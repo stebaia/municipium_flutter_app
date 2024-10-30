@@ -8,8 +8,9 @@ abstract class PnrrBodyEvent extends Equatable {
 }
 
 class FetchPnrrBodyEvent extends PnrrBodyEvent {
-  const FetchPnrrBodyEvent({required this.type, required this.id});
-
+  FetchPnrrBodyEvent(
+      {required this.baseUrl, required this.type, required this.id});
+  String baseUrl;
   final String type;
   final int id;
   @override

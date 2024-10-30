@@ -8,17 +8,16 @@ abstract class UserEvent extends Equatable {
 }
 
 class FetchListIdpEvent extends UserEvent {
-  const FetchListIdpEvent();
+  String baseUrl;
+  FetchListIdpEvent(this.baseUrl);
 }
 
-
 class FetchUserDataEvent extends UserEvent {
+  String baseUrl;
   final String authId;
   final String municipalityId;
   final String authSystem;
   final String authIdOld;
-  const FetchUserDataEvent(this.authId, this.municipalityId, this.authSystem, this.authIdOld);
+  FetchUserDataEvent(this.baseUrl, this.authId, this.municipalityId,
+      this.authSystem, this.authIdOld);
 }
-
-
-

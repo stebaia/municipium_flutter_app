@@ -6,8 +6,9 @@ part 'civil_defence_service.g.dart';
 
 @RestApi()
 abstract class CivilDefenceService {
-  factory CivilDefenceService(Dio dio, {String baseUrl}) = _CivilDefenceService;
+  factory CivilDefenceService(Dio dio) = _CivilDefenceService;
 
-  @GET('civil_defence_phone_numbers')
-  Future<List<CivilDefenceEmergencyCallDTO>> getPhoneNumbers();
+  @GET('{baseUrl}/civil_defence_phone_numbers')
+  Future<List<CivilDefenceEmergencyCallDTO>> getPhoneNumbers(
+      @Path('baseUrl') String baseUrl);
 }

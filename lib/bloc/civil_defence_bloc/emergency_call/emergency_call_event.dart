@@ -8,7 +8,8 @@ abstract class EmergencyCallEvent extends Equatable {
 }
 
 class FetchEmergencyCallEvent extends EmergencyCallEvent {
-  const FetchEmergencyCallEvent();
+  String baseUrl;
+  FetchEmergencyCallEvent(this.baseUrl);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [baseUrl];
 }

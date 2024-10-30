@@ -22,9 +22,15 @@ import 'package:image/image.dart' as img;
 
 class MunicipiumUtility {
   static String BASEURL_PROD = 'https://cloud.municipiumapp.it/api/v2/';
-
   static String BASEURL_STAGING = 'https://staging.municipiumapp.it/api/v2/';
+  static String BE_URL_STAGING = "https://api.municipiumapp.it/";
+  static String BE_URL_PROD = "https://api.municipiumapp.it/";
+  static String MMC_URL_PROD = "https://mmc.maggiolicloud.it/";
+  static String MMC_URL_STAG = "https://mmc-test.maggiolicloud.it/";
 
+  static String BASEURL_KEY = 'municipium_baseurl_key';
+  static String BE_URL_KEY = 'municipium_be_url_key';
+  static String MMC_URL_KEY = 'municipium_mmc_url_key';
   static String getDefaultImageUrl() {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }

@@ -32,10 +32,10 @@ class IssuesRepository {
       required this.issueService,
       required this.logger});
 
-  Future<List<IssueItemList>> getIssuesList(String udid) async {
+  Future<List<IssueItemList>> getIssuesList(String baseUrl, String udid) async {
     try {
       final List<IssueDto> issuesResponse =
-          await issueService.getIssuesList(udid);
+          await issueService.getIssuesList(baseUrl, udid);
       final List<IssueItemList> list = [];
       for (var element in issuesResponse) {
         list.add(issueItemMapper.fromDTO(element));
@@ -47,10 +47,11 @@ class IssuesRepository {
     }
   }
 
-  Future<IssueDetail> getIssueDetail(int id, String udid) async {
+  Future<IssueDetail> getIssueDetail(
+      String baseUrl, int id, String udid) async {
     try {
       final IssueDetailDto issuesResponse =
-          await issueService.getIssueDetail(id, udid);
+          await issueService.getIssueDetail(baseUrl, id, udid);
       IssueDetail detail = issueDetailMapper.fromDTO(issuesResponse);
       return detail;
     } catch (error, stackTrace) {
@@ -59,10 +60,14 @@ class IssuesRepository {
     }
   }
 
-  Future<List<IssueCategoryTag>> getIssueCategoryList() async {
+  Future<List<IssueCategoryTag>> getIssueCategoryList(
+    String baseUrl,
+  ) async {
     try {
       final List<IssueCategoryTagDto> issueCategoryTagResponse =
-          await issueService.getIssueCategoriesTags();
+          await issueService.getIssueCategoriesTags(
+        baseUrl,
+      );
       final List<IssueCategoryTag> listCategory = [];
       for (var cat in issueCategoryTagResponse) {
         listCategory.add(issueCategoryTagMapper.fromDTO(cat));
@@ -74,9 +79,11 @@ class IssuesRepository {
     }
   }
 
-  void postIssue(PostIssueDto issueDto, Function()? action) async {
+  void postIssue(
+      String baseUrl, PostIssueDto issueDto, Function()? action) async {
     try {
-      Map<String, bool> response = await issueService.postIssue(issueDto);
+      Map<String, bool> response =
+          await issueService.postIssue(baseUrl, issueDto);
       print(response);
       if (response['success'] == true) {
         if (action != null) {
@@ -89,9 +96,11 @@ class IssuesRepository {
     }
   }
 
-  void postMessage(ChatPostIssueDto item, Function()? action) async {
+  void postMessage(
+      String baseUrl, ChatPostIssueDto item, Function()? action) async {
     try {
-      ChatResponse response = await issueService.postMessageIssue(item);
+      ChatResponse response =
+          await issueService.postMessageIssue(baseUrl, item);
       print(response);
       if (response.success == true) {
         if (action != null) {
@@ -104,12 +113,17 @@ class IssuesRepository {
     }
   }
 
-  Future<List<IssueMappedCategory>> getIssueCategoryTagList() async {
+  Future<List<IssueMappedCategory>> getIssueCategoryTagList(
+      String baseUrl) async {
     try {
       final List<IssueTagDto> issueTagResponse =
-          await issueService.getIssueTags();
+          await issueService.getIssueTags(
+        baseUrl,
+      );
       final List<IssueTag> listTag = [];
-      final List<IssueCategoryTag> listCategory = await getIssueCategoryList();
+      final List<IssueCategoryTag> listCategory = await getIssueCategoryList(
+        baseUrl,
+      );
 
       for (var tag in issueTagResponse) {
         listTag.add(issueTagMapper.fromDTO(tag));

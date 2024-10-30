@@ -22,7 +22,10 @@ class _EventService implements EventService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<EventDetailDto> getEventDetail(int eventId) async {
+  Future<EventDetailDto> getEventDetail(
+    String baseUrl,
+    int eventId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +37,7 @@ class _EventService implements EventService {
     )
         .compose(
           _dio.options,
-          'events/${eventId}',
+          '${baseUrl}/events/${eventId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -55,7 +58,7 @@ class _EventService implements EventService {
   }
 
   @override
-  Future<List<EventDTO>> getEventsList() async {
+  Future<List<EventDTO>> getEventsList(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -67,7 +70,7 @@ class _EventService implements EventService {
     )
         .compose(
           _dio.options,
-          'events/',
+          '${baseUrl}/events/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -91,6 +94,7 @@ class _EventService implements EventService {
 
   @override
   Future<EventPagedDTO> getEventsPaged(
+    String baseUrl,
     int page_index,
     int page_size,
   ) async {
@@ -105,7 +109,7 @@ class _EventService implements EventService {
     )
         .compose(
           _dio.options,
-          'events/paged_events?page_index=${page_index}&page_size=${page_size}',
+          '${baseUrl}/events/paged_events?page_index=${page_index}&page_size=${page_size}',
           queryParameters: queryParameters,
           data: _data,
         )

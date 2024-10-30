@@ -22,7 +22,10 @@ class _MunicipalityBeService implements MunicipalityBeService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ResponseDevicePut> putDevices(DeviceBe device) async {
+  Future<ResponseDevicePut> putDevices(
+    String baseUrl,
+    DeviceBe device,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -35,7 +38,7 @@ class _MunicipalityBeService implements MunicipalityBeService {
     )
         .compose(
           _dio.options,
-          'devices',
+          '${baseUrl}/devices',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -56,7 +59,10 @@ class _MunicipalityBeService implements MunicipalityBeService {
   }
 
   @override
-  Future<HttpResponse<dynamic>> postDevices(DeviceBe device) async {
+  Future<HttpResponse<dynamic>> postDevices(
+    String baseUrl,
+    DeviceBe device,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -69,7 +75,7 @@ class _MunicipalityBeService implements MunicipalityBeService {
     )
         .compose(
           _dio.options,
-          'devices',
+          '${baseUrl}/devices',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -7,7 +7,9 @@ import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.d
 import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/ui/pages/online_service_detail_webview.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/enum.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class PnrrDetailPage extends StatelessWidget implements AutoRouteWrapper {
@@ -19,7 +21,10 @@ class PnrrDetailPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<PnrrBodyBloc>(
           create: (context) => PnrrBodyBloc(servicesRepository: context.read())
-            ..fetchBodiesPnrr(type, id),
+            ..fetchBodiesPnrr(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                type,
+                id),
         )
       ], child: this);
 
@@ -186,10 +191,10 @@ class PnrrDetailPage extends StatelessWidget implements AutoRouteWrapper {
                                                 if (body.urlPrenotazione !=
                                                     null) {
                                                   context.pushRoute(
-                                                     OnlineServiceDetailWebviewRoute(
-                                                          
+                                                      OnlineServiceDetailWebviewRoute(
                                                           url: body
-                                                              .urlPrenotazione!, name: ''));
+                                                              .urlPrenotazione!,
+                                                          name: ''));
                                                 }
                                               };
                                             },

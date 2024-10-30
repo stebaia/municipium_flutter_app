@@ -22,7 +22,8 @@ class _CivilDefenceService implements CivilDefenceService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<CivilDefenceEmergencyCallDTO>> getPhoneNumbers() async {
+  Future<List<CivilDefenceEmergencyCallDTO>> getPhoneNumbers(
+      String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +35,7 @@ class _CivilDefenceService implements CivilDefenceService {
     )
         .compose(
           _dio.options,
-          'civil_defence_phone_numbers',
+          '${baseUrl}/civil_defence_phone_numbers',
           queryParameters: queryParameters,
           data: _data,
         )

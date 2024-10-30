@@ -8,7 +8,8 @@ abstract class IssueTagEvent extends Equatable {
 }
 
 class FetchIssueTagEvent extends IssueTagEvent {
-  const FetchIssueTagEvent();
+  String baseUrl;
+  FetchIssueTagEvent(this.baseUrl);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [baseUrl];
 }

@@ -15,11 +15,11 @@ class ServiceOnlineBloc extends Bloc<ServiceOnlineEvent, ServiceOnlineState> {
 
   ServiceOnlineBloc({required this.onlineServiceRepository})
       : super(const TryServiceOnlineState()) {
-        on<FetchServiceListEvent> (_fetchServiceList);
-        on<FilterServiceListEvent> (_filterServiceList);
-      }
+    on<FetchServiceListEvent>(_fetchServiceList);
+    on<FilterServiceListEvent>(_filterServiceList);
+  }
 
-  void fetchServiceList() => add(const FetchServiceListEvent());
+  void fetchServiceList(String baseUrl) => add(FetchServiceListEvent(baseUrl));
 
   void filterServiceList(String query) => add(FilterServiceListEvent(query));
 
@@ -27,7 +27,8 @@ class ServiceOnlineBloc extends Bloc<ServiceOnlineEvent, ServiceOnlineState> {
       FetchServiceListEvent event, Emitter<ServiceOnlineState> emit) async {
     try {
       emit(const TryServiceOnlineState());
-      final serviceOnline = await onlineServiceRepository.getListOnlineService();
+      final serviceOnline =
+          await onlineServiceRepository.getListOnlineService(event.baseUrl);
       _allServices.addAll(serviceOnline);
       emit(FetchedServiceOnlineState(serviceOnline));
     } catch (error) {

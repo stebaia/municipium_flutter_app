@@ -24,10 +24,13 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
         _fetchMunicipalityListWithPosition);
   }
 
-  void fetchMunicipalityListWithPosition(double lat, double lng) =>
-      add(FetchMunicipalityListWithPositionEvent(lat: lat, lng: lng));
+  void fetchMunicipalityListWithPosition(
+          String baseUrl, double lat, double lng) =>
+      add(FetchMunicipalityListWithPositionEvent(
+          baseUrl: baseUrl, lat: lat, lng: lng));
 
-  void fetchMunicipalityList() => add(const FetchMunicipalityListEvent());
+  void fetchMunicipalityList(String baseUrl) =>
+      add(FetchMunicipalityListEvent(baseUrl));
 
   void filterMunicipalityList(String filterText) =>
       add(FilterMunicipalityListEvent(filterText: filterText));
@@ -93,7 +96,7 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
     emit(const FetchingMunicipalityState());
     try {
       final municipalityList =
-          await municipalityRepository.getMunicipalityList();
+          await municipalityRepository.getMunicipalityList(event.baseUrl);
       _municipalityList = municipalityList;
       emit(FetchedMunicipalityListState(municipalityList));
     } catch (ex) {
@@ -107,26 +110,37 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
     emit(const FetchingMunicipalityState());
     try {
       final municipalityList = await municipalityRepository
-          .getMunicipalityListFromPosition(event.lat, event.lng);
+          .getMunicipalityListFromPosition(event.baseUrl, event.lat, event.lng);
       emit(FetchedMunicipalityListState(municipalityList));
     } catch (ex) {
       emit(const ErrorMunicipalityState());
     }
   }
 
-  void fetchMunicipality(int municipalityId) =>
-      add(FetchMunicipalityEvent(municipalityId: municipalityId));
+  void fetchMunicipality(
+          String baseUrl, String baseUrlBe, int municipalityId) =>
+      add(FetchMunicipalityEvent(
+          baseUrl: baseUrl,
+          baseUrlBe: baseUrlBe,
+          municipalityId: municipalityId));
 
   FutureOr<void> _fetchMunicipality(
       FetchMunicipalityEvent fetchMunicipalityEvent,
       Emitter<MunicipalityState> emit) async {
     emit(const FetchingMunicipalityState());
     try {
-      final municipality = await municipalityRepository
-          .saveMunicipality(fetchMunicipalityEvent.municipalityId);
+      final municipality = await municipalityRepository.saveMunicipality(
+          fetchMunicipalityEvent.baseUrl,
+          fetchMunicipalityEvent.baseUrlBe,
+          fetchMunicipalityEvent.municipalityId);
       emit(FetchedMunicipalityState(municipality));
     } catch (error) {
       emit(const ErrorMunicipalityState());
     }
+  }
+
+  FutureOr<void> deleteMunicipality() async {
+    await municipalityRepository.secureStorage
+        .deleteMunicipalitylKeySecureData();
   }
 }

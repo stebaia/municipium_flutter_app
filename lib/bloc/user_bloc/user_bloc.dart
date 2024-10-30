@@ -10,37 +10,47 @@ part 'user_event.dart';
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-
   final UserRepository userRepository;
 
-  UserBloc({required this.userRepository}) : super(const FetchingListIdpState()) {
+  UserBloc({required this.userRepository})
+      : super(const FetchingListIdpState()) {
     on<FetchListIdpEvent>(_fetchListIdp);
     on<FetchUserDataEvent>(_getUserDataSpid);
   }
 
-  void fetchListIdp() => add(const FetchListIdpEvent());
-  void fetchUserSpid(String authId, String municipalityId, String authSystem, String authIdOld) => add(FetchUserDataEvent(authId, municipalityId, authSystem, authIdOld));
+  void fetchListIdp(String baseUrl) => add(FetchListIdpEvent(baseUrl));
+  void fetchUserSpid(String baseUrl, String authId, String municipalityId,
+          String authSystem, String authIdOld) =>
+      add(FetchUserDataEvent(
+          baseUrl, authId, municipalityId, authSystem, authIdOld));
 
-  FutureOr<void> _fetchListIdp(FetchListIdpEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _fetchListIdp(
+      FetchListIdpEvent event, Emitter<UserState> emit) async {
     emit(const FetchingListIdpState());
     try {
-      final listIdp = await userRepository.getIdps();
-      if(listIdp.isNotEmpty) {
+      final listIdp = await userRepository.getIdps(event.baseUrl);
+      if (listIdp.isNotEmpty) {
         emit(FetchedListIdpState(listIdp));
-      }else {
+      } else {
         emit(const NoListIdpState());
-      }  
-    }catch (e) {
+      }
+    } catch (e) {
       emit(const NoListIdpState());
     }
   }
 
-  FutureOr<void> _getUserDataSpid(FetchUserDataEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _getUserDataSpid(
+      FetchUserDataEvent event, Emitter<UserState> emit) async {
     emit(const FetchingUserDataState());
     try {
-      final SpidUserModel spidUserModel = await userRepository.getUserSpid(event.authId, event.municipalityId, event.authSystem, event.authIdOld);
+      final SpidUserModel spidUserModel = await userRepository.getUserSpid(
+          event.baseUrl,
+          event.authId,
+          event.municipalityId,
+          event.authSystem,
+          event.authIdOld);
       emit(FetchedUserDataState(spidUserModel));
-    }catch(ex){
+    } catch (ex) {
       emit(const NoSpidUserState());
     }
   }

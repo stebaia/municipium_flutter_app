@@ -23,6 +23,7 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
 
   @override
   Future<SpidUserModel> retriveUserData(
+    String baseUrl,
     dynamic authId,
     dynamic municipalityId,
     dynamic authSystem,
@@ -39,7 +40,7 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     )
         .compose(
           _dio.options,
-          'retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
+          '${baseUrl}/retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -8,9 +8,11 @@ import 'package:municipium/routers/app_router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
@@ -23,8 +25,9 @@ class NewsListPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<NewsListBloc>(
-          create: (context) =>
-              NewsListBloc(newsRepository: context.read())..fetchNewsList(),
+          create: (context) => NewsListBloc(newsRepository: context.read())
+            ..fetchNewsList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         )
       ], child: this);
 }
@@ -43,7 +46,6 @@ class _NewsListPageState extends State<NewsListPage> {
           scaffoldKey: _scaffoldKey,
         ),
         appBar: AppBar(
-          
           title: context.read<NewsListBloc>().isSearching
               ? TextField(
                   controller: _searchController,
@@ -124,7 +126,9 @@ class _NewsListPageState extends State<NewsListPage> {
                       !context.read<NewsListBloc>().isSearching) {
                     context.read<NewsListBloc>()
                       ..isFetching = true
-                      ..add(const FetchNewsListEvent());
+                      ..add(FetchNewsListEvent(
+                          Provider.of<BaseUrlNotifier>(context, listen: false)
+                              .baseUrl));
                   }
                 }),
               itemCount: newsToShow.length,

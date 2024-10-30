@@ -18,15 +18,18 @@ class IssueTagBloc extends Bloc<IssueTagEvent, IssueTagState> {
     on<FetchIssueTagEvent>(_fetchIssueTagsCategories);
   }
 
-  void fetchIssueTagsCategories() => add(const FetchIssueTagEvent());
+  void fetchIssueTagsCategories(String baseUrl) =>
+      add(FetchIssueTagEvent(baseUrl));
 
   FutureOr<void> _fetchIssueTagsCategories(
       FetchIssueTagEvent fetchNewsDetailEvent,
       Emitter<IssueTagState> emit) async {
     emit(const FetchingIssueTagState());
     try {
-      final issueMappedList = await issuesRepository.getIssueCategoryTagList();
-      final issueCategoryList = await issuesRepository.getIssueCategoryList();
+      final issueMappedList = await issuesRepository
+          .getIssueCategoryTagList(fetchNewsDetailEvent.baseUrl);
+      final issueCategoryList = await issuesRepository
+          .getIssueCategoryList(fetchNewsDetailEvent.baseUrl);
       if (issueMappedList.isNotEmpty) {
         emit(FetchedIssueTagState(issueMappedList, issueCategoryList));
       } else {

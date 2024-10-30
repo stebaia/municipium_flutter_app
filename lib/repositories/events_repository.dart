@@ -18,11 +18,11 @@ class EventsRepository {
       required this.eventItemMapper,
       required this.eventDetailMapper});
 
-  Future<List<EventItemList>> getEventsList(
+  Future<List<EventItemList>> getEventsList(String baseUrl,
       {required int pageIndex, required int pageSize}) async {
     try {
       final EventPagedDTO eventsListResponse =
-          await eventService.getEventsPaged(pageIndex, pageSize);
+          await eventService.getEventsPaged(baseUrl, pageIndex, pageSize);
       final List<EventItemList> eventsList = [];
       if (eventsListResponse.results != null) {
         for (var element in eventsListResponse.results!) {
@@ -37,10 +37,10 @@ class EventsRepository {
     }
   }
 
-  Future<EventDetail> getEventDetail({required int id}) async {
+  Future<EventDetail> getEventDetail(String baseUrl, {required int id}) async {
     try {
       final EventDetailDto eventsListResponse =
-          await eventService.getEventDetail(id);
+          await eventService.getEventDetail(baseUrl, id);
       final EventDetail detail = eventDetailMapper.fromDTO(eventsListResponse);
 
       return detail;

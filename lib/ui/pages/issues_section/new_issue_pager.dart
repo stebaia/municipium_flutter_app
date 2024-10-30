@@ -18,9 +18,11 @@ import 'package:municipium/ui/pages/issues_section/newissue_category_section.dar
 import 'package:municipium/ui/pages/issues_section/newissue_gallery_section.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_message_section.dart';
 import 'package:municipium/ui/pages/issues_section/newissue_recap_section.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
@@ -189,7 +191,12 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
                                                   .getMunicipality();
                                           issueCubit.setLoading(true);
                                           issueCubit.postIssue(
-                                              device, municipality, () {
+                                              Provider.of<BaseUrlNotifier>(
+                                                      context,
+                                                      listen: false)
+                                                  .baseUrl,
+                                              device,
+                                              municipality, () {
                                             issueCubit.setLoading(false);
                                             context.pushRoute(
                                                 NewissueCompletedRoute(
@@ -259,7 +266,8 @@ class NewIssuePager extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<IssueTagBloc>(
           create: (context) => IssueTagBloc(issuesRepository: context.read())
-            ..fetchIssueTagsCategories(),
+            ..fetchIssueTagsCategories(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         ),
         BlocProvider<IssueCubit>(
           create: (context) => IssueCubit(issuesRepository: context.read()),

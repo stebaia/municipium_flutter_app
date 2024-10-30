@@ -14,9 +14,11 @@ import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/ui/components/horizzontal_gallery.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/ui/components/tag_label_bkg.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
@@ -342,7 +344,10 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<IssueDetailBloc>(
           create: (context) => IssueDetailBloc(issueRepository: context.read())
-            ..fetchIssueDetail(id, udid),
+            ..fetchIssueDetail(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                id,
+                udid),
         )
       ], child: this);
 }

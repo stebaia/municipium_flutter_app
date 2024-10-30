@@ -20,3 +20,10 @@ class MunicipalityUrlEmpty extends MunicipalityUrlState {
 class MunicipalityUrlLoading extends MunicipalityUrlState {
   const MunicipalityUrlLoading();
 }
+
+class MunicipaltyEnvironnementChanging extends MunicipalityUrlState {
+  final String baseUrl;
+  @override
+  List<Object> get props => [baseUrl];
+  const MunicipaltyEnvironnementChanging(this.baseUrl);
+}

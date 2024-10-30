@@ -16,15 +16,16 @@ class EmergencyCallBloc extends Bloc<EmergencyCallEvent, EmergencyCallState> {
     on<FetchEmergencyCallEvent>(_fetchEmergencyCallList);
   }
 
-  void fetchEmergencyCallList() => add(const FetchEmergencyCallEvent());
+  void fetchEmergencyCallList(String baseUrl) =>
+      add(FetchEmergencyCallEvent(baseUrl));
 
   FutureOr<void> _fetchEmergencyCallList(
       FetchEmergencyCallEvent fetchEmergencyCallEvent,
       Emitter<EmergencyCallState> emit) async {
     emit(const FetchingEmergencyCallListState());
     try {
-      final emergencyCallList =
-          await civilDefenceRepository.getCivilDefenceList();
+      final emergencyCallList = await civilDefenceRepository
+          .getCivilDefenceList(fetchEmergencyCallEvent.baseUrl);
       if (emergencyCallList.isNotEmpty) {
         emit(FetchedEmergencyCallListState(emergencyCallList));
       } else {

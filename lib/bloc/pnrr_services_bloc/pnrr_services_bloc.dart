@@ -20,7 +20,8 @@ class PnrrServicesBloc extends Bloc<PnrrServiceEvent, PnrrServiceState> {
     on<FilterPnrrServiceEvent>(_filterServicesList);
   }
 
-  void fetchServicesPnrr(String type) => add(FetchPnrrServiceEvent(type: type));
+  void fetchServicesPnrr(String baseUrl, String type) =>
+      add(FetchPnrrServiceEvent(baseUrl: baseUrl, type: type));
   void filterServicesPnrr(String searchText) =>
       add(FilterPnrrServiceEvent(searchText));
 
@@ -29,8 +30,8 @@ class PnrrServicesBloc extends Bloc<PnrrServiceEvent, PnrrServiceState> {
       Emitter<PnrrServiceState> emit) async {
     emit(const FetchingPnrrServiceState());
     try {
-      final newsItemsList = await servicesRepository
-          .getServicesPnrrList(fetchPnrrServicesEvent.type);
+      final newsItemsList = await servicesRepository.getServicesPnrrList(
+          fetchPnrrServicesEvent.baseUrl, fetchPnrrServicesEvent.type);
       if (newsItemsList.isNotEmpty) {
         allServices.addAll(newsItemsList);
         emit(FetchedPnrrServiceState(allServices));

@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/issue_list_bloc/issue_list_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/tag_label_bkg.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
@@ -160,7 +162,9 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<IssueListBloc>(
           create: (context) => IssueListBloc(issuesRepository: context.read())
-            ..fetchIssueList(udid),
+            ..fetchIssueList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                udid),
         )
       ], child: this);
 }

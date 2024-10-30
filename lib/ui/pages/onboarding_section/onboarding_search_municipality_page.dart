@@ -12,7 +12,9 @@ import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/position_utils.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class OnboardingSearchMunicipalityPage extends StatelessWidget
@@ -69,6 +71,10 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                     context
                                         .read<MunicipalityBloc>()
                                         .fetchMunicipalityListWithPosition(
+                                            Provider.of<BaseUrlNotifier>(
+                                                    context,
+                                                    listen: false)
+                                                .baseUrl,
                                             position.latitude,
                                             position.longitude);
                                   },
@@ -205,9 +211,10 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<MunicipalityBloc>(
-          create: (context) =>
-              MunicipalityBloc(municipalityRepository: context.read())
-                ..fetchMunicipalityList(),
+          create: (context) => MunicipalityBloc(
+              municipalityRepository: context.read())
+            ..fetchMunicipalityList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         ),
         BlocProvider<VisibilityCubit>(
           create: (context) => VisibilityCubit(),

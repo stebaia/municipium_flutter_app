@@ -6,7 +6,9 @@ import 'package:municipium/bloc/pnrr_services_bloc/pnrr_services_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class PnrrServicesPage extends StatefulWidget implements AutoRouteWrapper {
@@ -19,9 +21,11 @@ class PnrrServicesPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<PnrrServicesBloc>(
-          create: (context) =>
-              PnrrServicesBloc(servicesRepository: context.read())
-                ..fetchServicesPnrr(type!),
+          create: (context) => PnrrServicesBloc(
+              servicesRepository: context.read())
+            ..fetchServicesPnrr(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                type!),
         )
       ], child: this);
 }
@@ -136,9 +140,11 @@ class _PnrrServicesPageState extends State<PnrrServicesPage> {
                                         '',
                                     id: state.servicesList[index].sitePageId!));
                               } else {
-                                context.pushRoute(OnlineServiceDetailWebviewRoute(
-                                    name: '',
-                                    url: state.servicesList[index].url ?? ''));
+                                context.pushRoute(
+                                    OnlineServiceDetailWebviewRoute(
+                                        name: '',
+                                        url: state.servicesList[index].url ??
+                                            ''));
                               }
                             },
                             child: Card(

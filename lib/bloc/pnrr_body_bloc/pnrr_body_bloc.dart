@@ -16,15 +16,17 @@ class PnrrBodyBloc extends Bloc<PnrrBodyEvent, PnrrBodyState> {
     on<FetchPnrrBodyEvent>(_fetchBodiesResponse);
   }
 
-  void fetchBodiesPnrr(String type, int id) =>
-      add(FetchPnrrBodyEvent(type: type, id: id));
+  void fetchBodiesPnrr(String baseUrl, String type, int id) =>
+      add(FetchPnrrBodyEvent(baseUrl: baseUrl, type: type, id: id));
 
   FutureOr<void> _fetchBodiesResponse(FetchPnrrBodyEvent fetchPnrrBodyEvent,
       Emitter<PnrrBodyState> emit) async {
     emit(const FetchingPnrrBodyState());
     try {
       final bodyResponse = await servicesRepository.getBodyPnrrResponse(
-          fetchPnrrBodyEvent.type, fetchPnrrBodyEvent.id);
+          fetchPnrrBodyEvent.baseUrl,
+          fetchPnrrBodyEvent.type,
+          fetchPnrrBodyEvent.id);
       if (bodyResponse.body != null && bodyResponse.body!.isNotEmpty) {
         emit(FetchedPnrrBodyState(bodyResponse));
       } else {

@@ -10,8 +10,11 @@ import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_
 import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/position_utils.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class ChooseMunicipalityPage extends StatelessWidget
@@ -23,6 +26,8 @@ class ChooseMunicipalityPage extends StatelessWidget
   Widget build(BuildContext context) {
     final municipality = (context.watch<MunicipalityGlobalCubit>().state
         as StoredMunicipalityGlobalState);
+    final baseUrlNotifier =
+        Provider.of<BaseUrlNotifier>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
@@ -73,26 +78,23 @@ class ChooseMunicipalityPage extends StatelessWidget
                               actions: [
                                 TextButton(
                                   child: Text("Cerca"),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (textToSearch?.replaceAll(' ', '') ==
                                         'AbilitaStaging') {
-                                      context
-                                          .read<MunicipalityUrlCubit>()
-                                          .changeEnvironnement(
-                                              BaseUrlType.staging);
-                                      municipalityContext
-                                          .read<MunicipalityBloc>()
-                                          .fetchMunicipalityList();
+                                      //await municipalityContext
+                                      //.read<MunicipalityBloc>()
+                                      //.deleteMunicipality();
+                                      baseUrlNotifier.updateBaseUrl(
+                                          MunicipiumUtility.BASEURL_STAGING);
                                     } else if (textToSearch?.replaceAll(
                                             ' ', '') ==
                                         'AbilitaProduzione') {
-                                      context
-                                          .read<MunicipalityUrlCubit>()
-                                          .changeEnvironnement(
-                                              BaseUrlType.prod);
-                                      municipalityContext
-                                          .read<MunicipalityBloc>()
-                                          .fetchMunicipalityList();
+                                      //await municipalityContext
+                                      //.read<MunicipalityBloc>()
+                                      //.deleteMunicipality();
+
+                                      baseUrlNotifier.updateBaseUrl(
+                                          MunicipiumUtility.BASEURL_PROD);
                                     } else {}
                                     Navigator.of(context)
                                         .pop(); // Chiude il popup
@@ -161,6 +163,12 @@ class ChooseMunicipalityPage extends StatelessWidget
                           HapticFeedback.mediumImpact();
 
                           context.read<MunicipalityBloc>().fetchMunicipality(
+                              Provider.of<BaseUrlNotifier>(context,
+                                      listen: false)
+                                  .baseUrl,
+                              Provider.of<BaseUrlNotifier>(context,
+                                      listen: false)
+                                  .baseUrlBe,
                               state.municipalityList[index].muninicipalityId);
                         },
                         child: Container(
@@ -198,9 +206,14 @@ class ChooseMunicipalityPage extends StatelessWidget
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<MunicipalityBloc>(
-          create: (context) =>
-              MunicipalityBloc(municipalityRepository: context.read())
-                ..fetchMunicipalityList(),
+          create: (context) => MunicipalityBloc(
+              municipalityRepository: context.read())
+            ..fetchMunicipalityList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
+        ),
+        ChangeNotifierProvider<BaseUrlNotifier>(
+          lazy: false,
+          create: (context) => BaseUrlNotifier(),
         ),
       ], child: this);
 }

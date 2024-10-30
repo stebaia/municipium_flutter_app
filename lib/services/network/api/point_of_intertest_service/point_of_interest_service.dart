@@ -8,19 +8,23 @@ part 'point_of_interest_service.g.dart';
 
 @RestApi()
 abstract class PointOfInterestService {
-  factory PointOfInterestService(Dio dio, {String baseUrl}) = _PointOfInterestService;
+  factory PointOfInterestService(Dio dio) = _PointOfInterestService;
 
+  @GET(
+      '{baseUrl}/point_of_interests/paged_pois_with_filter?page_index={pageIndex}&page_size={pageSize}')
+  Future<PointOfInterestsDTO> getPointOfInterestListPaged(
+      @Path('baseUrl') String baseUrl,
+      @Path('pageIndex') int pageIndex,
+      @Path('pageSize') int pageSize);
 
-  @GET('point_of_interests/paged_pois_with_filter?page_index={pageIndex}&page_size={pageSize}')
-  Future<PointOfInterestsDTO> getPointOfInterestListPaged(@Path('pageIndex') int pageIndex, @Path('pageSize') int pageSize);
+  @GET('{baseUrl}/point_of_interests/paged_pois_with_filter')
+  Future<PointOfInterestsDTO> getPointOfInterestList(
+      @Path('baseUrl') String baseUrl);
 
-  @GET('point_of_interests/paged_pois_with_filter')
-  Future<PointOfInterestsDTO> getPointOfInterestList();
+  @GET('{baseUrl}/point_of_interest_categories/categories_with_poi')
+  Future<List<CategoryPoiDTO>> getCategoryPoi(@Path('baseUrl') String baseUrl);
 
-  @GET('point_of_interest_categories/categories_with_poi')
-  Future<List<CategoryPoiDTO>> getCategoryPoi();
-
-  @GET('point_of_interests/{poiID}')
-  Future<PoiDetailDTO> getDetailPoi(@Path('poiID') int poiID);
-
+  @GET('{baseUrl}/point_of_interests/{poiID}')
+  Future<PoiDetailDTO> getDetailPoi(
+      @Path('baseUrl') String baseUrl, @Path('poiID') int poiID);
 }

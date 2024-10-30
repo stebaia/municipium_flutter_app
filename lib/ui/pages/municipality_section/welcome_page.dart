@@ -18,7 +18,9 @@ import 'package:municipium/ui/components/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/municipality_components/emergency_call_box.dart';
 import 'package:municipium/ui/components/municipality_components/info_municipality_box.dart';
 import 'package:municipium/ui/components/municipality_components/last_update_box.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
@@ -31,14 +33,18 @@ class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     return MultiBlocProvider(providers: [
       BlocProvider<MunicipalityBloc>(
-        create: (context) =>
-            MunicipalityBloc(municipalityRepository: context.read())
-              ..fetchMunicipality(municipalityId),
+        create: (context) => MunicipalityBloc(
+            municipalityRepository: context.read())
+          ..fetchMunicipality(
+              Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+              Provider.of<BaseUrlNotifier>(context, listen: false).baseUrlBe,
+              municipalityId),
       ),
       BlocProvider<EmergencyCallBloc>(
         create: (context) =>
             EmergencyCallBloc(civilDefenceRepository: context.read())
-              ..fetchEmergencyCallList(),
+              ..fetchEmergencyCallList(
+                  Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
       )
     ], child: this);
   }
