@@ -84,8 +84,9 @@ class ChooseMunicipalityPage extends StatelessWidget
                                       //await municipalityContext
                                       //.read<MunicipalityBloc>()
                                       //.deleteMunicipality();
-                                      baseUrlNotifier.updateBaseUrl(
+                                      await baseUrlNotifier.updateBaseUrl(
                                           MunicipiumUtility.BASEURL_STAGING);
+                                      context.pushRoute(ChooseMunicipalityRoute());
                                     } else if (textToSearch?.replaceAll(
                                             ' ', '') ==
                                         'AbilitaProduzione') {
@@ -93,8 +94,9 @@ class ChooseMunicipalityPage extends StatelessWidget
                                       //.read<MunicipalityBloc>()
                                       //.deleteMunicipality();
 
-                                      baseUrlNotifier.updateBaseUrl(
+                                      await baseUrlNotifier.updateBaseUrl(
                                           MunicipiumUtility.BASEURL_PROD);
+                                      context.pushRoute(ChooseMunicipalityRoute());
                                     } else {}
                                     Navigator.of(context)
                                         .pop(); // Chiude il popup
@@ -145,9 +147,6 @@ class ChooseMunicipalityPage extends StatelessWidget
             BlocConsumer<MunicipalityBloc, MunicipalityState>(
               listener: (context, state) {
                 if (state is FetchedMunicipalityState) {
-                  context
-                      .read<MunicipalityUrlCubit>()
-                      .fetchMunicipalityInStorage();
                   context.pushRoute(WelcomeRoute(
                       municipalityId: state.municipality.muninicipalityId));
                 }
@@ -211,9 +210,6 @@ class ChooseMunicipalityPage extends StatelessWidget
             ..fetchMunicipalityList(
                 Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         ),
-        ChangeNotifierProvider<BaseUrlNotifier>(
-          lazy: false,
-          create: (context) => BaseUrlNotifier(),
-        ),
+        
       ], child: this);
 }

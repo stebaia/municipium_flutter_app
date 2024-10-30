@@ -66,7 +66,6 @@ class _WelcomePageState extends State<WelcomePage> {
           );
         } else if (state is FetchedMunicipalityState) {
           Municipality municipality = state.municipality;
-          context.read<MunicipalityUrlCubit>().fetchMunicipalityInStorage();
           context.read<MunicipalityGlobalCubit>().authenticated(municipality);
           return Stack(
             children: [

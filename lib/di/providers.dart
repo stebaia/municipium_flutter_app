@@ -28,12 +28,13 @@ List<SingleChildWidget> providersFun() {
           if (kDebugMode) context.read<PrettyDioLogger>(),
         ]),
     ),
-    /*ChangeNotifierProvider<BaseUrlNotifier>(
+    Provider<SecureStorage>(create: (_) => SecureStorage()),
+    ChangeNotifierProvider<BaseUrlNotifier>(
       lazy: false,
       create: (context) {
         return BaseUrlNotifier()..initializeBaseUrl();
       },
-    ),*/
+    ),
     Provider<MunicipalityService>(
       create: (context) {
         return MunicipalityService(
@@ -41,6 +42,7 @@ List<SingleChildWidget> providersFun() {
         );
       },
     ),
+
     Provider<NewsService>(
       create: (context) => NewsService(
         context.read<Dio>(),

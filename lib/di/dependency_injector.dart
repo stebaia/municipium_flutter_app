@@ -139,45 +139,24 @@ class DependencyInjector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseUrlNotifier = BaseUrlNotifier();
-    return FutureBuilder(
-        future: baseUrlNotifier.initializeBaseUrl(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return MultiProvider(
-              providers: [
-                BlocProvider<BaseUrlCubit>(
-                  create: (context) => BaseUrlCubit(),
-                ),
-                Provider<SecureStorage>(create: (_) => SecureStorage()),
-                ChangeNotifierProvider<BaseUrlNotifier>(
-                  create: (context) {
-                    baseUrlNotifier
-                        .initializeBaseUrl(); // Assicurati che venga inizializzato
-                    return baseUrlNotifier;
-                  },
-                ),
-                BlocProvider(
-                  create: (context) => MunicipalityUrlCubit(
-                      secureStorage: context.read(),
-                      baseUrl: baseUrlNotifier.baseUrl),
-                )
-                // Aggiungi qui altri provider se necessario
-              ],
-              child: CustomDiHelper(
-                repositories: _repositories,
-                mappers: _mappers,
-                blocs: getBlocs(context,
-                    baseUrlNotifier), // Adesso accede al provider di BaseUrlNotifier
-                providers: providersFun(),
-                customService: _customService,
-                child: child,
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Container();
-          } else {
-            return Container();
-          }
-        });
+    return  FutureBuilder(
+      future: baseUrlNotifier.initializeBaseUrl(),
+      builder: (context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.done) {
+          return CustomDiHelper(
+                  repositories: _repositories,
+                  mappers: _mappers,
+                  blocs: _blocs,
+                  providers: providersFun(),
+                  customService: _customService,
+                  child: child,
+                );
+        } else {
+          return Container();
+        }
+        
+      }
+    );
   }
 }
+

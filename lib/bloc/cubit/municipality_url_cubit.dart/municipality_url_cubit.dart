@@ -13,7 +13,7 @@ class MunicipalityUrlCubit extends HydratedCubit<MunicipalityUrlState> {
   MunicipalityUrlCubit({required this.secureStorage, required this.baseUrl})
       : super(MunicipalityUrlState());
 
-  Future<void> fetchMunicipalityInStorage() async {
+  Future<void> fetchMunicipalityInStorage(String baseUrl) async {
     try {
       emit(MunicipalityUrlLoading());
       final municipality =

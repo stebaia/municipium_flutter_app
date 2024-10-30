@@ -25,7 +25,7 @@ class BaseUrlNotifier extends ChangeNotifier {
   }
 
   // Metodo per aggiornare il baseUrl
-  void updateBaseUrl(String url) {
+  Future<void> updateBaseUrl(String url) async {
     _storage.write(key: MunicipiumUtility.BASEURL_KEY, value: url);
     _baseUrl = url;
     notifyListeners();
