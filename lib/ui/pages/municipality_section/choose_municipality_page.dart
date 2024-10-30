@@ -67,7 +67,10 @@ class ChooseMunicipalityPage extends StatelessWidget
                       .text_no_municipality_search),
                   
                   TextButton(
-                    onPressed: () {},
+                    
+                    onPressed: () {
+
+                    },
                     child: Text(AppLocalizations.of(context)!.text_issue_now.toUpperCase(),
                     style:
                          const TextStyle(color: ThemeHelper.blueMunicipium, letterSpacing: 1),

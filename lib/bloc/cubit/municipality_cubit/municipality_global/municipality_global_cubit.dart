@@ -48,7 +48,9 @@ class MunicipalityGlobalCubit extends Cubit<MunicipalityGlobalState> {
   void authenticated(Municipality municipality) =>
       emit(StoredMunicipalityGlobalState(municipality));
 
-  void deleteMunicipality() async {}
+  void deleteMunicipality() async {
+    emit(NotMunicipalityGlobalState());
+  }
 
   /*void singOut(bool force) async {
     final user = await userRepository.logout(force, context);

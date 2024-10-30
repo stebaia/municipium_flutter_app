@@ -1,13 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
-import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
+import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
-import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/municipality_components/box_dashboard_components.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -15,9 +13,8 @@ class HomePage extends StatelessWidget {
   GlobalKey<ScaffoldState> scaffoldKey;
   @override
   Widget build(BuildContext context) {
-    final municipality = (context.read<MunicipalityGlobalCubit>().state
-            as StoredMunicipalityGlobalState)
-        .municipality;
+    final municipality = context.read<MunicipalityStoredCubit>().state!;
+
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,

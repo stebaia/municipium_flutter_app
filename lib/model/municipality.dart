@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipium_image.dart';
@@ -38,6 +40,76 @@ class Municipality extends Equatable {
     required this.jcityGovEnte,
     required this.jcityGovUrl,
     required this.province});
+
+  
+  factory Municipality.fromJsonFromShared(String jsonString) {
+    final json = jsonDecode(jsonString);
+    return Municipality(
+      municipalityName: json['name'],
+      muninicipalityId: json['id'],
+      lat: json['lat'],
+      lng: json['lng'],
+      logo: MunicipiumImage.fromJson(json['logo']),
+      background: MunicipiumImage.fromJson(json['background']),
+      subdomain: json['subdomain'],
+      appServiceOne: json['appServiceOne'],
+      appServiceTwo: json['appServiceTwo'],
+      appServiceThree: json['appServiceThree'],
+      appServiceFour: json['appServiceFour'],
+      province: json['province'],
+      newMenu: NewMenuDTO.fromJson(json['new_menu']),
+      configurations: json['configurations'] != null
+          ? Configurations.fromJson(json['configurations'])
+          : null,
+      jcityGovEnte: json['jcityGovEnte'] ?? '',
+      jcityGovUrl: json['jcityGovUrl'] ?? '',
+    );
+  }
+
+  factory Municipality.fromJson(Map<String, dynamic> json) {
+    return Municipality(
+      municipalityName: json['name'],
+      muninicipalityId: json['id'],
+      lat: json['lat'],
+      lng: json['lng'],
+      logo: MunicipiumImage.fromJson(json['logo']),
+      background: MunicipiumImage.fromJson(json['background']),
+      subdomain: json['subdomain'],
+      appServiceOne: json['appServiceOne'],
+      appServiceTwo: json['appServiceTwo'],
+      appServiceThree: json['appServiceThree'],
+      appServiceFour: json['appServiceFour'],
+      province: json['province'],
+      newMenu: NewMenuDTO.fromJson(json['new_menu']),
+      configurations: json['configurations'] != null
+          ? Configurations.fromJson(json['configurations'])
+          : null,
+      jcityGovEnte: json['jcityGovEnte'] ?? '',
+      jcityGovUrl: json['jcityGovUrl'] ?? '',
+    );
+  }
+
+  // Metodo per serializzare l'oggetto Municipality in un JSON di tipo Map
+  Map<String, dynamic> toJson() {
+    return {
+      'name': municipalityName,
+      'id': muninicipalityId,
+      'lat': lat,
+      'lng': lng,
+      'logo': logo.toJson(),
+      'background': background.toJson(),
+      'subdomain': subdomain,
+      'appServiceOne': appServiceOne,
+      'appServiceTwo': appServiceTwo,
+      'appServiceThree': appServiceThree,
+      'appServiceFour': appServiceFour,
+      'province': province,
+      'new_menu': newMenu.toJson(),
+      'configurations': configurations?.toJson(),
+      'jcityGovEnte': jcityGovEnte,
+      'jcityGovUrl': jcityGovUrl,
+    };
+  }
 
   @override
   List<Object?> get props => [

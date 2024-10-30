@@ -11,6 +11,7 @@ import 'package:municipium/bloc/cubit/calendar_filter_cubit/calendar_filter_cubi
 import 'package:municipium/bloc/cubit/device_cubit/device_cubit.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:municipium/bloc/cubit/theme_cubit/theme_cubit.dart';
 import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
@@ -117,17 +118,11 @@ import 'package:municipium/services/network/dto/reservable_unit_dto.dart';
 import 'package:municipium/services/network/dto/self_payment_dto.dart';
 import 'package:municipium/services/network/dto/service_pnrr_dto.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
-import 'package:municipium/utils/base_url_selector.dart';
-import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/secure_storage.dart';
-import 'package:municipium/utils/theme_helper.dart';
-import 'package:path/path.dart';
-import 'package:pine/di/dependency_injector_helper.dart';
 import 'package:pine/pine.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'blocs.dart';
 part 'mappers.dart';
@@ -143,24 +138,28 @@ class DependencyInjector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseUrlNotifier = BaseUrlNotifier();
-    return  FutureBuilder(
-      future: baseUrlNotifier.initializeBaseUrl(),
-      builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.done) {
-          return CustomDiHelper(
-                  repositories: _repositories,
-                  mappers: _mappers,
-                  blocs: _blocs,
-                  providers: providersFun(),
-                  customService: _customService,
-                  child: child,
-                );
-        } else {
-          return Container();
-        }
+    return   FutureBuilder(
+          future: baseUrlNotifier.initializeBaseUrl(),
+          builder: (context, snapshot) {
+            if(snapshot.connectionState == ConnectionState.done) {
+              return CustomDiHelper(
+                      repositories: _repositories,
+                      mappers: _mappers,
+                      blocs: _blocs,
+                      providers: providersFun(),
+                      customService: _customService,
+                      child: child,
+                    );
+            } else {
+              return Container();
+            }
+            
+          }
+        );
+       
         
-      }
-    );
+      
+    
   }
 }
 

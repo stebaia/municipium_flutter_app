@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/bloc/calendar_event_bloc/calendar_event_bloc_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/routers/app_router.gr.dart';
@@ -32,16 +33,14 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
   Widget build(BuildContext context) {
     context.read<UserMenuConfigurationCubit>().initialize();
     context.read<TemporaryConfigurationCubit>().initialize();
-    final municipality = (context.watch<MunicipalityGlobalCubit>().state
-            as StoredMunicipalityGlobalState)
-        .municipality;
+    final municipality = context.read<MunicipalityStoredCubit>().state!;
 
     return AutoTabsRouter(
         routes: [
           HomeRoute(scaffoldKey: scaffoldKey),
           MapsRoute(scaffoldKey: scaffoldKey),
           CalendarRoute(scaffoldKey: scaffoldKey),
-          if (municipality.configurations != null)
+          if (municipality?.configurations != null)
             PersonalAreaMenuRoute(scaffoldKey: scaffoldKey),
         ],
         transitionBuilder: (context, child, animation) => FadeTransition(
@@ -167,8 +166,8 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                           )),
                       label: 'Agenda',
                     ),
-                    if (municipality.configurations != null)
-                      if (municipality.configurations!.autenticazioneSpid! ||
+                    if (municipality?.configurations != null)
+                      if (municipality!.configurations!.autenticazioneSpid! ||
                           municipality.configurations!.autenticazioneCie!)
                         BottomNavigationBarItem(
                           icon: const SizedBox(

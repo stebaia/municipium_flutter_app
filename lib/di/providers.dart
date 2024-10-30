@@ -35,6 +35,7 @@ List<SingleChildWidget> providersFun() {
         return BaseUrlNotifier()..initializeBaseUrl();
       },
     ),
+    
     Provider<MunicipalityService>(
       create: (context) {
         return MunicipalityService(

@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/bloc/calendar_event_bloc/calendar_event_bloc_bloc.dart';
 import 'package:municipium/bloc/bloc/civil_defence_bloc/emergency_call/emergency_call_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
-import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
 import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
@@ -58,6 +58,7 @@ class WelcomePage extends StatefulWidget implements AutoRouteWrapper {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
+    final municipalityCubit = context.read<MunicipalityStoredCubit>();
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -110,6 +111,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             fillColor: ThemeHelper.blueMunicipium,
                             isEnabled: true,
                             onTap: () {
+                              municipalityCubit.updateMunicipality(municipality);
                               context.replaceRoute(CoreMunicipalityRoute(
                                   municipalityId: widget.municipalityId));
                             },

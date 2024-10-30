@@ -6,8 +6,8 @@ import 'package:municipium/model/municipality.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
 class BoxVerticalInfoDashboardComponents extends StatelessWidget {
-  const BoxVerticalInfoDashboardComponents({super.key,  required this.municipality});
-  final Municipality municipality;
+  BoxVerticalInfoDashboardComponents({super.key, this.municipality});
+  Municipality? municipality;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class BoxVerticalInfoDashboardComponents extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
             
-            image: NetworkImage('${municipality.background.baseUrl}${municipality.background.i640}'),
+            image: NetworkImage('${municipality?.background.baseUrl}${municipality?.background.i640}'),
             fit: BoxFit.cover,
           ),
         ),
@@ -42,7 +42,7 @@ class BoxVerticalInfoDashboardComponents extends StatelessWidget {
               children: [
                  CircleAvatar(
                     backgroundImage: NetworkImage(
-                        '${municipality.logo.baseUrl}${municipality.logo.i640}'),
+                        '${municipality?.logo.baseUrl}${municipality?.logo.i640}'),
                   ),
                   Spacer(),
                   Text(
