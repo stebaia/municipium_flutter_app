@@ -23,6 +23,7 @@ class _PointOfInterestService implements PointOfInterestService {
 
   @override
   Future<PointOfInterestsDTO> getPointOfInterestListPaged(
+    String baseUrl,
     int pageIndex,
     int pageSize,
   ) async {
@@ -37,7 +38,7 @@ class _PointOfInterestService implements PointOfInterestService {
     )
         .compose(
           _dio.options,
-          'point_of_interests/paged_pois_with_filter?page_index=${pageIndex}&page_size=${pageSize}',
+          '${baseUrl}/point_of_interests/paged_pois_with_filter?page_index=${pageIndex}&page_size=${pageSize}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -58,7 +59,7 @@ class _PointOfInterestService implements PointOfInterestService {
   }
 
   @override
-  Future<PointOfInterestsDTO> getPointOfInterestList() async {
+  Future<PointOfInterestsDTO> getPointOfInterestList(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -70,7 +71,7 @@ class _PointOfInterestService implements PointOfInterestService {
     )
         .compose(
           _dio.options,
-          'point_of_interests/paged_pois_with_filter',
+          '${baseUrl}/point_of_interests/paged_pois_with_filter',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -91,7 +92,7 @@ class _PointOfInterestService implements PointOfInterestService {
   }
 
   @override
-  Future<List<CategoryPoiDTO>> getCategoryPoi() async {
+  Future<List<CategoryPoiDTO>> getCategoryPoi(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -103,7 +104,7 @@ class _PointOfInterestService implements PointOfInterestService {
     )
         .compose(
           _dio.options,
-          'point_of_interest_categories/categories_with_poi',
+          '${baseUrl}/point_of_interest_categories/categories_with_poi',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -127,7 +128,10 @@ class _PointOfInterestService implements PointOfInterestService {
   }
 
   @override
-  Future<PoiDetailDTO> getDetailPoi(int poiID) async {
+  Future<PoiDetailDTO> getDetailPoi(
+    String baseUrl,
+    int poiID,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -139,7 +143,7 @@ class _PointOfInterestService implements PointOfInterestService {
     )
         .compose(
           _dio.options,
-          'point_of_interests/${poiID}',
+          '${baseUrl}/point_of_interests/${poiID}',
           queryParameters: queryParameters,
           data: _data,
         )

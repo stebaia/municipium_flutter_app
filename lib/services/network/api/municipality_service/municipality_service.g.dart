@@ -22,7 +22,7 @@ class _MunicipalityService implements MunicipalityService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<MunicipalityDTO>> getListMunicipality() async {
+  Future<List<MunicipalityDTO>> getListMunicipality(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +34,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-          'municipalities/',
+          '${baseUrl}/municipalities/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -59,6 +59,7 @@ class _MunicipalityService implements MunicipalityService {
 
   @override
   Future<List<MunicipalityDTO>> getListMunicipalityWithLatLng(
+    String baseUrl,
     double lat,
     double lng,
   ) async {
@@ -73,7 +74,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-          'municipalities/all=true&latitude=${lat}&longitude=${lng}&radius=50000',
+          '${baseUrl}/municipalities/all=true&latitude=${lat}&longitude=${lng}&radius=50000',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -97,7 +98,10 @@ class _MunicipalityService implements MunicipalityService {
   }
 
   @override
-  Future<MunicipalityDTO> getMunicipality(int municipalityId) async {
+  Future<MunicipalityDTO> getMunicipality(
+    String baseUrl,
+    int municipalityId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -109,7 +113,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-          'municipalities/show_mobile/${municipalityId}',
+          '${baseUrl}/municipalities/show_mobile/${municipalityId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -130,7 +134,7 @@ class _MunicipalityService implements MunicipalityService {
   }
 
   @override
-  Future<MunicipalityDTO> getIdpList() async {
+  Future<MunicipalityDTO> getIdpList(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -142,7 +146,7 @@ class _MunicipalityService implements MunicipalityService {
     )
         .compose(
           _dio.options,
-          'get_idps',
+          '${baseUrl}/get_idps',
           queryParameters: queryParameters,
           data: _data,
         )

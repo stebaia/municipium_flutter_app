@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/shared_storage.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/utils/secure_storage.dart';
@@ -11,7 +14,7 @@ import 'package:municipium/utils/theme_helper.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 @RoutePage()
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatefulWidget{
   const SplashPage({super.key});
 
   @override
@@ -21,19 +24,23 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
+    context.read<MunicipalityGlobalCubit>().checkMunicipalityGlobalState(Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl, Provider.of<BaseUrlNotifier>(context, listen: false).baseUrlBe);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final baseUrlNotifier =
+        Provider.of<BaseUrlNotifier>(context, listen: false);
     return BlocListener<MunicipalityGlobalCubit, MunicipalityGlobalState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         final status = OneSignal.User.pushSubscription.id;
         final secureStorage = SecureStorage();
         if (status != null) {
           secureStorage.setOneSignalKeyInStorage(status);
         }
         if (state is FetchedMunicipalityGlobalState) {
+          await baseUrlNotifier.updateBaseUrl('https://${state.municipality.subdomain}/api/v2');
           context.pushRoute(WelcomeRoute(
               municipalityId: state.municipality.muninicipalityId));
         } else if (state is StoredMunicipalityGlobalState) {

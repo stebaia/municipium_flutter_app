@@ -22,7 +22,7 @@ class _OnlineServiceService implements OnlineServiceService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<OnlineService>> getServices() async {
+  Future<List<OnlineService>> getServices(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +34,7 @@ class _OnlineServiceService implements OnlineServiceService {
     )
         .compose(
           _dio.options,
-          'municipality_services',
+          '${baseUrl}/municipality_services',
           queryParameters: queryParameters,
           data: _data,
         )

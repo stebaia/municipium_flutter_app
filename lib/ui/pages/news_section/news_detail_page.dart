@@ -9,8 +9,10 @@ import 'package:municipium/model/news/news_detail.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class NewsDetailPage extends StatefulWidget implements AutoRouteWrapper {
@@ -21,7 +23,9 @@ class NewsDetailPage extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<NewsDetailBloc>(
           create: (context) => NewsDetailBloc(newsRepository: context.read())
-            ..fetchNewsDetail(newsId),
+            ..fetchNewsDetail(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                newsId),
         )
       ], child: this);
 

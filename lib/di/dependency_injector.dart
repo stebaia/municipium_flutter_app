@@ -112,6 +112,7 @@ import 'package:municipium/services/network/dto/post_issue_dto.dart';
 import 'package:municipium/services/network/dto/reservable_unit_dto.dart';
 import 'package:municipium/services/network/dto/self_payment_dto.dart';
 import 'package:municipium/services/network/dto/service_pnrr_dto.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/base_url_selector.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/secure_storage.dart';
@@ -122,6 +123,7 @@ import 'package:pine/pine.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'blocs.dart';
 part 'mappers.dart';
@@ -136,54 +138,25 @@ class DependencyInjector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<BaseUrlCubit>(
-      create: (context) => BaseUrlCubit(),
-      child: Provider<SecureStorage>(
-        create: (context) => SecureStorage(),
-        child: BaseUrlSelector(
-          builder: (context, state) {
-            return BlocProvider(
-              create: (context) => MunicipalityUrlCubit(
-                  secureStorage: context.read(), baseUrl: state)
-                ..fetchMunicipalityInStorage(),
-              child: BlocBuilder<MunicipalityUrlCubit, MunicipalityUrlState>(
-                builder: (context, muincipalityUrlState) {
-                  String baseUrl;
-                  Widget content;
-
-                  if (muincipalityUrlState is MunicipalityUrlLoaded) {
-                    baseUrl = muincipalityUrlState.baseUrl;
-                  } else if (muincipalityUrlState is MunicipalityUrlEmpty) {
-                    baseUrl = state.name == 'prod'
-                        ? MunicipiumUtility.BASEURL_STAGING
-                        : MunicipiumUtility.BASEURL_STAGING;
-                  } else {
-                    baseUrl = ''; // or some default value if needed
-                  }
-
-                  if (muincipalityUrlState is MunicipalityUrlLoading) {
-                    content = Container(
-                      color: Colors.blue,
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    content = CustomDiHelper(
-                      repositories: _repositories,
-                      mappers: _mappers,
-                      blocs: _blocs,
-                      providers: providersFun(baseUrl: baseUrl),
-                      customService: _customService,
-                      child: child,
-                    );
-                  }
-
-                  return content;
-                },
-              ),
-            );
-          },
-        ),
-      ),
+    final baseUrlNotifier = BaseUrlNotifier();
+    return  FutureBuilder(
+      future: baseUrlNotifier.initializeBaseUrl(),
+      builder: (context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.done) {
+          return CustomDiHelper(
+                  repositories: _repositories,
+                  mappers: _mappers,
+                  blocs: _blocs,
+                  providers: providersFun(),
+                  customService: _customService,
+                  child: child,
+                );
+        } else {
+          return Container();
+        }
+        
+      }
     );
   }
 }
+

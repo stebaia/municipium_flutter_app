@@ -6,8 +6,8 @@ part 'online_service_service.g.dart';
 
 @RestApi()
 abstract class OnlineServiceService {
-  factory OnlineServiceService(Dio dio, {String baseUrl}) = _OnlineServiceService;
+  factory OnlineServiceService(Dio dio) = _OnlineServiceService;
 
-  @GET('municipality_services')
-  Future<List<OnlineService>> getServices();
+  @GET('{baseUrl}/municipality_services')
+  Future<List<OnlineService>> getServices(@Path('baseUrl') String baseUrl);
 }

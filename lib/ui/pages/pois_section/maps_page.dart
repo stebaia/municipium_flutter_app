@@ -21,6 +21,8 @@ import 'package:municipium/ui/components/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/maps_component/filter_modal_bottomsheet.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/point_of_interests/custom_info_window.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class MapsPage extends StatefulWidget implements AutoRouteWrapper {
@@ -32,14 +34,16 @@ class MapsPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<PointOfInterestBloc>(
-          create: (context) =>
-              PointOfInterestBloc(pointOfInterestRepository: context.read())
-                ..fetchPointOfInterestList(),
+          create: (context) => PointOfInterestBloc(
+              pointOfInterestRepository: context.read())
+            ..fetchPointOfInterestList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         ),
         BlocProvider<CategoryPoiBloc>(
-          create: (context) =>
-              CategoryPoiBloc(pointOfInterestRepository: context.read())
-                ..fetchCategoryPoiList(),
+          create: (context) => CategoryPoiBloc(
+              pointOfInterestRepository: context.read())
+            ..fetchCategoryPoiList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         ),
         BlocProvider<CategorySelectionCubit>(
           create: (_) => CategorySelectionCubit(),
@@ -214,7 +218,8 @@ class _MapsPageState extends State<MapsPage> {
                         decoration: BoxDecoration(
                             color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Theme.of(context).disabledColor)),
+                            border: Border.all(
+                                color: Theme.of(context).disabledColor)),
                         child: const Center(
                             child: FaIcon(
                           FontAwesomeIcons.sliders,
@@ -227,7 +232,8 @@ class _MapsPageState extends State<MapsPage> {
                       decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Theme.of(context).disabledColor)),
+                          border: Border.all(
+                              color: Theme.of(context).disabledColor)),
                       child: const TextField(
                         decoration: InputDecoration(
                           hintStyle: TextStyle(fontSize: 16),
@@ -252,7 +258,8 @@ class _MapsPageState extends State<MapsPage> {
                         decoration: BoxDecoration(
                             color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Theme.of(context).disabledColor)),
+                            border: Border.all(
+                                color: Theme.of(context).disabledColor)),
                         child: const Center(child: Icon(Icons.menu))),
                   ),
                 ],

@@ -21,26 +21,19 @@ class PointOfInterestBloc
     on<FetchPoiDetailEvent>(_fetchPoiDetail);
   }
 
+  void fetchPointOfInterestList(String baseUrl) =>
+      add(FetchPointOfInterestListEvent(baseUrl));
 
+  void fetchPoiDetail(String baseUrl, int poiId) =>
+      add(FetchPoiDetailEvent(baseUrl, poiId));
 
-  
-
-  void fetchPointOfInterestList() => add(
-      const FetchPointOfInterestListEvent());
-
-  void fetchPoiDetail(int poiId) => add(
-      FetchPoiDetailEvent(poiId));
-  
   FutureOr<void> _fetchPoiDetail(
-    FetchPoiDetailEvent event,
-      Emitter<PointOfInterestState> emit
-  )async {
+      FetchPoiDetailEvent event, Emitter<PointOfInterestState> emit) async {
     try {
-      final poiDetail  =
-          await pointOfInterestRepository.getDetailPoi(idPoi: event.poiId);
-     
+      final poiDetail = await pointOfInterestRepository
+          .getDetailPoi(event.baseUrl, idPoi: event.poiId);
+
       emit(FetchedPoiDetailState(poiDetail));
-          
     } catch (error) {
       emit(const ErrorPoiDetailState());
     }
@@ -53,14 +46,13 @@ class PointOfInterestBloc
     try {
       final pointOfInterestsList =
           await pointOfInterestRepository.getPointOfInterestList(
-              page,
-              20);
-      if (pointOfInterestsList.pointOfInterestsItemList!.length > 0){
+              fetchPointOfInterestListEvent.baseUrl, page, 20);
+      if (pointOfInterestsList.pointOfInterestsItemList!.length > 0) {
         emit(FetchedPointOfInterestListState(pointOfInterestsList));
         page++;
-      }else {
+      } else {
         emit(const NoPointOfInterestListState());
-      }    
+      }
     } catch (error) {
       emit(const ErrorPointOfInterestListState());
     }

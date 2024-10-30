@@ -16,15 +16,17 @@ class IssueDetailBloc extends Bloc<IssueDetailEvent, IssueDetailState> {
     on<FetchIssueDetailEvent>(_fetchIssueDetail);
   }
 
-  void fetchIssueDetail(int issueId, String udid) =>
-      add(FetchIssueDetailEvent(issueId: issueId, udid: udid));
+  void fetchIssueDetail(String baseUrl, int issueId, String udid) => add(
+      FetchIssueDetailEvent(baseUrl: baseUrl, issueId: issueId, udid: udid));
 
   FutureOr<void> _fetchIssueDetail(FetchIssueDetailEvent fetchIssueDetailEvent,
       Emitter<IssueDetailState> emit) async {
     emit(const FetchingIssueDetailState());
     try {
       final issueDetail = await issueRepository.getIssueDetail(
-          fetchIssueDetailEvent.issueId, fetchIssueDetailEvent.udid);
+          fetchIssueDetailEvent.baseUrl,
+          fetchIssueDetailEvent.issueId,
+          fetchIssueDetailEvent.udid);
       emit(FetchedIssueDetailState(issueDetail));
     } catch (error) {
       emit(const ErrorIssueDetailState());

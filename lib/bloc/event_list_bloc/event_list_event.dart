@@ -8,15 +8,15 @@ abstract class EventListEvent extends Equatable {
 }
 
 class FetchEventListEvent extends EventListEvent {
-  const FetchEventListEvent();
+  String baseUrl;
+  FetchEventListEvent(this.baseUrl);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [baseUrl];
 }
 
 class FilterEventListEvent extends EventListEvent {
   final String searchText;
-
-  const FilterEventListEvent(this.searchText);
+  FilterEventListEvent(this.searchText);
   @override
   List<Object> get props => [searchText];
 }

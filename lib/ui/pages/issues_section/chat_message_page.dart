@@ -11,6 +11,7 @@ import 'package:municipium/model/issue/issue_chat.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/services/network/dto/chat_post_issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_detail_dto.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
@@ -182,6 +183,9 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                               .getDevice();
                           DateTime now = DateTime.now();
                           issueChatCubit.addMessageToChat(
+                              Provider.of<BaseUrlNotifier>(context,
+                                      listen: false)
+                                  .baseUrl,
                               IssueChatItem(
                                   email: textUser,
                                   emailDate:

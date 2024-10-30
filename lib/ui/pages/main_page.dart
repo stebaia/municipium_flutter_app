@@ -7,7 +7,8 @@ import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/repositories/news_repository.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/pages/news_section/news_list_page.dart';
-
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class MainPage extends StatefulWidget implements AutoRouteWrapper {
@@ -19,8 +20,12 @@ class MainPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<MunicipalityBloc>(
-          create: (context) =>
-              MunicipalityBloc(municipalityRepository: context.read())..fetchMunicipality(municipalityId),
+          create: (context) => MunicipalityBloc(
+              municipalityRepository: context.read())
+            ..fetchMunicipality(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrlBe,
+                municipalityId),
         )
       ], child: this);
 }
@@ -36,25 +41,22 @@ class _MainPageState extends State<MainPage> {
         } else if (state is FetchedMunicipalityState) {
           return Container(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(state.municipality.municipalityName),
-                  
-                  MaterialButton(
-                    child: Text('get news'),
-                    onPressed: (() {
-                      context.pushRoute(const NewsListRoute());
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(state.municipality.municipalityName),
+              MaterialButton(
+                  child: Text('get news'),
+                  onPressed: (() {
+                    context.pushRoute(const NewsListRoute());
                   })),
-                  MaterialButton(
-                    child: Text('get pois'),
-                    onPressed: (() {
-                      context.pushRoute(const PointOfInterestListRoute());
+              MaterialButton(
+                  child: Text('get pois'),
+                  onPressed: (() {
+                    context.pushRoute(const PointOfInterestListRoute());
                   }))
-                ],
-              )
-            
-          );
+            ],
+          ));
         } else {
           return Center(
             child: Text('Errore'),

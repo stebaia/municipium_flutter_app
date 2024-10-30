@@ -8,11 +8,9 @@ abstract class ServiceOnlineEvent extends Equatable {
 }
 
 class FetchServiceListEvent extends ServiceOnlineEvent {
+  String baseUrl;
+  FetchServiceListEvent(this.baseUrl);
 
-  const FetchServiceListEvent();
-
-  
-  
   @override
   List<Object> get props => [];
 }

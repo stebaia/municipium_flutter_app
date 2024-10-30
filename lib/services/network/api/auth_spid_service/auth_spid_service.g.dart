@@ -22,7 +22,7 @@ class _AuthSpidService implements AuthSpidService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<IdpModel>> getIdps() async {
+  Future<List<IdpModel>> getIdps(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +34,7 @@ class _AuthSpidService implements AuthSpidService {
     )
         .compose(
           _dio.options,
-          'get_idps',
+          '${baseUrl}/get_idps',
           queryParameters: queryParameters,
           data: _data,
         )

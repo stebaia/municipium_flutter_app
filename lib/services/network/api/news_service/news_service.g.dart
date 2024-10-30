@@ -22,7 +22,10 @@ class _NewsService implements NewsService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<NewsDTO> getNewsDetail(int newsId) async {
+  Future<NewsDTO> getNewsDetail(
+    String baseUrl,
+    int newsId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +37,7 @@ class _NewsService implements NewsService {
     )
         .compose(
           _dio.options,
-          'news/${newsId}',
+          '${baseUrl}/news/${newsId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -56,6 +59,7 @@ class _NewsService implements NewsService {
 
   @override
   Future<NewsPagedDto> getNewsList(
+    String baseUrl,
     int page_index,
     int page_size,
   ) async {
@@ -70,7 +74,7 @@ class _NewsService implements NewsService {
     )
         .compose(
           _dio.options,
-          'news/paged_news?page_index=${page_index}&page_size=${page_size}',
+          '${baseUrl}/news/paged_news?page_index=${page_index}&page_size=${page_size}',
           queryParameters: queryParameters,
           data: _data,
         )

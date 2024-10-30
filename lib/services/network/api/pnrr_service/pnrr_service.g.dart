@@ -22,7 +22,10 @@ class _PnrrService implements PnrrService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ServicePnrrDTOResponse> getServices(String type) async {
+  Future<ServicePnrrDTOResponse> getServices(
+    String baseUrl,
+    String type,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +37,7 @@ class _PnrrService implements PnrrService {
     )
         .compose(
           _dio.options,
-          'paged_pnrr?type=${type}&orderByName=1',
+          '${baseUrl}/paged_pnrr?type=${type}&orderByName=1',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -56,6 +59,7 @@ class _PnrrService implements PnrrService {
 
   @override
   Future<PnrrBodyResponseDto> getPnrrDetail(
+    String baseUrl,
     String type,
     int id,
   ) async {
@@ -70,7 +74,7 @@ class _PnrrService implements PnrrService {
     )
         .compose(
           _dio.options,
-          'pnrr/${type}/${id}',
+          '${baseUrl}/pnrr/${type}/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

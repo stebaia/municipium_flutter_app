@@ -6,15 +6,18 @@ abstract class PointOfInterestEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
 class FetchPointOfInterestListEvent extends PointOfInterestEvent {
-  const FetchPointOfInterestListEvent();
-   @override
-  List<Object> get props => [];
+  String baseUrl;
+  FetchPointOfInterestListEvent(this.baseUrl);
+  @override
+  List<Object> get props => [baseUrl];
 }
 
 class FetchPoiDetailEvent extends PointOfInterestEvent {
   final int poiId;
-  const FetchPoiDetailEvent(this.poiId);
-   @override
+  String baseUrl;
+  FetchPoiDetailEvent(this.baseUrl, this.poiId);
+  @override
   List<Object> get props => [];
 }

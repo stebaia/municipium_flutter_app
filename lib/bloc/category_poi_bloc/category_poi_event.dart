@@ -8,7 +8,8 @@ abstract class CategoryPoiEvent extends Equatable {
 }
 
 class FetchCategoryPoiListEvent extends CategoryPoiEvent {
-  const FetchCategoryPoiListEvent();
-   @override
-  List<Object> get props => [];
+  String baseUrl;
+  FetchCategoryPoiListEvent(this.baseUrl);
+  @override
+  List<Object> get props => [baseUrl];
 }

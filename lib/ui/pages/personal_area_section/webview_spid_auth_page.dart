@@ -5,24 +5,33 @@ import 'package:lottie/lottie.dart';
 import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/bloc/user_bloc/user_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class WebViewSpidAuthPage extends StatefulWidget implements AutoRouteWrapper {
-  const WebViewSpidAuthPage({super.key, required this.urlSpid, required this.municipalityId, required this.authSystem});
+  const WebViewSpidAuthPage(
+      {super.key,
+      required this.urlSpid,
+      required this.municipalityId,
+      required this.authSystem});
   final String urlSpid;
   final String municipalityId;
   final String authSystem;
 
   @override
   State<WebViewSpidAuthPage> createState() => _WebViewSpidAuthPageState();
-  
+
   @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [BlocProvider<UserBloc>(
-          create: (context) =>
-              UserBloc(userRepository: context.read())..fetchListIdp(),
-        )], child: this);
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
+        BlocProvider<UserBloc>(
+          create: (context) => UserBloc(userRepository: context.read())
+            ..fetchListIdp(Provider.of<BaseUrlNotifier>(context, listen: false)
+                .baseUrlMmc),
+        )
+      ], child: this);
 }
 
 class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
@@ -41,8 +50,7 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
     });
   }
 
-  Future<void> _dialogBuilder(
-      BuildContext context) {
+  Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -51,15 +59,22 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
           context.router.popUntilRouteWithName(CoreMunicipalityRoute.name);
         });
         return AlertDialog(
-          content: Container(height: 300, width: MediaQuery.of(context).size.width, child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(AppLocalizations.of(context)!.dialog_success_account_spid, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-              Lottie.asset('assets/lottie/success.json', width: 160, height: 160),
-            ],
-          )),
-          
+          content: Container(
+              height: 300,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.dialog_success_account_spid,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Lottie.asset('assets/lottie/success.json',
+                      width: 160, height: 160),
+                ],
+              )),
         );
       },
     );
@@ -89,7 +104,13 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
             String authId = match.group(1)!;
             print("authId: $authId");
             if (request.url.contains(urlToCheck)) {
-              context.read<UserBloc>().fetchUserSpid(authId, widget.municipalityId, widget.authSystem, '');
+              context.read<UserBloc>().fetchUserSpid(
+                  Provider.of<BaseUrlNotifier>(context, listen: false)
+                      .baseUrlMmc,
+                  authId,
+                  widget.municipalityId,
+                  widget.authSystem,
+                  '');
             }
           } else {
             print("authId non trovato");
@@ -118,7 +139,7 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
       ),
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
-          if(state is FetchedUserDataState) {
+          if (state is FetchedUserDataState) {
             context.read<UserDataCubit>().auth(state.userSpidModel);
             _dialogBuilder(context);
           }

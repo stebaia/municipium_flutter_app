@@ -39,10 +39,10 @@ class MunicipalityRepository {
       required this.configurationsMapper,
       required this.logger});
 
-  Future<List<Municipality>> getMunicipalityList() async {
+  Future<List<Municipality>> getMunicipalityList(String baseUrl) async {
     try {
       final municipalityResponse =
-          await municipalityService.getListMunicipality();
+          await municipalityService.getListMunicipality(baseUrl);
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
@@ -55,10 +55,10 @@ class MunicipalityRepository {
   }
 
   Future<List<Municipality>> getMunicipalityListFromPosition(
-      double lat, double lng) async {
+      String baseUrl, double lat, double lng) async {
     try {
-      final municipalityResponse =
-          await municipalityService.getListMunicipalityWithLatLng(lat, lng);
+      final municipalityResponse = await municipalityService
+          .getListMunicipalityWithLatLng(baseUrl, lat, lng);
       final List<Municipality> municipalities = [];
       municipalityResponse.forEach((element) {
         municipalities.add(municipalityMapper.fromDTO(element));
@@ -172,10 +172,11 @@ class MunicipalityRepository {
     }
   }
 
-  Future<Municipality> saveMunicipality(int municipalityId) async {
+  Future<Municipality> saveMunicipality(
+      String baseUrl, String baseUrlBe, int municipalityId) async {
     try {
       final municipalityResponse =
-          await municipalityService.getMunicipality(municipalityId);
+          await municipalityService.getMunicipality(baseUrl, municipalityId);
       final municipality = municipalityMapper.fromDTO(municipalityResponse);
       municipality.configurations = await getConfigurationsAndSave(
           "https://${municipality.subdomain}/api/v2/");
@@ -201,7 +202,8 @@ class MunicipalityRepository {
             appVersion: version,
             udid: '',
             language: '');
-        final responseBePut = await municipalityBeService.putDevices(deviceBe);
+        final responseBePut =
+            await municipalityBeService.putDevices(baseUrlBe, deviceBe);
         deviceBe.udid = responseBePut.udid;
         await secureStorage.setDeviceKeyInStorage(deviceMapper.from(deviceBe));
         Map<String, dynamic> map = {
@@ -234,7 +236,8 @@ class MunicipalityRepository {
     }
   }
 
-  Future<Municipality?> getMunicipalityFromOneSignal() async {
+  Future<Municipality?> getMunicipalityFromOneSignal(
+      String baseUrl, String baseUrlBe) async {
     //OneSignal.U
     final String? playerId = await OneSignal.User.getOnesignalId();
     final String? pushId = await OneSignal.User.getExternalId();
@@ -261,16 +264,17 @@ class MunicipalityRepository {
             appVersion: version,
             udid: '',
             language: '');
-        final responseBePut = await municipalityBeService.putDevices(deviceBe);
+        final responseBePut =
+            await municipalityBeService.putDevices(baseUrlBe, deviceBe);
         deviceBe.udid = responseBePut.udid;
         await secureStorage.setDeviceKeyInStorage(deviceMapper.from(deviceBe));
         //GET MUNICIPALITY AND RETURN
-        final municipality =
-            saveMunicipality(int.parse(oneSignalTag['municipalityId']!));
+        final municipality = saveMunicipality(
+            baseUrl, baseUrlBe, int.parse(oneSignalTag['municipalityId']!));
         return municipality;
       } else {
-        final municipality =
-            saveMunicipality(int.parse(oneSignalTag['municipalityId']!));
+        final municipality = saveMunicipality(
+            baseUrl, baseUrlBe, int.parse(oneSignalTag['municipalityId']!));
         return municipality;
         //HO TUTTO E SONO A POSTO
         //GET MUNICIPALITY AND RETURN
@@ -278,7 +282,7 @@ class MunicipalityRepository {
     } else if (oneSignalTag['municipalityId'] == null &&
         deviceBeStorage != null) {
       final responseBePost =
-          await municipalityBeService.postDevices(deviceBeStorage);
+          await municipalityBeService.postDevices(baseUrlBe, deviceBeStorage);
       //RICHIAMO LA POST A DEVICES
       //RICHIAMO LA MUNICIPALITY SUBSCRIPTION
       //SE RITORNA

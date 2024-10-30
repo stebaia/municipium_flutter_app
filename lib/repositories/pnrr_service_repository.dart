@@ -19,9 +19,10 @@ class PnrrServiceRepository {
       required this.pnrrService,
       required this.logger});
 
-  Future<List<ServicePnrr>> getServicesPnrrList(String type) async {
+  Future<List<ServicePnrr>> getServicesPnrrList(
+      String baseUrl, String type) async {
     try {
-      final servicesListResponse = await pnrrService.getServices(type);
+      final servicesListResponse = await pnrrService.getServices(baseUrl, type);
       List<ServicePnrr> list = [];
       if (servicesListResponse.topics != null) {
         for (var element in servicesListResponse.topics!) {
@@ -36,9 +37,10 @@ class PnrrServiceRepository {
     }
   }
 
-  Future<BodyPnrrResponse> getBodyPnrrResponse(String type, int id) async {
+  Future<BodyPnrrResponse> getBodyPnrrResponse(
+      String baseUrl, String type, int id) async {
     try {
-      final response = await pnrrService.getPnrrDetail(type, id);
+      final response = await pnrrService.getPnrrDetail(baseUrl, type, id);
       return pnrrBodyMapper.fromDTO(response);
     } catch (error) {
       logger.e('errore: ${error.toString()}');

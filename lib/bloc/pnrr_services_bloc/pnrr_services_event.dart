@@ -7,11 +7,11 @@ abstract class PnrrServiceEvent extends Equatable {
 }
 
 class FetchPnrrServiceEvent extends PnrrServiceEvent {
-  const FetchPnrrServiceEvent({required this.type});
-
+  FetchPnrrServiceEvent({required this.baseUrl, required this.type});
+  String baseUrl;
   final String type;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [baseUrl];
 }
 
 class FilterPnrrServiceEvent extends PnrrServiceEvent {

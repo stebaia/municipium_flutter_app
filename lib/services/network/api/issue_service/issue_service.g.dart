@@ -23,6 +23,7 @@ class _IssueService implements IssueService {
 
   @override
   Future<IssueDetailDto> getIssueDetail(
+    String baseUrl,
     int issueId,
     String udid,
   ) async {
@@ -37,7 +38,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-          'issues/${issueId}?udid=${udid}',
+          '${baseUrl}/issues/${issueId}?udid=${udid}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -58,7 +59,10 @@ class _IssueService implements IssueService {
   }
 
   @override
-  Future<List<IssueDto>> getIssuesList(String udid) async {
+  Future<List<IssueDto>> getIssuesList(
+    String baseUrl,
+    String udid,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -70,7 +74,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-          'issues?udid=${udid}',
+          '${baseUrl}/issues?udid=${udid}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -93,7 +97,7 @@ class _IssueService implements IssueService {
   }
 
   @override
-  Future<List<IssueTagDto>> getIssueTags() async {
+  Future<List<IssueTagDto>> getIssueTags(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -105,7 +109,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-          'tags/',
+          '${baseUrl}/tags/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -128,7 +132,8 @@ class _IssueService implements IssueService {
   }
 
   @override
-  Future<List<IssueCategoryTagDto>> getIssueCategoriesTags() async {
+  Future<List<IssueCategoryTagDto>> getIssueCategoriesTags(
+      String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -140,7 +145,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-          'issue_categories/',
+          '${baseUrl}/issue_categories/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -164,7 +169,10 @@ class _IssueService implements IssueService {
   }
 
   @override
-  Future<Map<String, bool>> postIssue(PostIssueDto issue) async {
+  Future<Map<String, bool>> postIssue(
+    String baseUrl,
+    PostIssueDto issue,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -177,7 +185,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-          'issues',
+          '${baseUrl}/issues',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -198,7 +206,10 @@ class _IssueService implements IssueService {
   }
 
   @override
-  Future<ChatResponse> postMessageIssue(ChatPostIssueDto item) async {
+  Future<ChatResponse> postMessageIssue(
+    String baseUrl,
+    ChatPostIssueDto item,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -211,7 +222,7 @@ class _IssueService implements IssueService {
     )
         .compose(
           _dio.options,
-          'issues/comment_issue',
+          '${baseUrl}/issues/comment_issue',
           queryParameters: queryParameters,
           data: _data,
         )

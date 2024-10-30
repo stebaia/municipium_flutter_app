@@ -23,7 +23,9 @@ class _ReservationsService implements ReservationsService {
 
   @override
   Future<List<ReservableUnitDto>> getReservationUnits(
-      int municipalityId) async {
+    String baseUrl,
+    int municipalityId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -35,7 +37,7 @@ class _ReservationsService implements ReservationsService {
     )
         .compose(
           _dio.options,
-          'actions?id=${municipalityId}&action=preno_unita',
+          '${baseUrl}/actions?id=${municipalityId}&action=preno_unita',
           queryParameters: queryParameters,
           data: _data,
         )

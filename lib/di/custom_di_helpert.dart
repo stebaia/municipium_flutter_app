@@ -16,7 +16,7 @@ class CustomDiHelper extends StatelessWidget {
     this.providers,
     this.repositories,
     this.mappers,
-    this.blocs,
+    required this.blocs,
     this.customService,
     required this.child,
   });
@@ -43,8 +43,6 @@ class CustomDiHelper extends StatelessWidget {
 
     return _repositories;
   }
-
-
 
   Widget get _repositories {
     if (repositories?.isNotEmpty ?? false) {

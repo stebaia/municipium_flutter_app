@@ -18,11 +18,11 @@ class NewsRepository {
       required this.newsItemMapper,
       required this.newsDetailMapper});
 
-  Future<List<NewsItemList>> getNewsList(
+  Future<List<NewsItemList>> getNewsList(String baseUrl,
       {required int pageIndex, required int pageSize}) async {
     try {
       final NewsPagedDto newsListResponse =
-          await newsService.getNewsList(pageIndex, pageSize);
+          await newsService.getNewsList(baseUrl, pageIndex, pageSize);
       final List<NewsItemList> newsList = [];
       if (newsListResponse.results != null) {
         for (var element in newsListResponse.results!) {
@@ -36,9 +36,10 @@ class NewsRepository {
     }
   }
 
-  Future<NewsDetail> getNewsDetail(int newsId) async {
+  Future<NewsDetail> getNewsDetail(String baseUrl, int newsId) async {
     try {
-      final newsDetailResponse = await newsService.getNewsDetail(newsId);
+      final newsDetailResponse =
+          await newsService.getNewsDetail(baseUrl, newsId);
       final newsDetail = newsDetailMapper.fromDTO(newsDetailResponse);
       return newsDetail;
     } catch (error) {

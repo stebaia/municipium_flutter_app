@@ -9,10 +9,8 @@ part 'auth_spid_service.g.dart';
 
 @RestApi()
 abstract class AuthSpidService {
-  factory AuthSpidService(Dio dio, {String baseUrl}) =
-      _AuthSpidService;
+  factory AuthSpidService(Dio dio) = _AuthSpidService;
 
-  @GET('get_idps')
-  Future<List<IdpModel>>getIdps();
+  @GET('{baseUrl}/get_idps')
+  Future<List<IdpModel>> getIdps(@Path('baseUrl') String baseUrl);
 }
-

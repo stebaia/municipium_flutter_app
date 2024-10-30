@@ -6,20 +6,20 @@ class OnlineServiceRepository {
   final OnlineServiceService onlineServiceService;
   final Logger logger;
 
-  OnlineServiceRepository({
-    required this.onlineServiceService,
-    required this.logger
-  });
-  
-  Future<List<OnlineService>> getListOnlineService() async {
+  OnlineServiceRepository(
+      {required this.onlineServiceService, required this.logger});
+
+  Future<List<OnlineService>> getListOnlineService(
+    String baseUrl,
+  ) async {
     try {
-      final listOnlineService =
-          await onlineServiceService.getServices();
+      final listOnlineService = await onlineServiceService.getServices(
+        baseUrl,
+      );
       return listOnlineService;
     } catch (error) {
       logger.e('Error in getting service list');
       rethrow;
     }
   }
-
 }

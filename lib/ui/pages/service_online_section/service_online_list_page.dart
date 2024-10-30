@@ -6,6 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/bloc/service_online_bloc/service_online_bloc.dart';
 import 'package:municipium/model/online_service/online_service.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class ServiceOnlineListPage extends StatelessWidget
@@ -28,29 +30,32 @@ class ServiceOnlineListPage extends StatelessWidget
           child: Column(
             children: [
               Container(
-                      margin: EdgeInsets.all(10),
-                      child: TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:
-                                BorderSide(color: Theme.of(context).primaryColor, ),
-                          ),
-                          enabledBorder:  OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(color: Colors.grey, ),
-                          ),
-                          
-                          hintText: AppLocalizations.of(context)!.text_search_desired_service,
-                        ),
-                        onChanged: (query) {
-                          context.read<ServiceOnlineBloc>().filterServiceList(query);
-                          print(query);
-                        },
-                        style: const TextStyle(color: Colors.white),
+                margin: EdgeInsets.all(10),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    hintText: AppLocalizations.of(context)!
+                        .text_search_desired_service,
+                  ),
+                  onChanged: (query) {
+                    context.read<ServiceOnlineBloc>().filterServiceList(query);
+                    print(query);
+                  },
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
               BlocBuilder<ServiceOnlineBloc, ServiceOnlineState>(
                 builder: (context, state) {
                   if (state is FetchedServiceOnlineState) {
@@ -58,9 +63,13 @@ class ServiceOnlineListPage extends StatelessWidget
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        
-                        Container(padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),child: Text('${state.onlineServiceList.length} ${AppLocalizations.of(context)!.text_avaiable_services}', style: Theme.of(context).textTheme.titleMedium)),
-                        
+                        Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 20),
+                            child: Text(
+                                '${state.onlineServiceList.length} ${AppLocalizations.of(context)!.text_avaiable_services}',
+                                style:
+                                    Theme.of(context).textTheme.titleMedium)),
                         ListView.builder(
                           shrinkWrap: true,
                           itemCount: state.onlineServiceList.length,
@@ -80,11 +89,13 @@ class ServiceOnlineListPage extends StatelessWidget
                                     borderRadius: BorderRadius.circular(20),
                                     color: Theme.of(context).cardColor),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -131,9 +142,10 @@ class ServiceOnlineListPage extends StatelessWidget
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<ServiceOnlineBloc>(
-          create: (context) =>
-              ServiceOnlineBloc(onlineServiceRepository: context.read())
-                ..fetchServiceList(),
+          create: (context) => ServiceOnlineBloc(
+              onlineServiceRepository: context.read())
+            ..fetchServiceList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         )
       ], child: this);
 }

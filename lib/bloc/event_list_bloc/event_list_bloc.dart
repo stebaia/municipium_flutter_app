@@ -22,7 +22,7 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
     on<FilterEventListEvent>(_filterEventsList);
   }
 
-  void fetchEventList() => add(const FetchEventListEvent());
+  void fetchEventList(String baseUrl) => add(FetchEventListEvent(baseUrl));
   void filterEventList(String searchText) =>
       add(FilterEventListEvent(searchText));
 
@@ -30,8 +30,10 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
       Emitter<EventListState> emit) async {
     emit(const FetchingEventListState());
     try {
-      final eventItemList =
-          await eventsRepository.getEventsList(pageIndex: page, pageSize: 20);
+      final eventItemList = await eventsRepository.getEventsList(
+          fetchEventListEvent.baseUrl,
+          pageIndex: page,
+          pageSize: 20);
       if (eventItemList.isNotEmpty) {
         allEvents.addAll(eventItemList);
         emit(FetchedEventListState(allEvents));

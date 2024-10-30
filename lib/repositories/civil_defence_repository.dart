@@ -15,11 +15,12 @@ class CivilDefenceRepository {
       required this.civilDefenceService,
       required this.logger});
 
-  Future<List<CivilDefenceEmergencyCall>> getCivilDefenceList() async {
+  Future<List<CivilDefenceEmergencyCall>> getCivilDefenceList(
+      String baseUrl) async {
     try {
       final List<CivilDefenceEmergencyCallDTO>
           civilDefenceEmergencyCallResponse =
-          await civilDefenceService.getPhoneNumbers();
+          await civilDefenceService.getPhoneNumbers(baseUrl);
       final List<CivilDefenceEmergencyCall> list = [];
       civilDefenceEmergencyCallResponse.forEach((element) {
         list.add(emergencyCallMapper.fromDTO(element));

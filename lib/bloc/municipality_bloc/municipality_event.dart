@@ -9,15 +9,21 @@ abstract class MunicipalityEvent extends Equatable {
 
 class FetchMunicipalityEvent extends MunicipalityEvent {
   final int municipalityId;
-  const FetchMunicipalityEvent({required this.municipalityId});
+  String baseUrl;
+  String baseUrlBe;
+  FetchMunicipalityEvent(
+      {required this.baseUrl,
+      required this.baseUrlBe,
+      required this.municipalityId});
   @override
-  List<Object> get props => [municipalityId];
+  List<Object> get props => [baseUrl, municipalityId];
 }
 
 class FetchMunicipalityListEvent extends MunicipalityEvent {
-  const FetchMunicipalityListEvent();
+  String baseUrl;
+  FetchMunicipalityListEvent(this.baseUrl);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [baseUrl];
 }
 
 class GetMunicipalityTemp extends MunicipalityEvent {
@@ -47,8 +53,9 @@ class SetMunicipalityTempEvent extends MunicipalityEvent {
 class FetchMunicipalityListWithPositionEvent extends MunicipalityEvent {
   final double lat;
   final double lng;
-  const FetchMunicipalityListWithPositionEvent(
-      {required this.lat, required this.lng});
+  String baseUrl;
+  FetchMunicipalityListWithPositionEvent(
+      {required this.baseUrl, required this.lat, required this.lng});
   @override
   List<Object> get props => [];
 }

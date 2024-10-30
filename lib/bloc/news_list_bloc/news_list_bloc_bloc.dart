@@ -22,7 +22,7 @@ class NewsListBloc extends Bloc<NewsListBlocEvent, NewsListBlocState> {
     on<FilterNewsListEvent>(_filterNewsList);
   }
 
-  void fetchNewsList() => add(const FetchNewsListEvent());
+  void fetchNewsList(String baseUrl) => add(FetchNewsListEvent(baseUrl));
   void filterNewsList(String searchText) =>
       add(FilterNewsListEvent(searchText));
 
@@ -30,8 +30,10 @@ class NewsListBloc extends Bloc<NewsListBlocEvent, NewsListBlocState> {
       Emitter<NewsListBlocState> emit) async {
     emit(const FetchingNewsListState());
     try {
-      final newsItemsList =
-          await newsRepository.getNewsList(pageIndex: page, pageSize: 20);
+      final newsItemsList = await newsRepository.getNewsList(
+          fetchNewsListEvent.baseUrl,
+          pageIndex: page,
+          pageSize: 20);
       if (newsItemsList.isNotEmpty) {
         allNews.addAll(newsItemsList);
         emit(FetchedNewsListState(allNews));

@@ -11,17 +11,17 @@ class IssueChatCubit extends Cubit<List<IssueChatItem>> {
   IssueChatCubit({required this.chat, required this.issuesRepository})
       : super(chat);
 
-  addMessageToChat(
-      IssueChatItem message, String udid, int id, Function() action) async {
-    postIssue(ChatPostIssueDto(id: id, issueNotes: message.email, udid: udid),
-        () {
+  addMessageToChat(String baseUrl, IssueChatItem message, String udid, int id,
+      Function() action) async {
+    postIssue(baseUrl,
+        ChatPostIssueDto(id: id, issueNotes: message.email, udid: udid), () {
       final List<IssueChatItem> list = chat..insert(0, message);
       emit(list);
       action();
     });
   }
 
-  postIssue(ChatPostIssueDto item, Function()? action) async {
-    issuesRepository.postMessage(item, action);
+  postIssue(String baseUrl, ChatPostIssueDto item, Function()? action) async {
+    issuesRepository.postMessage(baseUrl, item, action);
   }
 }

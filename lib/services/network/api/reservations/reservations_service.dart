@@ -7,9 +7,10 @@ part 'reservations_service.g.dart';
 
 @RestApi()
 abstract class ReservationsService {
-  factory ReservationsService(Dio dio, {String baseUrl}) = _ReservationsService;
+  factory ReservationsService(Dio dio) = _ReservationsService;
 
-  @GET('actions?id={municipalityId}&action=preno_unita')
+  @GET('{baseUrl}/actions?id={municipalityId}&action=preno_unita')
   Future<List<ReservableUnitDto>> getReservationUnits(
+      @Path('baseUrl') String baseUrl,
       @Path('municipalityId') int municipalityId);
 }

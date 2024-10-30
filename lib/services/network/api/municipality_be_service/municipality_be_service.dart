@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/device/response_device_put.dart';
@@ -10,11 +9,13 @@ part 'municipality_be_service.g.dart';
 
 @RestApi()
 abstract class MunicipalityBeService {
-  factory MunicipalityBeService(Dio dio, {String baseUrl}) = _MunicipalityBeService;
+  factory MunicipalityBeService(Dio dio) = _MunicipalityBeService;
 
-  @PUT('devices')
-  Future<ResponseDevicePut> putDevices(@Body() DeviceBe device);
+  @PUT('{baseUrl}/devices')
+  Future<ResponseDevicePut> putDevices(
+      @Path('baseUrl') String baseUrl, @Body() DeviceBe device);
 
-  @PUT('devices')
-  Future<HttpResponse> postDevices(@Body() DeviceBe device);
+  @PUT('{baseUrl}/devices')
+  Future<HttpResponse> postDevices(
+      @Path('baseUrl') String baseUrl, @Body() DeviceBe device);
 }

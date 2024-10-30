@@ -14,14 +14,15 @@ class EventDetailBLoc extends Bloc<EventDetailEvent, EventDetailState> {
     on<FetchEventDetailEvent>(_fetchEventDetail);
   }
 
-  void fetchEventDetail(int eventId) =>
-      add(FetchEventDetailEvent(eventId: eventId));
+  void fetchEventDetail(String baseUrl, int eventId) =>
+      add(FetchEventDetailEvent(baseUrl: baseUrl, eventId: eventId));
 
   FutureOr<void> _fetchEventDetail(FetchEventDetailEvent fetchEventDetailEvent,
       Emitter<EventDetailState> emit) async {
     emit(const FetchingEventDetailState());
     try {
       final newsDetail = await eventRepository.getEventDetail(
+          fetchEventDetailEvent.baseUrl,
           id: fetchEventDetailEvent.eventId);
       emit(FetchedEventDetailState(newsDetail));
     } catch (error) {

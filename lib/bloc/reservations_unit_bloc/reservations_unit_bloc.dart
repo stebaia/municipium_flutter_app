@@ -17,14 +17,14 @@ class ReservationsUnitBloc
     on<FetchReservationsUnitEvent>(_fetchPointOfInterestList);
   }
 
-  void fetchReservationUnits(int municipalityId) =>
-      add(FetchReservationsUnitEvent(municipalityId));
+  void fetchReservationUnits(String baseUrl, int municipalityId) =>
+      add(FetchReservationsUnitEvent(baseUrl, municipalityId));
 
   FutureOr<void> _fetchPointOfInterestList(FetchReservationsUnitEvent event,
       Emitter<ReservationsUnitState> emit) async {
     try {
-      final units = await reservationsRepository
-          .getReservationUnitsList(event.municipalityId!);
+      final units = await reservationsRepository.getReservationUnitsList(
+          event.baseUrl, event.municipalityId!);
 
       emit(FetchedReservationUnitsState(units));
     } catch (error) {

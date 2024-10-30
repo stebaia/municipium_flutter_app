@@ -8,6 +8,7 @@ abstract class ReservationsUnitEvent extends Equatable {
 }
 
 class FetchReservationsUnitEvent extends ReservationsUnitEvent {
+  String baseUrl;
   final int? municipalityId;
-  const FetchReservationsUnitEvent(this.municipalityId);
+  FetchReservationsUnitEvent(this.baseUrl, this.municipalityId);
 }

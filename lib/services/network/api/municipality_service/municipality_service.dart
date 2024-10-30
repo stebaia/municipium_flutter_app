@@ -7,19 +7,23 @@ part 'municipality_service.g.dart';
 
 @RestApi()
 abstract class MunicipalityService {
-  factory MunicipalityService(Dio dio, {String baseUrl}) = _MunicipalityService;
+  factory MunicipalityService(Dio dio) = _MunicipalityService;
 
-  @GET('municipalities/')
-  Future<List<MunicipalityDTO>> getListMunicipality();
+  @GET('{baseUrl}/municipalities/')
+  Future<List<MunicipalityDTO>> getListMunicipality(
+      @Path('baseUrl') String baseUrl);
 
-  @GET('municipalities/all=true&latitude={lat}&longitude={lng}&radius=50000')
+  @GET(
+      '{baseUrl}/municipalities/all=true&latitude={lat}&longitude={lng}&radius=50000')
   Future<List<MunicipalityDTO>> getListMunicipalityWithLatLng(
-      @Path('lat') double lat, @Path('lng') double lng);
+      @Path('baseUrl') String baseUrl,
+      @Path('lat') double lat,
+      @Path('lng') double lng);
 
-  @GET('municipalities/show_mobile/{municipalityId}')
-  Future<MunicipalityDTO> getMunicipality(
+  @GET('{baseUrl}/municipalities/show_mobile/{municipalityId}')
+  Future<MunicipalityDTO> getMunicipality(@Path('baseUrl') String baseUrl,
       @Path('municipalityId') int municipalityId);
 
-  @GET('get_idps')
-  Future<MunicipalityDTO> getIdpList();
+  @GET('{baseUrl}/get_idps')
+  Future<MunicipalityDTO> getIdpList(@Path('baseUrl') String baseUrl);
 }
