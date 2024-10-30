@@ -462,8 +462,8 @@ class EventListRoute extends _i40.PageRouteInfo<void> {
 /// [_i10.HomePage]
 class HomeRoute extends _i40.PageRouteInfo<HomeRouteArgs> {
   HomeRoute({
-    _i43.Key? key,
-    required _i43.GlobalKey<_i41.ScaffoldState> scaffoldKey,
+    _i41.Key? key,
+    required _i41.GlobalKey<_i41.ScaffoldState> scaffoldKey,
     List<_i40.PageRouteInfo>? children,
   }) : super(
           HomeRoute.name,
@@ -494,9 +494,9 @@ class HomeRouteArgs {
     required this.scaffoldKey,
   });
 
-  final _i43.Key? key;
+  final _i41.Key? key;
 
-  final _i43.GlobalKey<_i41.ScaffoldState> scaffoldKey;
+  final _i41.GlobalKey<_i41.ScaffoldState> scaffoldKey;
 
   @override
   String toString() {

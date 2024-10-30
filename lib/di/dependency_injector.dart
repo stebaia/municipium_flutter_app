@@ -137,11 +137,7 @@ class DependencyInjector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseUrlNotifier = BaseUrlNotifier();
-    return   FutureBuilder(
-          future: baseUrlNotifier.initializeBaseUrl(),
-          builder: (context, snapshot) {
-            if(snapshot.connectionState == ConnectionState.done) {
+     
               return CustomDiHelper(
                       repositories: _repositories,
                       mappers: _mappers,
@@ -150,12 +146,10 @@ class DependencyInjector extends StatelessWidget {
                       customService: _customService,
                       child: child,
                     );
-            } else {
-              return Container();
-            }
             
-          }
-        );
+            
+        
+        
        
         
       

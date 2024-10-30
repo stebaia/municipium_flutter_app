@@ -68,9 +68,53 @@ class ChooseMunicipalityPage extends StatelessWidget
                   
                   TextButton(
                     
-                    onPressed: () {
+                    onPressed: () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Titolo del Popup"),
+                              content: TextField(
+                                  onChanged: (value) => textToSearch = value,
+                                  decoration: InputDecoration(
+                                    hintText: AppLocalizations.of(context)!
+                                        .text_search_municipality,
+                                  )),
+                              actions: [
+                                TextButton(
+                                  child: Text("Cerca"),
+                                  onPressed: () async {
+                                    if (textToSearch?.replaceAll(' ', '') ==
+                                        'AbilitaStaging') {
+                                      //await municipalityContext
+                                      //.read<MunicipalityBloc>()
+                                      //.deleteMunicipality();
+                                      await baseUrlNotifier.updateBaseUrl(
+                                          MunicipiumUtility.BASEURL_STAGING);
+                                      context.pushRoute(ChooseMunicipalityRoute());
+                                    } else if (textToSearch?.replaceAll(
+                                            ' ', '') ==
+                                        'AbilitaProduzione') {
+                                      //await municipalityContext
+                                      //.read<MunicipalityBloc>()
+                                      //.deleteMunicipality();
 
-                    },
+                                      await baseUrlNotifier.updateBaseUrl(
+                                          MunicipiumUtility.BASEURL_PROD);
+                                      context.pushRoute(ChooseMunicipalityRoute());
+                                    } else {}
+                                    Navigator.of(context)
+                                        .pop(); // Chiude il popup
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text("Chiudi"),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pop(); // Chiude il popup
+                                  },
+                                ),
+                              ],
+                            );}),
                     child: Text(AppLocalizations.of(context)!.text_issue_now.toUpperCase(),
                     style:
                          const TextStyle(color: ThemeHelper.blueMunicipium, letterSpacing: 1),
