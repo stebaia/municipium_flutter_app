@@ -7,3 +7,10 @@ class MunicipalityIdBloc extends Cubit<int> {
   void add(int id) => emit(id);
   void cancel() => emit(0);
 }
+
+class MunicipalitySubdomainBloc extends Cubit<String?> {
+  MunicipalitySubdomainBloc() : super(null); 
+
+  void add(String subdomain) => emit(subdomain);
+  void cancel() => emit(null);
+}

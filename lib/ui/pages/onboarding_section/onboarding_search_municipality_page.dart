@@ -26,6 +26,8 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
   final List<Municipality> _municipalityList = [];
   @override
   Widget build(BuildContext context) {
+    final baseUrlNotifier =
+        Provider.of<BaseUrlNotifier>(context, listen: false);
     return Scaffold(
       body: BlocBuilder<MunicipalityBloc, MunicipalityState>(
         builder: (context, municipalityState) {
@@ -210,6 +212,10 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                               .read<MunicipalityIdBloc>()
                                               .add(municipality
                                                   .muninicipalityId);
+                                          context
+                                              .read<MunicipalitySubdomainBloc>()
+                                              .add(municipality
+                                                  .subdomain);
                                           // Gestisci l'evento di tap sul municipio
                                         },
                                       );
@@ -228,6 +234,7 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                         FullWidthConfirmButton(
                           isEnabled: false,
                           onTap: () async {
+                            await baseUrlNotifier.updateBaseUrl('https://${context.read<MunicipalitySubdomainBloc>().state}/api/v2');
                             context.pushRoute(WelcomeRoute(
                                 municipalityId:
                                     context.read<MunicipalityIdBloc>().state));
@@ -258,6 +265,9 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
         ),
         BlocProvider<MunicipalityIdBloc>(
           create: (context) => MunicipalityIdBloc(),
+        ),
+        BlocProvider<MunicipalitySubdomainBloc>(
+          create: (context) => MunicipalitySubdomainBloc(),
         ),
       ], child: this);
 }

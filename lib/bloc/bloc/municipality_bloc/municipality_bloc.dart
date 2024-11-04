@@ -95,7 +95,7 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
     try {
     
       final municipalityList =
-          await municipalityRepository.getMunicipalityList(event.baseUrl);
+          await municipalityRepository.getMunicipalityListPaged(baseUrl: event.baseUrl, pageIndex: page, pageSize: 40);
       _municipalityList = municipalityList;
       if(_municipalityList.isNotEmpty) {
         emit(FetchedMunicipalityListState(municipalityList));
