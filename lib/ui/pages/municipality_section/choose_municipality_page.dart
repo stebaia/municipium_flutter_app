@@ -202,8 +202,10 @@ class ChooseMunicipalityPage extends StatelessWidget
                   suffixIcon: const Icon(Icons.gps_fixed)),
             ),
             BlocConsumer<MunicipalityBloc, MunicipalityState>(
-              listener: (context, state) {
+              listener: (context, state) async {
                 if (state is FetchedMunicipalityState) {
+                  await baseUrlNotifier.updateBaseUrl(
+                                          'https://${state.municipality.subdomain}/api/v2');
                   context.pushRoute(WelcomeRoute(
                       municipalityId: state.municipality.muninicipalityId));
                 }
