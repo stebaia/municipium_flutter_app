@@ -271,6 +271,7 @@ class MenuHelper {
         // TODO: Handle this case.
         break;
       case MenuItemType.poi:
+        context.pushRoute(const PointOfInterestListRoute());
         // TODO: Handle this case.
         break;
       case MenuItemType.services:

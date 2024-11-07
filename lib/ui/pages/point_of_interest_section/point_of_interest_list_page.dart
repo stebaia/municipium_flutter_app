@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
 import 'package:municipium/model/point_of_interests_item.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class PointOfInterestListPage extends StatefulWidget
@@ -32,6 +34,11 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+            title: Text(
+          AppLocalizations.of(context)!.poi_menu.toUpperCase(),
+          style: const TextStyle(fontSize: 20),
+        )),
         extendBodyBehindAppBar: true,
         body: Container(
             child: BlocBuilder<PointOfInterestBloc, PointOfInterestState>(
@@ -70,10 +77,16 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
                     }
                   }),
                 itemCount: _pointOfInterestItemList.length,
-                itemBuilder: ((context, index) => ListTile(
-                      // onTap: () => context.pushRoute(NewsDetailRoute(newsId: state.newsItemList[index].id)),
-                      title: Text(_pointOfInterestItemList[index].name!),
-                    )));
+                itemBuilder: ((context, index) => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    tileColor: Theme.of(context).canvasColor,
+                    title: Text(_pointOfInterestItemList[index].name!),
+                    subtitle: Text(_pointOfInterestItemList[index].address!),
+                    trailing: Icon(CupertinoIcons.chevron_right),
+                  ),
+                )));
           },
         )));
   }

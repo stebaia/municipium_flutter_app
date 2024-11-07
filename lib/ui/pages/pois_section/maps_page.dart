@@ -203,28 +203,17 @@ class _MapsPageState extends State<MapsPage> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () => showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: ((modalContext) => CustomBaseBottomSheet(
-                            height: MediaQuery.of(context).size.height * 0.9,
-                            title: 'filtri',
-                            body: FilterModalBottomSheet(
-                              categorySelectionCubit: context.read(),
-                              pointOfInterestListBloc: context.read(),
-                            )))),
+                    onTap: () {
+                      widget.scaffoldKey.currentState?.openDrawer();
+                    },
                     child: Container(
-                        padding: const EdgeInsets.all(14),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                             color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
                                 color: Theme.of(context).disabledColor)),
-                        child: const Center(
-                            child: FaIcon(
-                          FontAwesomeIcons.sliders,
-                          size: 18,
-                        ))),
+                        child: const Center(child: Icon(Icons.menu))),
                   ),
                   const SizedBox(width: 6),
                   Expanded(
@@ -250,18 +239,30 @@ class _MapsPageState extends State<MapsPage> {
                     width: 6,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      widget.scaffoldKey.currentState?.openDrawer();
-                    },
+                    onTap: () => showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: ((modalContext) => CustomBaseBottomSheet(
+                            height: MediaQuery.of(context).size.height * 0.9,
+                            title: 'filtri',
+                            body: FilterModalBottomSheet(
+                              categorySelectionCubit: context.read(),
+                              pointOfInterestListBloc: context.read(),
+                            )))),
                     child: Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                             color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
                                 color: Theme.of(context).disabledColor)),
-                        child: const Center(child: Icon(Icons.menu))),
+                        child: const Center(
+                            child: FaIcon(
+                          FontAwesomeIcons.sliders,
+                          size: 18,
+                        ))),
                   ),
+                  
                 ],
               ),
             ),

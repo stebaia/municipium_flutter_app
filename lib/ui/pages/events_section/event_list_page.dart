@@ -40,10 +40,10 @@ class _EventListPageState extends State<EventListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        drawer: MenuDrawer(
+        /* drawer: MenuDrawer(
           mContext: context,
           scaffoldKey: _scaffoldKey,
-        ),
+        ),*/
         appBar: AppBar(
           title: context.read<EventListBloc>().isSearching
               ? TextField(
@@ -58,14 +58,10 @@ class _EventListPageState extends State<EventListPage> {
                   onChanged: ((value) =>
                       context.read<EventListBloc>().filterEventList(value)),
                 )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 48),
-                  child: Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.events_menu.toUpperCase(),
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+              : Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.events_menu.toUpperCase(),
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ),
           leading: IconButton(
@@ -88,7 +84,7 @@ class _EventListPageState extends State<EventListPage> {
                 });
               },
             ),
-            IconButton(
+            /*IconButton(
               onPressed: () {
                 _scaffoldKey.currentState?.openDrawer();
               },
@@ -96,7 +92,7 @@ class _EventListPageState extends State<EventListPage> {
                 Icons.menu,
                 color: Colors.white,
               ),
-            ),
+            ),*/
           ],
         ),
         extendBodyBehindAppBar: false,

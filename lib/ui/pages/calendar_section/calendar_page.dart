@@ -170,7 +170,7 @@ class CalendarPage extends StatelessWidget implements AutoRouteWrapper {
                                                         .startDate), style: Theme.of(context).textTheme.titleMedium,),
                                       ),
                                       Container(
-                                        height: MediaQuery.of(context).size.height - appBarHeight - calendarHeight - 170,
+                                        height: MediaQuery.of(context).size.height - appBarHeight - calendarHeight - 221,
                                         child: ListView.builder(
                                           shrinkWrap: true,
                                           

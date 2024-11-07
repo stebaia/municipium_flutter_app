@@ -104,7 +104,7 @@ class BoxVerticalDashboardComponents extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.27,
           width: MediaQuery.of(context).size.width * 0.45,
           decoration: BoxDecoration(
-            color: Colors.amber,
+            color: Theme.of(context).canvasColor,
             borderRadius: BorderRadius.circular(20)
           ),
           child: Center(child: Text(name, style: TextStyle(color: Colors.black),)),

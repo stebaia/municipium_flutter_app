@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
+import 'package:municipium/ui/components/municipality_components/box_air_quality_component.dart';
 import 'package:municipium/ui/components/municipality_components/box_dashboard_components.dart';
 import 'package:provider/provider.dart';
 
@@ -49,13 +50,13 @@ class HomePage extends StatelessWidget {
                       municipality: municipality,                   
                     ),
                     
-                    BoxVerticalDashboardComponents(
-                      name: configurationMenus[1].serviceName,
-                      isRemoved: configurationMenus[1].isRemoved,
+                    VerticalBoxAirQualityComponent(
+                     
                     )
                   ],
                 ),
-                BoxHorizzontalDashboardComponents(name: configurationMenus[2].serviceName,isRemoved: configurationMenus[2].isRemoved, ),
+                HorizzontalBoxAirQualityComponent(),
+                //BoxHorizzontalDashboardComponents(name: configurationMenus[2].serviceName,isRemoved: configurationMenus[2].isRemoved, ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

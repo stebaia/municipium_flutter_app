@@ -59,15 +59,13 @@ class _NewsListPageState extends State<NewsListPage> {
                   onChanged: ((value) =>
                       context.read<NewsListBloc>().filterNewsList(value)),
                 )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 48),
-                  child: Center(
+              :  Center(
                     child: Text(
                       AppLocalizations.of(context)!.news_menu.toUpperCase(),
                       style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                  ),
+                  
                 ),
           leading: IconButton(
             onPressed: () => context.router.popUntil(
@@ -89,15 +87,7 @@ class _NewsListPageState extends State<NewsListPage> {
                 });
               },
             ),
-            IconButton(
-              onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-            ),
+            
           ],
         ),
         extendBodyBehindAppBar: false,
