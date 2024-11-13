@@ -135,7 +135,7 @@ class UserConfMenuEditPage extends StatelessWidget {
     int index,
     BuildContext context,
   ) {
-    UserConfigurationMenu emptyConf = UserConfigurationMenu(serviceName: '',isMandatory: false,isRemoved: true, position: 0);
+    UserConfigurationMenu emptyConf = UserConfigurationMenu(assetImage: '',serviceName: '',isMandatory: false,isRemoved: true, position: 0);
     context
         .read<TemporaryConfigurationCubit>()
         .updateConfiguration(emptyConf, index);
@@ -150,7 +150,7 @@ class UserConfMenuEditPage extends StatelessWidget {
         child: ListView.builder(itemCount: mockServiceName.length, itemBuilder:(context, index) => InkWell(
           child: Container(height: 60,child: Center(child: Text(mockServiceName[index]))),
           onTap: ()  {
-             context.read<TemporaryConfigurationCubit>().updateConfiguration(UserConfigurationMenu(serviceName: mockServiceName[index], isMandatory: false, position: position), position);
+             context.read<TemporaryConfigurationCubit>().updateConfiguration(UserConfigurationMenu(assetImage: '',serviceName: mockServiceName[index], isMandatory: false, position: position), position);
               Navigator.pop(context);
           }
          

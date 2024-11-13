@@ -13,6 +13,7 @@ import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/position_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -234,7 +235,14 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                         FullWidthConfirmButton(
                           isEnabled: false,
                           onTap: () async {
-                            await baseUrlNotifier.updateBaseUrl('https://${context.read<MunicipalitySubdomainBloc>().state}/api/v2');
+                            String? subdomain = context.read<MunicipalitySubdomainBloc>().state;
+                            if(subdomain != null) {
+                              await baseUrlNotifier.updateBaseUrl('https://$subdomain/api/v2');
+                            }else {
+                              
+                              await baseUrlNotifier.updateBaseUrl('https://${MunicipiumUtility.BASEURL_PROD}/api/v2');
+                            }
+                            
                             context.pushRoute(WelcomeRoute(
                                 municipalityId:
                                     context.read<MunicipalityIdBloc>().state));

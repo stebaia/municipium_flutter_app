@@ -65,7 +65,7 @@ dependencies:
   photo_manager: ^3.1.1
   device_info_plus: ^10.1.0
   package_info_plus: ^8.0.0
-  google_maps_flutter: ^2.6.1
+  google_maps_flutter: ^2.9.0
   clippy_flutter: ^2.0.0-nullsafety.1
   flutter_svprogresshud: ^1.0.1
   carousel_slider: ^5.0.0

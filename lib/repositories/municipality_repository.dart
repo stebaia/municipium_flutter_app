@@ -76,6 +76,7 @@ class MunicipalityRepository {
     // Aggiungi news
     if (municipality.newMenu.news != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.news!,
           isMandatory: false,
           position: 0));
@@ -83,6 +84,7 @@ class MunicipalityRepository {
     // Aggiungi issue
     if (municipality.newMenu.issue != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.issue!,
           isMandatory: false,
           position: 1));
@@ -90,6 +92,7 @@ class MunicipalityRepository {
     // Aggiungi penalties
     if (municipality.newMenu.penalties != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.penalties!,
           isMandatory: false,
           position: 2));
@@ -97,6 +100,7 @@ class MunicipalityRepository {
     // Aggiungi surveys
     if (municipality.newMenu.surveys != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.surveys!,
           isMandatory: false,
           position: 3));
@@ -104,6 +108,7 @@ class MunicipalityRepository {
     // Aggiungi garbage
     if (municipality.newMenu.garbage != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.garbage!.toString(),
           isMandatory: false,
           position: 4));
@@ -111,6 +116,7 @@ class MunicipalityRepository {
     // Aggiungi ecoattivi
     if (municipality.newMenu.ecoattivi != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.ecoattivi!,
           isMandatory: false,
           position: 5));
@@ -118,6 +124,7 @@ class MunicipalityRepository {
     // Aggiungi poi
     if (municipality.newMenu.poi != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.poi!,
           isMandatory: false,
           position: 6));
@@ -125,6 +132,7 @@ class MunicipalityRepository {
     // Aggiungi services
     if (municipality.newMenu.services != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.services!,
           isMandatory: false,
           position: 7));
@@ -132,6 +140,7 @@ class MunicipalityRepository {
     // Aggiungi dms
     if (municipality.newMenu.dms != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.dms!.toString(),
           isMandatory: false,
           position: 8));
@@ -139,6 +148,7 @@ class MunicipalityRepository {
     // Aggiungi digitalDossier
     if (municipality.newMenu.digitalDossier != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.digitalDossier!,
           isMandatory: false,
           position: 9));
@@ -146,6 +156,7 @@ class MunicipalityRepository {
     // Aggiungi civilDefence
     if (municipality.newMenu.civilDefence != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.civilDefence!.toString(),
           isMandatory: false,
           position: 10));
@@ -153,6 +164,7 @@ class MunicipalityRepository {
     // Aggiungi payment
     if (municipality.newMenu.payment != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.payment!,
           isMandatory: false,
           position: 11));
@@ -160,6 +172,7 @@ class MunicipalityRepository {
     // Aggiungi events
     if (municipality.newMenu.events != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.events!,
           isMandatory: false,
           position: 12));
@@ -167,6 +180,7 @@ class MunicipalityRepository {
     // Aggiungi sportelloTelematico
     if (municipality.newMenu.sportelloTelematico != null) {
       listWrapped.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.newMenu.sportelloTelematico!,
           isMandatory: false,
           position: 13));
@@ -179,7 +193,8 @@ class MunicipalityRepository {
       final municipalityResponse =
           await municipalityService.getMunicipality(baseUrl, municipalityId);
       final municipality = municipalityMapper.fromDTO(municipalityResponse);
-      municipality.configurations = await getConfigurationsAndSave(
+      try {
+        municipality.configurations = await getConfigurationsAndSave(
           "https://${municipality.subdomain}/api/v2/");
       await secureStorage
           .setMunicipalityKeyInStorage(munMapper.from(municipality));
@@ -219,6 +234,11 @@ class MunicipalityRepository {
         };
         OneSignal.User.addTags(map);
       }
+      }catch (e) {
+        logger.e('Error in getting municipality');
+        
+      }
+      
 
       return municipality;
     } catch (error, stackTrace) {

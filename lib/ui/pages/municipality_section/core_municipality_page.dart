@@ -58,17 +58,8 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                 scaffoldKey: scaffoldKey,
               ),
               //darkMode.darkTheme ? ThemeHelper.backgroundColorDark : Colors.white,
-              floatingActionButton: tabsRouter.activeIndex == 0
-                  ? FloatingActionButton.extended(
-                      onPressed: (() =>
-                          context.pushRoute(const UserConfMenuEditRoute())),
-                      label: const Text(
-                        'Personalizza',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      icon: Icon(Icons.edit, color: Colors.white),
-                    )
-                  : FloatingActionButton(
+              floatingActionButton: 
+                  FloatingActionButton(
                       onPressed: () => showModalBottomSheet(
                           context: context,
                           builder: ((modalContext) => CustomBaseBottomSheet(

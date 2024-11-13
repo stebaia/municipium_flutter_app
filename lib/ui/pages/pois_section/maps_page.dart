@@ -54,12 +54,14 @@ class MapsPage extends StatefulWidget implements AutoRouteWrapper {
 class _MapsPageState extends State<MapsPage> {
   final CustomInfoWindowController _customInfoWindowController =
       CustomInfoWindowController();
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  GoogleMapController? _controller;
 
   final double offset = 50;
   final double height = 210;
   final double width = 200;
+  late ClusterManager clusterManagers;
+
+  
 
   double _convertColorToHue(ItemCategory? category) {
     Color color;
@@ -84,6 +86,21 @@ class _MapsPageState extends State<MapsPage> {
     super.dispose();
   }
 
+
+  @override
+  void initState() {
+    clusterManagers = ClusterManager(
+        clusterManagerId: const ClusterManagerId("clusterManagerId"),
+        onClusterTap: (Cluster cluster) => setState(
+          () {
+            _controller?.animateCamera(
+                CameraUpdate.newLatLngBounds(cluster.bounds, 50));
+          },
+        ),
+      );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final municipality = (context.watch<MunicipalityGlobalCubit>().state
@@ -99,11 +116,16 @@ class _MapsPageState extends State<MapsPage> {
         SVProgressHUD.dismiss();
       }
     }, builder: (context, state) {
+
       Set<Marker> markers = {};
       if (state is FetchedPointOfInterestListState) {
         if (state.pointOfInterestsList.pointOfInterestsItemList != null) {
+          
+      //markers = {};
           markers = state.pointOfInterestsList.pointOfInterestsItemList!
               .map((point) => Marker(
+
+                  clusterManagerId: clusterManagers?.clusterManagerId,
                   icon: point.pointOfInterestCategories!.isNotEmpty
                       ? BitmapDescriptor.defaultMarkerWithHue(
                           _convertColorToHue(
@@ -117,7 +139,7 @@ class _MapsPageState extends State<MapsPage> {
                         Column(
                           children: [
                             Container(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).canvasColor,
                               padding: const EdgeInsets.all(16),
                               width: width,
                               child: Column(
@@ -154,7 +176,7 @@ class _MapsPageState extends State<MapsPage> {
                             Triangle.isosceles(
                               edge: Edge.BOTTOM,
                               child: Container(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).canvasColor,
                                 width: 20.0,
                                 height: 20.0,
                               ),
@@ -174,6 +196,7 @@ class _MapsPageState extends State<MapsPage> {
         children: [
           Positioned.fill(
             child: GoogleMap(
+              clusterManagers: {clusterManagers},
               myLocationEnabled: false,
               onTap: (position) {
                 _customInfoWindowController.hideInfoWindow!();
@@ -187,9 +210,10 @@ class _MapsPageState extends State<MapsPage> {
               initialCameraPosition: CameraPosition(
                   zoom: 14, target: LatLng(municipality.lat, municipality.lng)),
               onMapCreated: (GoogleMapController controller) {
+                _controller = controller;
                 _customInfoWindowController.googleMapController = controller;
 
-                _controller.complete(controller);
+               
               },
             ),
           ),

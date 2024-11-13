@@ -82,8 +82,9 @@ class BoxVerticalInfoDashboardComponents extends StatelessWidget {
 }
 
 class BoxVerticalDashboardComponents extends StatelessWidget {
-  const BoxVerticalDashboardComponents({super.key,  required this.name, this.isRemoved = false});
+  const BoxVerticalDashboardComponents({super.key,  required this.name, this.isRemoved = false, required this.assetImage});
   final String name;
+  final String assetImage;
   final bool isRemoved;
 
   @override
@@ -101,13 +102,19 @@ class BoxVerticalDashboardComponents extends StatelessWidget {
         
         Container(
           margin: const EdgeInsets.all(6),
+         
           height: MediaQuery.of(context).size.height * 0.27,
           width: MediaQuery.of(context).size.width * 0.45,
           decoration: BoxDecoration(
             color: Theme.of(context).canvasColor,
             borderRadius: BorderRadius.circular(20)
           ),
-          child: Center(child: Text(name, style: TextStyle(color: Colors.black),)),
+          child: Column(
+            children: [
+              Container(padding: EdgeInsets.all(20),child: Text(name, )),
+              //Image.asset(assetImage)
+            ],
+          ),
         ),
         
       ],
@@ -142,7 +149,7 @@ class BoxHorizzontalDashboardComponents extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.14,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: Theme.of(context).canvasColor,
         borderRadius: BorderRadius.circular(20)
       ),
       child: Center(child: Text(name, style: TextStyle(color: Colors.black),)),

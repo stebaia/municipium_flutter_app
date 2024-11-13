@@ -7,6 +7,15 @@ abstract class PointOfInterestEvent extends Equatable {
   List<Object> get props => [];
 }
 
+
+class FetchPagedPointOfInterestListEvent extends PointOfInterestEvent {
+  String baseUrl;
+  
+  FetchPagedPointOfInterestListEvent(this.baseUrl);
+  @override
+  List<Object> get props => [baseUrl];
+}
+
 class FetchPointOfInterestListEvent extends PointOfInterestEvent {
   String baseUrl;
   FetchPointOfInterestListEvent(this.baseUrl);

@@ -29,33 +29,43 @@ class UserRepository {
     List<UserConfigurationMenu> listOfConfiguration = [];
     if (municipality != null) {
       listOfConfiguration.add(UserConfigurationMenu(
+          assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: 'Info comune', isMandatory: true, position: 1));
       listOfConfiguration.add(UserConfigurationMenu(
+          assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.appServiceOne,
           isMandatory: false,
           position: 2));
       listOfConfiguration.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.appServiceTwo,
           isMandatory: false,
           position: 3));
       listOfConfiguration.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.appServiceThree,
           isMandatory: false,
           position: 4));
       listOfConfiguration.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: municipality.appServiceFour,
           isMandatory: false,
           position: 5));
     } else {
       listOfConfiguration.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: 'Info', isMandatory: true, position: 1));
       listOfConfiguration.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: 'Notizie', isMandatory: false, position: 2));
       listOfConfiguration.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: 'Eventi', isMandatory: false, position: 3));
       listOfConfiguration.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: 'Poi', isMandatory: false, position: 4));
       listOfConfiguration.add(UserConfigurationMenu(
+        assetImage: 'assets/images/illustration_categories_info_comune.png',
           serviceName: 'Segnalazioni', isMandatory: false, position: 5));
     }
 

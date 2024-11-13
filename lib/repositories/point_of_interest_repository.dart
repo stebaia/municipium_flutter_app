@@ -16,6 +16,27 @@ class PointOfInterestRepository {
       {required this.logger,
       required this.pointOfInterestService,
       required this.pointOfInterestMapper});
+    
+  Future<PointOfInterestsList> getPagedPointOfInterestList(
+    String baseUrl,
+    int pageIndex,
+    int pageSize,
+  ) async {
+    try {
+      final pointOfInterestsListResponse =
+          await pointOfInterestService.getPointOfInterestListPaged(
+        baseUrl,
+        pageIndex,
+        pageSize
+      );
+      final pointOfInterestsList =
+          pointOfInterestMapper.fromDTO(pointOfInterestsListResponse);
+      return pointOfInterestsList;
+    } catch (error) {
+      logger.e('Error in getting news list');
+      rethrow;
+    }
+  }
 
   Future<PointOfInterestsList> getPointOfInterestList(
     String baseUrl,

@@ -102,7 +102,7 @@ class CalendarPage extends StatelessWidget implements AutoRouteWrapper {
                         children: [
                           Container(
                             height: calendarHeight,
-                            color: Theme.of(context).unselectedWidgetColor,
+                            color: Theme.of(context).canvasColor,
                             child: TableCalendar<CalendarEvent>(
                               
                               headerStyle: const HeaderStyle(
@@ -126,6 +126,7 @@ class CalendarPage extends StatelessWidget implements AutoRouteWrapper {
                                     selectedDay.day));
                               },
                               calendarStyle: const CalendarStyle(
+                                
                                 selectedDecoration: BoxDecoration(
                                   color: ThemeHelper.blueMunicipium, // Colore dell'indicatore
                                   shape: BoxShape
