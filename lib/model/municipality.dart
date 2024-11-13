@@ -22,7 +22,10 @@ class Municipality extends Equatable {
   final String jcityGovEnte;
   final String jcityGovUrl;
   final String province;
+  final String prenotationWebUrl;
   Configurations? configurations;
+
+
   Municipality({
     required this.municipalityName,
     required this.muninicipalityId,
@@ -39,7 +42,8 @@ class Municipality extends Equatable {
     this.configurations,
     required this.jcityGovEnte,
     required this.jcityGovUrl,
-    required this.province});
+    required this.province,
+    required this.prenotationWebUrl});
 
   
   factory Municipality.fromJsonFromShared(String jsonString) {
@@ -63,6 +67,7 @@ class Municipality extends Equatable {
           : null,
       jcityGovEnte: json['jcityGovEnte'] ?? '',
       jcityGovUrl: json['jcityGovUrl'] ?? '',
+      prenotationWebUrl: json['prenotationWebUrl']
     );
   }
 
@@ -86,6 +91,7 @@ class Municipality extends Equatable {
           : null,
       jcityGovEnte: json['jcityGovEnte'] ?? '',
       jcityGovUrl: json['jcityGovUrl'] ?? '',
+      prenotationWebUrl: json['prenotationWebUrl']
     );
   }
 
@@ -108,6 +114,7 @@ class Municipality extends Equatable {
       'configurations': configurations?.toJson(),
       'jcityGovEnte': jcityGovEnte,
       'jcityGovUrl': jcityGovUrl,
+      'prenotationWebUrl' : prenotationWebUrl
     };
   }
 
@@ -127,6 +134,7 @@ class Municipality extends Equatable {
         appServiceFour,
         jcityGovEnte,
         jcityGovUrl,
-        province
+        province,
+        prenotationWebUrl
       ];
 }

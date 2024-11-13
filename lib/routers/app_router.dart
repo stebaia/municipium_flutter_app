@@ -55,6 +55,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SelfPaymentsRoute.page),
         AutoRoute(page: NewSelfPaymentRouter.page),
         AutoRoute(page: PersonTypePaymentRoute.page),
-        AutoRoute(page: WeatherQualityRoute.page)
+        AutoRoute(page: WeatherQualityRoute.page),
+        AutoRoute(page: PrenotationRoute.page),
       ];
 }
