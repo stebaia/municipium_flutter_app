@@ -9,6 +9,7 @@ import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
@@ -18,7 +19,7 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Segnalazioni'),
+        title: Text(AppLocalizations.of(context)!.issue_menu),
         leading: IconButton(
           onPressed: () => context.router.popUntil(
               (route) => route.settings.name == CoreMunicipalityRoute.name),
@@ -55,7 +56,7 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
                               horizontal: 16, vertical: 8),
                           child: Container(
                             decoration: BoxDecoration(
-                                color: ThemeHelper.greyFine,
+                                color: Theme.of(context).cardColor,
                                 borderRadius: BorderRadius.circular(10.0)),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -65,27 +66,47 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        'Segnalazione #${state.issueItemList[index].id}',
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w400),
+                                      Container(
+                                        height: 52,
+                                        width: 52,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: Color.fromRGBO(
+                                                240, 241, 250, 1)),
+                                        child: const Icon(
+                                          color: Color.fromRGBO(70, 70, 79, 1),
+                                          Icons.warning_amber_outlined,
+                                          size: 28,
+                                        ),
                                       ),
-                                      Text(
-                                          MunicipiumUtility.convertDate(
-                                              state.issueItemList[index]
-                                                  .createdAt,
-                                              'd MMM HH:mm',
-                                              todayYesterdayIncluded: true),
-                                          style: const TextStyle(
-                                              color: Color.fromRGBO(
-                                                  141, 144, 152, 1),
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400))
+                                      const SizedBox(
+                                        width: 12,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${AppLocalizations.of(context)!.issue_singular_desc} #${state.issueItemList[index].id}',
+                                            style: const TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                              MunicipiumUtility.convertDate(
+                                                  state.issueItemList[index]
+                                                      .createdAt,
+                                                  'd MMM HH:mm',
+                                                  todayYesterdayIncluded: true),
+                                              style: const TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      141, 144, 152, 1),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w400))
+                                        ],
+                                      ),
                                     ],
                                   ),
                                   const SizedBox(
@@ -105,18 +126,28 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
                                   Row(
                                     children: [
                                       TagLabelBkg(
-                                          title:
+                                          title: state
+                                                  .issueItemList[index].closed
+                                              ? AppLocalizations.of(context)!
+                                                  .issue_closed
+                                              : AppLocalizations.of(context)!
+                                                  .issue_open,
+                                          background:
                                               state.issueItemList[index].closed
-                                                  ? 'Chiusa'
-                                                  : 'Aperta'),
+                                                  ? const Color.fromRGBO(
+                                                      176, 241, 194, 1)
+                                                  : const Color.fromRGBO(
+                                                      255, 218, 214, 1)),
                                       const SizedBox(
                                         width: 16,
                                       ),
                                       TagLabelBkg(
-                                          title:
-                                              state.issueItemList[index].merged
-                                                  ? 'Sincronizzato'
-                                                  : 'Da sincronizzare')
+                                          title: state
+                                                  .issueItemList[index].merged
+                                              ? AppLocalizations.of(context)!
+                                                  .issue_synchronized
+                                              : AppLocalizations.of(context)!
+                                                  .issue_not_synchronyzed)
                                     ],
                                   )
                                 ],
@@ -137,6 +168,8 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
+        padding: const EdgeInsets.all(20),
+        width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
             context.pushRoute(NewIssueRouter());
@@ -144,13 +177,13 @@ class IssuesListPage extends StatelessWidget implements AutoRouteWrapper {
           style: ElevatedButton.styleFrom(
             backgroundColor: ThemeHelper.blueMunicipium,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(40),
             ),
             padding: const EdgeInsets.all(20),
           ),
-          child: const Text(
-            'Nuova segnalazione',
-            style: TextStyle(
+          child: Text(
+            AppLocalizations.of(context)!.new_issue,
+            style: const TextStyle(
                 color: Colors.white, fontSize: 17, fontWeight: FontWeight.w400),
           ),
         ),
