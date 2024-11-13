@@ -2,14 +2,14 @@ import 'package:municipium/model/ecoattivi/ecoattivi_answer.dart';
 
 class EcoattiviQuestion {
   int? domandaId;
-  String? tsto;
+  String? testo;
   int? progressivo;
   String? spiegazione;
   List<EcoattiviAnswer>? risposte;
 
   EcoattiviQuestion({
     this.domandaId,
-    this.tsto,
+    this.testo,
     this.progressivo,
     this.spiegazione,
     this.risposte,

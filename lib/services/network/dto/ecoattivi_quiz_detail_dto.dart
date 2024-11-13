@@ -40,14 +40,14 @@ class EcoattiviQuizDetailDto extends DTO {
 
 class EcoattiviQuestionDto extends DTO {
   int? domandaId;
-  String? tsto;
+  String? testo;
   int? progressivo;
   String? spiegazione;
   List<EcoattiviAnswerDto>? risposte;
 
   EcoattiviQuestionDto({
     this.domandaId,
-    this.tsto,
+    this.testo,
     this.progressivo,
     this.spiegazione,
     this.risposte,
@@ -56,7 +56,7 @@ class EcoattiviQuestionDto extends DTO {
   factory EcoattiviQuestionDto.fromJson(Map<String, dynamic> json) {
     return EcoattiviQuestionDto(
       domandaId: json['domandaId'],
-      tsto: json['tsto'],
+      testo: json['tsto'],
       progressivo: json['progressivo'],
       spiegazione: json['spiegazione'],
       risposte: (json['risposte'] as List<dynamic>?)
@@ -68,7 +68,7 @@ class EcoattiviQuestionDto extends DTO {
   Map<String, dynamic> toJson() {
     return {
       'domandaId': domandaId,
-      'tsto': tsto,
+      'tsto': testo,
       'progressivo': progressivo,
       'spiegazione': spiegazione,
       'risposte': risposte?.map((e) => e.toJson()).toList(),
