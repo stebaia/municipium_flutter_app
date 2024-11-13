@@ -19,8 +19,10 @@ class RoundedShapeButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
       decoration: BoxDecoration(
-          border: Border.all(color: borderColor ?? Colors.white),
-          borderRadius: BorderRadius.circular(12),
+          border: borderColor != null
+              ? Border.all(color: borderColor!)
+              : Border.all(),
+          borderRadius: BorderRadius.circular(40),
           color: color ?? ThemeHelper.blueMunicipium),
       child: Text(
         title,

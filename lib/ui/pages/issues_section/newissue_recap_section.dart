@@ -126,19 +126,21 @@ class NewIssueRecapSection extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      const Row(
+                      Row(
                         children: [
                           Expanded(
                             child: Text(
-                              'EMAIL',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!
+                                  .email_desc
+                                  .toUpperCase(),
+                              style: const TextStyle(
                                   color: ThemeHelper.darkGrey,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16,
                                   letterSpacing: -0.4),
                             ),
                           ),
-                          SizedBox()
+                          const SizedBox()
                         ],
                       ),
                       const SizedBox(

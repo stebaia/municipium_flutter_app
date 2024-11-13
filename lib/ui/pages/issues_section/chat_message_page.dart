@@ -15,6 +15,7 @@ import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class ChatMessagePage extends StatefulWidget implements AutoRouteWrapper {
@@ -93,7 +94,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
-                                  'Comune di ${widget.municName}',
+                                  '${AppLocalizations.of(context).municipality_of_desc} ${widget.municName}',
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                       fontSize: 16,
@@ -167,9 +168,10 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                           key: _formKey,
                           style: const TextStyle(color: Colors.black),
                           controller: _controller,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintStyle: TextStyle(color: Colors.black),
-                            hintText: 'Scrivi un messaggio...',
+                            hintText: AppLocalizations.of(context)!
+                                .issue_write_message,
                             border: InputBorder.none,
                           ),
                           //style: TextStyle(color: Theme.of(context).primaryColor),
