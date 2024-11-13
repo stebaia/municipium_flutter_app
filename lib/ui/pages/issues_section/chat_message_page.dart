@@ -94,7 +94,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
-                                  '${AppLocalizations.of(context).municipality_of_desc} ${widget.municName}',
+                                  '${AppLocalizations.of(context)!.municipality_of_desc} ${widget.municName}',
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                       fontSize: 16,
