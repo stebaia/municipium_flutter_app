@@ -5,6 +5,7 @@ import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class NewissueCompletedPage extends StatelessWidget {
@@ -17,20 +18,20 @@ class NewissueCompletedPage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: Container(
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check_circle_outlined,
                     size: 40,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Text(
-                    'La segnalazione è stata inviata con successo',
+                    AppLocalizations.of(context)!.issue_sended_desc,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
                         letterSpacing: -0.4),
@@ -56,9 +57,9 @@ class NewissueCompletedPage extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(20),
             ),
-            child: const Text(
-              'Storico segnalazioni',
-              style: TextStyle(
+            child: Text(
+              AppLocalizations.of(context)!.issue_history,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w400),

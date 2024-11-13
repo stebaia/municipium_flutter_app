@@ -48,7 +48,8 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                     return IconButton(
                       onPressed: () => context.pushRoute(ChatMessageRoute(
                           messages: detail!.email!.reversed.toList(),
-                          title: 'Segnalazione #${detail!.id}',
+                          title:
+                              '${AppLocalizations.of(context)!.issue_singular_desc} #${detail!.id}',
                           issueId: detail!.id!,
                           municName: municipality.municipalityName)),
                       icon: const Icon(Icons.message_outlined),
@@ -77,7 +78,7 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                           children: [
                             Expanded(
                               child: Text(
-                                'Segnalazione #${detail!.id}',
+                                '${AppLocalizations.of(context)!.issue_singular_desc} #${detail!.id}',
                                 style: const TextStyle(
                                     fontSize: 28,
                                     fontWeight: FontWeight.w700,
@@ -108,25 +109,29 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                           children: [
                             TagLabelBkg(
                                 title: detail!.closed ?? false
-                                    ? 'Chiusa'
-                                    : 'Aperta'),
+                                    ? AppLocalizations.of(context)!.issue_closed
+                                    : AppLocalizations.of(context)!.issue_open),
                             const SizedBox(
                               width: 16,
                             ),
                             TagLabelBkg(
                                 title: detail!.merged ?? false
-                                    ? 'Sincronizzato'
-                                    : 'Da sincronizzare')
+                                    ? AppLocalizations.of(context)!
+                                        .issue_synchronized
+                                    : AppLocalizations.of(context)!
+                                        .issue_not_synchronyzed)
                           ],
                         ),
                         const SizedBox(
                           height: 32,
                         ),
-                        const Row(
+                        Row(
                           children: [
                             Expanded(
-                              child: Text('Dettagli segnalazione',
-                                  style: TextStyle(
+                              child: Text(
+                                  AppLocalizations.of(context)!
+                                      .detail_issue_desc,
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: -0.4)),
@@ -136,11 +141,12 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         const SizedBox(
                           height: 32,
                         ),
-                        const Row(
+                        Row(
                           children: [
                             Expanded(
-                              child: Text('DATA D\'INVIO',
-                                  style: TextStyle(
+                              child: Text(
+                                  AppLocalizations.of(context)!.issue_date_desc,
+                                  style: const TextStyle(
                                       color: Color.fromRGBO(141, 144, 152, 1),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -168,11 +174,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         const SizedBox(
                           height: 32,
                         ),
-                        const Row(
+                        Row(
                           children: [
                             Expanded(
-                              child: Text('POSIZIONE',
-                                  style: TextStyle(
+                              child: Text(
+                                  AppLocalizations.of(context)!
+                                      .issue_position_desc
+                                      .toUpperCase(),
+                                  style: const TextStyle(
                                       color: Color.fromRGBO(141, 144, 152, 1),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -205,11 +214,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         const SizedBox(
                           height: 32,
                         ),
-                        const Row(
+                        Row(
                           children: [
                             Expanded(
-                              child: Text('TESTO SEGNALAZIONE',
-                                  style: TextStyle(
+                              child: Text(
+                                  AppLocalizations.of(context)!
+                                      .issue_text_desc
+                                      .toUpperCase(),
+                                  style: const TextStyle(
                                       color: Color.fromRGBO(141, 144, 152, 1),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -236,11 +248,14 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
                         ),
                         (detail!.image != null &&
                                 detail!.image!.i1920x1280 != null)
-                            ? const Row(
+                            ? Row(
                                 children: [
                                   Expanded(
-                                    child: Text('FOTO SEGNALAZIONE',
-                                        style: TextStyle(
+                                    child: Text(
+                                        AppLocalizations.of(context)!
+                                            .issue_photo
+                                            .toUpperCase(),
+                                        style: const TextStyle(
                                             color: Color.fromRGBO(
                                                 141, 144, 152, 1),
                                             fontSize: 16,
@@ -306,9 +321,9 @@ class IssueDetailPage extends StatelessWidget implements AutoRouteWrapper {
               ),
               padding: const EdgeInsets.all(20),
             ),
-            child: const Text(
-              'Aggiungi commento',
-              style: TextStyle(
+            child: Text(
+              AppLocalizations.of(context)!.issue_insert_comment,
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w400),

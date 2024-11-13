@@ -1,10 +1,12 @@
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
@@ -28,7 +30,79 @@ class NewIssueGallerySection extends StatelessWidget {
           child: SizedBox(
             child: Column(
               children: [
-                _getButton(
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext buildContext) {
+                          return SafeArea(
+                            child: Wrap(
+                              children: [
+                                ListTile(
+                                  leading: Icon(Icons.photo),
+                                  title: Text(AppLocalizations.of(context)!
+                                      .issue_pick_from_gallery),
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                    _pickImageFromGallery(
+                                        context); // Chiude l'Action Sheet
+                                  },
+                                ),
+                                ListTile(
+                                  leading: Icon(Icons.camera_alt),
+                                  title: Text(AppLocalizations.of(context)!
+                                      .issue_pick_from_camera),
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                    _openCamera(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: DottedBorder(
+                      color: ThemeHelper.blueMunicipium, // Colore del bordo
+                      strokeWidth: 2, // Spessore del tratteggio
+                      dashPattern: const [
+                        10,
+                        5
+                      ], // Imposta lunghezza e spazio dei tratti
+                      borderType: BorderType
+                          .RRect, // Tipo di bordo (rettangolare con bordi arrotondati)
+                      radius:
+                          Radius.circular(12), // Raggio per bordi arrotondati
+                      child: Container(
+                        height: 120,
+                        padding:
+                            EdgeInsets.all(20), // Padding interno del container
+
+                        child: Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const Text(
+                              '+',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: ThemeHelper.blueMunicipium),
+                            ),
+                            Text(
+                                AppLocalizations.of(context)!
+                                    .issue_load_image
+                                    .toUpperCase(),
+                                style: const TextStyle(
+                                    color: ThemeHelper.blueMunicipium)),
+                          ],
+                        )),
+                      ),
+                    ),
+                  ),
+                ),
+                /*_getButton(
                     onTap: () {
                       _pickImageFromGallery(context);
                     },
@@ -42,7 +116,7 @@ class NewIssueGallerySection extends StatelessWidget {
                       _openCamera(context);
                     },
                     title: AppLocalizations.of(context)!.add_photo_camera,
-                    icon: Icons.camera_alt_outlined),
+                    icon: Icons.camera_alt_outlined),*/
                 const SizedBox(
                   height: 16,
                 ),
@@ -62,7 +136,7 @@ class NewIssueGallerySection extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                _checkGallery(context, imageList: state.imageList),
+                _checkGallery(context, imageList: state.imageList, height: 250),
               ],
             ),
           ),
@@ -87,9 +161,11 @@ class NewIssueGallerySection extends StatelessWidget {
     }
   }
 
-  Widget _checkGallery(BuildContext context, {List<XFile>? imageList}) {
+  Widget _checkGallery(BuildContext context,
+      {List<XFile>? imageList, double? height}) {
     if (imageList != null && imageList.isNotEmpty) {
       return HorizzontalGallery(
+        height: height,
         imageList: imageList,
         title: Row(
           children: [
