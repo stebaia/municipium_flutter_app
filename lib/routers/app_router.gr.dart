@@ -9,12 +9,12 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i38;
-import 'package:flutter/cupertino.dart' as _i42;
+import 'package:flutter/cupertino.dart' as _i41;
 import 'package:flutter/material.dart' as _i39;
 import 'package:municipium/model/menu/menu_item.dart' as _i44;
 import 'package:municipium/model/menu/submenu_type.dart' as _i43;
 import 'package:municipium/model/user/user_spid_model.dart' as _i40;
-import 'package:municipium/services/network/dto/issue_detail_dto.dart' as _i41;
+import 'package:municipium/services/network/dto/issue_detail_dto.dart' as _i42;
 import 'package:municipium/ui/pages/calendar_section/calendar_page.dart' as _i3;
 import 'package:municipium/ui/pages/events_section/event_detail_page.dart'
     as _i8;
@@ -127,9 +127,12 @@ abstract class $AppRouter extends _i38.RootStackRouter {
       );
     },
     ChooseMunicipalityRoute.name: (routeData) {
+      final args = routeData.argsAs<ChooseMunicipalityRouteArgs>(
+          orElse: () => const ChooseMunicipalityRouteArgs());
       return _i38.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i38.WrappedRoute(child: const _i5.ChooseMunicipalityPage()),
+        child:
+            _i38.WrappedRoute(child: _i5.ChooseMunicipalityPage(key: args.key)),
       );
     },
     CoreMunicipalityRoute.name: (routeData) {
@@ -482,8 +485,8 @@ class AccountPrefereceRoute extends _i38.PageRouteInfo<void> {
 /// [_i3.CalendarPage]
 class CalendarRoute extends _i38.PageRouteInfo<CalendarRouteArgs> {
   CalendarRoute({
-    _i39.Key? key,
-    required _i39.GlobalKey<_i39.ScaffoldState> scaffoldKey,
+    _i41.Key? key,
+    required _i41.GlobalKey<_i39.ScaffoldState> scaffoldKey,
     List<_i38.PageRouteInfo>? children,
   }) : super(
           CalendarRoute.name,
@@ -506,9 +509,9 @@ class CalendarRouteArgs {
     required this.scaffoldKey,
   });
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
-  final _i39.GlobalKey<_i39.ScaffoldState> scaffoldKey;
+  final _i41.GlobalKey<_i39.ScaffoldState> scaffoldKey;
 
   @override
   String toString() {
@@ -521,7 +524,7 @@ class CalendarRouteArgs {
 class ChatMessageRoute extends _i38.PageRouteInfo<ChatMessageRouteArgs> {
   ChatMessageRoute({
     _i39.Key? key,
-    required List<_i41.IssueChatItem> messages,
+    required List<_i42.IssueChatItem> messages,
     required String title,
     required int issueId,
     required String municName,
@@ -555,7 +558,7 @@ class ChatMessageRouteArgs {
 
   final _i39.Key? key;
 
-  final List<_i41.IssueChatItem> messages;
+  final List<_i42.IssueChatItem> messages;
 
   final String title;
 
@@ -571,16 +574,32 @@ class ChatMessageRouteArgs {
 
 /// generated route for
 /// [_i5.ChooseMunicipalityPage]
-class ChooseMunicipalityRoute extends _i38.PageRouteInfo<void> {
-  const ChooseMunicipalityRoute({List<_i38.PageRouteInfo>? children})
-      : super(
+class ChooseMunicipalityRoute
+    extends _i38.PageRouteInfo<ChooseMunicipalityRouteArgs> {
+  ChooseMunicipalityRoute({
+    _i41.Key? key,
+    List<_i38.PageRouteInfo>? children,
+  }) : super(
           ChooseMunicipalityRoute.name,
+          args: ChooseMunicipalityRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'ChooseMunicipalityRoute';
 
-  static const _i38.PageInfo<void> page = _i38.PageInfo<void>(name);
+  static const _i38.PageInfo<ChooseMunicipalityRouteArgs> page =
+      _i38.PageInfo<ChooseMunicipalityRouteArgs>(name);
+}
+
+class ChooseMunicipalityRouteArgs {
+  const ChooseMunicipalityRouteArgs({this.key});
+
+  final _i41.Key? key;
+
+  @override
+  String toString() {
+    return 'ChooseMunicipalityRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -588,7 +607,7 @@ class ChooseMunicipalityRoute extends _i38.PageRouteInfo<void> {
 class CoreMunicipalityRoute
     extends _i38.PageRouteInfo<CoreMunicipalityRouteArgs> {
   CoreMunicipalityRoute({
-    _i42.Key? key,
+    _i41.Key? key,
     required int municipalityId,
     List<_i38.PageRouteInfo>? children,
   }) : super(
@@ -612,7 +631,7 @@ class CoreMunicipalityRouteArgs {
     required this.municipalityId,
   });
 
-  final _i42.Key? key;
+  final _i41.Key? key;
 
   final int municipalityId;
 
@@ -626,7 +645,7 @@ class CoreMunicipalityRouteArgs {
 /// [_i7.DetailPoiPage]
 class DetailPoiRoute extends _i38.PageRouteInfo<DetailPoiRouteArgs> {
   DetailPoiRoute({
-    _i42.Key? key,
+    _i41.Key? key,
     required int poiId,
     List<_i38.PageRouteInfo>? children,
   }) : super(
@@ -650,7 +669,7 @@ class DetailPoiRouteArgs {
     required this.poiId,
   });
 
-  final _i42.Key? key;
+  final _i41.Key? key;
 
   final int poiId;
 
@@ -716,8 +735,8 @@ class EventListRoute extends _i38.PageRouteInfo<void> {
 /// [_i10.HomePage]
 class HomeRoute extends _i38.PageRouteInfo<HomeRouteArgs> {
   HomeRoute({
-    _i42.Key? key,
-    required _i42.GlobalKey<_i39.ScaffoldState> scaffoldKey,
+    _i41.Key? key,
+    required _i41.GlobalKey<_i39.ScaffoldState> scaffoldKey,
     List<_i38.PageRouteInfo>? children,
   }) : super(
           HomeRoute.name,
@@ -740,9 +759,9 @@ class HomeRouteArgs {
     required this.scaffoldKey,
   });
 
-  final _i42.Key? key;
+  final _i41.Key? key;
 
-  final _i42.GlobalKey<_i39.ScaffoldState> scaffoldKey;
+  final _i41.GlobalKey<_i39.ScaffoldState> scaffoldKey;
 
   @override
   String toString() {
@@ -887,8 +906,8 @@ class MainRouteArgs {
 /// [_i15.MapsPage]
 class MapsRoute extends _i38.PageRouteInfo<MapsRouteArgs> {
   MapsRoute({
-    _i42.Key? key,
-    required _i42.GlobalKey<_i39.ScaffoldState> scaffoldKey,
+    _i41.Key? key,
+    required _i41.GlobalKey<_i39.ScaffoldState> scaffoldKey,
     List<_i38.PageRouteInfo>? children,
   }) : super(
           MapsRoute.name,
@@ -911,9 +930,9 @@ class MapsRouteArgs {
     required this.scaffoldKey,
   });
 
-  final _i42.Key? key;
+  final _i41.Key? key;
 
-  final _i42.GlobalKey<_i39.ScaffoldState> scaffoldKey;
+  final _i41.GlobalKey<_i39.ScaffoldState> scaffoldKey;
 
   @override
   String toString() {
@@ -939,7 +958,7 @@ class MyWidget extends _i38.PageRouteInfo<void> {
 /// [_i17.NewIssuePager]
 class NewIssueRouter extends _i38.PageRouteInfo<NewIssueRouterArgs> {
   NewIssueRouter({
-    _i42.Key? key,
+    _i41.Key? key,
     List<_i38.PageRouteInfo>? children,
   }) : super(
           NewIssueRouter.name,
@@ -956,7 +975,7 @@ class NewIssueRouter extends _i38.PageRouteInfo<NewIssueRouterArgs> {
 class NewIssueRouterArgs {
   const NewIssueRouterArgs({this.key});
 
-  final _i42.Key? key;
+  final _i41.Key? key;
 
   @override
   String toString() {
@@ -1074,7 +1093,7 @@ class OnboardingRoute extends _i38.PageRouteInfo<void> {
 class OnboardingSearchMunicipalityRoute
     extends _i38.PageRouteInfo<OnboardingSearchMunicipalityRouteArgs> {
   OnboardingSearchMunicipalityRoute({
-    _i42.Key? key,
+    _i41.Key? key,
     List<_i38.PageRouteInfo>? children,
   }) : super(
           OnboardingSearchMunicipalityRoute.name,
@@ -1091,7 +1110,7 @@ class OnboardingSearchMunicipalityRoute
 class OnboardingSearchMunicipalityRouteArgs {
   const OnboardingSearchMunicipalityRouteArgs({this.key});
 
-  final _i42.Key? key;
+  final _i41.Key? key;
 
   @override
   String toString() {
@@ -1162,8 +1181,8 @@ class PaymentChoiceRoute extends _i38.PageRouteInfo<void> {
 class PersonalAreaMenuRoute
     extends _i38.PageRouteInfo<PersonalAreaMenuRouteArgs> {
   PersonalAreaMenuRoute({
-    _i42.Key? key,
-    required _i42.GlobalKey<_i39.ScaffoldState> scaffoldKey,
+    _i41.Key? key,
+    required _i41.GlobalKey<_i39.ScaffoldState> scaffoldKey,
     List<_i38.PageRouteInfo>? children,
   }) : super(
           PersonalAreaMenuRoute.name,
@@ -1186,9 +1205,9 @@ class PersonalAreaMenuRouteArgs {
     required this.scaffoldKey,
   });
 
-  final _i42.Key? key;
+  final _i41.Key? key;
 
-  final _i42.GlobalKey<_i39.ScaffoldState> scaffoldKey;
+  final _i41.GlobalKey<_i39.ScaffoldState> scaffoldKey;
 
   @override
   String toString() {
@@ -1353,7 +1372,7 @@ class SelfPaymentsRouteArgs {
 class ServiceOnlineListRoute
     extends _i38.PageRouteInfo<ServiceOnlineListRouteArgs> {
   ServiceOnlineListRoute({
-    _i42.Key? key,
+    _i41.Key? key,
     List<_i38.PageRouteInfo>? children,
   }) : super(
           ServiceOnlineListRoute.name,
@@ -1370,7 +1389,7 @@ class ServiceOnlineListRoute
 class ServiceOnlineListRouteArgs {
   const ServiceOnlineListRouteArgs({this.key});
 
-  final _i42.Key? key;
+  final _i41.Key? key;
 
   @override
   String toString() {
@@ -1516,7 +1535,7 @@ class WebViewSpidAuthRouteArgs {
 /// [_i37.WelcomePage]
 class WelcomeRoute extends _i38.PageRouteInfo<WelcomeRouteArgs> {
   WelcomeRoute({
-    _i42.Key? key,
+    _i39.Key? key,
     required int municipalityId,
     List<_i38.PageRouteInfo>? children,
   }) : super(
@@ -1540,7 +1559,7 @@ class WelcomeRouteArgs {
     required this.municipalityId,
   });
 
-  final _i42.Key? key;
+  final _i39.Key? key;
 
   final int municipalityId;
 

@@ -91,6 +91,9 @@ List<SingleChildWidget> providersFun({required String baseUrl}) {
             MmcMunicipiumService(context.read<Dio>(),baseUrl: baseUrlMmc)),
     Provider<OnlineServiceService>(
         create: (context) =>
-            OnlineServiceService(context.read<Dio>(),baseUrl: baseUrl))
+            OnlineServiceService(context.read<Dio>(),baseUrl: baseUrl)),
+    Provider<CalendarService>(
+        create: (context) =>
+            CalendarService(context.read<Dio>(),baseUrl: baseUrl))
   ];
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'municipality_configuration_service.dart';
+part of 'calendar_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,9 +8,8 @@ part of 'municipality_configuration_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _MunicipalityConfigurationService
-    implements MunicipalityConfigurationService {
-  _MunicipalityConfigurationService(
+class _CalendarService implements CalendarService {
+  _CalendarService(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -23,19 +22,30 @@ class _MunicipalityConfigurationService
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<Configurations> getMunicipalityConfigurations(dynamic baseUrl) async {
+  Future<List<CalendarEvent>> getCalendar(
+    String date,
+    String? endDate,
+    String? name,
+    String? type,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'date': date,
+      r'date_end': endDate,
+      r'name': name,
+      r'type': type,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<Configurations>(Options(
+    final _options = _setStreamType<List<CalendarEvent>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '${baseUrl}digital_dossier/configurations',
+          'municipality_event',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -44,10 +54,12 @@ class _MunicipalityConfigurationService
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Configurations _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<CalendarEvent> _value;
     try {
-      _value = Configurations.fromJson(_result.data!);
+      _value = _result.data!
+          .map((dynamic i) => CalendarEvent.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

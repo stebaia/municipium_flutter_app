@@ -5,11 +5,13 @@ import 'package:municipium/utils/theme_helper.dart';
 class LightTheme {
   static const primaryColor = Color(0xff2140E9);
   static const lightBlue = Color(0xFFE3F2FD);
-  static const baseColor = Colors.black;
-  static const greyFine = Color.fromRGBO(245, 248, 253, 1);
+  static const baseColor = Color.fromARGB(255, 42, 42, 42);
+  static const greyFine = Color(0xffeeeff7);
   static const lightGrey = Color.fromRGBO(234, 238, 247, 1);
-
+  static const elementColor = Color(0xffF6F7FE);
+  static const calendarColor = Color(0xffF0F1FA);
   static get make => ThemeData(
+    scaffoldBackgroundColor: Colors.white,
         brightness: Brightness.light,
         primaryColor: primaryColor,
         dividerColor: baseColor,
@@ -17,7 +19,15 @@ class LightTheme {
           primary: primaryColor,
           secondary: lightBlue,
         ),
-        appBarTheme: AppBarTheme(elevation: 0, surfaceTintColor: lightBlue),
+        canvasColor: Color(0xfff6f7ff),
+        appBarTheme: AppBarTheme(elevation: 0, backgroundColor:elementColor ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          selectedItemColor: primaryColor,
+          selectedIconTheme: IconThemeData(color: primaryColor),
+          unselectedItemColor: Colors.black,
+          unselectedIconTheme: IconThemeData(color: Colors.black,),
+          backgroundColor: elementColor
+        ),
         bottomAppBarTheme: BottomAppBarTheme(color: Colors.black),
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
@@ -50,6 +60,7 @@ class LightTheme {
             borderSide: BorderSide(color: Colors.red),
           ),
         ),
+        unselectedWidgetColor: calendarColor,
         cardColor: greyFine,
         cardTheme: const CardTheme(surfaceTintColor: greyFine),
         textButtonTheme: TextButtonThemeData(
@@ -75,7 +86,7 @@ class LightTheme {
         ),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
-            fontSize: 32,
+            fontSize: 28,
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
@@ -100,9 +111,11 @@ class LightTheme {
 class DarkTheme {
   static const primaryColor = Color(0xff2140E9);
   static const darkBlack = Color.fromARGB(40, 41, 40, 40);
+  static const scaffoldBackgroundColor = Color.fromARGB(255, 3, 3, 3);
   static const baseColor = Colors.white;
 
   static get make => ThemeData(
+    scaffoldBackgroundColor: scaffoldBackgroundColor,
         brightness: Brightness.dark,
         primaryColor: primaryColor,
         dividerColor: baseColor,
@@ -167,7 +180,7 @@ class DarkTheme {
             foregroundColor: Colors.white,
           ),
         ),
-        cardColor: Color(0xFF303030),
+        cardColor: Color.fromARGB(255, 30, 30, 30),
         cardTheme: const CardTheme(surfaceTintColor: Color(0xFF303030)),
         textTheme: const TextTheme(
           titleLarge: TextStyle(

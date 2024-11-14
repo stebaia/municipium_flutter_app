@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeHelper {
   static const blueMunicipium = Color(0xff2140E9);
+   static const blueMunicipiumBackground = Color(0xffDFE0FF);
   static const lightGrey = Color.fromRGBO(188, 191, 200, 1);
   static const darkGrey = Color.fromRGBO(127, 127, 127, 1);
 

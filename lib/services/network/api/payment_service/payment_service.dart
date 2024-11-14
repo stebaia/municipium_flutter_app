@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:municipium/services/network/dto/self_payment_dto.dart';
 import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
 
 part 'payment_service.g.dart';
 

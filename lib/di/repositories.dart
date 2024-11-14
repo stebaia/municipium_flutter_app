@@ -73,5 +73,10 @@ final List<RepositoryProvider> _repositories = [
         selfPaymentsMapper: context.read(),
         paymentService: context.read(),
         logger: context.read()),
+  ),
+  RepositoryProvider<CalendarEventRepository>(
+    create: (context) => CalendarEventRepository(
+        calendarService: context.read(),
+        logger: context.read()),
   )
 ];

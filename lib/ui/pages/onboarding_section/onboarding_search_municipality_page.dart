@@ -20,6 +20,8 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
   OnboardingSearchMunicipalityPage({super.key});
   final GlobalKey globalKeyTextField = GlobalKey();
   final TextEditingController municipalityController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final List<Municipality> _municipalityList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,173 +29,203 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
         builder: (context, municipalityState) {
           return Container(
             padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!
-                                .text_search_municipality,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            key: globalKeyTextField,
-                            child: TextField(
-                              controller: municipalityController,
-                              onChanged: (value) {
-                                if (value.length >= 3) {
-                                  context.read<VisibilityCubit>().show();
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Stack(
+                children: [
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Spacer(),
+                        Text(
+                          AppLocalizations.of(context)!
+                              .text_search_municipality,
+                          style: Theme.of(context).textTheme.titleLarge
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          key: globalKeyTextField,
+                          child: TextField(
+                            controller: municipalityController,
+                            onChanged: (value) {
+                              if (value.length >= 3) {
+                                context.read<VisibilityCubit>().show();
+                                context
+                                    .read<MunicipalityBloc>()
+                                    .filterMunicipalityList(value);
+                              } else if (value.isEmpty) {
+                                context.read<VisibilityCubit>().hide();
+                              }
+                            },
+                            decoration: InputDecoration(
+                              fillColor: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor,
+                              suffixIcon: GestureDetector(
+                                onTap: () async {
+                                  Position position =
+                                      await PositionUtils.getCurrentPosition();
+                                  print(position);
                                   context
                                       .read<MunicipalityBloc>()
-                                      .filterMunicipalityList(value);
-                                } else if (value.isEmpty) {
-                                  context.read<VisibilityCubit>().hide();
-                                }
-                              },
-                              decoration: InputDecoration(
-                                suffixIcon: GestureDetector(
-                                  onTap: () async {
-                                    Position position = await PositionUtils
-                                        .getCurrentPosition();
-                                    print(position);
-                                    context
-                                        .read<MunicipalityBloc>()
-                                        .fetchMunicipalityListWithPosition(
-                                            position.latitude,
-                                            position.longitude);
-                                  },
-                                  child: Icon(
-                                    Icons.gps_fixed,
-                                    color: Colors.grey[400],
-                                  ),
+                                      .fetchMunicipalityListWithPosition(
+                                          position.latitude,
+                                          position.longitude);
+                                },
+                                child: const Icon(
+                                  Icons.gps_fixed,
+                                  color: Colors.black,
                                 ),
-                                contentPadding: const EdgeInsets.all(16),
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      context.watch<VisibilityCubit>().state ==
-                                              VisibilityState.invisible
-                                          ? BorderRadius.circular(10.0)
-                                          : const BorderRadius.only(
-                                              topLeft: Radius.circular(
-                                                10,
-                                              ),
-                                              topRight: Radius.circular(10)),
-                                  borderSide: BorderSide(
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      context.watch<VisibilityCubit>().state ==
-                                              VisibilityState.invisible
-                                          ? BorderRadius.circular(10.0)
-                                          : const BorderRadius.only(
-                                              topLeft: Radius.circular(
-                                                10,
-                                              ),
-                                              topRight: Radius.circular(10)),
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                                filled: true,
-                                hintStyle: TextStyle(color: Colors.grey[400]),
-                                hintText: "Cerca il tuo comune",
                               ),
+                              contentPadding: const EdgeInsets.all(16),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color!,
+                                ),
+                              ),
+                              errorBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .color!),
+                              ),
+                              filled: true,
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color!),
+                              hintText: "Cerca il tuo comune",
                             ),
                           ),
-                          Wrap(
-                            children: [
-                              BlocBuilder<VisibilityCubit, VisibilityState>(
-                                builder: (context, state) {
-                                  if (state == VisibilityState.visible) {
-                                    if (municipalityState
-                                        is FetchedMunicipalityListState) {
-                                      List<Municipality> _municipalityList =
-                                          municipalityState.municipalityList;
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            border: Border.all(
-                                              color: Theme.of(context)
-                                                  .secondaryHeaderColor,
-                                            ),
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                    bottomRight:
-                                                        Radius.circular(10))),
-                                        child: ListView.separated(
-                                          padding: EdgeInsets.zero,
-                                          separatorBuilder: (context, index) =>
-                                              Divider(),
-                                          shrinkWrap: true,
-                                          itemCount: municipalityState
-                                              .municipalityList.length,
-                                          itemBuilder: (context, index) {
-                                            final municipality =
-                                                municipalityState
-                                                    .municipalityList[index];
-                                            return ListTile(
-                                              title: Text(municipality
-                                                  .municipalityName),
-                                              // Aggiungi qui altre informazioni che vuoi mostrare
-                                              onTap: () {
-                                                municipalityController.text =
-                                                    municipality
-                                                        .municipalityName;
-                                                context
-                                                    .read<VisibilityCubit>()
-                                                    .hide();
-                                                context
-                                                    .read<MunicipalityIdBloc>()
-                                                    .add(municipality
-                                                        .muninicipalityId);
-                                                // Gestisci l'evento di tap sul municipio
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    } else {
-                                      return Container(); // Potresti mostrare un indicatore di caricamento qui
-                                    }
-                                  } else {
-                                    return Container();
-                                  }
-                                },
+                        ),
+                        const SizedBox(height: 20,),
+                        SizedBox(
+                            child: DropdownButtonFormField<int>(
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor,
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color!,
+                                ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          FullWidthConfirmButton(
-                            isEnabled: false,
-                            onTap: () async {
-                              context.pushRoute(WelcomeRoute(
-                                  municipalityId: context
-                                      .read<MunicipalityIdBloc>()
-                                      .state));
-                            },
-                          ),
-                        ],
-                      ),
+                              errorBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .color!),
+                              ),
+                              ),
+                          
+                          items: const <DropdownMenuItem<int>>[
+                            DropdownMenuItem<int>(
+                              value: 1,
+                              child: Text("Owner"),
+                            ),
+                            DropdownMenuItem<int>(
+                              value: 2,
+                              child: Text("Member"),
+                            ),
+                          ],
+                          onChanged: (int? value) {},
+                        )),
+                        BlocBuilder<VisibilityCubit, VisibilityState>(
+                          builder: (context, state) {
+                            if (state == VisibilityState.visible) {
+                              if (municipalityState
+                                  is FetchedFilteredMunicipalityListState) {
+                                List<Municipality> _municipalityList =
+                                    municipalityState.municipalityList;
+                                return Container(
+                                  height: _municipalityList.length > 4
+                                      ? 240
+                                      : (60 * _municipalityList.length)
+                                          .toDouble(),
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      border: Border.all(
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10))),
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.zero,
+                                    separatorBuilder: (context, index) =>
+                                        Divider(),
+                                    shrinkWrap: true,
+                                    itemCount: municipalityState
+                                        .municipalityList.length,
+                                    itemBuilder: (context, index) {
+                                      final municipality = municipalityState
+                                          .municipalityList[index];
+                                      return ListTile(
+                                        title:
+                                            Text(municipality.municipalityName, style: TextStyle(color: Colors.white),),
+                                        // Aggiungi qui altre informazioni che vuoi mostrare
+                                        onTap: () {
+                                          municipalityController.text =
+                                              municipality.municipalityName;
+                                          context
+                                              .read<VisibilityCubit>()
+                                              .hide();
+                                          context
+                                              .read<MunicipalityIdBloc>()
+                                              .add(municipality
+                                                  .muninicipalityId);
+                                          // Gestisci l'evento di tap sul municipio
+                                        },
+                                      );
+                                    },
+                                  ),
+                                );
+                              } else {
+                                return Container(); // Potresti mostrare un indicatore di caricamento qui
+                              }
+                            } else {
+                              return Container();
+                            }
+                          },
+                        ),
+                        Spacer(),
+                        FullWidthConfirmButton(
+                          isEnabled: false,
+                          onTap: () async {
+                            context.pushRoute(WelcomeRoute(
+                                municipalityId:
+                                    context.read<MunicipalityIdBloc>().state));
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );
