@@ -16,6 +16,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       : super(const FetchingListIdpState()) {
     on<FetchListIdpEvent>(_fetchListIdp);
     on<FetchUserDataEvent>(_getUserDataSpid);
+    on<LogoutUserDataEvent>(_logoutUser);
   }
 
   void fetchListIdp(String baseUrl) => add(FetchListIdpEvent(baseUrl));
@@ -23,6 +24,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           String authSystem, String authIdOld) =>
       add(FetchUserDataEvent(
           baseUrl, authId, municipalityId, authSystem, authIdOld));
+  void logoutUserSpid(
+          String baseUrlMmc, String playerId, String cf, String udid) =>
+      add(LogoutUserDataEvent(baseUrlMmc, playerId, cf, udid));
 
   FutureOr<void> _fetchListIdp(
       FetchListIdpEvent event, Emitter<UserState> emit) async {
@@ -53,5 +57,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     } catch (ex) {
       emit(const NoSpidUserState());
     }
+  }
+
+  FutureOr<void> _logoutUser(
+      LogoutUserDataEvent event, Emitter<UserState> emit) async {
+    emit(const FetchingUserDataState());
+    try {
+      final bool spidUserModel = await userRepository.logoutUser(
+        event.baseUrlMmc,
+        event.playerId,
+        event.cf,
+        event.udid,
+      );
+      emit(const NoSpidUserState());
+    } catch (ex) {}
   }
 }

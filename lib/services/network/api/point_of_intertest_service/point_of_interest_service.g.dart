@@ -12,14 +12,11 @@ class _PointOfInterestService implements PointOfInterestService {
   _PointOfInterestService(
     this._dio, {
     this.baseUrl,
-    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
-
-  final ParseErrorLogger? errorLogger;
 
   @override
   Future<PointOfInterestsDTO> getPointOfInterestListPaged(
@@ -31,30 +28,24 @@ class _PointOfInterestService implements PointOfInterestService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<PointOfInterestsDTO>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PointOfInterestsDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/point_of_interests/paged_pois_with_filter?page_index=${pageIndex}&page_size=${pageSize}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late PointOfInterestsDTO _value;
-    try {
-      _value = PointOfInterestsDTO.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/point_of_interests/paged_pois_with_filter?page_index=${pageIndex}&page_size=${pageSize}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = PointOfInterestsDTO.fromJson(_result.data!);
     return _value;
   }
 
@@ -64,30 +55,24 @@ class _PointOfInterestService implements PointOfInterestService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<PointOfInterestsDTO>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PointOfInterestsDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/point_of_interests/paged_pois_with_filter',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late PointOfInterestsDTO _value;
-    try {
-      _value = PointOfInterestsDTO.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/point_of_interests/paged_pois_with_filter',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = PointOfInterestsDTO.fromJson(_result.data!);
     return _value;
   }
 
@@ -97,33 +82,26 @@ class _PointOfInterestService implements PointOfInterestService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<CategoryPoiDTO>>(Options(
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<CategoryPoiDTO>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/point_of_interest_categories/categories_with_poi',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<CategoryPoiDTO> _value;
-    try {
-      _value = _result.data!
-          .map(
-              (dynamic i) => CategoryPoiDTO.fromJson(i as Map<String, dynamic>))
-          .toList();
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/point_of_interest_categories/categories_with_poi',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var _value = _result.data!
+        .map((dynamic i) => CategoryPoiDTO.fromJson(i as Map<String, dynamic>))
+        .toList();
     return _value;
   }
 
@@ -136,30 +114,24 @@ class _PointOfInterestService implements PointOfInterestService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<PoiDetailDTO>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<PoiDetailDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/point_of_interests/${poiID}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late PoiDetailDTO _value;
-    try {
-      _value = PoiDetailDTO.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/point_of_interests/${poiID}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = PoiDetailDTO.fromJson(_result.data!);
     return _value;
   }
 

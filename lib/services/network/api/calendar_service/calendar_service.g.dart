@@ -12,14 +12,11 @@ class _CalendarService implements CalendarService {
   _CalendarService(
     this._dio, {
     this.baseUrl,
-    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
-
-  final ParseErrorLogger? errorLogger;
 
   @override
   Future<List<CalendarEvent>> getCalendar(
@@ -39,32 +36,26 @@ class _CalendarService implements CalendarService {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<CalendarEvent>>(Options(
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<CalendarEvent>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/municipality_event',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<CalendarEvent> _value;
-    try {
-      _value = _result.data!
-          .map((dynamic i) => CalendarEvent.fromJson(i as Map<String, dynamic>))
-          .toList();
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/municipality_event',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var _value = _result.data!
+        .map((dynamic i) => CalendarEvent.fromJson(i as Map<String, dynamic>))
+        .toList();
     return _value;
   }
 

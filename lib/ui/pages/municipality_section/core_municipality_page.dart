@@ -58,32 +58,31 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                 scaffoldKey: scaffoldKey,
               ),
               //darkMode.darkTheme ? ThemeHelper.backgroundColorDark : Colors.white,
-              floatingActionButton: 
-                  FloatingActionButton(
-                      onPressed: () => showModalBottomSheet(
-                          context: context,
-                          builder: ((modalContext) => CustomBaseBottomSheet(
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              title: 'azioni rapide',
-                              body: const ModalRapidActionComponent()))),
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () => showModalBottomSheet(
+                    context: context,
+                    builder: ((modalContext) => CustomBaseBottomSheet(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        title: 'azioni rapide',
+                        body: const ModalRapidActionComponent()))),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
               bottomNavigationBar: BottomNavigationBar(
                   elevation: 0,
-                  
-                 
                   type: BottomNavigationBarType.fixed,
                   currentIndex: tabsRouter.activeIndex,
                   onTap: (index) async {
                     // here we switch between tabs
                     if (index == 2) {
                       context.read<CalendarBloc>().fetchCalendarEvents(
-                            baseUrl: Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
-                            date: MunicipiumUtility.getFirstDayOfMonth(),
-                            endDate: MunicipiumUtility.getLastDayOfMonth());
+                          baseUrl: Provider.of<BaseUrlNotifier>(context,
+                                  listen: false)
+                              .baseUrl,
+                          date: MunicipiumUtility.getFirstDayOfMonth(),
+                          endDate: MunicipiumUtility.getLastDayOfMonth());
                     }
                     if (index == 3) {
                       bool isEnabled = await context
@@ -102,7 +101,6 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.home,
-                            
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
@@ -122,7 +120,6 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.map,
-                            
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
@@ -142,7 +139,6 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.calendar,
-                        
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
@@ -165,7 +161,6 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
                               height: 30,
                               child: Icon(
                                 CupertinoIcons.person,
-                                
                               )),
                           activeIcon: Container(
                               decoration: const BoxDecoration(

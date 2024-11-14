@@ -25,9 +25,6 @@ abstract class MunicipalityService {
   Future<MunicipalityDTO> getMunicipality(@Path('baseUrl') String baseUrl,
       @Path('municipalityId') int municipalityId);
 
-  @GET('{baseUrl}/get_idps')
-  Future<MunicipalityDTO> getIdpList(@Path('baseUrl') String baseUrl);
-
   @GET(
       '{baseUrl}/paged_municipalities?page_index={page_index}&page_size={page_size}')
   Future<MunicipalityListDTO> getMunicipalityListPaged(

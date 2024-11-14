@@ -12,14 +12,11 @@ class _CivilDefenceService implements CivilDefenceService {
   _CivilDefenceService(
     this._dio, {
     this.baseUrl,
-    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
-
-  final ParseErrorLogger? errorLogger;
 
   @override
   Future<List<CivilDefenceEmergencyCallDTO>> getPhoneNumbers(
@@ -28,33 +25,27 @@ class _CivilDefenceService implements CivilDefenceService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<CivilDefenceEmergencyCallDTO>>(Options(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<CivilDefenceEmergencyCallDTO>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/civil_defence_phone_numbers',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<CivilDefenceEmergencyCallDTO> _value;
-    try {
-      _value = _result.data!
-          .map((dynamic i) =>
-              CivilDefenceEmergencyCallDTO.fromJson(i as Map<String, dynamic>))
-          .toList();
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/civil_defence_phone_numbers',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var _value = _result.data!
+        .map((dynamic i) =>
+            CivilDefenceEmergencyCallDTO.fromJson(i as Map<String, dynamic>))
+        .toList();
     return _value;
   }
 

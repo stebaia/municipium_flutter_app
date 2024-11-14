@@ -1159,10 +1159,11 @@ class PersonalAreaMenuRoute
     name,
     builder: (data) {
       final args = data.argsAs<PersonalAreaMenuRouteArgs>();
-      return _i27.PersonalAreaMenuPage(
+      return _i42.WrappedRoute(
+          child: _i27.PersonalAreaMenuPage(
         key: args.key,
         scaffoldKey: args.scaffoldKey,
-      );
+      ));
     },
   );
 }

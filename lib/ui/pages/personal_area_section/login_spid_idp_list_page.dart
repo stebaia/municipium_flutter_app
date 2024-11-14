@@ -39,8 +39,6 @@ class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
               return ListView.builder(
                 itemCount: listIdp.length,
                 itemBuilder: (context, index) => Card(
-                    color: Colors.grey,
-                    surfaceTintColor: Colors.white,
                     margin: const EdgeInsets.all(10),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -86,8 +84,8 @@ class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<UserBloc>(
           create: (context) => UserBloc(userRepository: context.read())
-            ..fetchListIdp(Provider.of<BaseUrlNotifier>(context, listen: false)
-                .baseUrlMmc),
+            ..fetchListIdp(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         )
       ], child: this);
 }

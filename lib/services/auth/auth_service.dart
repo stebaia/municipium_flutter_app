@@ -17,11 +17,13 @@ class AuthService {
     if (user.authId != null) {
       if (hasBiometrics) {
         // Controlla se l'utente ha eseguito l'accesso biometrico o tramite sequenza.
-        bool authenticated = await auth.authenticate(
-          localizedReason: 'Autenticati per accedere all\'app',
-          options: const AuthenticationOptions(biometricOnly: true),
-        );
-        return authenticated ? AuthStatus.fullAuth : AuthStatus.semiAuth;
+        try {
+          bool authenticated = await auth.authenticate(
+            localizedReason: 'Autenticati per accedere all\'app',
+            options: const AuthenticationOptions(biometricOnly: false),
+          );
+          return authenticated ? AuthStatus.fullAuth : AuthStatus.semiAuth;
+        } catch (e) {}
       } else {
         return AuthStatus.semiAuth;
       }

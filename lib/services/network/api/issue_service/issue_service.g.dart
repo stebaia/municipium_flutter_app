@@ -12,14 +12,11 @@ class _IssueService implements IssueService {
   _IssueService(
     this._dio, {
     this.baseUrl,
-    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
-
-  final ParseErrorLogger? errorLogger;
 
   @override
   Future<IssueDetailDto> getIssueDetail(
@@ -31,30 +28,24 @@ class _IssueService implements IssueService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<IssueDetailDto>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<IssueDetailDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/issues/${issueId}?udid=${udid}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late IssueDetailDto _value;
-    try {
-      _value = IssueDetailDto.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/issues/${issueId}?udid=${udid}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = IssueDetailDto.fromJson(_result.data!);
     return _value;
   }
 
@@ -67,32 +58,26 @@ class _IssueService implements IssueService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<IssueDto>>(Options(
+    final _result =
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<IssueDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/issues?udid=${udid}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<IssueDto> _value;
-    try {
-      _value = _result.data!
-          .map((dynamic i) => IssueDto.fromJson(i as Map<String, dynamic>))
-          .toList();
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/issues?udid=${udid}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var _value = _result.data!
+        .map((dynamic i) => IssueDto.fromJson(i as Map<String, dynamic>))
+        .toList();
     return _value;
   }
 
@@ -102,32 +87,26 @@ class _IssueService implements IssueService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<IssueTagDto>>(Options(
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<IssueTagDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/tags/',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<IssueTagDto> _value;
-    try {
-      _value = _result.data!
-          .map((dynamic i) => IssueTagDto.fromJson(i as Map<String, dynamic>))
-          .toList();
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/tags/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var _value = _result.data!
+        .map((dynamic i) => IssueTagDto.fromJson(i as Map<String, dynamic>))
+        .toList();
     return _value;
   }
 
@@ -138,33 +117,27 @@ class _IssueService implements IssueService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<IssueCategoryTagDto>>(Options(
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<IssueCategoryTagDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/issue_categories/',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<IssueCategoryTagDto> _value;
-    try {
-      _value = _result.data!
-          .map((dynamic i) =>
-              IssueCategoryTagDto.fromJson(i as Map<String, dynamic>))
-          .toList();
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/issue_categories/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var _value = _result.data!
+        .map((dynamic i) =>
+            IssueCategoryTagDto.fromJson(i as Map<String, dynamic>))
+        .toList();
     return _value;
   }
 
@@ -178,30 +151,24 @@ class _IssueService implements IssueService {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(issue.toJson());
-    final _options = _setStreamType<Map<String, bool>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Map<String, bool>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/issues',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Map<String, bool> _value;
-    try {
-      _value = _result.data!.cast<String, bool>();
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/issues',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = _result.data!.cast<String, bool>();
     return _value;
   }
 
@@ -215,30 +182,24 @@ class _IssueService implements IssueService {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(item.toJson());
-    final _options = _setStreamType<ChatResponse>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ChatResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '${baseUrl}/issues/comment_issue',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ChatResponse _value;
-    try {
-      _value = ChatResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+            .compose(
+              _dio.options,
+              '${baseUrl}/issues/comment_issue',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ChatResponse.fromJson(_result.data!);
     return _value;
   }
 
