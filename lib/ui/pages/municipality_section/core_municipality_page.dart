@@ -31,9 +31,15 @@ class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<UserMenuConfigurationCubit>().initialize();
-    context.read<TemporaryConfigurationCubit>().initialize();
     final municipality = context.read<MunicipalityStoredCubit>().state!;
+    String baseUrl =
+        Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl;
+    context
+        .read<UserMenuConfigurationCubit>()
+        .initialize(baseUrl, widget.municipalityId.toString());
+    context
+        .read<TemporaryConfigurationCubit>()
+        .initialize(baseUrl, widget.municipalityId.toString());
 
     return AutoTabsRouter(
         routes: [

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
+import 'package:municipium/model/dashboard_menu/dashboard_menu.dart';
 import 'package:municipium/model/municipality_list.dart';
 import 'package:municipium/services/network/dto/municipality_dto.dart';
 import 'package:retrofit/retrofit.dart';
@@ -37,4 +37,9 @@ abstract class MunicipalityService {
     @Path('baseUrl') String baseUrl,
     @Path('municipality_name') String municipalityName,
   );
+
+  @GET('{baseUrl}/municipalities/dashboard_mobile/{municipality_id}')
+  Future<List<DashboardMenu>> getMunicipalityDashboard(
+      @Path('baseUrl') String baseUrl,
+      @Path('municipality_id') String municipalityId);
 }

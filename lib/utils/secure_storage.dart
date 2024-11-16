@@ -15,11 +15,17 @@ class SecureStorage {
 
   final String _configurationMenu = "CONFIGURATION_MENU";
 
-
   Future setConfigurationMenu(String menu) async {
-     await storage.write(key: _configurationMenu, value: menu);
+    await storage.write(key: _configurationMenu, value: menu);
   }
 
+  Future<String?> getConfigurationMenu() async {
+    try {
+      return await storage.read(key: _configurationMenu);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
   Future setMunicipalityKeyInStorage(String municipality) async {
     await storage.write(key: _municipalityKey, value: municipality);
@@ -29,7 +35,7 @@ class SecureStorage {
     await storage.write(key: _deviceKey, value: device);
   }
 
-   Future setConfigurationsKeyInStorage(String conf) async {
+  Future setConfigurationsKeyInStorage(String conf) async {
     await storage.write(key: _configurationKey, value: conf);
   }
 
@@ -76,9 +82,6 @@ class SecureStorage {
       throw Exception(e);
     }
   }
-
- 
-
 
   Future setOneSignalKeyInStorage(String key) async {
     await storage.write(key: _oneSignalKey, value: key);

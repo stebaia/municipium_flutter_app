@@ -6,19 +6,18 @@ import 'package:municipium/repositories/user_repository.dart';
 
 part 'user_menu_conf_cubit_state.dart';
 
-
-class UserMenuConfigurationCubit extends HydratedCubit<List<UserConfigurationMenu>> {
+class UserMenuConfigurationCubit
+    extends HydratedCubit<List<UserConfigurationMenu>> {
   final UserRepository userRepository;
 
   UserMenuConfigurationCubit(this.userRepository) : super([]) {
-    initialize();
+    //initialize();
   }
 
-  Future<void> initialize() async {
-    
-      List<UserConfigurationMenu> conf = await userRepository.initUserMenuInShared();
-      emit(conf);
-    
+  Future<void> initialize(String baseUrl, String municipalityId) async {
+    List<UserConfigurationMenu> conf =
+        await userRepository.initUserMenuInShared(baseUrl, municipalityId);
+    emit(conf);
   }
 
   void resetConf() {
