@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:municipium/model/municipality.dart';
+import 'package:municipium/ui/pages/user_configuration_section/user_conf_menu_edit_page.dart';
 import 'package:municipium/utils/theme_helper.dart';
 
 class BoxVerticalInfoDashboardComponents extends StatelessWidget {
@@ -105,28 +107,32 @@ class BoxVerticalDashboardComponents extends StatelessWidget {
   Widget _completeWidgetContainer(BuildContext context, String name) {
     return Stack(
       children: [
-        Container(
-          margin: const EdgeInsets.all(6),
-          height: MediaQuery.of(context).size.height * 0.27,
-          width: MediaQuery.of(context).size.width * 0.45,
-          decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor,
-              borderRadius: BorderRadius.circular(20)),
-          child: Stack(
-            children: [
-              Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(name,
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold))),
-              Positioned(
-                  bottom: 0,
-                  child: Image.network(
-                    assetImage,
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    height: 120,
-                  ))
-            ],
+        InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () => context.router.pushNamed('/$slug'),
+          child: Container(
+            margin: const EdgeInsets.all(6),
+            height: MediaQuery.of(context).size.height * 0.27,
+            width: MediaQuery.of(context).size.width * 0.45,
+            decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.circular(20)),
+            child: Stack(
+              children: [
+                Container(
+                    padding: EdgeInsets.all(20),
+                    child: Text(name,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold))),
+                Positioned(
+                    bottom: 0,
+                    child: Image.network(
+                      assetImage,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      height: 120,
+                    ))
+              ],
+            ),
           ),
         ),
       ],
@@ -166,28 +172,31 @@ class BoxHorizzontalDashboardComponents extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.14,
             width: MediaQuery.of(context).size.width,
           )
-        : Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            height: MediaQuery.of(context).size.height * 0.14,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.circular(20)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: const EdgeInsets.all(20),
-                    width: 150,
-                    child: Text(name,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold))),
-                Image.network(
-                  assetImage,
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  height: 120,
-                )
-              ],
-            ));
+        : InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: () => context.router.pushNamed('/$slug'),
+            child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                height: MediaQuery.of(context).size.height * 0.14,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).canvasColor,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(20),
+                        width: 150,
+                        child: Text(name,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold))),
+                    Image.network(
+                      assetImage,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      height: 120,
+                    )
+                  ],
+                )));
   }
 }

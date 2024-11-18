@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
                   assetImage: configurationMenus[1].assetImage,
                   name: configurationMenus[1].serviceName,
                   isRemoved: configurationMenus[1].isRemoved,
-                  slug: configurationMenus[0].slug,
+                  slug: configurationMenus[1].slug,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -77,13 +77,13 @@ class HomePage extends StatelessWidget {
                       assetImage: configurationMenus[2].assetImage,
                       name: configurationMenus[2].serviceName,
                       isRemoved: configurationMenus[2].isRemoved,
-                      slug: configurationMenus[0].slug,
+                      slug: configurationMenus[2].slug,
                     ),
                     BoxVerticalDashboardComponents(
                       assetImage: configurationMenus[3].assetImage,
                       name: configurationMenus[3].serviceName,
                       isRemoved: configurationMenus[3].isRemoved,
-                      slug: configurationMenus[0].slug,
+                      slug: configurationMenus[3].slug,
                     )
                   ],
                 ),

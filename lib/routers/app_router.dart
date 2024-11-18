@@ -20,12 +20,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: MainRoute.page,
         ),
-        AutoRoute(
-          page: NewsListRoute.page,
-        ),
-        AutoRoute(
-          page: EventListRoute.page,
-        ),
+        AutoRoute(page: NewsListRoute.page, path: '/news'),
+        AutoRoute(page: EventListRoute.page, path: '/events'),
         AutoRoute(
           page: AccountDataRoute.page,
         ),
@@ -33,7 +29,7 @@ class AppRouter extends RootStackRouter {
           page: AccountPrefereceRoute.page,
         ),
         AutoRoute(page: WebViewSpidAuthRoute.page),
-        AutoRoute(page: ServiceOnlineListRoute.page),
+        AutoRoute(page: ServiceOnlineListRoute.page, path: '/services'),
         AutoRoute(page: LoginSpidIdpListRoute.page),
         AutoRoute(page: ChooseMunicipalityRoute.page),
         AutoRoute(page: PnrrServicesRoute.page),
@@ -41,11 +37,11 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: OnlineServiceDetailWebviewRoute.page),
         AutoRoute(page: EventDetailRoute.page),
         AutoRoute(page: DetailPoiRoute.page),
-        AutoRoute(page: IssuesListRoute.page),
+        AutoRoute(page: IssuesListRoute.page, path: '/issue'),
         AutoRoute(page: NewIssueRouter.page),
         AutoRoute(page: WelcomeRoute.page),
         AutoRoute(page: NewsDetailRoute.page),
-        AutoRoute(page: PointOfInterestListRoute.page),
+        AutoRoute(page: PointOfInterestListRoute.page, path: '/poi'),
         AutoRoute(page: SettingsRoute.page),
         AutoRoute(page: UserConfMenuEditRoute.page),
         AutoRoute(page: IssueDetailRoute.page),
@@ -56,6 +52,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: NewSelfPaymentRouter.page),
         AutoRoute(page: PersonTypePaymentRoute.page),
         AutoRoute(page: WeatherQualityRoute.page),
-        AutoRoute(page: PrenotationRoute.page),
+        AutoRoute(page: PrenotationRoute.page, path: '/prenotazioni'),
       ];
 }
