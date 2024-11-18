@@ -183,33 +183,50 @@ class UserConfMenuEditPage extends StatelessWidget {
             if (snapshot.hasData) {
               List<UserConfigurationMenu> userConfiguration = snapshot.data!;
               return Container(
+                  padding: const EdgeInsets.all(20),
                   height: MediaQuery.of(context).size.height * 0.9,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                  child: ListView.builder(
-                      itemCount: userConfiguration.length,
-                      itemBuilder: (context, index) => InkWell(
-                          child: Container(
-                              height: 60,
-                              child: Center(
-                                  child: Text(
-                                      userConfiguration[index].serviceName))),
-                          onTap: () {
-                            context
-                                .read<TemporaryConfigurationCubit>()
-                                .updateConfiguration(
-                                    UserConfigurationMenu(
-                                        assetImage:
-                                            userConfiguration[index].assetImage,
-                                        serviceName: userConfiguration[index]
-                                            .serviceName,
-                                        isMandatory: userConfiguration[index]
-                                            .isMandatory,
-                                        position: position,
-                                        slug: userConfiguration[index].slug),
-                                    position);
-                            Navigator.pop(context);
-                          })));
+                  child: Column(
+                    children: [
+                      Text(
+                        'Lista di servizi',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const Divider(),
+                      Flexible(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: userConfiguration.length,
+                            itemBuilder: (context, index) => InkWell(
+                                child: Container(
+                                    height: 60,
+                                    child: Center(
+                                        child: Text(userConfiguration[index]
+                                            .serviceName))),
+                                onTap: () {
+                                  context
+                                      .read<TemporaryConfigurationCubit>()
+                                      .updateConfiguration(
+                                          UserConfigurationMenu(
+                                              assetImage:
+                                                  userConfiguration[index]
+                                                      .assetImage,
+                                              serviceName:
+                                                  userConfiguration[index]
+                                                      .serviceName,
+                                              isMandatory:
+                                                  userConfiguration[index]
+                                                      .isMandatory,
+                                              position: position,
+                                              slug: userConfiguration[index]
+                                                  .slug),
+                                          position);
+                                  Navigator.pop(context);
+                                })),
+                      ),
+                    ],
+                  ));
             } else {
               return Center(
                 child: CircularProgressIndicator(),
