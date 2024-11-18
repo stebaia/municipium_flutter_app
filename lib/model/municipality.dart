@@ -23,76 +23,76 @@ class Municipality extends Equatable {
   final String jcityGovUrl;
   final String province;
   final String prenotationWebUrl;
+  final String civilDefenceType;
   Configurations? configurations;
 
+  Municipality(
+      {required this.municipalityName,
+      required this.muninicipalityId,
+      required this.background,
+      required this.logo,
+      required this.lat,
+      required this.lng,
+      required this.subdomain,
+      required this.appServiceOne,
+      required this.appServiceTwo,
+      required this.appServiceThree,
+      required this.appServiceFour,
+      required this.newMenu,
+      this.configurations,
+      required this.jcityGovEnte,
+      required this.jcityGovUrl,
+      required this.province,
+      required this.civilDefenceType,
+      required this.prenotationWebUrl});
 
-  Municipality({
-    required this.municipalityName,
-    required this.muninicipalityId,
-    required this.background,
-    required this.logo,
-    required this.lat,
-    required this.lng,
-    required this.subdomain,
-    required this.appServiceOne,
-    required this.appServiceTwo,
-    required this.appServiceThree,
-    required this.appServiceFour,
-    required this.newMenu,
-    this.configurations,
-    required this.jcityGovEnte,
-    required this.jcityGovUrl,
-    required this.province,
-    required this.prenotationWebUrl});
-
-  
   factory Municipality.fromJsonFromShared(String jsonString) {
     final json = jsonDecode(jsonString);
     return Municipality(
-      municipalityName: json['name'],
-      muninicipalityId: json['id'],
-      lat: json['lat'],
-      lng: json['lng'],
-      logo: MunicipiumImage.fromJson(json['logo']),
-      background: MunicipiumImage.fromJson(json['background']),
-      subdomain: json['subdomain'],
-      appServiceOne: json['appServiceOne'],
-      appServiceTwo: json['appServiceTwo'],
-      appServiceThree: json['appServiceThree'],
-      appServiceFour: json['appServiceFour'],
-      province: json['province'],
-      newMenu: NewMenuDTO.fromJson(json['new_menu']),
-      configurations: json['configurations'] != null
-          ? Configurations.fromJson(json['configurations'])
-          : null,
-      jcityGovEnte: json['jcityGovEnte'] ?? '',
-      jcityGovUrl: json['jcityGovUrl'] ?? '',
-      prenotationWebUrl: json['prenotationWebUrl']
-    );
+        municipalityName: json['name'],
+        muninicipalityId: json['id'],
+        lat: json['lat'],
+        lng: json['lng'],
+        logo: MunicipiumImage.fromJson(json['logo']),
+        background: MunicipiumImage.fromJson(json['background']),
+        subdomain: json['subdomain'],
+        appServiceOne: json['appServiceOne'],
+        appServiceTwo: json['appServiceTwo'],
+        appServiceThree: json['appServiceThree'],
+        appServiceFour: json['appServiceFour'],
+        province: json['province'],
+        newMenu: NewMenuDTO.fromJson(json['new_menu']),
+        configurations: json['configurations'] != null
+            ? Configurations.fromJson(json['configurations'])
+            : null,
+        jcityGovEnte: json['jcityGovEnte'] ?? '',
+        jcityGovUrl: json['jcityGovUrl'] ?? '',
+        civilDefenceType: json['civilDefenceType'],
+        prenotationWebUrl: json['prenotationWebUrl']);
   }
 
   factory Municipality.fromJson(Map<String, dynamic> json) {
     return Municipality(
-      municipalityName: json['name'],
-      muninicipalityId: json['id'],
-      lat: json['lat'],
-      lng: json['lng'],
-      logo: MunicipiumImage.fromJson(json['logo']),
-      background: MunicipiumImage.fromJson(json['background']),
-      subdomain: json['subdomain'],
-      appServiceOne: json['appServiceOne'],
-      appServiceTwo: json['appServiceTwo'],
-      appServiceThree: json['appServiceThree'],
-      appServiceFour: json['appServiceFour'],
-      province: json['province'],
-      newMenu: NewMenuDTO.fromJson(json['new_menu']),
-      configurations: json['configurations'] != null
-          ? Configurations.fromJson(json['configurations'])
-          : null,
-      jcityGovEnte: json['jcityGovEnte'] ?? '',
-      jcityGovUrl: json['jcityGovUrl'] ?? '',
-      prenotationWebUrl: json['prenotationWebUrl']
-    );
+        municipalityName: json['name'],
+        muninicipalityId: json['id'],
+        lat: json['lat'],
+        lng: json['lng'],
+        logo: MunicipiumImage.fromJson(json['logo']),
+        background: MunicipiumImage.fromJson(json['background']),
+        subdomain: json['subdomain'],
+        appServiceOne: json['appServiceOne'],
+        appServiceTwo: json['appServiceTwo'],
+        appServiceThree: json['appServiceThree'],
+        appServiceFour: json['appServiceFour'],
+        province: json['province'],
+        newMenu: NewMenuDTO.fromJson(json['new_menu']),
+        configurations: json['configurations'] != null
+            ? Configurations.fromJson(json['configurations'])
+            : null,
+        jcityGovEnte: json['jcityGovEnte'] ?? '',
+        jcityGovUrl: json['jcityGovUrl'] ?? '',
+        civilDefenceType: json['civilDefenceType'],
+        prenotationWebUrl: json['prenotationWebUrl']);
   }
 
   // Metodo per serializzare l'oggetto Municipality in un JSON di tipo Map
@@ -114,7 +114,8 @@ class Municipality extends Equatable {
       'configurations': configurations?.toJson(),
       'jcityGovEnte': jcityGovEnte,
       'jcityGovUrl': jcityGovUrl,
-      'prenotationWebUrl' : prenotationWebUrl
+      'civilDefenceType': civilDefenceType,
+      'prenotationWebUrl': prenotationWebUrl
     };
   }
 
@@ -135,6 +136,7 @@ class Municipality extends Equatable {
         jcityGovEnte,
         jcityGovUrl,
         province,
+        civilDefenceType,
         prenotationWebUrl
       ];
 }

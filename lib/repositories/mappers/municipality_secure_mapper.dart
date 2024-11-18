@@ -20,12 +20,12 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         'appServiceTwo': from.appServiceTwo,
         'appServiceThree': from.appServiceThree,
         'appServiceFour': from.appServiceFour,
-        'province' : from.province,
+        'province': from.province,
         'new_menu': from.newMenu.toJson(),
-        'configurations': from.configurations ??
-            from.configurations!
-                .toJson(),
-         'url_prenotazioni_web'  : from.prenotationWebUrl// Serializza l'oggetto MunicipiumImage
+        'configurations': from.configurations ?? from.configurations!.toJson(),
+        'url_prenotazioni_web':
+            from.prenotationWebUrl, // Serializza l'oggetto MunicipiumImage
+        'civil_defence_type': from.civilDefenceType
       });
 
   @override
@@ -51,6 +51,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         configurations: Configurations.fromJson(json['configurations']),
         jcityGovEnte: json['jcityGovEnte'] ?? '',
         jcityGovUrl: json['jcityGovUrl'] ?? '',
-        prenotationWebUrl: json['url_prenotazioni_web']);
+        civilDefenceType: json['civil_defence_type'] ?? '',
+        prenotationWebUrl: json['url_prenotazioni_web'] ?? '');
   }
 }

@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
+import 'package:municipium/model/civil_defence/civil_defence_level.dart';
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
 import 'package:pine/pine.dart';
@@ -26,8 +27,20 @@ class CivilDefenceRepository {
         list.add(emergencyCallMapper.fromDTO(element));
       });
       return list;
-    } catch (error, stackTrace) {
+    } catch (error) {
       logger.e('Error in getting news list');
+      rethrow;
+    }
+  }
+
+  Future<CivilDefenceLevels> getCivilDefenceLevels(
+      String baseUrl, String type) async {
+    try {
+      final CivilDefenceLevels civilDefenceLevels =
+          await civilDefenceService.getCivilDefenceLevels(baseUrl, type);
+      return civilDefenceLevels;
+    } catch (e) {
+      logger.e('Error getting civil defence levels $e');
       rethrow;
     }
   }
