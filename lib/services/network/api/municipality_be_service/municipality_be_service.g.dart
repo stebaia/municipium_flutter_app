@@ -6,7 +6,7 @@ part of 'municipality_be_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _MunicipalityBeService implements MunicipalityBeService {
   _MunicipalityBeService(
@@ -19,7 +19,10 @@ class _MunicipalityBeService implements MunicipalityBeService {
   String? baseUrl;
 
   @override
-  Future<ResponseDevicePut> putDevices(DeviceBe device) async {
+  Future<ResponseDevicePut> putDevices(
+    String baseUrl,
+    DeviceBe device,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -33,7 +36,7 @@ class _MunicipalityBeService implements MunicipalityBeService {
     )
             .compose(
               _dio.options,
-              'devices',
+              '${baseUrl}/devices',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -42,12 +45,15 @@ class _MunicipalityBeService implements MunicipalityBeService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ResponseDevicePut.fromJson(_result.data!);
-    return value;
+    final _value = ResponseDevicePut.fromJson(_result.data!);
+    return _value;
   }
 
   @override
-  Future<HttpResponse<dynamic>> postDevices(DeviceBe device) async {
+  Future<HttpResponse<dynamic>> postDevices(
+    String baseUrl,
+    DeviceBe device,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -61,7 +67,7 @@ class _MunicipalityBeService implements MunicipalityBeService {
     )
             .compose(
               _dio.options,
-              'devices',
+              '${baseUrl}/devices',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -70,8 +76,8 @@ class _MunicipalityBeService implements MunicipalityBeService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = _result.data;
-    final httpResponse = HttpResponse(value, _result);
+    final _value = _result.data;
+    final httpResponse = HttpResponse(_value, _result);
     return httpResponse;
   }
 

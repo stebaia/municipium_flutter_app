@@ -6,7 +6,7 @@ part of 'issue_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _IssueService implements IssueService {
   _IssueService(
@@ -19,20 +19,24 @@ class _IssueService implements IssueService {
   String? baseUrl;
 
   @override
-  Future<IssueDto> getIssueDetail(int issueId) async {
+  Future<IssueDetailDto> getIssueDetail(
+    String baseUrl,
+    int issueId,
+    String udid,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<IssueDto>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<IssueDetailDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'issues/${issueId}',
+              '${baseUrl}/issues/${issueId}?udid=${udid}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,12 +45,15 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = IssueDto.fromJson(_result.data!);
-    return value;
+    final _value = IssueDetailDto.fromJson(_result.data!);
+    return _value;
   }
 
   @override
-  Future<List<IssueDto>> getIssuesList() async {
+  Future<List<IssueDto>> getIssuesList(
+    String baseUrl,
+    String udid,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -59,7 +66,7 @@ class _IssueService implements IssueService {
     )
             .compose(
               _dio.options,
-              'issues/',
+              '${baseUrl}/issues?udid=${udid}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -68,14 +75,14 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) => IssueDto.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   @override
-  Future<List<IssueTagDto>> getIssueTags() async {
+  Future<List<IssueTagDto>> getIssueTags(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -88,7 +95,7 @@ class _IssueService implements IssueService {
     )
             .compose(
               _dio.options,
-              'tags/',
+              '${baseUrl}/tags/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -97,14 +104,15 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) => IssueTagDto.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   @override
-  Future<List<IssueCategoryTagDto>> getIssueCategoriesTags() async {
+  Future<List<IssueCategoryTagDto>> getIssueCategoriesTags(
+      String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -117,7 +125,7 @@ class _IssueService implements IssueService {
     )
             .compose(
               _dio.options,
-              'issue_categories/',
+              '${baseUrl}/issue_categories/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -126,15 +134,18 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) =>
             IssueCategoryTagDto.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   @override
-  Future<Map<String, bool>> postIssue(PostIssueDto issue) async {
+  Future<Map<String, bool>> postIssue(
+    String baseUrl,
+    PostIssueDto issue,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -148,7 +159,7 @@ class _IssueService implements IssueService {
     )
             .compose(
               _dio.options,
-              'issues',
+              '${baseUrl}/issues',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -157,8 +168,39 @@ class _IssueService implements IssueService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = _result.data!.cast<String, bool>();
-    return value;
+    final _value = _result.data!.cast<String, bool>();
+    return _value;
+  }
+
+  @override
+  Future<ChatResponse> postMessageIssue(
+    String baseUrl,
+    ChatPostIssueDto item,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(item.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ChatResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '${baseUrl}/issues/comment_issue',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ChatResponse.fromJson(_result.data!);
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

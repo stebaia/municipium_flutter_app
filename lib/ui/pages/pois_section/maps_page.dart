@@ -10,17 +10,19 @@ import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:municipium/app.dart';
-import 'package:municipium/bloc/category_poi_bloc/category_poi_bloc.dart';
+import 'package:municipium/bloc/bloc/category_poi_bloc/category_poi_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/selected_categories_cubit.dart/selected_categories_cubit.dart';
-import 'package:municipium/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
+import 'package:municipium/bloc/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
 import 'package:municipium/model/item_category.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
-import 'package:municipium/ui/components/custom_bottomsheet.dart';
+import 'package:municipium/ui/components/bottom_sheet/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/maps_component/filter_modal_bottomsheet.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/point_of_interests/custom_info_window.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class MapsPage extends StatefulWidget implements AutoRouteWrapper {
@@ -32,14 +34,16 @@ class MapsPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<PointOfInterestBloc>(
-          create: (context) =>
-              PointOfInterestBloc(pointOfInterestRepository: context.read())
-                ..fetchPointOfInterestList(),
+          create: (context) => PointOfInterestBloc(
+              pointOfInterestRepository: context.read())
+            ..fetchPointOfInterestList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         ),
         BlocProvider<CategoryPoiBloc>(
-          create: (context) =>
-              CategoryPoiBloc(pointOfInterestRepository: context.read())
-                ..fetchCategoryPoiList(),
+          create: (context) => CategoryPoiBloc(
+              pointOfInterestRepository: context.read())
+            ..fetchCategoryPoiList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         ),
         BlocProvider<CategorySelectionCubit>(
           create: (_) => CategorySelectionCubit(),
@@ -50,12 +54,14 @@ class MapsPage extends StatefulWidget implements AutoRouteWrapper {
 class _MapsPageState extends State<MapsPage> {
   final CustomInfoWindowController _customInfoWindowController =
       CustomInfoWindowController();
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  GoogleMapController? _controller;
 
   final double offset = 50;
   final double height = 210;
   final double width = 200;
+  late ClusterManager clusterManagers;
+
+  
 
   double _convertColorToHue(ItemCategory? category) {
     Color color;
@@ -80,6 +86,21 @@ class _MapsPageState extends State<MapsPage> {
     super.dispose();
   }
 
+
+  @override
+  void initState() {
+    clusterManagers = ClusterManager(
+        clusterManagerId: const ClusterManagerId("clusterManagerId"),
+        onClusterTap: (Cluster cluster) => setState(
+          () {
+            _controller?.animateCamera(
+                CameraUpdate.newLatLngBounds(cluster.bounds, 50));
+          },
+        ),
+      );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final municipality = (context.watch<MunicipalityGlobalCubit>().state
@@ -95,11 +116,16 @@ class _MapsPageState extends State<MapsPage> {
         SVProgressHUD.dismiss();
       }
     }, builder: (context, state) {
+
       Set<Marker> markers = {};
       if (state is FetchedPointOfInterestListState) {
         if (state.pointOfInterestsList.pointOfInterestsItemList != null) {
+          
+      //markers = {};
           markers = state.pointOfInterestsList.pointOfInterestsItemList!
               .map((point) => Marker(
+
+                  clusterManagerId: clusterManagers?.clusterManagerId,
                   icon: point.pointOfInterestCategories!.isNotEmpty
                       ? BitmapDescriptor.defaultMarkerWithHue(
                           _convertColorToHue(
@@ -113,7 +139,7 @@ class _MapsPageState extends State<MapsPage> {
                         Column(
                           children: [
                             Container(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).canvasColor,
                               padding: const EdgeInsets.all(16),
                               width: width,
                               child: Column(
@@ -150,7 +176,7 @@ class _MapsPageState extends State<MapsPage> {
                             Triangle.isosceles(
                               edge: Edge.BOTTOM,
                               child: Container(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).canvasColor,
                                 width: 20.0,
                                 height: 20.0,
                               ),
@@ -170,6 +196,7 @@ class _MapsPageState extends State<MapsPage> {
         children: [
           Positioned.fill(
             child: GoogleMap(
+              clusterManagers: {clusterManagers},
               myLocationEnabled: false,
               onTap: (position) {
                 _customInfoWindowController.hideInfoWindow!();
@@ -183,9 +210,10 @@ class _MapsPageState extends State<MapsPage> {
               initialCameraPosition: CameraPosition(
                   zoom: 14, target: LatLng(municipality.lat, municipality.lng)),
               onMapCreated: (GoogleMapController controller) {
+                _controller = controller;
                 _customInfoWindowController.googleMapController = controller;
 
-                _controller.complete(controller);
+               
               },
             ),
           ),
@@ -199,35 +227,26 @@ class _MapsPageState extends State<MapsPage> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () => showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: ((modalContext) => CustomBaseBottomSheet(
-                            height: MediaQuery.of(context).size.height * 0.9,
-                            title: 'filtri',
-                            body: FilterModalBottomSheet(
-                              categorySelectionCubit: context.read(),
-                              pointOfInterestListBloc: context.read(),
-                            )))),
+                    onTap: () {
+                      widget.scaffoldKey.currentState?.openDrawer();
+                    },
                     child: Container(
-                        padding: const EdgeInsets.all(14),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.blueGrey)),
-                        child: const Center(
-                            child: FaIcon(
-                          FontAwesomeIcons.sliders,
-                          size: 18,
-                        ))),
+                            border: Border.all(
+                                color: Theme.of(context).disabledColor)),
+                        child: const Center(child: Icon(Icons.menu))),
                   ),
                   const SizedBox(width: 6),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.blueGrey)),
+                          border: Border.all(
+                              color: Theme.of(context).disabledColor)),
                       child: const TextField(
                         decoration: InputDecoration(
                           hintStyle: TextStyle(fontSize: 16),
@@ -244,17 +263,30 @@ class _MapsPageState extends State<MapsPage> {
                     width: 6,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      widget.scaffoldKey.currentState?.openDrawer();
-                    },
+                    onTap: () => showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: ((modalContext) => CustomBaseBottomSheet(
+                            height: MediaQuery.of(context).size.height * 0.9,
+                            title: 'filtri',
+                            body: FilterModalBottomSheet(
+                              categorySelectionCubit: context.read(),
+                              pointOfInterestListBloc: context.read(),
+                            )))),
                     child: Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.blueGrey)),
-                        child: const Center(child: Icon(Icons.menu))),
+                            border: Border.all(
+                                color: Theme.of(context).disabledColor)),
+                        child: const Center(
+                            child: FaIcon(
+                          FontAwesomeIcons.sliders,
+                          size: 18,
+                        ))),
                   ),
+                  
                 ],
               ),
             ),

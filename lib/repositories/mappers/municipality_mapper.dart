@@ -18,6 +18,7 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
         appServiceTwo: dto.appService2 ?? '',
         appServiceThree: dto.appService3 ?? '',
         appServiceFour: dto.appService4 ?? '',
+        province: dto.province?.initials ?? '',
         logo: dto.logo != null
             ? mapperImages.fromDTO(dto.logo!)
             : const MunicipiumImage(
@@ -25,7 +26,8 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
                 i300x300: '',
                 baseUrl: '',
                 i720x960: '',
-                i1920x1280: ''),
+                i1920x1280: '',
+                i640: ''),
         background: dto.image != null
             ? mapperImages.fromDTO(dto.image!)
             : const MunicipiumImage(
@@ -33,9 +35,13 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
                 i300x300: '',
                 baseUrl: '',
                 i720x960: '',
-                i1920x1280: ''),
+                i1920x1280: '',
+                i640: ''),
         subdomain: dto.subdomain != null ? dto.subdomain! : '',
-        newMenu: dto.newMenu ?? NewMenuDTO());
+        newMenu: dto.newMenu ?? NewMenuDTO(),
+        jcityGovUrl: dto.jcityGovUrl ?? '',
+        jcityGovEnte: dto.jcityGovEnte ?? '',
+        prenotationWebUrl: dto.prenotationWebUrl ?? '');
   }
 
   @override

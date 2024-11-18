@@ -6,7 +6,7 @@ final List<RepositoryProvider> _repositories = [
           configurationsMapper: context.read(),
           munMapper: context.read(),
           deviceMapper: context.read(),
-          baseMunicipalityService: context.read(),
+          configurationService: context.read(),
           municipalityBeService: context.read(),
           secureStorage: context.read(),
           municipalityService: context.read(),
@@ -37,6 +37,7 @@ final List<RepositoryProvider> _repositories = [
   RepositoryProvider<IssuesRepository>(
     create: (context) => IssuesRepository(
         issueItemMapper: context.read(),
+        issueDetailMapper: context.read(),
         issueTagMapper: context.read(),
         issueCategoryTagMapper: context.read(),
         issueService: context.read(),
@@ -44,10 +45,12 @@ final List<RepositoryProvider> _repositories = [
         logger: context.read()),
   ),
   RepositoryProvider<UserRepository>(
-    create: (context) => UserRepository(
-        municipalityRepository: context.read(),
-       secureStorage: context.read())
-  ),
+      create: (context) => UserRepository(
+          municipalityService: context.read(),
+          mmcMunicipiumService: context.read(),
+          authSpidService: context.read(),
+          municipalityRepository: context.read(),
+          secureStorage: context.read())),
   RepositoryProvider<PnrrServiceRepository>(
     create: (context) => PnrrServiceRepository(
         pnrrMapper: context.read(),
@@ -60,5 +63,20 @@ final List<RepositoryProvider> _repositories = [
         resarvableUnitsMapper: context.read(),
         service: context.read(),
         logger: context.read()),
+  ),
+  RepositoryProvider<OnlineServiceRepository>(
+    create: (context) => OnlineServiceRepository(
+        onlineServiceService: context.read(), logger: context.read()),
+  ),
+  RepositoryProvider<PaymentsRepository>(
+    create: (context) => PaymentsRepository(
+        selfPaymentsMapper: context.read(),
+        paymentResponseMapper: context.read(),
+        paymentService: context.read(),
+        logger: context.read()),
+  ),
+  RepositoryProvider<CalendarEventRepository>(
+    create: (context) => CalendarEventRepository(
+        calendarService: context.read(), logger: context.read()),
   )
 ];

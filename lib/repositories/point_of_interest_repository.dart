@@ -7,7 +7,8 @@ import 'package:municipium/services/network/dto/point_of_interests_list_dto.dart
 import 'package:pine/utils/dto_mapper.dart';
 
 class PointOfInterestRepository {
-  final DTOMapper<PointOfInterestsDTO, PointOfInterestsList> pointOfInterestMapper;
+  final DTOMapper<PointOfInterestsDTO, PointOfInterestsList>
+      pointOfInterestMapper;
   final PointOfInterestService pointOfInterestService;
   final Logger logger;
 
@@ -15,35 +16,68 @@ class PointOfInterestRepository {
       {required this.logger,
       required this.pointOfInterestService,
       required this.pointOfInterestMapper});
-
-  Future<PointOfInterestsList> getPointOfInterestList(int pageIndex, int pageSize,) async {
+    
+  Future<PointOfInterestsList> getPagedPointOfInterestList(
+    String baseUrl,
+    int pageIndex,
+    int pageSize,
+  ) async {
     try {
       final pointOfInterestsListResponse =
-          await pointOfInterestService.getPointOfInterestList();
-      final pointOfInterestsList = pointOfInterestMapper.fromDTO(pointOfInterestsListResponse);
+          await pointOfInterestService.getPointOfInterestListPaged(
+        baseUrl,
+        pageIndex,
+        pageSize
+      );
+      final pointOfInterestsList =
+          pointOfInterestMapper.fromDTO(pointOfInterestsListResponse);
       return pointOfInterestsList;
     } catch (error) {
       logger.e('Error in getting news list');
       rethrow;
     }
   }
-  
-  Future<PoiDetailDTO> getDetailPoi({required int idPoi}) async {
+
+  Future<PointOfInterestsList> getPointOfInterestList(
+    String baseUrl,
+    int pageIndex,
+    int pageSize,
+  ) async {
     try {
-      final detailPoi = await pointOfInterestService.getDetailPoi(idPoi);
-      return detailPoi;
-    }catch (error) {
-      logger.e('Error getting poi with id: ' + idPoi.toString() );
+      final pointOfInterestsListResponse =
+          await pointOfInterestService.getPointOfInterestList(
+        baseUrl,
+      );
+      final pointOfInterestsList =
+          pointOfInterestMapper.fromDTO(pointOfInterestsListResponse);
+      return pointOfInterestsList;
+    } catch (error) {
+      logger.e('Error in getting news list');
       rethrow;
     }
   }
-  
 
-  Future<List<CategoryPoiDTO>> getCategoryPoiList() async {
+  Future<PoiDetailDTO> getDetailPoi(String baseUrl,
+      {required int idPoi}) async {
     try {
-      final categoryPoi = await pointOfInterestService.getCategoryPoi();
+      final detailPoi =
+          await pointOfInterestService.getDetailPoi(baseUrl, idPoi);
+      return detailPoi;
+    } catch (error) {
+      logger.e('Error getting poi with id: ' + idPoi.toString());
+      rethrow;
+    }
+  }
+
+  Future<List<CategoryPoiDTO>> getCategoryPoiList(
+    String baseUrl,
+  ) async {
+    try {
+      final categoryPoi = await pointOfInterestService.getCategoryPoi(
+        baseUrl,
+      );
       return categoryPoi;
-    }catch (error) {
+    } catch (error) {
       logger.e('Error getting category poi');
       rethrow;
     }

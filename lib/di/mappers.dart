@@ -55,5 +55,15 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<ReservableUnitDto, ReservableUnit>>(
       create: (_) => ReservableUnitMapper()),
   Provider<DTOMapper<PostIssueDto, ProgressIssue>>(
-      create: (_) => PostIssueMapper())
+      create: (_) => PostIssueMapper()),
+  Provider<DTOMapper<IssueDetailDto, IssueDetail>>(
+      create: (_) => IssueDetailMapper()),
+  Provider<DTOMapper<SelfPaymentDTO, SelfPayment>>(
+      create: (_) => SelfPaymentMapper()),
+  Provider<DTOMapper<PaymentResponseDTO, PaymentResponse>>(
+      create: (_) => PaymentResponseMapper()),
+  Provider<DTOMapper<PaymentCustomFieldDTO, PaymentCustomField>>(
+      create: (_) => PaymentCustomFieldMapper()),
+  Provider<DTOMapper<FieldAttributeDTO, FieldAttribute>>(
+      create: (_) => FieldAttributeMapper())
 ];

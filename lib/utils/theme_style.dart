@@ -5,15 +5,29 @@ import 'package:municipium/utils/theme_helper.dart';
 class LightTheme {
   static const primaryColor = Color(0xff2140E9);
   static const lightBlue = Color(0xFFE3F2FD);
-
+  static const baseColor = Color.fromARGB(255, 42, 42, 42);
+  static const greyFine = Color(0xffeeeff7);
+  static const lightGrey = Color.fromRGBO(234, 238, 247, 1);
+  static const elementColor = Color(0xffF6F7FE);
+  static const calendarColor = Color(0xffF0F1FA);
   static get make => ThemeData(
+    scaffoldBackgroundColor: Colors.white,
         brightness: Brightness.light,
         primaryColor: primaryColor,
+        dividerColor: baseColor,
         colorScheme: const ColorScheme.light(
           primary: primaryColor,
           secondary: lightBlue,
         ),
-        appBarTheme: AppBarTheme(elevation: 0, surfaceTintColor: lightBlue),
+        canvasColor: Color(0xfff6f7ff),
+        appBarTheme: AppBarTheme(elevation: 0, backgroundColor:elementColor ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          selectedItemColor: primaryColor,
+          selectedIconTheme: IconThemeData(color: primaryColor),
+          unselectedItemColor: Colors.black,
+          unselectedIconTheme: IconThemeData(color: Colors.black,),
+          backgroundColor: elementColor
+        ),
         bottomAppBarTheme: BottomAppBarTheme(color: Colors.black),
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
@@ -46,11 +60,12 @@ class LightTheme {
             borderSide: BorderSide(color: Colors.red),
           ),
         ),
-        cardColor: const Color.fromRGBO(245, 248, 253, 1),
-        cardTheme: const CardTheme(
-            surfaceTintColor: const Color.fromRGBO(245, 248, 253, 1)),
+        unselectedWidgetColor: calendarColor,
+        cardColor: greyFine,
+        cardTheme: const CardTheme(surfaceTintColor: greyFine),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
+            foregroundColor: Colors.black,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
@@ -71,8 +86,8 @@ class LightTheme {
         ),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
-            fontSize: 32,
-            color: primaryColor,
+            fontSize: 28,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
           titleSmall: TextStyle(
@@ -96,19 +111,23 @@ class LightTheme {
 class DarkTheme {
   static const primaryColor = Color(0xff2140E9);
   static const darkBlack = Color.fromARGB(40, 41, 40, 40);
+  static const scaffoldBackgroundColor = Color.fromARGB(255, 3, 3, 3);
+  static const baseColor = Colors.white;
 
   static get make => ThemeData(
+    scaffoldBackgroundColor: scaffoldBackgroundColor,
         brightness: Brightness.dark,
         primaryColor: primaryColor,
-        
+        dividerColor: baseColor,
         colorScheme: const ColorScheme.dark(
           primary: primaryColor,
           secondary: darkBlack,
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Colors.white,
         ),
-        appBarTheme: AppBarTheme(elevation: 0, surfaceTintColor: darkBlack),
+        
+        appBarTheme: const AppBarTheme(elevation: 0, surfaceTintColor: darkBlack),
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -142,6 +161,7 @@ class DarkTheme {
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
+            foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
@@ -160,12 +180,12 @@ class DarkTheme {
             foregroundColor: Colors.white,
           ),
         ),
-        cardColor: Color(0xFF303030),
+        cardColor: Color.fromARGB(255, 30, 30, 30),
         cardTheme: const CardTheme(surfaceTintColor: Color(0xFF303030)),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
             fontSize: 32,
-            color: primaryColor,
+            
             fontWeight: FontWeight.bold,
           ),
           titleSmall: TextStyle(

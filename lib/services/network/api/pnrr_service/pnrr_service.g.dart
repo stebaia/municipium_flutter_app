@@ -6,7 +6,7 @@ part of 'pnrr_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _PnrrService implements PnrrService {
   _PnrrService(
@@ -19,7 +19,10 @@ class _PnrrService implements PnrrService {
   String? baseUrl;
 
   @override
-  Future<ServicePnrrDTOResponse> getServices(String type) async {
+  Future<ServicePnrrDTOResponse> getServices(
+    String baseUrl,
+    String type,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -32,7 +35,7 @@ class _PnrrService implements PnrrService {
     )
             .compose(
               _dio.options,
-              'paged_pnrr?type=${type}&orderByName=1',
+              '${baseUrl}/paged_pnrr?type=${type}&orderByName=1',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,12 +44,13 @@ class _PnrrService implements PnrrService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ServicePnrrDTOResponse.fromJson(_result.data!);
-    return value;
+    final _value = ServicePnrrDTOResponse.fromJson(_result.data!);
+    return _value;
   }
 
   @override
   Future<PnrrBodyResponseDto> getPnrrDetail(
+    String baseUrl,
     String type,
     int id,
   ) async {
@@ -62,7 +66,7 @@ class _PnrrService implements PnrrService {
     )
             .compose(
               _dio.options,
-              'pnrr/${type}/${id}',
+              '${baseUrl}/pnrr/${type}/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -71,8 +75,8 @@ class _PnrrService implements PnrrService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PnrrBodyResponseDto.fromJson(_result.data!);
-    return value;
+    final _value = PnrrBodyResponseDto.fromJson(_result.data!);
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

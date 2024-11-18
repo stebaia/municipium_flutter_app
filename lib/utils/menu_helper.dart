@@ -1,4 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
+import 'package:municipium/bloc/cubit/device_cubit/device_cubit.dart';
+import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/menu/menu_item.dart';
 import 'package:municipium/model/menu/submenu_type.dart';
 import 'package:municipium/model/municipality.dart';
@@ -56,6 +61,9 @@ class MenuHelper {
     }
     if (municipality.newMenu.payment != null) {
       list.add(MenuItem(type: MenuItemType.payment));
+    }
+     if (municipality.newMenu.prenotazioni != null) {
+      list.add(MenuItem(type: MenuItemType.prenotations));
     }
     return list;
   }
@@ -139,6 +147,8 @@ class MenuHelper {
         return Icons.warning;
       case MenuItemType.payment:
         return Icons.payment;
+      case MenuItemType.prenotations:
+        return CupertinoIcons.calendar;
       case MenuItemType.sportelloTelematico:
         return Icons.perm_contact_calendar;
     }
@@ -236,12 +246,14 @@ class MenuHelper {
         return AppLocalizations.of(context)!.civil_defence_menu;
       case MenuItemType.payment:
         return AppLocalizations.of(context)!.payment_menu;
+      case MenuItemType.prenotations:
+        return AppLocalizations.of(context)!.prenotation_menu;
       case MenuItemType.sportelloTelematico:
         return AppLocalizations.of(context)!.sportello_telematico_menu;
     }
   }
 
-  static void checkAndPushRoute(BuildContext context, MenuItem menuItem) {
+  static void checkAndPushRoute(BuildContext context, MenuItem menuItem) async {
     switch (menuItem.type) {
       case MenuItemType.news:
         context.pushRoute(const NewsListRoute());
@@ -250,10 +262,12 @@ class MenuHelper {
         context.pushRoute(const EventListRoute());
         break;
       case MenuItemType.issue:
-        context.pushRoute(const IssuesListRoute());
+        DeviceBe? deviceBe = await context.read<DeviceCubit>().getDeviceBeFromStorage();
+        context.pushRoute(IssuesListRoute(udid: deviceBe!.udid));
         break;
       case MenuItemType.penalties:
-        // TODO: Handle this case.
+        context.pushRoute(
+            PaymentChoiceRoute()); //in attesa che i pagamenti vengano giu
         break;
       case MenuItemType.surveys:
         // TODO: Handle this case.
@@ -265,10 +279,11 @@ class MenuHelper {
         // TODO: Handle this case.
         break;
       case MenuItemType.poi:
+        context.pushRoute(const PointOfInterestListRoute());
         // TODO: Handle this case.
         break;
       case MenuItemType.services:
-        // TODO: Handle this case.
+        context.pushRoute(ServiceOnlineListRoute());
         break;
       case MenuItemType.dms:
         // TODO: Handle this case.
@@ -277,10 +292,12 @@ class MenuHelper {
         // TODO: Handle this case.
         break;
       case MenuItemType.civilDefence:
-        // TODO: Handle this case.
+        break;
+       case MenuItemType.prenotations:
+        context.pushRoute(const PrenotationRoute());
         break;
       case MenuItemType.payment:
-        // TODO: Handle this case.
+        context.pushRoute(const PaymentChoiceRoute());
         break;
       case MenuItemType.sportelloTelematico:
         context.pushRoute(PnrrServicesRoute(type: 'services'));

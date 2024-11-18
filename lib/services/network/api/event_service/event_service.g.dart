@@ -6,7 +6,7 @@ part of 'event_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _EventService implements EventService {
   _EventService(
@@ -19,7 +19,10 @@ class _EventService implements EventService {
   String? baseUrl;
 
   @override
-  Future<EventDetailDto> getEventDetail(int eventId) async {
+  Future<EventDetailDto> getEventDetail(
+    String baseUrl,
+    int eventId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -32,7 +35,7 @@ class _EventService implements EventService {
     )
             .compose(
               _dio.options,
-              'events/${eventId}',
+              '${baseUrl}/events/${eventId}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,12 +44,12 @@ class _EventService implements EventService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = EventDetailDto.fromJson(_result.data!);
-    return value;
+    final _value = EventDetailDto.fromJson(_result.data!);
+    return _value;
   }
 
   @override
-  Future<List<EventDTO>> getEventsList() async {
+  Future<List<EventDTO>> getEventsList(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -59,7 +62,7 @@ class _EventService implements EventService {
     )
             .compose(
               _dio.options,
-              'events/',
+              '${baseUrl}/events/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -68,14 +71,15 @@ class _EventService implements EventService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) => EventDTO.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   @override
   Future<EventPagedDTO> getEventsPaged(
+    String baseUrl,
     int page_index,
     int page_size,
   ) async {
@@ -91,7 +95,7 @@ class _EventService implements EventService {
     )
             .compose(
               _dio.options,
-              'events/paged_events?page_index=${page_index}&page_size=${page_size}',
+              '${baseUrl}/events/paged_events?page_index=${page_index}&page_size=${page_size}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -100,8 +104,8 @@ class _EventService implements EventService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = EventPagedDTO.fromJson(_result.data!);
-    return value;
+    final _value = EventPagedDTO.fromJson(_result.data!);
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

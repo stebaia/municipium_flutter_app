@@ -1,11 +1,14 @@
 import 'package:logger/logger.dart';
+import 'package:municipium/model/issue/issue_Detail.dart';
 import 'package:municipium/model/issue/issue_category_tag.dart';
 import 'package:municipium/model/issue/issue_item_list.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/issue_tag.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
+import 'package:municipium/services/network/dto/chat_post_issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
+import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
 import 'package:municipium/services/network/dto/issue_tag_dto.dart';
 import 'package:municipium/services/network/dto/post_issue_dto.dart';
@@ -13,6 +16,7 @@ import 'package:pine/utils/dto_mapper.dart';
 
 class IssuesRepository {
   final DTOMapper<IssueDto, IssueItemList> issueItemMapper;
+  final DTOMapper<IssueDetailDto, IssueDetail> issueDetailMapper;
   final DTOMapper<IssueTagDto, IssueTag> issueTagMapper;
   final DTOMapper<IssueCategoryTagDto, IssueCategoryTag> issueCategoryTagMapper;
   final DTOMapper<PostIssueDto, ProgressIssue> postIssueMapper;
@@ -21,30 +25,49 @@ class IssuesRepository {
 
   IssuesRepository(
       {required this.issueItemMapper,
+      required this.issueDetailMapper,
       required this.issueTagMapper,
       required this.issueCategoryTagMapper,
       required this.postIssueMapper,
       required this.issueService,
       required this.logger});
 
-  Future<List<IssueItemList>> getIssuesList() async {
+  Future<List<IssueItemList>> getIssuesList(String baseUrl, String udid) async {
     try {
-      final List<IssueDto> issuesResponse = await issueService.getIssuesList();
+      final List<IssueDto> issuesResponse =
+          await issueService.getIssuesList(baseUrl, udid);
       final List<IssueItemList> list = [];
       for (var element in issuesResponse) {
         list.add(issueItemMapper.fromDTO(element));
       }
       return list;
     } catch (error, stackTrace) {
-      logger.e('Error in getting issues list municipality-object');
+      logger.e('Error in getting issues list');
       rethrow;
     }
   }
 
-  Future<List<IssueCategoryTag>> getIssueCategoryList() async {
+  Future<IssueDetail> getIssueDetail(
+      String baseUrl, int id, String udid) async {
+    try {
+      final IssueDetailDto issuesResponse =
+          await issueService.getIssueDetail(baseUrl, id, udid);
+      IssueDetail detail = issueDetailMapper.fromDTO(issuesResponse);
+      return detail;
+    } catch (error, stackTrace) {
+      logger.e('Error in getting issue detail: $error -- $stackTrace');
+      rethrow;
+    }
+  }
+
+  Future<List<IssueCategoryTag>> getIssueCategoryList(
+    String baseUrl,
+  ) async {
     try {
       final List<IssueCategoryTagDto> issueCategoryTagResponse =
-          await issueService.getIssueCategoriesTags();
+          await issueService.getIssueCategoriesTags(
+        baseUrl,
+      );
       final List<IssueCategoryTag> listCategory = [];
       for (var cat in issueCategoryTagResponse) {
         listCategory.add(issueCategoryTagMapper.fromDTO(cat));
@@ -56,23 +79,51 @@ class IssuesRepository {
     }
   }
 
-  Future<Map<String, bool>> postIssue(PostIssueDto issueDto) async {
+  void postIssue(
+      String baseUrl, PostIssueDto issueDto, Function()? action) async {
     try {
-      Map<String, bool> response = await issueService.postIssue(issueDto);
+      Map<String, bool> response =
+          await issueService.postIssue(baseUrl, issueDto);
       print(response);
-      return response;
+      if (response['success'] == true) {
+        if (action != null) {
+          action();
+        }
+      }
     } catch (error, stackTrace) {
       logger.e('Error in getting tags categories list');
       rethrow;
     }
   }
 
-  Future<List<IssueMappedCategory>> getIssueCategoryTagList() async {
+  void postMessage(
+      String baseUrl, ChatPostIssueDto item, Function()? action) async {
+    try {
+      ChatResponse response =
+          await issueService.postMessageIssue(baseUrl, item);
+      print(response);
+      if (response.success == true) {
+        if (action != null) {
+          action();
+        }
+      }
+    } catch (error, stackTrace) {
+      logger.e('Error in getting tags categories list');
+      rethrow;
+    }
+  }
+
+  Future<List<IssueMappedCategory>> getIssueCategoryTagList(
+      String baseUrl) async {
     try {
       final List<IssueTagDto> issueTagResponse =
-          await issueService.getIssueTags();
+          await issueService.getIssueTags(
+        baseUrl,
+      );
       final List<IssueTag> listTag = [];
-      final List<IssueCategoryTag> listCategory = await getIssueCategoryList();
+      final List<IssueCategoryTag> listCategory = await getIssueCategoryList(
+        baseUrl,
+      );
 
       for (var tag in issueTagResponse) {
         listTag.add(issueTagMapper.fromDTO(tag));

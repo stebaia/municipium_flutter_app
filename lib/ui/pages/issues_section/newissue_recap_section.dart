@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
-import 'package:municipium/bloc/issue_tags_bloc/issue_tag_bloc.dart';
+import 'package:municipium/bloc/bloc/issue_tags_bloc/issue_tag_bloc.dart';
 import 'package:municipium/model/issue/issue_mapped_category.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/ui/components/horizzontal_gallery.dart';
@@ -37,7 +37,7 @@ class NewIssueRecapSection extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                      //color: Theme.of(context).cardColor,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(12)),
                   child: Column(
                     children: [
@@ -93,13 +93,15 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            '${AppLocalizations.of(context)!.name_desc.toUpperCase()} e ${AppLocalizations.of(context)!.surname_desc.toUpperCase()}',
-                            style: const TextStyle(
-                                color: ThemeHelper.darkGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              '${AppLocalizations.of(context)!.name_desc.toUpperCase()} e ${AppLocalizations.of(context)!.surname_desc.toUpperCase()}',
+                              style: const TextStyle(
+                                  color: ThemeHelper.darkGrey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],
@@ -109,43 +111,14 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            '${(state.name ?? '')} ${(state.surname ?? '')}',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 17,
-                                letterSpacing: -0.4),
-                          ),
-                          const SizedBox()
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'EMAIL',
-                            style: TextStyle(
-                                color: ThemeHelper.darkGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                letterSpacing: -0.4),
-                          ),
-                          SizedBox()
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            state.email ?? '',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 17,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              '${(state.name ?? '')} ${(state.surname ?? '')}',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],
@@ -155,15 +128,17 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!
-                                .phone_desc
-                                .toUpperCase(),
-                            style: const TextStyle(
-                                color: ThemeHelper.darkGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .email_desc
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                  color: ThemeHelper.darkGrey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],
@@ -173,12 +148,14 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            state.phone ?? '',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 17,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              state.email ?? '',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],
@@ -188,15 +165,17 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!
-                                .address_desc
-                                .toUpperCase(),
-                            style: const TextStyle(
-                                color: ThemeHelper.darkGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .phone_desc
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                  color: ThemeHelper.darkGrey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],
@@ -206,12 +185,14 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            state.address ?? '',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 17,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              state.phone ?? '',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],
@@ -221,13 +202,17 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!.content_desc,
-                            style: const TextStyle(
-                                color: ThemeHelper.darkGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .address_desc
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                  color: ThemeHelper.darkGrey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],
@@ -237,12 +222,49 @@ class NewIssueRecapSection extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            state.content ?? '',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 17,
-                                letterSpacing: -0.4),
+                          Expanded(
+                            child: Text(
+                              state.address ?? '',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                  letterSpacing: -0.4),
+                            ),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              AppLocalizations.of(context)!.content_desc,
+                              style: const TextStyle(
+                                  color: ThemeHelper.darkGrey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  letterSpacing: -0.4),
+                            ),
+                          ),
+                          const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              state.content ?? '',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                  letterSpacing: -0.4),
+                            ),
                           ),
                           const SizedBox()
                         ],
@@ -259,6 +281,7 @@ class NewIssueRecapSection extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(12)),
                         child: HorizzontalGallery(
                           imageList: state.imageList!,

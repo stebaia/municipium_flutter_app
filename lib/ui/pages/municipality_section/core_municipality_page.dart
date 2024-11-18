@@ -1,59 +1,62 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/app.dart';
+import 'package:municipium/bloc/bloc/calendar_event_bloc/calendar_event_bloc_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
+import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
-import 'package:municipium/bloc/municipality_bloc/municipality_bloc.dart';
-import 'package:municipium/main.dart';
 import 'package:municipium/routers/app_router.gr.dart';
-import 'package:municipium/ui/components/custom_bottomsheet.dart';
+import 'package:municipium/services/auth/service_manager.dart';
+import 'package:municipium/ui/components/bottom_sheet/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/municipality_components/modal_rapid_action_component.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
-class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+class CoreMunicipalityPage extends StatefulWidget {
   final int municipalityId;
   CoreMunicipalityPage({super.key, required this.municipalityId});
 
   @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
-        BlocProvider<MunicipalityBloc>(
-          create: (context) =>
-              MunicipalityBloc(municipalityRepository: context.read())
-                ..fetchMunicipality(municipalityId),
-        ),
-      ], child: this);
+  State<CoreMunicipalityPage> createState() => _CoreMunicipalityPageState();
+}
+
+class _CoreMunicipalityPageState extends State<CoreMunicipalityPage> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
+    final municipality = context.read<MunicipalityStoredCubit>().state!;
+    String baseUrl =
+        Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl;
+    context
+        .read<UserMenuConfigurationCubit>()
+        .initialize(baseUrl, widget.municipalityId.toString());
+    context
+        .read<TemporaryConfigurationCubit>()
+        .initialize(baseUrl, widget.municipalityId.toString());
+
     return AutoTabsRouter(
-      routes: [
-        HomeRoute(scaffoldKey: scaffoldKey),
-        MapsRoute(scaffoldKey: scaffoldKey),
-        HomeRoute(scaffoldKey: scaffoldKey),
-        HomeRoute(scaffoldKey: scaffoldKey)
-      ],
-      transitionBuilder: (context, child, animation) => FadeTransition(
-        opacity: animation,
-        // the passed child is technically our animated selected-tab page
-        child: child,
-      ),
-      builder: (context, child) {
-        final tabsRouter = AutoTabsRouter.of(context);
-        return BlocListener<MunicipalityBloc, MunicipalityState>(
-          listener: (context, state) {
-            if(state is FetchedMunicipalityState) {
-              context.read<UserMenuConfigurationCubit>().initialize();
-              context.read<TemporaryConfigurationCubit>().initialize();
-              context.read<MunicipalityGlobalCubit>().getStoredMunicipalityGlobalState();
-            }
-          },
-          child: Scaffold(
+        routes: [
+          HomeRoute(scaffoldKey: scaffoldKey),
+          MapsRoute(scaffoldKey: scaffoldKey),
+          CalendarRoute(scaffoldKey: scaffoldKey),
+          if (municipality?.configurations != null)
+            PersonalAreaMenuRoute(scaffoldKey: scaffoldKey),
+        ],
+        transitionBuilder: (context, child, animation) => FadeTransition(
+              opacity: animation,
+              // the passed child is technically our animated selected-tab page
+              child: child,
+            ),
+        builder: (context, child) {
+          final tabsRouter = AutoTabsRouter.of(context);
+          return Scaffold(
               key: scaffoldKey,
               body: child,
               drawer: MenuDrawer(
@@ -61,30 +64,42 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                 scaffoldKey: scaffoldKey,
               ),
               //darkMode.darkTheme ? ThemeHelper.backgroundColorDark : Colors.white,
-              floatingActionButton: tabsRouter.activeIndex == 0
-                  ? FloatingActionButton.extended(
-                      onPressed: (() =>
-                          context.pushRoute(const UserConfMenuEditRoute())),
-                      label: Text('Personalizza'),
-                      icon: Icon(Icons.edit),
-                    )
-                  : FloatingActionButton(
-                      onPressed: () => showModalBottomSheet(
-                          context: context,
-                          builder: ((modalContext) => CustomBaseBottomSheet(
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              title: 'azioni rapide',
-                              body: const ModalRapidActionComponent()))),
-                      child: const Icon(Icons.add),
-                    ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () => showModalBottomSheet(
+                    context: context,
+                    builder: ((modalContext) => CustomBaseBottomSheet(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        title: 'azioni rapide',
+                        body: const ModalRapidActionComponent()))),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
               bottomNavigationBar: BottomNavigationBar(
                   elevation: 0,
-                  backgroundColor: ThemeHelper.blueMunicipium,
                   type: BottomNavigationBarType.fixed,
                   currentIndex: tabsRouter.activeIndex,
-                  onTap: (index) {
+                  onTap: (index) async {
                     // here we switch between tabs
-                    tabsRouter.setActiveIndex(index);
+                    if (index == 2) {
+                      context.read<CalendarBloc>().fetchCalendarEvents(
+                          baseUrl: Provider.of<BaseUrlNotifier>(context,
+                                  listen: false)
+                              .baseUrl,
+                          date: MunicipiumUtility.getFirstDayOfMonth(),
+                          endDate: MunicipiumUtility.getLastDayOfMonth());
+                    }
+                    if (index == 3) {
+                      bool isEnabled = await context
+                          .read<ServiceAccessManager>()
+                          .handleServiceAccess('Area Personale', context);
+                      if (isEnabled) {
+                        tabsRouter.setActiveIndex(index);
+                      }
+                    } else {
+                      tabsRouter.setActiveIndex(index);
+                    }
                   },
                   items: [
                     BottomNavigationBarItem(
@@ -92,11 +107,10 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.home,
-                            color: Colors.white,
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: ThemeHelper.blueMunicipiumBackground,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           width: 50,
@@ -112,11 +126,10 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.map,
-                            color: Colors.white,
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: ThemeHelper.blueMunicipiumBackground,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           width: 50,
@@ -132,11 +145,10 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                           height: 30,
                           child: Icon(
                             CupertinoIcons.calendar,
-                            color: Colors.white,
                           )),
                       activeIcon: Container(
                           decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: ThemeHelper.blueMunicipiumBackground,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           width: 50,
@@ -147,29 +159,29 @@ class CoreMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                           )),
                       label: 'Agenda',
                     ),
-                    BottomNavigationBarItem(
-                      icon: const SizedBox(
-                          height: 30,
-                          child: Icon(
-                            CupertinoIcons.person,
-                            color: Colors.white,
-                          )),
-                      activeIcon: Container(
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          width: 50,
-                          height: 30,
-                          child: const Icon(
-                            CupertinoIcons.person,
-                            color: ThemeHelper.blueMunicipium,
-                          )),
-                      label: 'Area personale',
-                    ),
-                  ])),
-        );
-      },
-    );
+                    if (municipality?.configurations != null)
+                      if (municipality!.configurations!.autenticazioneSpid! ||
+                          municipality.configurations!.autenticazioneCie!)
+                        BottomNavigationBarItem(
+                          icon: const SizedBox(
+                              height: 30,
+                              child: Icon(
+                                CupertinoIcons.person,
+                              )),
+                          activeIcon: Container(
+                              decoration: const BoxDecoration(
+                                  color: ThemeHelper.blueMunicipiumBackground,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              width: 50,
+                              height: 30,
+                              child: const Icon(
+                                CupertinoIcons.person,
+                                color: ThemeHelper.blueMunicipium,
+                              )),
+                          label: 'Area personale',
+                        ),
+                  ]));
+        });
   }
 }

@@ -18,6 +18,7 @@ class NewMenuDTO extends Equatable {
   String? payment;
   String? events;
   String? sportelloTelematico;
+  String? prenotazioni;
 
   NewMenuDTO(
       {this.news,
@@ -33,7 +34,8 @@ class NewMenuDTO extends Equatable {
       this.civilDefence,
       this.payment,
       this.events,
-      this.sportelloTelematico});
+      this.sportelloTelematico,
+      this.prenotazioni});
 
   NewMenuDTO.fromJson(Map<String, dynamic> json) {
     news = json['news'];
@@ -53,6 +55,7 @@ class NewMenuDTO extends Equatable {
         : null;
     payment = json['payment'];
     events = json['events'];
+    prenotazioni = json['prenotazioni'];
     sportelloTelematico = json['sportello_telematico'];
   }
 
@@ -77,6 +80,7 @@ class NewMenuDTO extends Equatable {
     }
     data['payment'] = this.payment;
     data['events'] = this.events;
+    data['prenotazioni'] = this.prenotazioni;
     data['sportello_telematico'] = this.sportelloTelematico;
     return data;
   }
@@ -96,6 +100,7 @@ class NewMenuDTO extends Equatable {
         civilDefence,
         payment,
         events,
-        sportelloTelematico
+        sportelloTelematico,
+        prenotazioni
       ];
 }

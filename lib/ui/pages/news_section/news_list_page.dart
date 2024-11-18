@@ -2,15 +2,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/news_list_bloc/news_list_bloc_bloc.dart';
+import 'package:municipium/bloc/bloc/news_list_bloc/news_list_bloc_bloc.dart';
 import 'package:municipium/model/news/news_item_list.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
@@ -23,8 +25,9 @@ class NewsListPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<NewsListBloc>(
-          create: (context) =>
-              NewsListBloc(newsRepository: context.read())..fetchNewsList(),
+          create: (context) => NewsListBloc(newsRepository: context.read())
+            ..fetchNewsList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         )
       ], child: this);
 }
@@ -43,7 +46,6 @@ class _NewsListPageState extends State<NewsListPage> {
           scaffoldKey: _scaffoldKey,
         ),
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
           title: context.read<NewsListBloc>().isSearching
               ? TextField(
                   controller: _searchController,
@@ -57,15 +59,13 @@ class _NewsListPageState extends State<NewsListPage> {
                   onChanged: ((value) =>
                       context.read<NewsListBloc>().filterNewsList(value)),
                 )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 48),
-                  child: Center(
+              :  Center(
                     child: Text(
                       AppLocalizations.of(context)!.news_menu.toUpperCase(),
                       style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                  ),
+                  
                 ),
           leading: IconButton(
             onPressed: () => context.router.popUntil(
@@ -87,15 +87,7 @@ class _NewsListPageState extends State<NewsListPage> {
                 });
               },
             ),
-            IconButton(
-              onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-            ),
+            
           ],
         ),
         extendBodyBehindAppBar: false,
@@ -124,7 +116,9 @@ class _NewsListPageState extends State<NewsListPage> {
                       !context.read<NewsListBloc>().isSearching) {
                     context.read<NewsListBloc>()
                       ..isFetching = true
-                      ..add(const FetchNewsListEvent());
+                      ..add(FetchNewsListEvent(
+                          Provider.of<BaseUrlNotifier>(context, listen: false)
+                              .baseUrl));
                   }
                 }),
               itemCount: newsToShow.length,

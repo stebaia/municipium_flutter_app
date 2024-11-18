@@ -8,12 +8,13 @@ part 'pnrr_service.g.dart';
 
 @RestApi()
 abstract class PnrrService {
-  factory PnrrService(Dio dio, {String baseUrl}) = _PnrrService;
+  factory PnrrService(Dio dio) = _PnrrService;
 
-  @GET('paged_pnrr?type={type}&orderByName=1')
-  Future<ServicePnrrDTOResponse> getServices(@Path('type') String type);
+  @GET('{baseUrl}/paged_pnrr?type={type}&orderByName=1')
+  Future<ServicePnrrDTOResponse> getServices(
+      @Path('baseUrl') String baseUrl, @Path('type') String type);
 
-  @GET('pnrr/{type}/{id}')
-  Future<PnrrBodyResponseDto> getPnrrDetail(
+  @GET('{baseUrl}/pnrr/{type}/{id}')
+  Future<PnrrBodyResponseDto> getPnrrDetail(@Path('baseUrl') String baseUrl,
       @Path('type') String type, @Path('id') int id);
 }

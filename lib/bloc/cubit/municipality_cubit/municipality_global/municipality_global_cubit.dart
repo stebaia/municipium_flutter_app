@@ -14,14 +14,14 @@ class MunicipalityGlobalCubit extends Cubit<MunicipalityGlobalState> {
       {required this.municipalityRepository, required this.context})
       : super(const CheckMunicipalityGlobalState());
 
-  void checkMunicipalityGlobalState() async {
+  void checkMunicipalityGlobalState(String baseUrl, String baseUrlBe) async {
     try {
       final municipality = await municipalityRepository.currentMunicipality;
       if (municipality != null) {
         emit(FetchedMunicipalityGlobalState(municipality));
       } else {
-        Municipality? sharedOldMunicipality =
-            await municipalityRepository.getMunicipalityFromOneSignal();
+        Municipality? sharedOldMunicipality = await municipalityRepository
+            .getMunicipalityFromOneSignal(baseUrl, baseUrlBe);
         if (sharedOldMunicipality != null) {
           emit(FetchedMunicipalityGlobalState(sharedOldMunicipality));
         }
@@ -48,7 +48,9 @@ class MunicipalityGlobalCubit extends Cubit<MunicipalityGlobalState> {
   void authenticated(Municipality municipality) =>
       emit(StoredMunicipalityGlobalState(municipality));
 
-  void deleteMunicipality() async {}
+  void deleteMunicipality() async {
+    emit(NotMunicipalityGlobalState());
+  }
 
   /*void singOut(bool force) async {
     final user = await userRepository.logout(force, context);

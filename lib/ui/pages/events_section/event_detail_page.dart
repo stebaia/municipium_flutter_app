@@ -2,13 +2,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:municipium/bloc/event_detail_bloc/event_detail_bloc.dart';
+import 'package:municipium/bloc/bloc/event_detail_bloc/event_detail_bloc.dart';
 import 'package:municipium/ui/components/detail_gallery_box.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/component_factory.dart';
 import 'package:municipium/utils/municipium_utility.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
@@ -19,7 +21,9 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<EventDetailBLoc>(
           create: (context) => EventDetailBLoc(eventRepository: context.read())
-            ..fetchEventDetail(eventId),
+            ..fetchEventDetail(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                eventId),
         )
       ], child: this);
 
@@ -28,7 +32,6 @@ class EventDetailPage extends StatelessWidget implements AutoRouteWrapper {
     final PageController pageController = PageController();
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () => context.maybePop(),

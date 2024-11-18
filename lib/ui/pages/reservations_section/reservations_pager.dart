@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
-import 'package:municipium/bloc/reservations_unit_bloc/reservations_unit_bloc.dart';
+import 'package:municipium/bloc/bloc/reservations_unit_bloc/reservations_unit_bloc.dart';
 import 'package:municipium/ui/components/pager/progress_pager_stepper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class ReservationsPager extends StatelessWidget implements AutoRouteWrapper {
@@ -19,7 +21,9 @@ class ReservationsPager extends StatelessWidget implements AutoRouteWrapper {
       BlocProvider<ReservationsUnitBloc>(
         create: (context) =>
             ReservationsUnitBloc(reservationsRepository: context.read())
-              ..fetchReservationUnits(municipality.muninicipalityId),
+              ..fetchReservationUnits(
+                  Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                  municipality.muninicipalityId),
       ),
     ], child: this);
   }

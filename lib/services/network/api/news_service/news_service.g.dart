@@ -6,7 +6,7 @@ part of 'news_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _NewsService implements NewsService {
   _NewsService(
@@ -19,7 +19,10 @@ class _NewsService implements NewsService {
   String? baseUrl;
 
   @override
-  Future<NewsDTO> getNewsDetail(int newsId) async {
+  Future<NewsDTO> getNewsDetail(
+    String baseUrl,
+    int newsId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -32,7 +35,7 @@ class _NewsService implements NewsService {
     )
             .compose(
               _dio.options,
-              'news/${newsId}',
+              '${baseUrl}/news/${newsId}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,12 +44,13 @@ class _NewsService implements NewsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = NewsDTO.fromJson(_result.data!);
-    return value;
+    final _value = NewsDTO.fromJson(_result.data!);
+    return _value;
   }
 
   @override
   Future<NewsPagedDto> getNewsList(
+    String baseUrl,
     int page_index,
     int page_size,
   ) async {
@@ -62,7 +66,7 @@ class _NewsService implements NewsService {
     )
             .compose(
               _dio.options,
-              'news/paged_news?page_index=${page_index}&page_size=${page_size}',
+              '${baseUrl}/news/paged_news?page_index=${page_index}&page_size=${page_size}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -71,8 +75,8 @@ class _NewsService implements NewsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = NewsPagedDto.fromJson(_result.data!);
-    return value;
+    final _value = NewsPagedDto.fromJson(_result.data!);
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

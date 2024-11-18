@@ -2,15 +2,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/event_list_bloc/event_list_bloc.dart';
+import 'package:municipium/bloc/bloc/event_list_bloc/event_list_bloc.dart';
 import 'package:municipium/model/events/event_item_list.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/ui/components/detail_image_box.dart';
 import 'package:municipium/ui/components/menu/menu_drawer.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/shimmer_utils.dart';
 import 'package:municipium/utils/theme_helper.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class EventListPage extends StatefulWidget implements AutoRouteWrapper {
@@ -22,8 +24,9 @@ class EventListPage extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<EventListBloc>(
-          create: (context) =>
-              EventListBloc(eventsRepository: context.read())..fetchEventList(),
+          create: (context) => EventListBloc(eventsRepository: context.read())
+            ..fetchEventList(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         )
       ], child: this);
 }
@@ -37,12 +40,11 @@ class _EventListPageState extends State<EventListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        drawer: MenuDrawer(
+        /* drawer: MenuDrawer(
           mContext: context,
           scaffoldKey: _scaffoldKey,
-        ),
+        ),*/
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
           title: context.read<EventListBloc>().isSearching
               ? TextField(
                   controller: _searchController,
@@ -56,14 +58,10 @@ class _EventListPageState extends State<EventListPage> {
                   onChanged: ((value) =>
                       context.read<EventListBloc>().filterEventList(value)),
                 )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 48),
-                  child: Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.events_menu.toUpperCase(),
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+              : Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.events_menu.toUpperCase(),
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ),
           leading: IconButton(
@@ -86,7 +84,7 @@ class _EventListPageState extends State<EventListPage> {
                 });
               },
             ),
-            IconButton(
+            /*IconButton(
               onPressed: () {
                 _scaffoldKey.currentState?.openDrawer();
               },
@@ -94,7 +92,7 @@ class _EventListPageState extends State<EventListPage> {
                 Icons.menu,
                 color: Colors.white,
               ),
-            ),
+            ),*/
           ],
         ),
         extendBodyBehindAppBar: false,
@@ -123,7 +121,9 @@ class _EventListPageState extends State<EventListPage> {
                       !context.read<EventListBloc>().isSearching) {
                     context.read<EventListBloc>()
                       ..isFetching = true
-                      ..add(const FetchEventListEvent());
+                      ..add(FetchEventListEvent(
+                          Provider.of<BaseUrlNotifier>(context, listen: false)
+                              .baseUrl));
                   }
                 }),
               itemCount: eventsToShow.length,

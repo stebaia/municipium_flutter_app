@@ -14,7 +14,8 @@ enum MenuItemType {
   dms,
   digitalDossier,
   civilDefence,
-  payment
+  payment,
+  prenotations,
 }
 
 class SubMenuItemType {}

@@ -6,7 +6,7 @@ part of 'civil_defence_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _CivilDefenceService implements CivilDefenceService {
   _CivilDefenceService(
@@ -19,7 +19,8 @@ class _CivilDefenceService implements CivilDefenceService {
   String? baseUrl;
 
   @override
-  Future<List<CivilDefenceEmergencyCallDTO>> getPhoneNumbers() async {
+  Future<List<CivilDefenceEmergencyCallDTO>> getPhoneNumbers(
+      String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -32,7 +33,7 @@ class _CivilDefenceService implements CivilDefenceService {
     )
             .compose(
               _dio.options,
-              'civil_defence_phone_numbers',
+              '${baseUrl}/civil_defence_phone_numbers',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -41,11 +42,11 @@ class _CivilDefenceService implements CivilDefenceService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) =>
             CivilDefenceEmergencyCallDTO.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

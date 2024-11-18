@@ -6,7 +6,7 @@ part of 'reservations_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _ReservationsService implements ReservationsService {
   _ReservationsService(
@@ -20,7 +20,9 @@ class _ReservationsService implements ReservationsService {
 
   @override
   Future<List<ReservableUnitDto>> getReservationUnits(
-      int municipalityId) async {
+    String baseUrl,
+    int municipalityId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -33,7 +35,7 @@ class _ReservationsService implements ReservationsService {
     )
             .compose(
               _dio.options,
-              'actions?id=${municipalityId}&action=preno_unita',
+              '${baseUrl}/actions?id=${municipalityId}&action=preno_unita',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -42,11 +44,11 @@ class _ReservationsService implements ReservationsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    var _value = _result.data!
         .map((dynamic i) =>
             ReservableUnitDto.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

@@ -24,10 +24,10 @@ class ModalRapidActionComponent extends StatelessWidget {
                       height: 80,
                       width: 80,
                       decoration: BoxDecoration(
-                          color: Colors.black54,
+                          
                           borderRadius:
                               const BorderRadius.all(Radius.circular(50)),
-                          border: Border.all(color: Colors.blueGrey)),
+                          border: Border.all(color: Theme.of(context).disabledColor)),
                       child: const Center(
                         child: Icon(CupertinoIcons.calendar),
                       ),
@@ -45,10 +45,10 @@ class ModalRapidActionComponent extends StatelessWidget {
                       height: 80,
                       width: 80,
                       decoration: BoxDecoration(
-                          color: Colors.black54,
+                          
                           borderRadius:
                               const BorderRadius.all(Radius.circular(50)),
-                          border: Border.all(color: Colors.blueGrey)),
+                          border: Border.all(color: Theme.of(context).disabledColor)),
                       child: const Center(
                         child: Icon(CupertinoIcons.phone),
                       ),
@@ -70,10 +70,10 @@ class ModalRapidActionComponent extends StatelessWidget {
                         height: 80,
                         width: 80,
                         decoration: BoxDecoration(
-                            color: Colors.black54,
+                           
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(50)),
-                            border: Border.all(color: Colors.blueGrey)),
+                            border: Border.all(color: Theme.of(context).disabledColor)),
                         child: const Center(
                           child: Icon(CupertinoIcons.alarm),
                         ),

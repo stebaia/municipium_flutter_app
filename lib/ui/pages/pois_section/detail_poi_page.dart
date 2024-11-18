@@ -7,13 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:municipium/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
-import 'package:municipium/services/network/dto/contact_point_dto.dart';
+import 'package:municipium/bloc/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
 import 'package:municipium/services/network/dto/poi_detail_dto.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.dart';
 import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/icons_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -204,9 +205,11 @@ class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<PointOfInterestBloc>(
-          create: (context) =>
-              PointOfInterestBloc(pointOfInterestRepository: context.read())
-                ..fetchPoiDetail(poiId),
+          create: (context) => PointOfInterestBloc(
+              pointOfInterestRepository: context.read())
+            ..fetchPoiDetail(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+                poiId),
         ),
       ], child: this);
 }

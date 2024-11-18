@@ -16,10 +16,10 @@ class ReservationsRepository {
       required this.logger});
 
   Future<List<ReservableUnit>> getReservationUnitsList(
-      int municipalityId) async {
+      String baseUrl, int municipalityId) async {
     try {
       final reservationsResponse =
-          await service.getReservationUnits(municipalityId);
+          await service.getReservationUnits(baseUrl, municipalityId);
       final List<ReservableUnit> reservationsUnitsList = [];
       for (var element in reservationsResponse) {
         reservationsUnitsList.add(resarvableUnitsMapper.fromDTO(element));
