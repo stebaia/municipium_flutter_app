@@ -146,5 +146,19 @@
     "text_yes" : "Si",
     "text_no" : "No",
 
-    "text_calendar_title" : "Agenda"
+    "text_calendar_title" : "Agenda",
+
+    "text_title_dialog_legend_risk" : "Legenda colori",
+
+    "text_legend_white" : "Colore bianco",
+    "text_legend_red" : "Colore rosso",
+    "text_legend_green" : "Colore verde",
+    "text_legend_yellow" : "Colore giallo", 
+    "text_legend_orange" : "Colore arancione",
+    "text_legend_no_prediction" : "Nessuna previsione",
+    "text_legend_no_risk" : "Criticità assente",
+    "text_legend_ordinary_risk" : "Criticità ordinaria",
+    "text_legend_yellow_risk" : "Criticità moderata",
+    "text_legend_red_risk" : "Criticità elevata"
+
 }   

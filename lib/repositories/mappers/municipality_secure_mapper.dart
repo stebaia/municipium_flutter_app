@@ -52,6 +52,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         jcityGovEnte: json['jcityGovEnte'] ?? '',
         jcityGovUrl: json['jcityGovUrl'] ?? '',
         civilDefenceType: json['civil_defence_type'] ?? '',
+        civilDefenceNewsCategoryIds: json['civil_defence_news_category_ids'] ?? [],
         prenotationWebUrl: json['url_prenotazioni_web'] ?? '');
   }
 }

@@ -24,6 +24,7 @@ class Municipality extends Equatable {
   final String province;
   final String prenotationWebUrl;
   final String civilDefenceType;
+  final List<int> civilDefenceNewsCategoryIds;
   Configurations? configurations;
 
   Municipality(
@@ -44,6 +45,7 @@ class Municipality extends Equatable {
       required this.jcityGovUrl,
       required this.province,
       required this.civilDefenceType,
+      required this.civilDefenceNewsCategoryIds,
       required this.prenotationWebUrl});
 
   factory Municipality.fromJsonFromShared(String jsonString) {
@@ -67,6 +69,7 @@ class Municipality extends Equatable {
             : null,
         jcityGovEnte: json['jcityGovEnte'] ?? '',
         jcityGovUrl: json['jcityGovUrl'] ?? '',
+        civilDefenceNewsCategoryIds: json['civilDefenceNewsCategoryIds'] ?? [],
         civilDefenceType: json['civilDefenceType'],
         prenotationWebUrl: json['prenotationWebUrl']);
   }
@@ -91,6 +94,7 @@ class Municipality extends Equatable {
             : null,
         jcityGovEnte: json['jcityGovEnte'] ?? '',
         jcityGovUrl: json['jcityGovUrl'] ?? '',
+        civilDefenceNewsCategoryIds: json['civilDefenceNewsCategoryIds'] ?? [],
         civilDefenceType: json['civilDefenceType'],
         prenotationWebUrl: json['prenotationWebUrl']);
   }
@@ -115,6 +119,7 @@ class Municipality extends Equatable {
       'jcityGovEnte': jcityGovEnte,
       'jcityGovUrl': jcityGovUrl,
       'civilDefenceType': civilDefenceType,
+      'civilDefenceNewsCategoryIds': civilDefenceNewsCategoryIds,
       'prenotationWebUrl': prenotationWebUrl
     };
   }
@@ -137,6 +142,7 @@ class Municipality extends Equatable {
         jcityGovUrl,
         province,
         civilDefenceType,
-        prenotationWebUrl
+        prenotationWebUrl,
+        civilDefenceNewsCategoryIds
       ];
 }

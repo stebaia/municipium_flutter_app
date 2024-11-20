@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:logger/logger.dart';
 import 'package:municipium/model/news/news_detail.dart';
 import 'package:municipium/model/news/news_item_list.dart';
@@ -32,6 +34,26 @@ class NewsRepository {
       return newsList;
     } catch (error) {
       logger.e('Error in getting news list');
+      rethrow;
+    }
+  }
+
+
+  Future<List<NewsItemList>> getNewsListFromCategory(String baseUrl,
+      {required int categoryId,}) async {
+    try {
+      final NewsPagedDto newsListResponse =
+          await newsService.getNewsFromCategory(baseUrl, categoryId,);
+      final List<NewsItemList> newsList = [];
+      if (newsListResponse.results != null) {
+        for (var element in newsListResponse.results!) {
+          newsList.add(newsItemMapper.fromDTO(element));
+        }
+      }
+      return newsList;
+    } catch (error) {
+      
+      logger.e('Error in getting news list', error: error);
       rethrow;
     }
   }

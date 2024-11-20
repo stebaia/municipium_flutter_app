@@ -52,6 +52,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: NewSelfPaymentRouter.page),
         AutoRoute(page: PersonTypePaymentRoute.page),
         AutoRoute(page: WeatherQualityRoute.page),
+        AutoRoute(page: CivilDefenceNewsRoute.page, path: '/civil_defence_alerts_news'),
         AutoRoute(
             page: CivilDefenceLevelRoute.page, path: '/civil_defence_levels'),
         AutoRoute(page: PrenotationRoute.page, path: '/prenotazioni'),

@@ -146,5 +146,18 @@
     "text_yes" : "Yes",
     "text_no" : "No",
 
-     "text_calendar_title" : "Agenda"
+     "text_calendar_title" : "Agenda",
+
+     "text_title_dialog_legend_risk" : "Colors legend",
+
+    "text_legend_white" : "White color",
+    "text_legend_red" : "Red color",
+    "text_legend_green" : "Green color",
+    "text_legend_yellow" : "Yellow color", 
+    "text_legend_orange" : "Orange color",
+    "text_legend_no_prediction" : "No prediction",
+    "text_legend_no_risk" : "Criticality absent",
+    "text_legend_ordinary_risk" : "Ordinary criticality",
+    "text_legend_yellow_risk" : "Modarate criticality",
+    "text_legend_red_risk" : "High riticality"
 }

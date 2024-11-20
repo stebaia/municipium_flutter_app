@@ -15,12 +15,12 @@ class UserConfigurationMenu {
       this.isRemoved = false});
   factory UserConfigurationMenu.fromJson(Map<String, dynamic> json) {
     return UserConfigurationMenu(
-      serviceName: json['serviceName'],
-      slug: json['slug'],
-      position: json['position'],
-      isMandatory: json['isMandatory'],
-      assetImage: json['image'],
-      isRemoved: json['isRemoved'],
+      serviceName: json['serviceName'] ?? '',
+      slug: json['slug'] ?? '',
+      position: json['position']?? '' ,
+      isMandatory: json['isMandatory'] ?? false,
+      assetImage: json['image'] ?? '',
+      isRemoved: json['isRemoved'] ?? false,
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:municipium/model/pnrr/service_pnrr.dart';
 import 'package:municipium/services/network/dto/pnrr_body_dto.dart';
 import 'package:municipium/services/network/dto/service_pnrr_dto.dart';
 import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
 
 part 'pnrr_service.g.dart';
 

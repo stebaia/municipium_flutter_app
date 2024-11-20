@@ -42,6 +42,7 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
         jcityGovUrl: dto.jcityGovUrl ?? '',
         jcityGovEnte: dto.jcityGovEnte ?? '',
         civilDefenceType: dto.civilDefenceType ?? '',
+        civilDefenceNewsCategoryIds: dto.civilDefenceNewsCategoryIds ?? [],
         prenotationWebUrl: dto.prenotationWebUrl ?? '');
   }
 

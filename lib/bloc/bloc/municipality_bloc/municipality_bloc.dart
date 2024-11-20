@@ -132,6 +132,7 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
       Emitter<MunicipalityState> emit) async {
     emit(const FetchingMunicipalityState());
     try {
+      //deleteMunicipality();
       final municipality = await municipalityRepository.saveMunicipality(
           fetchMunicipalityEvent.baseUrl,
           fetchMunicipalityEvent.baseUrlBe,
@@ -146,4 +147,5 @@ class MunicipalityBloc extends Bloc<MunicipalityEvent, MunicipalityState> {
     await municipalityRepository.secureStorage
         .deleteMunicipalitylKeySecureData();
   }
+
 }

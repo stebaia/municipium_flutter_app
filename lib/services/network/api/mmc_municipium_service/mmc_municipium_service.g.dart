@@ -12,11 +12,14 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
   _MmcMunicipiumService(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
+
+  final ParseErrorLogger? errorLogger;
 
   @override
   Future<SpidUserModel> retriveUserData(
@@ -30,24 +33,30 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<SpidUserModel>(Options(
+    final _options = _setStreamType<SpidUserModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '${baseUrl}retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = SpidUserModel.fromJson(_result.data!);
+        .compose(
+          _dio.options,
+          '${baseUrl}retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SpidUserModel _value;
+    try {
+      _value = SpidUserModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -61,23 +70,23 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(requestLogoutSpid.toJson());
-    final _result =
-        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+    final _options = _setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '${baseUrl}disableDevice',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
+        .compose(
+          _dio.options,
+          '${baseUrl}disableDevice',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch(_options);
     final _value = _result.data;
     final httpResponse = HttpResponse(_value, _result);
     return httpResponse;

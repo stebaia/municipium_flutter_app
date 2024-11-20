@@ -19,10 +19,12 @@ class NewsListBloc extends Bloc<NewsListBlocEvent, NewsListBlocState> {
   NewsListBloc({required this.newsRepository})
       : super(const FetchingNewsListState()) {
     on<FetchNewsListEvent>(_fetchNewsList);
+    on<FetchNewsListFromCategoryEvent>(_fetchNewsFromCategoryList);
     on<FilterNewsListEvent>(_filterNewsList);
   }
 
   void fetchNewsList(String baseUrl) => add(FetchNewsListEvent(baseUrl));
+  void fetchNewsListFromCategory(String baseUrl, int newsCategoryId) => add(FetchNewsListFromCategoryEvent(baseUrl, newsCategoryId));
   void filterNewsList(String searchText) =>
       add(FilterNewsListEvent(searchText));
 
@@ -38,6 +40,25 @@ class NewsListBloc extends Bloc<NewsListBlocEvent, NewsListBlocState> {
         allNews.addAll(newsItemsList);
         emit(FetchedNewsListState(allNews));
         page++;
+      } else {
+        emit(const NoNewsListState());
+      }
+    } catch (error) {
+      emit(const ErrorNewsListState());
+    }
+  }
+
+
+  FutureOr<void> _fetchNewsFromCategoryList(FetchNewsListFromCategoryEvent fetchNewsListEvent,
+      Emitter<NewsListBlocState> emit) async {
+    emit(const FetchingNewsListState());
+    try {
+      final newsItemsList = await newsRepository.getNewsListFromCategory(
+          fetchNewsListEvent.baseUrl,
+          categoryId: fetchNewsListEvent.newsCategoryId,
+          );
+      if (newsItemsList.isNotEmpty) {
+        emit(FetchedNewsListState(newsItemsList));
       } else {
         emit(const NoNewsListState());
       }

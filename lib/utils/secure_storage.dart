@@ -27,6 +27,9 @@ class SecureStorage {
     }
   }
 
+
+
+
   Future setMunicipalityKeyInStorage(String municipality) async {
     await storage.write(key: _municipalityKey, value: municipality);
   }
@@ -56,6 +59,7 @@ class SecureStorage {
   }
 
   Future<void> deleteMunicipalitylKeySecureData() async {
+    await storage.delete( key: _configurationMenu);
     await storage.delete(
       key: _municipalityKey,
     );
