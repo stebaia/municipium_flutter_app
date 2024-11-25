@@ -159,6 +159,8 @@
     "text_legend_no_risk" : "Criticità assente",
     "text_legend_ordinary_risk" : "Criticità ordinaria",
     "text_legend_yellow_risk" : "Criticità moderata",
-    "text_legend_red_risk" : "Criticità elevata"
+    "text_legend_red_risk" : "Criticità elevata",
+
+    "text_civil_defence_are_you_ready_title_page" : "Sei pronto?"
 
 }   

@@ -6,7 +6,7 @@ part of 'news_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
 class _NewsService implements NewsService {
   _NewsService(
@@ -95,7 +95,7 @@ class _NewsService implements NewsService {
   }
 
   @override
-  Future<NewsPagedDto> getNewsFromCategory(
+  Future<List<NewsDTO>> getNewsFromCategory(
     String baseUrl,
     int newsCategoryId,
   ) async {
@@ -103,7 +103,7 @@ class _NewsService implements NewsService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<NewsPagedDto>(Options(
+    final _options = _setStreamType<List<NewsDTO>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -119,10 +119,12 @@ class _NewsService implements NewsService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late NewsPagedDto _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<NewsDTO> _value;
     try {
-      _value = NewsPagedDto.fromJson(_result.data!);
+      _value = _result.data!
+          .map((dynamic i) => NewsDTO.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

@@ -13,41 +13,40 @@ import 'package:municipium/utils/shimmer_utils.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
 
-
-
 @RoutePage()
-class CivilDefenceNewsPage extends StatelessWidget implements AutoRouteWrapper{
-
-   @override
+class CivilDefenceNewsPage extends StatelessWidget implements AutoRouteWrapper {
+  @override
   Widget wrappedRoute(BuildContext context) {
     String baseUrl =
         Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl;
 
-    int id =
-        context.read<MunicipalityStoredCubit>().state!.civilDefenceNewsCategoryIds[0];
+    int id = context
+        .read<MunicipalityStoredCubit>()
+        .state!
+        .civilDefenceNewsCategoryIds[0];
 
-        return MultiBlocProvider(providers: [
-        BlocProvider<NewsListBloc>(
-          create: (context) => NewsListBloc(newsRepository: context.read())
-            ..fetchNewsListFromCategory(
-                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl, id),
-        )
-      ], child: this);
-  } 
+    return MultiBlocProvider(providers: [
+      BlocProvider<NewsListBloc>(
+        create: (context) => NewsListBloc(newsRepository: context.read())
+          ..fetchNewsListFromCategory(
+              Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl, id),
+      )
+    ], child: this);
+  }
+
   const CivilDefenceNewsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          AppLocalizations.of(context)!.civil_defence_alerts.toUpperCase(),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            AppLocalizations.of(context)!.civil_defence_alerts.toUpperCase(),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
         ),
-        
-    ),
-    body: Container(child: BlocBuilder<NewsListBloc, NewsListBlocState>(
+        body: Container(child: BlocBuilder<NewsListBloc, NewsListBlocState>(
           builder: (context, state) {
             List<NewsItemList> newsToShow =
                 (context.read<NewsListBloc>().allNews);
@@ -64,12 +63,16 @@ class CivilDefenceNewsPage extends StatelessWidget implements AutoRouteWrapper{
               );
             }
             return ListView.builder(
-              
               itemCount: newsToShow.length,
               itemBuilder: ((context, index) => GestureDetector(
-                    child: Padding(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          borderRadius: BorderRadius.circular(20)),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 24, horizontal: 16),
+                          vertical: 16, horizontal: 16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,6 +170,5 @@ class CivilDefenceNewsPage extends StatelessWidget implements AutoRouteWrapper{
             );
           },
         )));
-
   }
 }

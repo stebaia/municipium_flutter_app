@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:municipium/model/civil_defence/civil_defence_are_you_ready.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/civil_defence/civil_defence_level.dart';
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
@@ -39,6 +40,18 @@ class CivilDefenceRepository {
       final CivilDefenceLevels civilDefenceLevels =
           await civilDefenceService.getCivilDefenceLevels(baseUrl, type);
       return civilDefenceLevels;
+    } catch (e) {
+      logger.e('Error getting civil defence levels $e');
+      rethrow;
+    }
+  }
+
+  Future<List<CivilDefenceAreYouReady>> getCivilDefenceAreYouReady(
+      String baseUrl) async {
+    try {
+      final List<CivilDefenceAreYouReady> responseList =
+          await civilDefenceService.getCivilDefenceAreYouReady(baseUrl);
+      return responseList;
     } catch (e) {
       logger.e('Error getting civil defence levels $e');
       rethrow;

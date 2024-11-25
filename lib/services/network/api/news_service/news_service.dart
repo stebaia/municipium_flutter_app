@@ -17,8 +17,9 @@ abstract class NewsService {
   Future<NewsPagedDto> getNewsList(@Path('baseUrl') String baseUrl,
       @Path('page_index') int page_index, @Path('page_size') int page_size);
 
-  @GET(
-      '{baseUrl}/news_categories/{newsCategoryId}/news')
-  Future<NewsPagedDto> getNewsFromCategory(@Path('baseUrl') String baseUrl,
-      @Path('newsCategoryId') int newsCategoryId,);
+  @GET('{baseUrl}/news_categories/{newsCategoryId}/news')
+  Future<List<NewsDTO>> getNewsFromCategory(
+    @Path('baseUrl') String baseUrl,
+    @Path('newsCategoryId') int newsCategoryId,
+  );
 }
