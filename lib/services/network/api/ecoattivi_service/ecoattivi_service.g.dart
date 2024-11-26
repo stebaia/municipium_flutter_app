@@ -22,15 +22,16 @@ class _EcoattiviService implements EcoattiviService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<EcoattiviQuizDto>> getQuizList(
+  Future<List<EcoattiviQuiz>> getQuizList(
     String baseUrl,
     String token,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = token;
-    final _options = _setStreamType<List<EcoattiviQuizDto>>(Options(
+    final _headers = <String, dynamic>{r'x_usr_token': token};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<EcoattiviQuiz>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -47,12 +48,77 @@ class _EcoattiviService implements EcoattiviService {
           baseUrl,
         )));
     final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<EcoattiviQuizDto> _value;
+    late List<EcoattiviQuiz> _value;
     try {
       _value = _result.data!
-          .map((dynamic i) =>
-              EcoattiviQuizDto.fromJson(i as Map<String, dynamic>))
+          .map((dynamic i) => EcoattiviQuiz.fromJson(i as Map<String, dynamic>))
           .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<void> verifyToken(
+    String baseUrl,
+    String token,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'x_usr_token': token};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<void>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '${baseUrl}/verifica_token',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<EcoattiviSituazioneUtente> situazioneUtente(
+    String baseUrl,
+    String token,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'x_usr_token': token};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<EcoattiviSituazioneUtente>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '${baseUrl}/situazione_utente',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late EcoattiviSituazioneUtente _value;
+    try {
+      _value = EcoattiviSituazioneUtente.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

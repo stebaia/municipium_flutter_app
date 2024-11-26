@@ -16,7 +16,9 @@ import 'package:provider/provider.dart';
 
 @RoutePage()
 class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
-  const LoginSpidIdpListPage({super.key});
+  final bool ecoattivi;
+
+  const LoginSpidIdpListPage({super.key, required this.ecoattivi});
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,10 @@ class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
 
                           if (deviceBe != null) {
                             String urlSpid = SpidObject.getWebSpidUrl(
+                                Provider.of<BaseUrlNotifier>(context,
+                                        listen: false)
+                                    .baseUrlMmc,
+                                municipality.codiceSap,
                                 municipality.muninicipalityId.toString(),
                                 listIdp[index].entityId.toString(),
                                 deviceBe.playerId.toString(),
@@ -67,7 +73,8 @@ class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
                                 urlSpid: urlSpid,
                                 municipalityId:
                                     municipality.muninicipalityId.toString(),
-                                authSystem: 'spid'));
+                                authSystem: 'spid',
+                                ecoattivi: ecoattivi));
                           }
                         },
                       ),
@@ -86,8 +93,8 @@ class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<UserBloc>(
           create: (context) => UserBloc(userRepository: context.read())
-            ..fetchListIdp(Provider.of<BaseUrlNotifier>(context, listen: false)
-                .baseUrlMmc),
+            ..fetchListIdp(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         )
       ], child: this);
 }

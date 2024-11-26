@@ -411,7 +411,7 @@ class EcoattiviHomeRoute extends _i42.PageRouteInfo<void> {
   static _i42.PageInfo page = _i42.PageInfo(
     name,
     builder: (data) {
-      return _i42.WrappedRoute(child: const _i8.EcoattiviHomePage());
+      return const _i8.EcoattiviHomePage();
     },
   );
 }
@@ -630,10 +630,18 @@ class IssuesListRouteArgs {
 
 /// generated route for
 /// [_i14.LoginSpidIdpListPage]
-class LoginSpidIdpListRoute extends _i42.PageRouteInfo<void> {
-  const LoginSpidIdpListRoute({List<_i42.PageRouteInfo>? children})
-      : super(
+class LoginSpidIdpListRoute
+    extends _i42.PageRouteInfo<LoginSpidIdpListRouteArgs> {
+  LoginSpidIdpListRoute({
+    _i45.Key? key,
+    required bool ecoattivi,
+    List<_i42.PageRouteInfo>? children,
+  }) : super(
           LoginSpidIdpListRoute.name,
+          args: LoginSpidIdpListRouteArgs(
+            key: key,
+            ecoattivi: ecoattivi,
+          ),
           initialChildren: children,
         );
 
@@ -642,9 +650,30 @@ class LoginSpidIdpListRoute extends _i42.PageRouteInfo<void> {
   static _i42.PageInfo page = _i42.PageInfo(
     name,
     builder: (data) {
-      return _i42.WrappedRoute(child: const _i14.LoginSpidIdpListPage());
+      final args = data.argsAs<LoginSpidIdpListRouteArgs>();
+      return _i42.WrappedRoute(
+          child: _i14.LoginSpidIdpListPage(
+        key: args.key,
+        ecoattivi: args.ecoattivi,
+      ));
     },
   );
+}
+
+class LoginSpidIdpListRouteArgs {
+  const LoginSpidIdpListRouteArgs({
+    this.key,
+    required this.ecoattivi,
+  });
+
+  final _i45.Key? key;
+
+  final bool ecoattivi;
+
+  @override
+  String toString() {
+    return 'LoginSpidIdpListRouteArgs{key: $key, ecoattivi: $ecoattivi}';
+  }
 }
 
 /// generated route for
@@ -1568,6 +1597,7 @@ class WebViewSpidAuthRoute
     required String urlSpid,
     required String municipalityId,
     required String authSystem,
+    required bool ecoattivi,
     List<_i42.PageRouteInfo>? children,
   }) : super(
           WebViewSpidAuthRoute.name,
@@ -1576,6 +1606,7 @@ class WebViewSpidAuthRoute
             urlSpid: urlSpid,
             municipalityId: municipalityId,
             authSystem: authSystem,
+            ecoattivi: ecoattivi,
           ),
           initialChildren: children,
         );
@@ -1592,6 +1623,7 @@ class WebViewSpidAuthRoute
         urlSpid: args.urlSpid,
         municipalityId: args.municipalityId,
         authSystem: args.authSystem,
+        ecoattivi: args.ecoattivi,
       ));
     },
   );
@@ -1603,6 +1635,7 @@ class WebViewSpidAuthRouteArgs {
     required this.urlSpid,
     required this.municipalityId,
     required this.authSystem,
+    required this.ecoattivi,
   });
 
   final _i43.Key? key;
@@ -1613,9 +1646,11 @@ class WebViewSpidAuthRouteArgs {
 
   final String authSystem;
 
+  final bool ecoattivi;
+
   @override
   String toString() {
-    return 'WebViewSpidAuthRouteArgs{key: $key, urlSpid: $urlSpid, municipalityId: $municipalityId, authSystem: $authSystem}';
+    return 'WebViewSpidAuthRouteArgs{key: $key, urlSpid: $urlSpid, municipalityId: $municipalityId, authSystem: $authSystem, ecoattivi: $ecoattivi}';
   }
 }
 

@@ -136,8 +136,8 @@ class PersonalAreaMenuPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         InkWell(
-                          onTap: () =>
-                              context.pushRoute(const LoginSpidIdpListRoute()),
+                          onTap: () => context.pushRoute(
+                              LoginSpidIdpListRoute(ecoattivi: false)),
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
                             width: 200,

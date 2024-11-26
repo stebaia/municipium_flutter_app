@@ -20,7 +20,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         'appServiceTwo': from.appServiceTwo,
         'appServiceThree': from.appServiceThree,
         'appServiceFour': from.appServiceFour,
-        'province' : from.province,
+        'province': from.province,
         'new_menu': from.newMenu.toJson(),
         'configurations': from.configurations ??
             from.configurations!
@@ -31,6 +31,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
   Municipality to(String to) {
     final json = jsonDecode(to);
     return Municipality(
+        codiceSap: json['codice_sap'] ?? '',
         municipalityName: json['name'],
         muninicipalityId: json['id'],
         lat: json['lat'],
@@ -49,6 +50,7 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         ),
         configurations: Configurations.fromJson(json['configurations']),
         jcityGovEnte: json['jcityGovEnte'] ?? '',
-        jcityGovUrl: json['jcityGovUrl'] ?? '');
+        jcityGovUrl: json['jcityGovUrl'] ?? '',
+        istat: json['istat'] ?? -1);
   }
 }

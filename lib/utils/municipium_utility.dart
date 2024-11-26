@@ -25,16 +25,20 @@ class MunicipiumUtility {
   static String BASEURL_STAGING = 'https://staging.municipiumapp.it/api/v2/';
   static String BE_URL_STAGING = "https://api.municipiumapp.it/";
   static String BE_URL_PROD = "https://api.municipiumapp.it/";
-  static String MMC_URL_PROD = "https://mmc.maggiolicloud.it/";
-  static String MMC_URL_STAG = "https://mmc-test.maggiolicloud.it/";
+  static String MMC_URL_PROD = "https://mmc.maggioli.cloud";
+  static String MMC_URL_STAG = "https://mmc-dev.maggioli.cloud";
+  static String ECOATTIVI_URL_STAGING =
+      "https://municipium-api-test.azurewebsites.net/api/v1.0/";
+  static String ECOATTIVI_URL_PROD =
+      "https://municipium-api-prod.azurewebsites.net/api/v1.0/";
 
   static String BASEURL_KEY = 'municipium_baseurl_key';
   static String BE_URL_KEY = 'municipium_be_url_key';
   static String MMC_URL_KEY = 'municipium_mmc_url_key';
+  static String ECOATTIVI_URL_KEY = 'ecoattivi_url_key';
   static String getDefaultImageUrl() {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }
-
 
   static String getLastDayOfMonth() {
     final now = DateTime.now();
@@ -66,12 +70,12 @@ class MunicipiumUtility {
   static String getFormatDayFromDate(String dateString) {
     DateTime date = DateTime.parse(dateString);
     return date.isAtSameMomentAs(DateTime.now())
-                            ? 'oggi'
-                            : date.isAtSameMomentAs(DateTime.now().subtract(Duration(days: 1)))
-                                ? 'ieri'
-                                : date.isAtSameMomentAs(DateTime.now().add(Duration(days: 1)))
-                                    ? 'domani'
-                                    : DateFormat('EEE, d MMMM').format(date);
+        ? 'oggi'
+        : date.isAtSameMomentAs(DateTime.now().subtract(Duration(days: 1)))
+            ? 'ieri'
+            : date.isAtSameMomentAs(DateTime.now().add(Duration(days: 1)))
+                ? 'domani'
+                : DateFormat('EEE, d MMMM').format(date);
   }
 
   static String convertDate(String dateString, String endFormat,

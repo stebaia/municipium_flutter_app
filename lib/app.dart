@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:municipium/di/dependency_injector.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,15 +30,7 @@ class _App extends State<App> {
   Future<void> initPlatformState() async {
     OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
     OneSignal.initialize("c1cd13b0-124b-441e-bc9f-309961066d16");
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.getBool('first_run') ?? true) {
-      // need this for IOS app deleting, securestorage is not deleted with app
-      SecureStorage storage = SecureStorage();
-      await HydratedBloc.storage.clear();
-      storage.deleteAll();
 
-      prefs.setBool('first_run', false);
-    }
     // The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
   }
 
