@@ -36,8 +36,10 @@ class SubMenuPage extends StatelessWidget {
                 return MenuRow(
                   textToShow:
                       MenuHelper.getSubMenuName(context, list[index]) ?? '',
-                  onTapMethod: () {},
-                  sizeFont: 20,
+                  onTapMethod: () {
+                    MenuHelper.checkAndPushSubMenuItem(context, list[index]);
+                  },
+                  sizeFont: 16,
                   icon: MenuHelper.getSubMenuIcon(list[index]),
                   showIconArrow: true,
                 );

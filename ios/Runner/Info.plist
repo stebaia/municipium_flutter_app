@@ -14,8 +14,6 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Why is my app authenticating using face id</string>
 	<key>CFBundleName</key>
 	<string>municipium_flutter_app</string>
 	<key>CFBundlePackageType</key>
@@ -26,12 +24,6 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-<string>We need your location to provide better services.</string>
-<key>NSLocationAlwaysUsageDescription</key>
-<string>We need your location to provide better services.</string>
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>We need your location to provide better services.</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>sms</string>
@@ -39,25 +31,31 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Access to the camera needed for report issue.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Why is my app authenticating using face id</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your location to provide better services.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to provide better services.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to provide better services.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>test</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to photo library for choose images to create an issue.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>io.flutter.embedded_views_preview</key>
-<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Access to the camera needed for report issue.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to photo library for choose images to create an issue.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>test</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>sms</string>
-		<string>tel</string>
-	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -73,5 +71,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 </dict>
 </plist>

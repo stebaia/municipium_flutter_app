@@ -161,6 +161,8 @@
     "text_legend_yellow_risk" : "Criticità moderata",
     "text_legend_red_risk" : "Criticità elevata",
 
-    "text_civil_defence_are_you_ready_title_page" : "Sei pronto?"
+    "text_civil_defence_are_you_ready_title_page" : "In caso di calamità",
+    "text_attachment_and_planning" : "Piano comunale e allegati",
+    "text_attachment" : "Allegati"
 
 }   

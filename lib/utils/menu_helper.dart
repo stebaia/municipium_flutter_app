@@ -253,6 +253,26 @@ class MenuHelper {
     }
   }
 
+  static void checkAndPushSubMenuItem(BuildContext context, SubMenuItemType menuItem) async {
+    switch (menuItem) {
+      case CivilDefenceType.civilDefenceLevels:
+        context.pushRoute(const CivilDefenceLevelRoute());
+      break;
+      case CivilDefenceType.civilDefenceAlertNews:
+        context.pushRoute(const CivilDefenceNewsRoute());
+      break;
+      case CivilDefenceType.civilDefenceInformations:
+        context.pushRoute(const CivilDefenceInformationsRoute());
+      break;
+      case CivilDefenceType.civilDefencePhoneNumbers:
+        context.pushRoute(const CivilDefenceNumbersRoute());
+      break;
+      case CivilDefenceType.civilDefenceAreUReady:
+        context.pushRoute(const CivilDefenceAreYouReadyRoute());
+      break;
+    }
+  }
+
   static void checkAndPushRoute(BuildContext context, MenuItem menuItem) async {
     switch (menuItem.type) {
       case MenuItemType.news:

@@ -2,8 +2,10 @@ import 'package:logger/logger.dart';
 import 'package:municipium/model/civil_defence/civil_defence_are_you_ready.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/civil_defence/civil_defence_level.dart';
+import 'package:municipium/model/civil_defence/civil_defence_list_informations.dart';
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
+import 'package:municipium/ui/pages/civil_defence_section/civil_defence_informations_page.dart';
 import 'package:pine/pine.dart';
 
 class CivilDefenceRepository {
@@ -54,6 +56,18 @@ class CivilDefenceRepository {
       return responseList;
     } catch (e) {
       logger.e('Error getting civil defence levels $e');
+      rethrow;
+    }
+  }
+
+  Future<List<CivilDefenceListInformations>> getCivilDefenceInformations(
+      String baseUrl) async {
+    try {
+      final List<CivilDefenceListInformations> responseList =
+          await civilDefenceService.getCivilDefenceInformations(baseUrl);
+      return responseList;
+    } catch (e) {
+      logger.e('Error getting civil defence info $e');
       rethrow;
     }
   }

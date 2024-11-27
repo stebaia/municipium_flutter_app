@@ -46,7 +46,7 @@ class MenuDrawer extends StatelessWidget {
                 MenuRow(
                     textToShow: AppLocalizations.of(context)!.spid_login_menu,
                     onTapMethod: () {},
-                    sizeFont: 20,
+                    sizeFont: 18,
                     icon: Icons.person_outlined),
               ],
               MenuRow(
@@ -55,7 +55,7 @@ class MenuDrawer extends StatelessWidget {
                   onTapMethod: () {
                     context.pushRoute(ChooseMunicipalityRoute());
                   },
-                  sizeFont: 20,
+                  sizeFont: 18,
                   icon: Icons.location_on_outlined),
               Divider(
                 color: Theme.of(context).dividerColor,
@@ -77,7 +77,7 @@ class MenuDrawer extends StatelessWidget {
                           }
                           scaffoldKey.currentState?.closeDrawer();
                         },
-                        sizeFont: 20,
+                        sizeFont: 18,
                         icon: MenuHelper.getMenuIcon(menuList[index]));
                   },
                   itemCount: menuList.length,

@@ -161,5 +161,7 @@
     "text_legend_yellow_risk" : "Modarate criticality",
     "text_legend_red_risk" : "High riticality",
 
-    "text_civil_defence_are_you_ready_title_page" : "Are you ready?"
+    "text_civil_defence_are_you_ready_title_page" : "In case of calamity",
+    "text_attachment_and_planning" : "Municipality planning and attachment",
+    "text_attachment" : "Attachment"
 }

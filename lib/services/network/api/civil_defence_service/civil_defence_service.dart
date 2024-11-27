@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:municipium/model/civil_defence/civil_defence_are_you_ready.dart';
 import 'package:municipium/model/civil_defence/civil_defence_level.dart';
+import 'package:municipium/model/civil_defence/civil_defence_list_informations.dart';
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
@@ -20,6 +21,11 @@ abstract class CivilDefenceService {
 
   @GET('{baseUrl}/civil_defence_risks')
   Future<List<CivilDefenceAreYouReady>> getCivilDefenceAreYouReady(
+    @Path('baseUrl') String baseUrl,
+  );
+
+  @GET('{baseUrl}/civil_defence_informations')
+  Future<List<CivilDefenceListInformations>> getCivilDefenceInformations(
     @Path('baseUrl') String baseUrl,
   );
 }
