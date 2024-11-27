@@ -59,13 +59,12 @@ class _NewsListPageState extends State<NewsListPage> {
                   onChanged: ((value) =>
                       context.read<NewsListBloc>().filterNewsList(value)),
                 )
-              :  Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.news_menu.toUpperCase(),
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  
+              : Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.news_menu.toUpperCase(),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ),
           leading: IconButton(
             onPressed: () => context.router.popUntil(
@@ -87,7 +86,6 @@ class _NewsListPageState extends State<NewsListPage> {
                 });
               },
             ),
-            
           ],
         ),
         extendBodyBehindAppBar: false,
@@ -123,9 +121,14 @@ class _NewsListPageState extends State<NewsListPage> {
                 }),
               itemCount: newsToShow.length,
               itemBuilder: ((context, index) => GestureDetector(
-                    child: Padding(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          borderRadius: BorderRadius.circular(20)),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 24, horizontal: 16),
+                          vertical: 16, horizontal: 16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,

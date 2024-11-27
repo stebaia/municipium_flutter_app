@@ -6,17 +6,20 @@ part of 'municipality_be_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
 class _MunicipalityBeService implements MunicipalityBeService {
   _MunicipalityBeService(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
+
+  final ParseErrorLogger? errorLogger;
 
   @override
   Future<ResponseDevicePut> putDevices(
@@ -28,24 +31,30 @@ class _MunicipalityBeService implements MunicipalityBeService {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(device.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ResponseDevicePut>(Options(
+    final _options = _setStreamType<ResponseDevicePut>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '${baseUrl}/devices',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = ResponseDevicePut.fromJson(_result.data!);
+        .compose(
+          _dio.options,
+          '${baseUrl}/devices',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ResponseDevicePut _value;
+    try {
+      _value = ResponseDevicePut.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 
@@ -59,23 +68,23 @@ class _MunicipalityBeService implements MunicipalityBeService {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(device.toJson());
-    final _result =
-        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+    final _options = _setStreamType<HttpResponse<dynamic>>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '${baseUrl}/devices',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
+        .compose(
+          _dio.options,
+          '${baseUrl}/devices',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch(_options);
     final _value = _result.data;
     final httpResponse = HttpResponse(_value, _result);
     return httpResponse;

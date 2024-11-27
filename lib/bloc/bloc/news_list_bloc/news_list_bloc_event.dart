@@ -21,3 +21,12 @@ class FilterNewsListEvent extends NewsListBlocEvent {
   @override
   List<Object> get props => [searchText];
 }
+
+class FetchNewsListFromCategoryEvent extends NewsListBlocEvent {
+  final String baseUrl;
+  final int newsCategoryId;
+
+  const FetchNewsListFromCategoryEvent(this.baseUrl,this.newsCategoryId);
+  @override
+  List<Object> get props => [newsCategoryId];
+}

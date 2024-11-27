@@ -240,7 +240,7 @@ class ChooseMunicipalityPage extends StatelessWidget
                       itemBuilder: (context, index) => InkWell(
                         onTap: () {
                           HapticFeedback.mediumImpact();
-
+                          context.read<MunicipalityBloc>().deleteMunicipality();
                           context.read<MunicipalityBloc>().fetchMunicipality(
                               Provider.of<BaseUrlNotifier>(context,
                                       listen: false)

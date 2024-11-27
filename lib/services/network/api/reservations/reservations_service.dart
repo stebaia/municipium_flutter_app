@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:municipium/services/network/dto/reservable_unit_dto.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
 part 'reservations_service.g.dart';
