@@ -22,6 +22,8 @@ import 'package:municipium/di/custom_di_helpert.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_quiz.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_situazione_utente.dart';
 import 'package:municipium/model/events/event_detail.dart';
 import 'package:municipium/model/events/event_item_list.dart';
 import 'package:municipium/model/issue/issue_Detail.dart';
@@ -47,11 +49,14 @@ import 'package:municipium/model/reservations/reservable_unit.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
 import 'package:municipium/repositories/calendar_event_repository.dart';
 import 'package:municipium/repositories/civil_defence_repository.dart';
+import 'package:municipium/repositories/ecoattivi_repository.dart';
 import 'package:municipium/repositories/events_repository.dart';
 import 'package:municipium/repositories/issues_repository.dart';
 import 'package:municipium/repositories/mappers/civil_defence_mapper/civil_defence_emergency_call_mapper.dart';
 import 'package:municipium/repositories/mappers/configuration_mapper.dart';
 import 'package:municipium/repositories/mappers/device_secure_mapper.dart';
+import 'package:municipium/repositories/mappers/ecoattivi_mapper/ecoattivi_quiz_item_mapper.dart';
+import 'package:municipium/repositories/mappers/ecoattivi_mapper/ecoattivi_situazione_utente_mapper.dart';
 import 'package:municipium/repositories/mappers/event_mapper/event_detail_mapper.dart';
 import 'package:municipium/repositories/mappers/event_mapper/event_item_mapper.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
@@ -87,6 +92,7 @@ import 'package:municipium/services/auth/service_manager.dart';
 import 'package:municipium/services/network/api/auth_spid_service/auth_spid_service.dart';
 import 'package:municipium/services/network/api/calendar_service/calendar_service.dart';
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
+import 'package:municipium/services/network/api/ecoattivi_service/ecoattivi_service.dart';
 import 'package:municipium/services/network/api/event_service/event_service.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
 import 'package:municipium/services/network/api/mmc_municipium_service/mmc_municipium_service.dart';
@@ -100,6 +106,8 @@ import 'package:municipium/services/network/api/pnrr_service/pnrr_service.dart';
 import 'package:municipium/services/network/api/point_of_intertest_service/point_of_interest_service.dart';
 import 'package:municipium/services/network/api/reservations/reservations_service.dart';
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi_quiz_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi_situazione_utente_dto.dart';
 import 'package:municipium/services/network/dto/event_detail_dto.dart';
 import 'package:municipium/services/network/dto/event_dto.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
@@ -117,6 +125,7 @@ import 'package:municipium/services/network/dto/post_issue_dto.dart';
 import 'package:municipium/services/network/dto/reservable_unit_dto.dart';
 import 'package:municipium/services/network/dto/self_payment_dto.dart';
 import 'package:municipium/services/network/dto/service_pnrr_dto.dart';
+import 'package:municipium/services/network/interceptor/ecoattivi_interceptor.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/secure_storage.dart';
 import 'package:pine/pine.dart';
@@ -137,23 +146,13 @@ class DependencyInjector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     
-              return CustomDiHelper(
-                      repositories: _repositories,
-                      mappers: _mappers,
-                      blocs: _blocs,
-                      providers: providersFun(),
-                      customService: _customService,
-                      child: child,
-                    );
-            
-            
-        
-        
-       
-        
-      
-    
+    return CustomDiHelper(
+      repositories: _repositories,
+      mappers: _mappers,
+      blocs: _blocs,
+      providers: providersFun(),
+      customService: _customService,
+      child: child,
+    );
   }
 }
-

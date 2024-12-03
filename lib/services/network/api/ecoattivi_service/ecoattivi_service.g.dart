@@ -22,16 +22,20 @@ class _EcoattiviService implements EcoattiviService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<EcoattiviQuiz>> getQuizList(
+  Future<List<EcoattiviQuizDto>> getQuizList(
     String baseUrl,
     String token,
+    String guid,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'x_usr_token': token};
+    final _headers = <String, dynamic>{
+      r'x_usr_token': token,
+      r'x_app_guid': guid,
+    };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<EcoattiviQuiz>>(Options(
+    final _options = _setStreamType<List<EcoattiviQuizDto>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -48,10 +52,11 @@ class _EcoattiviService implements EcoattiviService {
           baseUrl,
         )));
     final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<EcoattiviQuiz> _value;
+    late List<EcoattiviQuizDto> _value;
     try {
       _value = _result.data!
-          .map((dynamic i) => EcoattiviQuiz.fromJson(i as Map<String, dynamic>))
+          .map((dynamic i) =>
+              EcoattiviQuizDto.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -61,16 +66,20 @@ class _EcoattiviService implements EcoattiviService {
   }
 
   @override
-  Future<void> verifyToken(
+  Future<ResponseDto> verifyToken(
     String baseUrl,
     String token,
+    String guid,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'x_usr_token': token};
+    final _headers = <String, dynamic>{
+      r'x_usr_token': token,
+      r'x_app_guid': guid,
+    };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<void>(Options(
+    final _options = _setStreamType<ResponseDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -86,20 +95,32 @@ class _EcoattiviService implements EcoattiviService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    await _dio.fetch<void>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ResponseDto _value;
+    try {
+      _value = ResponseDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   @override
-  Future<EcoattiviSituazioneUtente> situazioneUtente(
+  Future<EcoattiviSituazioneUtenteDto> situazioneUtente(
     String baseUrl,
     String token,
+    String guid,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'x_usr_token': token};
+    final _headers = <String, dynamic>{
+      r'x_usr_token': token,
+      r'x_app_guid': guid,
+    };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<EcoattiviSituazioneUtente>(Options(
+    final _options = _setStreamType<EcoattiviSituazioneUtenteDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -116,9 +137,9 @@ class _EcoattiviService implements EcoattiviService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late EcoattiviSituazioneUtente _value;
+    late EcoattiviSituazioneUtenteDto _value;
     try {
-      _value = EcoattiviSituazioneUtente.fromJson(_result.data!);
+      _value = EcoattiviSituazioneUtenteDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

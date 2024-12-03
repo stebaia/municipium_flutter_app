@@ -131,6 +131,9 @@ class UserRepository {
           user, istat, token, service, codiceAmico, privacy);
       final userValidated = await mmcMunicipiumService.validateUser(
           baseUrlMmc, userToValidateDto);
+      if (userValidated.data != null) {
+        secureStorage.setEcoattiviToken(userValidated.data!.token ?? '');
+      }
       return userValidated;
     } catch (ex) {
       rethrow;

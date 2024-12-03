@@ -28,14 +28,17 @@ class MunicipiumUtility {
   static String MMC_URL_PROD = "https://mmc.maggioli.cloud";
   static String MMC_URL_STAG = "https://mmc-dev.maggioli.cloud";
   static String ECOATTIVI_URL_STAGING =
-      "https://municipium-api-test.azurewebsites.net/api/v1.0/";
+      "https://municipium-api-test.azurewebsites.net/api/v1.0";
   static String ECOATTIVI_URL_PROD =
-      "https://municipium-api-prod.azurewebsites.net/api/v1.0/";
+      "https://municipium-api-prod.azurewebsites.net/api/v1.0";
+  static String ECOATTIVI_GUID_STAGING = 'A717D45E-78B5-4687-B138-F4FAD2BAA2AF';
+  static String ECOATTIVI_GUID_PROD = 'D6BF4E88-82A4-4CBE-90D0-3DE035BD43B0';
 
   static String BASEURL_KEY = 'municipium_baseurl_key';
   static String BE_URL_KEY = 'municipium_be_url_key';
   static String MMC_URL_KEY = 'municipium_mmc_url_key';
   static String ECOATTIVI_URL_KEY = 'ecoattivi_url_key';
+  static String ECOATTIVI_GUID_KEY = 'ecoattivi_guid_key';
   static String getDefaultImageUrl() {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }

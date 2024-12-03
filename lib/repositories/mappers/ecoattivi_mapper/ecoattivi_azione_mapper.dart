@@ -16,7 +16,11 @@ class EcoattiviAzioneMapper
 
   @override
   EcoattiviAzioneDto toDTO(EcoattiviAzione model) {
-    // TODO: implement toDTO
-    throw UnimplementedError();
+    return EcoattiviAzioneDto(
+        azioneId: model.azioneId,
+        titolo: model.titolo,
+        desc: model.desc,
+        punti: model.punti,
+        eseguita: model.eseguita);
   }
 }
