@@ -78,5 +78,10 @@ final List<RepositoryProvider> _repositories = [
   RepositoryProvider<CalendarEventRepository>(
     create: (context) => CalendarEventRepository(
         calendarService: context.read(), logger: context.read()),
+  ),
+  RepositoryProvider<GarbageRepository>(
+    create: (context) => GarbageRepository(
+      mapperImages: context.read(),
+        service: context.read(), logger: context.read()),
   )
 ];

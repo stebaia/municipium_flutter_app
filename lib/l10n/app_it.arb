@@ -163,6 +163,8 @@
 
     "text_civil_defence_are_you_ready_title_page" : "In caso di calamità",
     "text_attachment_and_planning" : "Piano comunale e allegati",
-    "text_attachment" : "Allegati"
+    "text_attachment" : "Allegati",
+
+     "text_garbage_calendar_title" : "Ecocalendario"
 
 }   

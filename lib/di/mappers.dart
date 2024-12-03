@@ -65,5 +65,5 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<PaymentCustomFieldDTO, PaymentCustomField>>(
       create: (_) => PaymentCustomFieldMapper()),
   Provider<DTOMapper<FieldAttributeDTO, FieldAttribute>>(
-      create: (_) => FieldAttributeMapper())
+      create: (_) => FieldAttributeMapper()),
 ];

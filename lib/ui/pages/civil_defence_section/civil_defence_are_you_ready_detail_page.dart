@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:municipium/model/civil_defence/civil_defence_are_you_ready.dart';
-import 'package:municipium/ui/components/detail_gallery_box.dart';
 
 @RoutePage()
 class CivilDefenceAreYouReadyDetailPage extends StatelessWidget {

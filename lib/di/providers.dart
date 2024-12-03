@@ -95,6 +95,10 @@ List<SingleChildWidget> providersFun() {
             OnlineServiceService(context.read<Dio>())),//baseUrl
     Provider<CalendarService>(
         create: (context) =>
-            CalendarService(context.read<Dio>()))
+            CalendarService(context.read<Dio>())),
+    Provider<GarbageService>(
+        create: (context) =>
+            GarbageService(context.read<Dio>())),
+    
   ];
 }
