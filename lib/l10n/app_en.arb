@@ -165,5 +165,11 @@
     "text_attachment_and_planning" : "Municipality planning and attachment",
     "text_attachment" : "Attachment",
 
-    "text_garbage_calendar_title" : "Ecocalendars"
+    "text_garbage_calendar_title" : "Ecocalendars",
+    "text_garbage_detail_calendar_title" : "Calendars",
+    "text_garbage_detail_calendar_element_title" : "Garbage details",
+
+     "label_text_close" : "Close",
+     "label_text_description" : "Description",
+     "label_text_instruction" : "Instruction"
 }

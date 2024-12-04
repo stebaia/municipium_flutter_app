@@ -40,6 +40,17 @@ class MunicipiumUtility {
     final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
     return DateFormat('yyyy-MM-dd').format(lastDayOfMonth);
   }
+  
+   static String getStartGarbageCalendarOfMonth() {
+    return ((DateTime.now().millisecondsSinceEpoch ~/ 1000) - 86400).toString();
+  }
+
+
+   static String getEndGarbageCalendarOfMonth() {
+    return ((DateTime.now().millisecondsSinceEpoch ~/ 1000) + 2674800).toString();
+
+  }
+
 
   static String getDateFiveDaysAgo() {
     final fiveDaysAgo = DateTime.now().subtract(const Duration(days: 5));
@@ -60,6 +71,11 @@ class MunicipiumUtility {
   static String getCurrentDay() {
     final now = DateTime.now();
     return DateFormat('yyyy-MM-dd').format(now);
+  }
+  
+  static String getDateWithFormat(String dateString, String format, String localizzations) {
+    DateTime date = DateTime.parse(dateString);
+    return DateFormat(format, localizzations).format(date);
   }
 
   static String getFormatDayFromDate(String dateString) {

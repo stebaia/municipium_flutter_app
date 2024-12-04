@@ -20,6 +20,8 @@ import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/events/event_detail.dart';
 import 'package:municipium/model/events/event_item_list.dart';
+import 'package:municipium/model/garbage/garbage_calendar.dart';
+import 'package:municipium/model/garbage/garbage_calendar_element.dart';
 import 'package:municipium/model/issue/issue_Detail.dart';
 import 'package:municipium/model/issue/issue_category_tag.dart';
 import 'package:municipium/model/issue/issue_item_list.dart';
@@ -51,6 +53,8 @@ import 'package:municipium/repositories/mappers/configuration_mapper.dart';
 import 'package:municipium/repositories/mappers/device_secure_mapper.dart';
 import 'package:municipium/repositories/mappers/event_mapper/event_detail_mapper.dart';
 import 'package:municipium/repositories/mappers/event_mapper/event_item_mapper.dart';
+import 'package:municipium/repositories/mappers/garbage_mapper/garbage_calendar_element_mapper.dart';
+import 'package:municipium/repositories/mappers/garbage_mapper/garbage_calendar_mapper.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/issue_mapper/issue_category_tag_mapper.dart';
 import 'package:municipium/repositories/mappers/issue_mapper/issue_detail_mapper.dart';
@@ -100,6 +104,8 @@ import 'package:municipium/services/network/api/reservations/reservations_servic
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
 import 'package:municipium/services/network/dto/event_detail_dto.dart';
 import 'package:municipium/services/network/dto/event_dto.dart';
+import 'package:municipium/services/network/dto/garbage_calendar_dto.dart';
+import 'package:municipium/services/network/dto/garbage_calendar_element_dto.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
 import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
@@ -144,14 +150,6 @@ class DependencyInjector extends StatelessWidget {
                       customService: _customService,
                       child: child,
                     );
-            
-            
-        
-        
-       
-        
-      
-    
   }
 }
 

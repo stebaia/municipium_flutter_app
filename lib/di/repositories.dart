@@ -81,7 +81,8 @@ final List<RepositoryProvider> _repositories = [
   ),
   RepositoryProvider<GarbageRepository>(
     create: (context) => GarbageRepository(
-      mapperImages: context.read(),
+      mapperCalendarElement: context.read(),
+      mapperCalendar: context.read(),
         service: context.read(), logger: context.read()),
   )
 ];
