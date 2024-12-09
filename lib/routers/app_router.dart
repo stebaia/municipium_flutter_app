@@ -69,7 +69,14 @@ class AppRouter extends RootStackRouter {
             page: CivilDefenceLevelRoute.page, path: '/civil_defence_levels'),
         AutoRoute(page: PrenotationRoute.page, path: '/prenotazioni'),
         AutoRoute(page: GarbageCalendarRoute.page, path: '/calendars'),
-        AutoRoute(page: GarbageCalendarDetailRoute.page, ),
-        AutoRoute(page: GarbageElementDetailRoute.page, ),
+        AutoRoute(
+          page: GarbageCalendarDetailRoute.page,
+        ),
+        AutoRoute(
+          page: GarbageElementDetailRoute.page,
+        ),
+        AutoRoute(
+            page: GarbageCalendarElementListRoute.page,
+            path: '/garbage_categories'),
       ];
 }

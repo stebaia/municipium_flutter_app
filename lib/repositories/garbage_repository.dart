@@ -1,29 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:municipium/model/garbage/garbage_calendar.dart';
 import 'package:municipium/model/garbage/garbage_calendar_element.dart';
 import 'package:municipium/model/garbage/garbage_detail_calendar.dart';
-import 'package:municipium/repositories/mappers/garbage_mapper/garbage_calendar_mapper.dart';
-import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/services/network/api/garbage_service/garbage_service.dart';
 import 'package:municipium/services/network/dto/garbage_calendar_dto.dart';
 import 'package:municipium/services/network/dto/garbage_calendar_element_dto.dart';
-import 'package:municipium/services/network/dto/m_images_dto.dart';
 import 'package:pine/pine.dart';
 
 class GarbageRepository {
   final GarbageService service;
   final Logger logger;
   final DTOMapper<GarbageCalendarsDTO, GarbageCalendars> mapperCalendar;
-  final DTOMapper<CalendarElementDTO, GarbageCalendarElement> mapperCalendarElement;
+  final DTOMapper<CalendarElementDTO, GarbageCalendarElement>
+      mapperCalendarElement;
   GarbageRepository(
-      {
-        required this.mapperCalendar, required this.mapperCalendarElement,
-        
+      {required this.mapperCalendar,
+      required this.mapperCalendarElement,
       required this.service,
       required this.logger});
 
   Future<List<GarbageCalendars>> getGarbageCalendarsList(
-      String baseUrl,) async {
+    String baseUrl,
+  ) async {
     try {
       final garbageCalendarsResponse =
           await service.getGarbageCalendars(baseUrl);
@@ -43,8 +42,7 @@ class GarbageRepository {
   Future<List<GarbageDetailCalendar>> getGarbageDetailCalendars(
       String baseUrl, String id, String start, String end) async {
     try {
-      final garbageResponse = await service.getGarbage(
-          baseUrl, id, start, end);
+      final garbageResponse = await service.getGarbage(baseUrl, id, start, end);
       return garbageResponse;
     } catch (error) {
       logger.e('Error in getting reservations units list');
@@ -52,17 +50,38 @@ class GarbageRepository {
     }
   }
 
+  Future<List<GarbageCalendars>> getGarbageCategoriesList(
+    String baseUrl,
+  ) async {
+    try {
+      final garbageResponse = await service.getGarbageCategoriesURL(baseUrl);
+      final List<GarbageCalendars> garbageList = [];
+      final List<GarbageCalendarElement> elementMacroList = [];
+      for (var element in garbageResponse) {
+        elementMacroList.add(mapperCalendarElement.fromDTO(element));
+      }
+      for (var g in elementMacroList) {
+        if (g.garbageCalendars.isNotEmpty) {
+          garbageList.add(g.garbageCalendars[0]);
+        }
+      }
+
+      return garbageList;
+    } catch (error) {
+      logger.e('Error in getting garbage categories units list');
+      rethrow;
+    }
+  }
+
   Future<GarbageCalendarElement> getGarbageCalendarElement(
       String baseUrl, int id) async {
     try {
-      final garbageResponse = await service.getGarbageSubCategoriesURL(
-          baseUrl, id.toString());
+      final garbageResponse =
+          await service.getGarbageSubCategoriesURL(baseUrl, id.toString());
       return mapperCalendarElement.fromDTO(garbageResponse);
     } catch (error) {
       logger.e('Error in getting reservations units list');
       rethrow;
     }
   }
-
-  
 }

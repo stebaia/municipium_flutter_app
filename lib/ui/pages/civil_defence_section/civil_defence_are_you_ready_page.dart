@@ -19,7 +19,9 @@ class CivilDefenceAreYouReadyPage extends StatelessWidget
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          AppLocalizations.of(context)!.text_civil_defence_are_you_ready_title_page.toUpperCase(),
+          AppLocalizations.of(context)!
+              .text_civil_defence_are_you_ready_title_page
+              .toUpperCase(),
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
       ),
@@ -31,10 +33,12 @@ class CivilDefenceAreYouReadyPage extends StatelessWidget
             return ListView.builder(
               itemCount: listOfCivilRisk.length,
               itemBuilder: (context, index) => InkWell(
-                onTap:() => context.pushRoute(CivilDefenceAreYouReadyDetailRoute(element: listOfCivilRisk[index])),
+                onTap: () => context.pushRoute(
+                    CivilDefenceAreYouReadyDetailRoute(
+                        element: listOfCivilRisk[index])),
                 child: Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: DecorationImage(

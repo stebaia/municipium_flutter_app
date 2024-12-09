@@ -14,21 +14,25 @@ abstract class GarbageService {
   factory GarbageService(Dio dio) = _GarbageService;
 
   @GET('{baseUrl}/${MunicipiumApi.GARBAGE_CATEGORIES}')
-  Future<EventDetailDto> getGarbageCategoriesURL(
+  Future<List<CalendarElementDTO>> getGarbageCategoriesURL(
       @Path('baseUrl') String baseUrl);
-  
+
   @GET('{baseUrl}/${MunicipiumApi.GARBAGE_CATEGORIES}/{id}')
   Future<CalendarElementDTO> getGarbageSubCategoriesURL(
-      @Path('baseUrl') String baseUrl,
-      @Path('id') String id
-      );
+      @Path('baseUrl') String baseUrl, @Path('id') String id);
 
   @GET('{baseUrl}/${MunicipiumApi.GARBAGE_CATEGORIES}')
-  Future<List<EventDTO>> getGarbageCollectionsURL(@Path('baseUrl') String baseUrl);
+  Future<List<EventDTO>> getGarbageCollectionsURL(
+      @Path('baseUrl') String baseUrl);
 
   @GET('{baseUrl}/${MunicipiumApi.CALENDARS}')
-  Future<List<GarbageCalendarsDTO>> getGarbageCalendars(@Path('baseUrl') String baseUrl);
+  Future<List<GarbageCalendarsDTO>> getGarbageCalendars(
+      @Path('baseUrl') String baseUrl);
 
   @GET('{baseUrl}/${MunicipiumApi.CALENDARS_GET}{id}?start={start}&end={end}')
-  Future<List<GarbageDetailCalendar>> getGarbage(@Path('baseUrl') String baseUrl, @Path('id') String id, @Path('start') String start, @Path('end') String end);
+  Future<List<GarbageDetailCalendar>> getGarbage(
+      @Path('baseUrl') String baseUrl,
+      @Path('id') String id,
+      @Path('start') String start,
+      @Path('end') String end);
 }
