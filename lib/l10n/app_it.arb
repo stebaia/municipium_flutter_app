@@ -165,6 +165,13 @@
     "text_attachment_and_planning" : "Piano comunale e allegati",
     "text_attachment" : "Allegati",
 
-     "text_garbage_calendar_title" : "Ecocalendario"
+     "text_garbage_calendar_title" : "Ecocalendario",
+     "text_garbage_detail_calendar_title" : "Calendario",
+     "text_garbage_detail_calendar_element_title" : "Dettagli rifiuto",
+
+     "label_text_close" : "Chiudi",
+     "label_text_description" : "Descrizione",
+     "label_text_instruction" : "Istruzioni",
+     "label_text_categories" : "Glossario"
 
 }   

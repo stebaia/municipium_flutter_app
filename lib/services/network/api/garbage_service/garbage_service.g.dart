@@ -22,12 +22,13 @@ class _GarbageService implements GarbageService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<EventDetailDto> getGarbageCategoriesURL(String baseUrl) async {
+  Future<List<CalendarElementDTO>> getGarbageCategoriesURL(
+      String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<EventDetailDto>(Options(
+    final _options = _setStreamType<List<CalendarElementDTO>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -43,10 +44,13 @@ class _GarbageService implements GarbageService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late EventDetailDto _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<CalendarElementDTO> _value;
     try {
-      _value = EventDetailDto.fromJson(_result.data!);
+      _value = _result.data!
+          .map((dynamic i) =>
+              CalendarElementDTO.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -55,7 +59,7 @@ class _GarbageService implements GarbageService {
   }
 
   @override
-  Future<EventDetailDto> getGarbageSubCategoriesURL(
+  Future<CalendarElementDTO> getGarbageSubCategoriesURL(
     String baseUrl,
     String id,
   ) async {
@@ -63,7 +67,7 @@ class _GarbageService implements GarbageService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<EventDetailDto>(Options(
+    final _options = _setStreamType<CalendarElementDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -80,9 +84,9 @@ class _GarbageService implements GarbageService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late EventDetailDto _value;
+    late CalendarElementDTO _value;
     try {
-      _value = EventDetailDto.fromJson(_result.data!);
+      _value = CalendarElementDTO.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -126,12 +130,12 @@ class _GarbageService implements GarbageService {
   }
 
   @override
-  Future<List<GarbageCalendars>> getGarbageCalendars(String baseUrl) async {
+  Future<List<GarbageCalendarsDTO>> getGarbageCalendars(String baseUrl) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<GarbageCalendars>>(Options(
+    final _options = _setStreamType<List<GarbageCalendarsDTO>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -148,11 +152,52 @@ class _GarbageService implements GarbageService {
           baseUrl,
         )));
     final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<GarbageCalendars> _value;
+    late List<GarbageCalendarsDTO> _value;
     try {
       _value = _result.data!
           .map((dynamic i) =>
-              GarbageCalendars.fromJson(i as Map<String, dynamic>))
+              GarbageCalendarsDTO.fromJson(i as Map<String, dynamic>))
+          .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<GarbageDetailCalendar>> getGarbage(
+    String baseUrl,
+    String id,
+    String start,
+    String end,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<GarbageDetailCalendar>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '${baseUrl}/calendars/${id}?start=${start}&end=${end}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<GarbageDetailCalendar> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) =>
+              GarbageDetailCalendar.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
