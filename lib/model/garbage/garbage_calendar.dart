@@ -31,3 +31,11 @@ class GarbageCalendars extends Equatable {
         calendarTypeIconGrey
       ];
 }
+
+
+class WrappedGarbageCalendars {
+  final int parentId;
+  final GarbageCalendars garbageCalendars;
+
+  WrappedGarbageCalendars({required this.parentId, required this.garbageCalendars});
+}

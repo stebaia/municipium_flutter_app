@@ -9,6 +9,7 @@ class GarbageCalendarMapper
   GarbageCalendars fromDTO(GarbageCalendarsDTO dto) {
     MunicipiumImageMapper mapperImages = MunicipiumImageMapper();
     return GarbageCalendars(
+       
         id: dto.id ?? 0,
         name: dto.name ?? '',
         updatedAt: dto.updatedAt ?? '',

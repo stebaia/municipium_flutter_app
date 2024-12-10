@@ -50,21 +50,29 @@ class GarbageRepository {
     }
   }
 
-  Future<List<GarbageCalendars>> getGarbageCategoriesList(
+  Future<List<WrappedGarbageCalendars>> getGarbageCategoriesList(
     String baseUrl,
   ) async {
     try {
       final garbageResponse = await service.getGarbageCategoriesURL(baseUrl);
-      final List<GarbageCalendars> garbageList = [];
+      final List<WrappedGarbageCalendars> garbageList = [];
       final List<GarbageCalendarElement> elementMacroList = [];
       for (var element in garbageResponse) {
         elementMacroList.add(mapperCalendarElement.fromDTO(element));
       }
+
       for (var g in elementMacroList) {
         if (g.garbageCalendars.isNotEmpty) {
-          garbageList.add(g.garbageCalendars[0]);
+          for (var element in g.garbageCalendars) {
+            garbageList.add(WrappedGarbageCalendars(parentId: g.id, garbageCalendars: element));
+          }
         }
       }
+
+      
+
+      
+
 
       return garbageList;
     } catch (error) {

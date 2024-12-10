@@ -171,5 +171,6 @@
 
      "label_text_close" : "Close",
      "label_text_description" : "Description",
-     "label_text_instruction" : "Instruction"
+     "label_text_instruction" : "Instruction",
+    "label_text_categories" : "Categories"
 }

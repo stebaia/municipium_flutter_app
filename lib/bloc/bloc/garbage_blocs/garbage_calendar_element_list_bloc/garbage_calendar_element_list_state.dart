@@ -12,7 +12,7 @@ class FetchingGarbageCategoriesState extends GarbageCategoriesState {
 }
 
 class FetchedGarbageCategoriesState extends GarbageCategoriesState {
-  final List<GarbageCalendars> garbageCategoriesList;
+  final List<WrappedGarbageCalendars> garbageCategoriesList;
   const FetchedGarbageCategoriesState(this.garbageCategoriesList);
 
   @override
