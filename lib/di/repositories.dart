@@ -81,8 +81,18 @@ final List<RepositoryProvider> _repositories = [
   ),
   RepositoryProvider<GarbageRepository>(
     create: (context) => GarbageRepository(
-      mapperCalendarElement: context.read(),
-      mapperCalendar: context.read(),
-        service: context.read(), logger: context.read()),
-  )
+        mapperCalendarElement: context.read(),
+        mapperCalendar: context.read(),
+        service: context.read(),
+        logger: context.read()),
+  ),
+  RepositoryProvider<LissiRepository>(create: (context) {
+    final repository = LissiRepository(
+        service: context.read(),
+        logger: context.read(),
+        secureStorage: context.read());
+    context.read<Dio>().interceptors.insert(
+        0, AuthInterceptor(lissiRepository: repository, dio: context.read()));
+    return repository;
+  })
 ];
