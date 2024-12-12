@@ -36,3 +36,8 @@ class ConfirmedPresentationSessionState extends LissiPresentationSessionState {
 class ErrorPresentationSessionState extends LissiPresentationSessionState {
   const ErrorPresentationSessionState();
 }
+
+
+class ErrorConfirmingPresentationSessionState extends LissiPresentationSessionState {
+  const ErrorConfirmingPresentationSessionState();
+}

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/bloc/lissi_bloc/lissi_auth_bloc/lissi_auth_bloc.dart';
-import 'package:municipium/bloc/bloc/lissi_bloc/lissi_presentation_template_bloc/lissi_presentation_template_bloc.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 
 @RoutePage()

@@ -44,16 +44,16 @@ class LissiPresentationSessionBloc
     ConfirmPresentationSessionEvent event, 
     Emitter<LissiPresentationSessionState> emit
   ) async {
-    emit(const CreatingPresentationSessionState());
+    emit(const ConfirmingPresentationSessionState());
     try {
       final presentationSession = await lissiRepository.confirmPresentationSession(event.presentationSessionId);
-      if(presentationSession.state == 'CONFIRMED') {
+      if(presentationSession.state == 'COMPLETE') {
         emit(ConfirmedPresentationSessionState(presentationSession));
       } else if(presentationSession.state == 'ERROR') {
-        emit(const ErrorPresentationSessionState());
+        emit(const ErrorConfirmingPresentationSessionState());
       } 
     } catch (error) {
-      emit(const ErrorPresentationSessionState());
+      emit(const ErrorConfirmingPresentationSessionState());
     }
   }
 }
