@@ -11,10 +11,13 @@ class AuthInterceptor extends QueuedInterceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    final token = await lissiRepository.getLissiTokenKeyFromStorage();
-    if (token != null) {
-      options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+    if (options.uri.toString().contains('maggioli.municipiumapp.it')) {
+      final token = await lissiRepository.getLissiTokenKeyFromStorage();
+      if (token != null) {
+        options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+      }
     }
-    super.onRequest(options, handler);
+
+    handler.next(options);
   }
 }
