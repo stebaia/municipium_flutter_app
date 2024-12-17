@@ -144,7 +144,7 @@ class LissiPresentationSessionPage extends StatelessWidget
                   children: [
                     Text(
                       '${claim.claimName}: ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Expanded(
                       child: Text(
@@ -156,17 +156,14 @@ class LissiPresentationSessionPage extends StatelessWidget
                 ),
               );
             }).toList(),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
         );
       }).toList(),
     );
   }
 
-// Esempio di utilizzo
-  void _onShowClaimsPressed(BuildContext context, LissiCardInfo cardInfo) {
-    _showClaimsDialog(context, cardInfo);
-  }
+  
 
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
@@ -177,3 +174,4 @@ class LissiPresentationSessionPage extends StatelessWidget
                       presentationTemplateName: presentationSessionId))),
       ], child: this);
 }
+
