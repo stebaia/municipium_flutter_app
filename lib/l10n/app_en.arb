@@ -64,6 +64,9 @@
     "error_news_fetched" : "Errore nel download delle notizie",
     "read_more" : "Leggi di più",
 
+    "text_no_poi_in_list" : "No points of interest found",
+    "text_no_recycling_in_list" : "no recycling areas found",
+
     "@_ISSUES_STRINGS" : {},
     "new_issue" : "Nuova segnalazione",
     "back_desc" : "Indietro",
@@ -168,6 +171,7 @@
     "text_garbage_calendar_title" : "Ecocalendars",
     "text_garbage_detail_calendar_title" : "Calendars",
     "text_garbage_detail_calendar_element_title" : "Garbage details",
+    "text_garbage_recycling_areas_title" : "Recycling areas",
 
      "label_text_close" : "Close",
      "label_text_description" : "Description",
@@ -180,4 +184,5 @@
     "label_wallet_my_documents_description" : "Visualizza i tuou documenti",
     "label_wallet_my_documents_title" : "Scegli tra i vari template",
     "label_wallet_scan_documents" : "Scansiona documenti"
+    
 }

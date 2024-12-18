@@ -63,19 +63,19 @@ class CivilDefenceLevelPage extends StatelessWidget
                   ),
                   todayRisk.codiceRischio != null
                       ? _builRiskIcon(
-                          todayRisk.codiceRischio!, todayRisk.colore!)
+                          todayRisk.codiceRischio!, todayRisk.colore ?? '#000000')
                       : Container(),
                 ],
               ),
               const Divider(
                 height: 30,
               ),
-              Text(todayRisk.denominazioneLivello!,
+              Text(todayRisk.denominazioneLivello ?? '',
                   style: Theme.of(context).textTheme.titleSmall),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Criticià ${todayRisk.criticita!}',
+                  Text('Criticià ${todayRisk.criticita ?? ''}',
                       style: Theme.of(context).textTheme.titleMedium),
                   Text(
                       MunicipiumUtility.convertDate(
@@ -94,7 +94,7 @@ class CivilDefenceLevelPage extends StatelessWidget
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-              color: HexColor.fromHex(todayRisk.colore!)),
+              color: HexColor.fromHex(todayRisk.colore ?? '#000000')),
         ),
       ],
     );

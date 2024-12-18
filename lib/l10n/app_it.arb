@@ -104,6 +104,9 @@
     "issue_load_image" : "Carica immagine",
     "issue_write_message" : "Scrivi un messaggio...",
 
+    "text_no_poi_in_list" : "Nessun punto di interesse",
+    "text_no_recycling_in_list" : "Nessun punto di raccolta",
+
 
     "theme_system" : "Sistema",
     "theme_dark" : "Scuro",
@@ -168,6 +171,7 @@
      "text_garbage_calendar_title" : "Ecocalendario",
      "text_garbage_detail_calendar_title" : "Calendario",
      "text_garbage_detail_calendar_element_title" : "Dettagli rifiuto",
+     "text_garbage_recycling_areas_title" : "Punti di raccolta",
 
      "label_text_close" : "Chiudi",
      "label_text_description" : "Descrizione",

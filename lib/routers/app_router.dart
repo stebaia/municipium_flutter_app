@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/ui/pages/garbage_section/garbage_recycling_areas_page.dart';
 
 @AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
@@ -87,5 +88,9 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: LissiPresentationSessionRoute.page,
         ),
+        AutoRoute(
+          page: GarbageReciclingAreasRoute.page,
+        path: '/recycling_areas'),
+        
       ];
 }

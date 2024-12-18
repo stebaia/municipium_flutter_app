@@ -64,7 +64,7 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
           builder: (context, state) {
             if (state is FetchingPointOfInterestListState &&
                 _pointOfInterestItemList.isEmpty) {
-             return ShimmerUtils.buildPoiShimmer(6);
+              return ShimmerUtils.buildPoiShimmer(6);
             } else if (state is FetchedPointOfInterestListState) {
               _pointOfInterestItemList.addAll(state
                   .pointOfInterestsList.pointOfInterestsItemList!
@@ -72,8 +72,9 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
               context.read<PointOfInterestBloc>().isFetching = false;
             } else if (state is NoPointOfInterestListState &&
                 _pointOfInterestItemList.isEmpty) {
-              return const Center(
-                child: Text('Nessun poi presente'),
+              return Center(
+                child: Text(
+                    AppLocalizations.of(context)!.text_no_recycling_in_list),
               );
             } else if (state is ErrorPointOfInterestListState) {
               return const Center(
@@ -97,13 +98,14 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
                 itemBuilder: ((context, index) => Container(
                       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: ListTile(
-                        onTap: () => context.pushRoute(DetailPoiRoute(poiId: _pointOfInterestItemList[index].id!)),
+                        onTap: () => context.pushRoute(DetailPoiRoute(
+                            poiId: _pointOfInterestItemList[index].id!)),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         tileColor: Theme.of(context).canvasColor,
-                        title: Text(_pointOfInterestItemList[index].name!),
+                        title: Text(_pointOfInterestItemList[index].name!, style: Theme.of(context).textTheme.titleMedium),
                         subtitle:
-                            Text(_pointOfInterestItemList[index].address!),
+                            Text(_pointOfInterestItemList[index].address!, style: Theme.of(context).textTheme.bodySmall),
                         trailing: Icon(CupertinoIcons.chevron_right),
                       ),
                     )));
