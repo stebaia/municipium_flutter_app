@@ -92,6 +92,7 @@ dependencies:
   dotted_border: ^2.1.0
   flutter_downloader: ^1.11.8
   open_file: ^3.5.10
+  qr_flutter: ^4.1.0
 http: ^0.13.3
 
 dev_dependencies:

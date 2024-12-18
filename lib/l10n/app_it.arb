@@ -172,6 +172,13 @@
      "label_text_close" : "Chiudi",
      "label_text_description" : "Descrizione",
      "label_text_instruction" : "Istruzioni",
-     "label_text_categories" : "Glossario"
+     "label_text_categories" : "Glossario",
+      "label_wallet_title_what_do_you_do" : "Cosa vuoi fare?",
+    "label_wallet_verify_documents" : "Verifica documenti",
+    "label_wallet_verify_documents_description" : "Verifica i documenti del cittadino/a",
+    "label_wallet_my_documents" : "I miei documenti",
+    "label_wallet_my_documents_description" : "Visualizza i tuou documenti",
+    "label_wallet_my_documents_title" : "Scegli tra i vari template",
+    "label_wallet_scan_documents" : "Scansiona documenti"
 
 }   

@@ -99,6 +99,9 @@ List<SingleChildWidget> providersFun() {
     Provider<GarbageService>(
         create: (context) =>
             GarbageService(context.read<Dio>())),
+    Provider<LissiService>(
+        create: (context) =>
+            LissiService(context.read<Dio>(),)),
     
   ];
 }

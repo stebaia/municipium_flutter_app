@@ -78,5 +78,14 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
             page: GarbageCalendarElementListRoute.page,
             path: '/garbage_categories'),
+        AutoRoute(
+          page: LissiDashboardRoute.page,
+        ),
+        AutoRoute(
+          page: LissiPresentationTemplateListRoute.page,
+        ),
+        AutoRoute(
+          page: LissiPresentationSessionRoute.page,
+        ),
       ];
 }

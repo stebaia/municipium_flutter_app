@@ -11,6 +11,8 @@ class SecureStorage {
 
   final String _municipalityKey = "MUNINICIPALITY_KEY";
 
+   final String _lissiTokenKey = "LISSI_KEY";
+
   final String _deviceKey = "DEVICE_KEY";
 
   final String _configurationMenu = "CONFIGURATION_MENU";
@@ -27,8 +29,18 @@ class SecureStorage {
     }
   }
 
+  Future<String?> getLissiTokenKeyFromStorage() async {
+    try {
+      return await storage.read(key: _lissiTokenKey);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
 
+  Future setLissiTokenKeyInStorage(String token) async {
+    await storage.write(key: _lissiTokenKey, value: token);
+  }
 
   Future setMunicipalityKeyInStorage(String municipality) async {
     await storage.write(key: _municipalityKey, value: municipality);
