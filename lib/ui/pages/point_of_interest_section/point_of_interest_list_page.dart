@@ -64,7 +64,7 @@ class _PointOfInterestListPageState extends State<PointOfInterestListPage> {
           builder: (context, state) {
             if (state is FetchingPointOfInterestListState &&
                 _pointOfInterestItemList.isEmpty) {
-              return ShimmerUtils.buildPoiShimmer(6);
+              return ShimmerUtils.buildPoiShimmer(6, context);
             } else if (state is FetchedPointOfInterestListState) {
               _pointOfInterestItemList.addAll(state
                   .pointOfInterestsList.pointOfInterestsItemList!

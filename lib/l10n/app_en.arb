@@ -67,6 +67,9 @@
     "text_no_poi_in_list" : "No points of interest found",
     "text_no_recycling_in_list" : "no recycling areas found",
 
+    "text_telephone" : "Telefono",
+    "text_fax" : "Fax",
+
     "@_ISSUES_STRINGS" : {},
     "new_issue" : "Nuova segnalazione",
     "back_desc" : "Indietro",

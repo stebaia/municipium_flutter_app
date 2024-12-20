@@ -108,6 +108,10 @@
     "text_no_recycling_in_list" : "Nessun punto di raccolta",
 
 
+    "text_telephone" : "Telefono",
+    "text_fax" : "Fax",
+
+
     "theme_system" : "Sistema",
     "theme_dark" : "Scuro",
     "theme_light" : "Chiaro",

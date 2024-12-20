@@ -14,3 +14,12 @@ class FetchRecyclingAreasEvent extends RecyclingAreasEvent {
   @override
   List<Object> get props => [baseUrl];
 }
+
+
+class FilterRecyclingAreasEvent extends RecyclingAreasEvent {
+  final String letter;
+  const FilterRecyclingAreasEvent(this.letter);
+
+  @override
+  List<Object> get props => [letter];
+}

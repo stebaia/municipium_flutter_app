@@ -91,6 +91,10 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: GarbageReciclingAreasRoute.page,
         path: '/recycling_areas'),
+
+        AutoRoute(
+          page: GarbageInfoRetirementRoute.page,
+        path: '/garbage_collections'),
         
       ];
 }
