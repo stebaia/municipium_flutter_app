@@ -1,21 +1,13 @@
-import 'dart:ffi';
-import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/ui/components/horizzontal_gallery.dart';
 import 'package:municipium/utils/component_factory.dart';
-import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
-import 'package:path/path.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewIssueGallerySection extends StatelessWidget {

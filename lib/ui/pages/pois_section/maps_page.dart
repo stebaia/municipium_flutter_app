@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:municipium/app.dart';
 import 'package:municipium/bloc/bloc/category_poi_bloc/category_poi_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/selected_categories_cubit.dart/selected_categories_cubit.dart';
@@ -19,7 +18,6 @@ import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/buttons/fullwidth_button.dart';
 import 'package:municipium/ui/components/bottom_sheet/custom_bottomsheet.dart';
 import 'package:municipium/ui/components/maps_component/filter_modal_bottomsheet.dart';
-import 'package:municipium/ui/components/menu/menu_drawer.dart';
 import 'package:municipium/ui/components/point_of_interests/custom_info_window.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:provider/provider.dart';
@@ -61,8 +59,6 @@ class _MapsPageState extends State<MapsPage> {
   final double width = 200;
   late ClusterManager clusterManagers;
 
-  
-
   double _convertColorToHue(ItemCategory? category) {
     Color color;
     if (category != null) {
@@ -86,18 +82,17 @@ class _MapsPageState extends State<MapsPage> {
     super.dispose();
   }
 
-
   @override
   void initState() {
     clusterManagers = ClusterManager(
-        clusterManagerId: const ClusterManagerId("clusterManagerId"),
-        onClusterTap: (Cluster cluster) => setState(
-          () {
-            _controller?.animateCamera(
-                CameraUpdate.newLatLngBounds(cluster.bounds, 50));
-          },
-        ),
-      );
+      clusterManagerId: const ClusterManagerId("clusterManagerId"),
+      onClusterTap: (Cluster cluster) => setState(
+        () {
+          _controller
+              ?.animateCamera(CameraUpdate.newLatLngBounds(cluster.bounds, 50));
+        },
+      ),
+    );
     super.initState();
   }
 
@@ -116,15 +111,12 @@ class _MapsPageState extends State<MapsPage> {
         SVProgressHUD.dismiss();
       }
     }, builder: (context, state) {
-
       Set<Marker> markers = {};
       if (state is FetchedPointOfInterestListState) {
         if (state.pointOfInterestsList.pointOfInterestsItemList != null) {
-          
-      //markers = {};
+          //markers = {};
           markers = state.pointOfInterestsList.pointOfInterestsItemList!
               .map((point) => Marker(
-
                   clusterManagerId: clusterManagers?.clusterManagerId,
                   icon: point.pointOfInterestCategories!.isNotEmpty
                       ? BitmapDescriptor.defaultMarkerWithHue(
@@ -212,8 +204,6 @@ class _MapsPageState extends State<MapsPage> {
               onMapCreated: (GoogleMapController controller) {
                 _controller = controller;
                 _customInfoWindowController.googleMapController = controller;
-
-               
               },
             ),
           ),
@@ -241,24 +231,48 @@ class _MapsPageState extends State<MapsPage> {
                   ),
                   const SizedBox(width: 6),
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                              color: Theme.of(context).disabledColor)),
-                      child: const TextField(
-                        decoration: InputDecoration(
-                          hintStyle: TextStyle(fontSize: 16),
-                          hintText: 'Cerca',
-                          prefixIcon: Icon(Icons.search),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.only(
-                              top: 8, bottom: 0, left: 10, right: 10),
-                        ),
-                      ),
-                    ),
-                  ),
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: Theme.of(context).disabledColor)),
+                          child: BlocBuilder<PointOfInterestBloc,
+                              PointOfInterestState>(
+                            builder: (context, state) {
+                              if (state is FetchedPointOfInterestListState ||
+                                  state is SearchedPointOfInterestListState) {
+                                final currentList = state
+                                        is FetchedPointOfInterestListState
+                                    ? state.pointOfInterestsList
+                                    : (state
+                                            as SearchedPointOfInterestListState)
+                                        .pointOfInterestsList;
+
+                                return TextField(
+                                  onChanged: (value) {
+                                    context.read<PointOfInterestBloc>().add(
+                                          SearchPointOfInterestEvent(
+                                              value, currentList),
+                                        );
+                                  },
+                                  decoration: const InputDecoration(
+                                    hintStyle: TextStyle(fontSize: 16),
+                                    hintText: 'Cerca',
+                                    prefixIcon: Icon(Icons.search),
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.only(
+                                      top: 8,
+                                      bottom: 0,
+                                      left: 10,
+                                      right: 10,
+                                    ),
+                                  ),
+                                );
+                              }
+                              return const TextField(); // Default state
+                            },
+                          ))),
                   const SizedBox(
                     width: 6,
                   ),
@@ -270,8 +284,9 @@ class _MapsPageState extends State<MapsPage> {
                             height: MediaQuery.of(context).size.height * 0.9,
                             title: 'filtri',
                             body: FilterModalBottomSheet(
+                              categoryPoiBloc: context.read(),
                               categorySelectionCubit: context.read(),
-                              pointOfInterestListBloc: context.read(),
+                              pointOfInterestBloc: context.read(),
                             )))),
                     child: Container(
                         padding: const EdgeInsets.all(14),
@@ -286,7 +301,6 @@ class _MapsPageState extends State<MapsPage> {
                           size: 18,
                         ))),
                   ),
-                  
                 ],
               ),
             ),
