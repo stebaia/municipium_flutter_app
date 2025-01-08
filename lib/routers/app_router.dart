@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:municipium/routers/app_router.gr.dart';
-import 'package:municipium/ui/pages/garbage_section/garbage_recycling_areas_page.dart';
 
 @AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
@@ -96,5 +95,11 @@ class AppRouter extends RootStackRouter {
           page: GarbageInfoRetirementRoute.page,
         path: '/garbage_collections'),
         
+        AutoRoute(
+          page: SurveryListRoute.page,
+        path: '/surveys'),
+      AutoRoute(
+          page: SurveyDetailRoute.page,
+        path: '/surveys/:id'),
       ];
 }

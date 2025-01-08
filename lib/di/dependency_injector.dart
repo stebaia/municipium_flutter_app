@@ -83,6 +83,7 @@ import 'package:municipium/repositories/payments_repository.dart';
 import 'package:municipium/repositories/pnrr_service_repository.dart';
 import 'package:municipium/repositories/point_of_interest_repository.dart';
 import 'package:municipium/repositories/reservations_repository.dart';
+import 'package:municipium/repositories/survey_repository.dart';
 import 'package:municipium/repositories/user_repository.dart';
 import 'package:municipium/services/auth/auth_service.dart';
 import 'package:municipium/services/auth/service_manager.dart';
@@ -103,6 +104,7 @@ import 'package:municipium/services/network/api/payment_service/payment_service.
 import 'package:municipium/services/network/api/pnrr_service/pnrr_service.dart';
 import 'package:municipium/services/network/api/point_of_intertest_service/point_of_interest_service.dart';
 import 'package:municipium/services/network/api/reservations/reservations_service.dart';
+import 'package:municipium/services/network/api/survey_service/survey_service.dart';
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
 import 'package:municipium/services/network/dto/event_detail_dto.dart';
 import 'package:municipium/services/network/dto/event_dto.dart';

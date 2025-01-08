@@ -94,5 +94,14 @@ final List<RepositoryProvider> _repositories = [
     context.read<Dio>().interceptors.insert(
         0, AuthInterceptor(lissiRepository: repository, dio: context.read()));
     return repository;
+  }),
+
+   RepositoryProvider<SurveyRepository>(create: (context) {
+    final repository = SurveyRepository(
+        service: context.read(),
+        logger: context.read(),
+        );
+    
+    return repository;
   })
 ];

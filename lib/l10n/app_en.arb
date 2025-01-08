@@ -186,6 +186,12 @@
     "label_wallet_my_documents" : "I miei documenti",
     "label_wallet_my_documents_description" : "Visualizza i tuou documenti",
     "label_wallet_my_documents_title" : "Scegli tra i vari template",
-    "label_wallet_scan_documents" : "Scansiona documenti"
+    "label_wallet_scan_documents" : "Scansiona documenti",
+
+    "label_ended" : "End",
+    "label_end_date" : "Ending",
+
+    "label_open_survey" : "Open survey",
+    "label_closed_survey" : "Closed survey"
     
 }

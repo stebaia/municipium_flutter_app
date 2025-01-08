@@ -93,6 +93,7 @@ dependencies:
   flutter_downloader: ^1.11.8
   open_file: ^3.5.10
   qr_flutter: ^4.1.0
+  fl_chart: ^0.70.1
 http: ^0.13.3
 
 dev_dependencies:
