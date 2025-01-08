@@ -63,7 +63,7 @@ class _SurveyDetailPageState extends State<SurveyDetailPage> {
                         _currentPage = index;
                       });
                     },
-                    itemCount: state.surveyDetail.results.length,
+                    itemCount: _totalPages,
                     itemBuilder: (context, index) {
                       final result = state.surveyDetail.results[index];
                       return QuestionResultCard(result: result);
@@ -114,7 +114,11 @@ class _SurveyDetailPageState extends State<SurveyDetailPage> {
             ),
           );
         } else if (state is FetchingSurveyDetailState) {
-          return const CircularProgressIndicator();
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         } else {
           return Container();
         }
