@@ -58,6 +58,7 @@ class _SurveyDetailPageState extends State<SurveyDetailPage> {
               children: [
                 Expanded(
                   child: PageView.builder(
+                    controller: _pageController,
                     onPageChanged: (index) {
                       setState(() {
                         _currentPage = index;
