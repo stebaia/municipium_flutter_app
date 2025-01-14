@@ -193,7 +193,13 @@
     "label_end_date" : "Termina",
 
     "label_open_survey" : "Sondaggi aperti",
-    "label_closed_survey" : "Sondaggi chiusi"
+    "label_closed_survey" : "Sondaggi chiusi",
+    
+    
+  "acceptation": "Accettazione informativa sui Dati personali",
+  "acceptation_body": "Procedendo con la compilazione e con l'invio di questo modulo Lei acconsente al trattamento dei dati personali forniti, ai sensi e per gli effetti dell'articolo 13 del Regolamento EU 2016/679 e della normativa nazionale applicabile in materia di trattamento dei dati personali, per la finalità e nei limiti indicati dalla informativa privacy che la invitiamo a leggere con attenzione.",
+  "read_info": "LEGGI L'INFORMATIVA"
+
 
 
 }   

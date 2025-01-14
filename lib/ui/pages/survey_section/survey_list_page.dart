@@ -32,7 +32,7 @@ class SurveryListPage extends StatelessWidget implements AutoRouteWrapper {
           itemCount: surveys.length,
           itemBuilder: (context, index) {
             return ListTile(
-              onTap: () => context.pushRoute(SurveyDetailRoute(id: surveys[index].id)),
+              onTap: () => isArchived ? context.pushRoute(SurveyDetailRoute(id: surveys[index].id)) : context.pushRoute(QuestionSurveyRoute(id: surveys[index].id)),
               leading: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(

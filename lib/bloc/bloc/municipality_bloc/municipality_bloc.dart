@@ -6,7 +6,6 @@ import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/repositories/municipality_repository.dart';
-import 'package:municipium/repositories/user_repository.dart';
 
 part 'municipality_event.dart';
 part 'municipality_state.dart';

@@ -1,12 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:municipium/model/survey/survey.dart';
 import 'package:municipium/model/survey/survey_response.dart';
 
 class QuestionResultCard extends StatelessWidget {
   const QuestionResultCard({required this.result});
   final SurveyResult result;
-
+  
   @override
   Widget build(BuildContext context) {
     // Raccoglie tutte le risposte e voti validi
