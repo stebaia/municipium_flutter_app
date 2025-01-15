@@ -197,7 +197,9 @@
     
   "acceptation": "Acceptance of personal data information",
   "acceptation_body": "By proceeding with the completion and submission of this form, you consent to the processing of the personal data provided, in accordance with Article 13 of EU Regulation 2016/679 and the applicable national laws on personal data processing, for the purposes and within the limits specified in the privacy policy that we invite you to read carefully.",
-  "read_info": "READ THE PRIVACY POLICY"
+  "read_info": "READ THE PRIVACY POLICY",
+  "label_no_open_survey" : "No open survey",
+  "label_no_closed_survey" : "No closed survey"
 
     
 }

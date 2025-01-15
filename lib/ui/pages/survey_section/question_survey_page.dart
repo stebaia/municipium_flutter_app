@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/bloc/bloc/survey_bloc/survey_post_bloc/survey_post_bloc.dart';
 import 'package:municipium/bloc/bloc/survey_bloc/survey_question_bloc/survey_question_bloc.dart';
 import 'package:municipium/bloc/cubit/device_cubit/device_cubit.dart';
@@ -12,7 +11,6 @@ import 'package:municipium/model/survey/question_response.dart';
 import 'package:municipium/model/survey/survey_post_request.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
-import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -47,7 +45,7 @@ class _QuestionPagerState extends State<QuestionSurveyPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
   Map<int, List<Answers>> _selectedAnswers = {};
-  
+
   bool _isPrivacyAccepted = false; // Stato per la checkbox della privacy policy
 
   void _nextPage(int length, SurveyQuestionState state, String udid) {
@@ -84,39 +82,54 @@ class _QuestionPagerState extends State<QuestionSurveyPage> {
         return;
       }
 
-      // Costruisci la lista di risposte
-      List<Answers> answersList = [];
+      if (_currentPage == length - 2) {
+        List<Answers> finalListAnswer = [];
 
-      for (final  (index, entry)  in _selectedAnswers.entries.indexed) {
-        int questionId = entry.key;
-        //String answer = entry.value[index];
-        
-        answersList.add(Answers(
-          questionId: questionId,
-          answerIds: [int.parse(answer)], // Assumendo che sia un ID numerico
-        ));
+        for (var entry in _selectedAnswers.entries) {
+          int questionId = entry.key;
+          List<Answers> answersList = entry.value;
+
+          Answers answers = Answers();
+          answers.questionId = questionId;
+          answers.type = entry.value[0].type;
+
+          if (answers.type == "checkbox") {
+            print('Domanda ID: $questionId');
+            for (var answer in answersList) {
+              if (answers.answerIds == null) {
+                answers.answerIds = [];
+                answers.answerIds!.add(answer.answerIds![0]);
+              } else {
+                answers.answerIds!.add(answer.answerIds![0]);
+              }
+
+              print('Risposta: ${answer.answer}');
+            }
+          } else {
+            answers.answer = answersList.last.answer;
+          }
+
+          finalListAnswer.add(answers);
+        }
+
+        print(finalListAnswer);
+        context.read<SurveyVoteBloc>().postSurveyVote(
+              Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
+              widget.id,
+              SurveyPostRequest(
+                answers: finalListAnswer,
+                udid: udid, // Sostituire con il vero UDID se disponibile
+                ended: true,
+                isHeader: false,
+                participants: 0,
+                id: widget.id,
+                visible: false,
+                voted: true,
+              ),
+            );
+      } else {
+        context.maybePop();
       }
-
-     
-      
-
-      // Effettua la chiamata di post con i dati raccolti
-      context.read<SurveyVoteBloc>().postSurveyVote(
-            Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl,
-            widget.id,
-            SurveyPostRequest(
-              answers: answersList,
-              udid: udid, // Sostituire con il vero UDID se disponibile
-              ended: true,
-              isHeader: false,
-              participants: 0,
-              id: widget.id,
-              visible: false,
-              voted: true,
-            ),
-          );
-
-      // Mostra conferma o naviga via
     }
   }
 
@@ -135,49 +148,59 @@ class _QuestionPagerState extends State<QuestionSurveyPage> {
       case 'string-multiline':
         return TextField(
           decoration: InputDecoration(
-                  labelText: question.question,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.primary,
-                      
-                      width: 2,
-                    ),
-                  ),
-                ),
-          
+            labelText: question.question,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+                width: 2,
+              ),
+            ),
+          ),
           onChanged: (value) {
             setState(() {
               _selectedAnswers.putIfAbsent(question.questionId, () => []);
-              _selectedAnswers[question.questionId]!.add(Answers(answer: value, type: question.questionType, questionId: question.questionId));
+              _selectedAnswers[question.questionId]!.add(Answers(
+                  answer: value,
+                  type: question.questionType,
+                  questionId: question.questionId));
             });
           },
         );
       case 'checkbox':
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: question.answers!.map((answer) {
-      return CheckboxListTile(
-        title: Text(answer),
-        value: _selectedAnswers[question.questionId]?.contains(answer) ?? false,
-        onChanged: (value) {
-          setState(() {
-            if (value!) {
-              // Aggiunge la risposta selezionata
-              _selectedAnswers.putIfAbsent(question.questionId, () => []);
-             // _selectedAnswers[question.questionId]!.add(Answers(answerIds: question.answers.indexOf(answer)));
-            } else {
-              // Rimuove la risposta deselezionata
-              _selectedAnswers[question.questionId]?.remove(answer);
-              // Se la lista è vuota, la rimuove del tutto
-              if (_selectedAnswers[question.questionId]!.isEmpty) {
-                _selectedAnswers.remove(question.questionId);
-              }
-            }
-          });
-        },
-      );
-    }).toList(),
-  );
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: question.answers!.map((answer) {
+            return CheckboxListTile(
+              title: Text(answer),
+              value: _selectedAnswers[question.questionId]
+                      ?.any((answerObj) => answerObj.answer == answer) ??
+                  false,
+              onChanged: (value) {
+                setState(() {
+                  if (value!) {
+                    // Aggiunge la risposta selezionata
+                    _selectedAnswers.putIfAbsent(question.questionId, () => []);
+
+                    _selectedAnswers[question.questionId]!.add(Answers(
+                        answer: answer,
+                        answerIds: [question.answers!.indexOf(answer)],
+                        type: question.questionType,
+                        questionId: question.questionId));
+                  } else {
+                    // Rimuove la risposta selezionata
+                    _selectedAnswers[question.questionId]!
+                        .removeWhere((answerObj) => answerObj.answer == answer);
+
+                    // Rimuove la chiave se la lista è vuota
+                    if (_selectedAnswers[question.questionId]!.isEmpty) {
+                      _selectedAnswers.remove(question.questionId);
+                    }
+                  }
+                });
+              },
+            );
+          }).toList(),
+        );
       case 'radiobox':
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,12 +208,14 @@ class _QuestionPagerState extends State<QuestionSurveyPage> {
             return RadioListTile<String>(
               title: Text(answer),
               value: answer,
-              groupValue: _selectedAnswers[question.questionId]![0],
+              groupValue: _selectedAnswers[question.questionId]?[0].answer ?? '',
               onChanged: (value) {
                 setState(() {
                   _selectedAnswers.putIfAbsent(question.questionId, () => []);
-                  _selectedAnswers[question.questionId]!.add(value!);
-                  
+                  _selectedAnswers[question.questionId]!.add(Answers(
+                      answer: value!,
+                      type: question.questionType,
+                      questionId: question.questionId));
                 });
               },
             );
@@ -203,8 +228,10 @@ class _QuestionPagerState extends State<QuestionSurveyPage> {
           onChanged: (value) {
             setState(() {
               _selectedAnswers.putIfAbsent(question.questionId, () => []);
-              _selectedAnswers[question.questionId]!.add(value);
-              
+              _selectedAnswers[question.questionId]!.add(Answers(
+                  answer: value,
+                  type: question.questionType,
+                  questionId: question.questionId));
             });
           },
         );
@@ -221,10 +248,13 @@ class _QuestionPagerState extends State<QuestionSurveyPage> {
         if (state is PostedSurveyVoteState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.surveyPostResponse.message!),
-            ),
+                content: Text(
+                    state.surveyPostResponse.message!)),
           );
-          Navigator.of(context).pop();
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.ease,
+          );
         }
       },
       child: BlocBuilder<SurveyQuestionBloc, SurveyQuestionState>(
@@ -333,27 +363,37 @@ class _QuestionPagerState extends State<QuestionSurveyPage> {
                                 child: const Text('Indietro'),
                               ),
                         ElevatedButton(
-                          onPressed: (_currentPage == 0 ||
-                                      _currentPage == pages.length - 2) ||
-                                  (_selectedAnswers.containsKey(state
-                                      .questionResponse
-                                      .questions[_currentPage - 1]
-                                      .questionId))
-                              ? () async {
-                                  DeviceBe? deviceBe = await context
-                                      .read<DeviceCubit>()
-                                      .getDeviceBeFromStorage();
-                                  if (deviceBe != null) {
-                                    _nextPage(
-                                        pages.length, state, deviceBe.udid);
-                                  }
-                                }
-                              : null, // Disabilita il bottone se non tutte le risposte sono selezionate
+                          onPressed: () async {
+                            // Calcola l'indice dell'ultima domanda
+                            final int lastQuestionIndex =
+                                state.questionResponse.questions.length;
+
+                            // Verifica se siamo nella pagina iniziale o alla pagina della privacy
+                            bool canProceed = _currentPage ==
+                                    0 || // Pagina iniziale
+                                _currentPage >
+                                    lastQuestionIndex || // Pagina privacy o finale
+                                (_currentPage > 0 &&
+                                    _currentPage <= lastQuestionIndex &&
+                                    _selectedAnswers.containsKey(state
+                                        .questionResponse
+                                        .questions[_currentPage - 1]
+                                        .questionId));
+
+                            if (canProceed) {
+                              DeviceBe? deviceBe = await context
+                                  .read<DeviceCubit>()
+                                  .getDeviceBeFromStorage();
+                              if (deviceBe != null) {
+                                _nextPage(pages.length, state, deviceBe.udid);
+                              }
+                            }
+                          },
                           child: Text(_currentPage == pages.length - 2
-                              ? _currentPage == pages.length - 1
+                              ? 'Concludi'
+                              : _currentPage == pages.length - 1
                                   ? 'Fine'
-                                  : 'Concludi'
-                              : 'Avanti'),
+                                  : 'Avanti'),
                         ),
                       ],
                     ),
