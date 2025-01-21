@@ -104,6 +104,12 @@ class AppRouter extends RootStackRouter {
        AutoRoute(
           page: QuestionSurveyRoute.page,
         path: '/question_survey/:id'),
+         AutoRoute(
+          page: InfoMunicipalityRoute.page,
+        path: '/info_municipality'),
+         AutoRoute(
+          page: InfoMunicipalityDetailRoute.page,
+        path: '/info_municipality/:id'),
       ];
       
 }

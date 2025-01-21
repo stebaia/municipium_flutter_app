@@ -105,5 +105,10 @@ List<SingleChildWidget> providersFun() {
         create: (context) => SurveyService(
               context.read<Dio>(),
             )),
+
+    Provider<InfoMunicipalityService>(
+        create: (context) => InfoMunicipalityService(
+              context.read<Dio>(),
+            )),
   ];
 }

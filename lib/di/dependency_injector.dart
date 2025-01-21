@@ -47,6 +47,7 @@ import 'package:municipium/repositories/calendar_event_repository.dart';
 import 'package:municipium/repositories/civil_defence_repository.dart';
 import 'package:municipium/repositories/events_repository.dart';
 import 'package:municipium/repositories/garbage_repository.dart';
+import 'package:municipium/repositories/info_municipality_repository.dart';
 import 'package:municipium/repositories/issues_repository.dart';
 import 'package:municipium/repositories/lissi_repository.dart';
 import 'package:municipium/repositories/mappers/civil_defence_mapper/civil_defence_emergency_call_mapper.dart';
@@ -92,6 +93,7 @@ import 'package:municipium/services/network/api/calendar_service/calendar_servic
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/api/event_service/event_service.dart';
 import 'package:municipium/services/network/api/garbage_service/garbage_service.dart';
+import 'package:municipium/services/network/api/info_municipality_service/info_municipality_service.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
 import 'package:municipium/services/network/api/lissi_service/lissi_service.dart';
 import 'package:municipium/services/network/api/mmc_municipium_service/mmc_municipium_service.dart';

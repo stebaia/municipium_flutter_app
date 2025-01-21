@@ -103,5 +103,13 @@ final List<RepositoryProvider> _repositories = [
         );
     
     return repository;
+  }),
+  RepositoryProvider<InfoMunicipalityRepository>(create: (context) {
+    final repository = InfoMunicipalityRepository(
+        service: context.read(),
+        logger: context.read(),
+        );
+    
+    return repository;
   })
 ];

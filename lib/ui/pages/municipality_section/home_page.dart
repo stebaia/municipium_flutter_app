@@ -5,9 +5,7 @@ import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
 import 'package:municipium/routers/app_router.gr.dart';
-import 'package:municipium/ui/components/municipality_components/box_air_quality_component.dart';
 import 'package:municipium/ui/components/municipality_components/box_dashboard_components.dart';
-import 'package:provider/provider.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -40,7 +38,7 @@ class HomePage extends StatelessWidget {
         builder: (context, state) {
           List<UserConfigurationMenu> configurationMenus = state;
           if (configurationMenus.isEmpty) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

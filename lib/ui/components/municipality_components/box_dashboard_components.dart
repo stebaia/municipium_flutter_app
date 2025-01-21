@@ -1,12 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
-import 'package:municipium/ui/pages/user_configuration_section/user_conf_menu_edit_page.dart';
-import 'package:municipium/utils/theme_helper.dart';
+
 
 class BoxVerticalInfoDashboardComponents extends StatelessWidget {
   BoxVerticalInfoDashboardComponents({super.key, this.municipality});
@@ -14,57 +11,60 @@ class BoxVerticalInfoDashboardComponents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(6),
-          height: MediaQuery.of(context).size.height * 0.27,
-          width: MediaQuery.of(context).size.width * 0.45,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-              image: NetworkImage(
-                  '${municipality?.background.baseUrl}${municipality?.background.i640}'),
-              fit: BoxFit.cover,
+    return InkWell(
+      onTap: () => context.pushRoute(const InfoMunicipalityRoute()),
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(6),
+            height: MediaQuery.of(context).size.height * 0.27,
+            width: MediaQuery.of(context).size.width * 0.45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image:  DecorationImage(
+                image: NetworkImage(
+                    '${municipality?.background?.baseUrl}${municipality?.background?.i640}'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        Container(
-          margin: const EdgeInsets.all(6),
-          height: MediaQuery.of(context).size.height * 0.27,
-          width: MediaQuery.of(context).size.width * 0.45,
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(173, 33, 63, 233),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      '${municipality?.logo.baseUrl}${municipality?.logo.i640}'),
-                ),
-                const Spacer(),
-                Text(
-                  DateTime.now().day.toString(),
-                  style: const TextStyle(
-                      fontSize: 46,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                Text(
-                  DateFormat.MMMM('it').format(DateTime.now()).toUpperCase(),
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ],
+          Container(
+            margin: const EdgeInsets.all(6),
+            height: MediaQuery.of(context).size.height * 0.27,
+            width: MediaQuery.of(context).size.width * 0.45,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(173, 33, 63, 233),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        '${municipality?.logo?.baseUrl}${municipality?.logo?.i640}'),
+                  ),
+                  const Spacer(),
+                  Text(
+                    DateTime.now().day.toString(),
+                    style: const TextStyle(
+                        fontSize: 46,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  Text(
+                    DateFormat.MMMM('it').format(DateTime.now()).toUpperCase(),
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
