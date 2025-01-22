@@ -1,12 +1,16 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/bloc/info_municipality_bloc/info_municipality_pages/info_municipality_bloc.dart';
 import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:municipium/model/pages/pages.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class InfoMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
@@ -40,7 +44,7 @@ class InfoMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                       )
                     : Image.network(
                         '${municipality.image?.baseUrl}${municipality.image?.i640}',
-                         height: 300,
+                        height: 300,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),
@@ -80,20 +84,33 @@ class InfoMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
                   Text(municipality.prefix!),
                 ],
               ),
-              const SizedBox(height: 8,),
-              
+              const SizedBox(
+                height: 8,
+              ),
               BlocBuilder<InfoMunicipalityBloc, InfoMunicipalityPageState>(
                 builder: (context, state) {
                   if (state is FetchedListPageInfoMunicipalityState) {
+                    List<Pages> pages =
+                        state.pageList.where((p) => p.parentId == null).toList();
+                    for (int i = 0; i < pages.length; i++) {
+                      pages[i].children = state.pageList
+                          .where((p) => p.parentId == pages[i].id)
+                          .toList();
+                    }
+
                     return Flexible(
-                      child: ListView.separated(
-                          primary: false,
-                          separatorBuilder: (context, index) => const Divider(),
-                          itemCount: state.pageList.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) =>
-                              ListTile(title: Text(state.pageList[index].title), trailing: const Icon(Icons.chevron_right), onTap: () => context.pushRoute(InfoMunicipalityDetailRoute(id: state.pageList[index].id)),),)
-                    );
+                        child: ListView.separated(
+                      primary: false,
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: pages.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => ListTile(
+                        title: Text(pages[index].title ?? ''),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => onPushFromType(
+                            context, pages[index].itemType ?? 'P', pages[index]),
+                      ),
+                    ));
                   } else if (state is FetchingListPageInfoMunicipalityState) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
@@ -106,6 +123,18 @@ class InfoMunicipalityPage extends StatelessWidget implements AutoRouteWrapper {
         ),
       ),
     );
+  }
+
+  void onPushFromType(BuildContext context, String type, Pages page,) async {
+    switch (type) {
+      case 'S': 
+      case 'P':
+        context.pushRoute(InfoMunicipalityDetailRoute(id: page.id, pages: page.children));
+        break;
+      case 'L':
+        await launchUrl(Uri.parse(page.link!));
+        break;
+    }
   }
 
   @override

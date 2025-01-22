@@ -13,8 +13,9 @@ import 'package:flutter/cupertino.dart' as _i65;
 import 'package:flutter/material.dart' as _i63;
 import 'package:municipium/model/civil_defence/civil_defence_are_you_ready.dart'
     as _i67;
-import 'package:municipium/model/menu/menu_item.dart' as _i69;
-import 'package:municipium/model/menu/submenu_type.dart' as _i68;
+import 'package:municipium/model/menu/menu_item.dart' as _i70;
+import 'package:municipium/model/menu/submenu_type.dart' as _i69;
+import 'package:municipium/model/pages/pages.dart' as _i68;
 import 'package:municipium/model/user/user_spid_model.dart' as _i64;
 import 'package:municipium/services/network/dto/issue_detail_dto.dart' as _i66;
 import 'package:municipium/ui/pages/calendar_section/calendar_page.dart' as _i3;
@@ -897,12 +898,14 @@ class InfoMunicipalityDetailRoute
   InfoMunicipalityDetailRoute({
     _i63.Key? key,
     required int id,
+    List<_i68.Pages>? pages,
     List<_i62.PageRouteInfo>? children,
   }) : super(
           InfoMunicipalityDetailRoute.name,
           args: InfoMunicipalityDetailRouteArgs(
             key: key,
             id: id,
+            pages: pages,
           ),
           initialChildren: children,
         );
@@ -917,6 +920,7 @@ class InfoMunicipalityDetailRoute
           child: _i23.InfoMunicipalityDetailPage(
         key: args.key,
         id: args.id,
+        pages: args.pages,
       ));
     },
   );
@@ -926,15 +930,18 @@ class InfoMunicipalityDetailRouteArgs {
   const InfoMunicipalityDetailRouteArgs({
     this.key,
     required this.id,
+    this.pages,
   });
 
   final _i63.Key? key;
 
   final int id;
 
+  final List<_i68.Pages>? pages;
+
   @override
   String toString() {
-    return 'InfoMunicipalityDetailRouteArgs{key: $key, id: $id}';
+    return 'InfoMunicipalityDetailRouteArgs{key: $key, id: $id, pages: $pages}';
   }
 }
 
@@ -2057,8 +2064,8 @@ class SplashRoute extends _i62.PageRouteInfo<void> {
 class SubMenuRoute extends _i62.PageRouteInfo<SubMenuRouteArgs> {
   SubMenuRoute({
     _i63.Key? key,
-    required _i68.SubMenuType menu,
-    required _i69.MenuItem item,
+    required _i69.SubMenuType menu,
+    required _i70.MenuItem item,
     List<_i62.PageRouteInfo>? children,
   }) : super(
           SubMenuRoute.name,
@@ -2094,9 +2101,9 @@ class SubMenuRouteArgs {
 
   final _i63.Key? key;
 
-  final _i68.SubMenuType menu;
+  final _i69.SubMenuType menu;
 
-  final _i69.MenuItem item;
+  final _i70.MenuItem item;
 
   @override
   String toString() {
