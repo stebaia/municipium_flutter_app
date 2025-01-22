@@ -16,3 +16,13 @@ class FetchGarbageCategoriesEvent extends GarbageCategoriesEvent {
   @override
   List<Object> get props => [baseUrl];
 }
+
+
+class FilterGarbageCalendarElementEvent extends GarbageCategoriesEvent {
+  final String letter;
+  const FilterGarbageCalendarElementEvent(this.letter);
+
+  @override
+  List<Object> get props => [letter];
+}
+

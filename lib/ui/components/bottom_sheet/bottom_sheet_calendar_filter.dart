@@ -57,6 +57,7 @@ class BottomSheetFilter extends StatelessWidget {
                       child: const Center(child: Text('Cancella')),
                       
                     ),
+                    
                     ElevatedButton(
                       style: ButtonStyle(
                         padding: WidgetStateProperty.all(const EdgeInsets.all(20)),

@@ -16,11 +16,15 @@ class PointOfInterestBloc
   int page = 0;
   bool isFetching = true;
   bool isSearching = false;
+  PointOfInterestsList? originalList;
   PointOfInterestBloc({required this.pointOfInterestRepository})
       : super(const FetchingPointOfInterestListState()) {
     on<FetchPointOfInterestListEvent>(_fetchPointOfInterestList);
     on<FetchPagedPointOfInterestListEvent>(_fetchPagedPointOfInterestList);
     on<FetchPoiDetailEvent>(_fetchPoiDetail);
+    on<SearchPointOfInterestEvent>(_searchPointOfInterest);
+    on<FilterPointOfInterestByCategoriesEvent>(
+        _filterPointOfInterestByCategories);
   }
 
   void fetchPointOfInterestList(String baseUrl) =>
@@ -31,6 +35,13 @@ class PointOfInterestBloc
 
   void fetchPoiDetail(String baseUrl, int poiId) =>
       add(FetchPoiDetailEvent(baseUrl, poiId));
+
+  void filterPoiList(
+    final Map<int, bool> selectedCategories,
+    final PointOfInterestsList originalList,
+    final List<CategoryPoiDTO> categories,
+  ) =>
+      add(FilterPointOfInterestByCategoriesEvent(selectedCategories, originalList, categories));
 
   FutureOr<void> _fetchPoiDetail(
       FetchPoiDetailEvent event, Emitter<PointOfInterestState> emit) async {
@@ -44,6 +55,64 @@ class PointOfInterestBloc
     }
   }
 
+  FutureOr<void> _filterPointOfInterestByCategories(
+    FilterPointOfInterestByCategoriesEvent event,
+    Emitter<PointOfInterestState> emit,
+  ) {
+    // If no categories are selected, show all POIs
+    if (!event.selectedCategories.containsValue(true)) {
+      emit(FetchedPointOfInterestListState(event.originalList));
+      return null;
+    }
+
+    // Get list of selected category IDs
+    final selectedCategoryIds = event.selectedCategories.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+
+    // Get all POI IDs that belong to selected categories
+    final Set<int> relevantPoiIds = {};
+    for (var category in event.categories) {
+      if (selectedCategoryIds.contains(category.id)) {
+        relevantPoiIds.addAll(category.idPoi ?? []);
+      }
+    }
+
+    // Filter the original POI list to only include POIs that belong to selected categories
+    final filteredItems = event.originalList.pointOfInterestsItemList
+        ?.where((poi) => relevantPoiIds.contains(poi.id))
+        .toList();
+
+    final filteredList = PointOfInterestsList(
+      pointOfInterestsItemList: filteredItems,
+    );
+
+    emit(FetchedPointOfInterestListState(filteredList));
+  }
+
+  FutureOr<void> _searchPointOfInterest(
+    SearchPointOfInterestEvent event,
+    Emitter<PointOfInterestState> emit,
+  ) {
+    if (event.query.isEmpty) {
+      emit(FetchedPointOfInterestListState(originalList!));
+      return null;
+    }
+
+    final filteredItems = originalList!.pointOfInterestsItemList!
+        .where((poi) =>
+            poi.name?.toLowerCase().contains(event.query.toLowerCase()) ??
+            false)
+        .toList();
+
+    final filteredList = PointOfInterestsList(
+      pointOfInterestsItemList: filteredItems,
+    );
+
+    emit(FetchedPointOfInterestListState(filteredList));
+  }
+
   FutureOr<void> _fetchPointOfInterestList(
       FetchPointOfInterestListEvent fetchPointOfInterestListEvent,
       Emitter<PointOfInterestState> emit) async {
@@ -52,6 +121,7 @@ class PointOfInterestBloc
       final pointOfInterestsList =
           await pointOfInterestRepository.getPointOfInterestList(
               fetchPointOfInterestListEvent.baseUrl, page, 20);
+      originalList = pointOfInterestsList;
       if (pointOfInterestsList.pointOfInterestsItemList!.length > 0) {
         emit(FetchedPointOfInterestListState(pointOfInterestsList));
         page++;
@@ -62,7 +132,6 @@ class PointOfInterestBloc
       emit(const ErrorPointOfInterestListState());
     }
   }
-
 
   FutureOr<void> _fetchPagedPointOfInterestList(
       FetchPagedPointOfInterestListEvent fetchPointOfInterestListEvent,

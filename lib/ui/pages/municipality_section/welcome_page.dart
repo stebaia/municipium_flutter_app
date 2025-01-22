@@ -82,7 +82,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height / 2,
                     child: Image.network(
-                      '${municipality.background.baseUrl}${municipality.background.i1280}',
+                      '${municipality.background?.baseUrl}${municipality.background?.i1280}',
                       fit: BoxFit.cover,
                     )),
                 Column(

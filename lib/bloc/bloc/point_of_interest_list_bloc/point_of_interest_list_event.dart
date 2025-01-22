@@ -30,3 +30,15 @@ class FetchPoiDetailEvent extends PointOfInterestEvent {
   @override
   List<Object> get props => [];
 }
+
+class FilterPointOfInterestByCategoriesEvent extends PointOfInterestEvent {
+  final Map<int, bool> selectedCategories;
+  final PointOfInterestsList originalList;
+  final List<CategoryPoiDTO> categories;
+
+  const FilterPointOfInterestByCategoriesEvent(
+    this.selectedCategories, 
+    this.originalList,
+    this.categories,
+  );
+}

@@ -19,6 +19,20 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
         appServiceThree: dto.appService3 ?? '',
         appServiceFour: dto.appService4 ?? '',
         province: dto.province?.initials ?? '',
+        zipCode: dto.zipCode ?? '',
+        prefix: dto.prefix ?? '',
+        surface: dto.surface ?? '',
+        citizensNumber: dto.citizensNumber ?? 0,
+        description: dto.description ?? '',
+        image: dto.image != null
+            ? mapperImages.fromDTO(dto.image!)
+            : const MunicipiumImage(
+                i1280: '',
+                i300x300: '',
+                baseUrl: '',
+                i720x960: '',
+                i1920x1280: '',
+                i640: ''),
         logo: dto.logo != null
             ? mapperImages.fromDTO(dto.logo!)
             : const MunicipiumImage(

@@ -157,13 +157,13 @@ class MenuHelper {
   static IconData? getSubMenuIcon(SubMenuItemType type) {
     switch (type) {
       case GarbageMenuType.recyclyngAreas:
-        return Icons.view_in_ar;
+        return CupertinoIcons.cube_box;
       case GarbageMenuType.garbageCollectors:
-        return Icons.monitor;
+        return Icons.fire_truck_outlined;
       case GarbageMenuType.garbageCalendars:
         return Icons.calendar_month;
       case GarbageMenuType.garbageCategories:
-        return Icons.monitor;
+        return Icons.category_outlined;
       case CivilDefenceType.civilDefencePhoneNumbers:
         return Icons.phone;
       case CivilDefenceType.civilDefenceLevels:
@@ -193,7 +193,7 @@ class MenuHelper {
       case GarbageMenuType.garbageCollectors:
         return AppLocalizations.of(context)?.garbage_collections_menu;
       case GarbageMenuType.garbageCalendars:
-        return AppLocalizations.of(context)?.calendar_menu;
+        return AppLocalizations.of(context)?.text_garbage_calendar_title;
       case GarbageMenuType.garbageCategories:
         return AppLocalizations.of(context)?.garbage_categories_menu;
       case CivilDefenceType.civilDefencePhoneNumbers:
@@ -270,6 +270,18 @@ class MenuHelper {
       case CivilDefenceType.civilDefenceAreUReady:
         context.pushRoute(const CivilDefenceAreYouReadyRoute());
       break;
+      case GarbageMenuType.garbageCalendars:
+        context.pushRoute(const GarbageCalendarRoute());
+        break;
+      case GarbageMenuType.garbageCategories:
+        context.pushRoute(const GarbageCalendarElementListRoute());
+        break;
+      case GarbageMenuType.recyclyngAreas:
+        context.pushRoute(const GarbageReciclingAreasRoute());
+        break;
+      case GarbageMenuType.garbageCollectors:
+        context.pushRoute(const GarbageInfoRetirementRoute());
+        break;
     }
   }
 

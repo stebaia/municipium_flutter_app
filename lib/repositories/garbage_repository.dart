@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:municipium/model/garbage/garbage_calendar.dart';
 import 'package:municipium/model/garbage/garbage_calendar_element.dart';
+import 'package:municipium/model/garbage/garbage_collection.dart';
 import 'package:municipium/model/garbage/garbage_detail_calendar.dart';
 import 'package:municipium/services/network/api/garbage_service/garbage_service.dart';
 import 'package:municipium/services/network/dto/garbage_calendar_dto.dart';
 import 'package:municipium/services/network/dto/garbage_calendar_element_dto.dart';
+import 'package:municipium/services/network/dto/poi_detail_dto.dart';
 import 'package:pine/pine.dart';
 
 class GarbageRepository {
@@ -50,6 +52,17 @@ class GarbageRepository {
     }
   }
 
+  Future<List<PoiDetailDTO>> getRecyclingAreas(
+      String baseUrl,) async {
+    try {
+      final garbageResponse = await service.getRecyclingAreas(baseUrl);
+      return garbageResponse;
+    } catch (error) {
+      logger.e('Error in getting reservations units list');
+      rethrow;
+    }
+  }
+
   Future<List<WrappedGarbageCalendars>> getGarbageCategoriesList(
     String baseUrl,
   ) async {
@@ -69,11 +82,6 @@ class GarbageRepository {
         }
       }
 
-      
-
-      
-
-
       return garbageList;
     } catch (error) {
       logger.e('Error in getting garbage categories units list');
@@ -87,6 +95,19 @@ class GarbageRepository {
       final garbageResponse =
           await service.getGarbageSubCategoriesURL(baseUrl, id.toString());
       return mapperCalendarElement.fromDTO(garbageResponse);
+    } catch (error) {
+      logger.e('Error in getting reservations units list');
+      rethrow;
+    }
+  }
+
+
+  Future<GarbageCollection> getGarbageCollection(
+      String baseUrl) async {
+    try {
+      final garbageResponse =
+          await service.getGarbageCollections(baseUrl);
+      return garbageResponse;
     } catch (error) {
       logger.e('Error in getting reservations units list');
       rethrow;

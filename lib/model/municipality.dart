@@ -10,10 +10,16 @@ class Municipality extends Equatable {
   final String municipalityName;
   final int muninicipalityId;
   final String subdomain;
+  final String? description;
+  final int? citizensNumber;
+  final String? surface;
+  final String? zipCode;
+  final String? prefix;
   final double lat;
   final double lng;
-  final MunicipiumImage background;
-  final MunicipiumImage logo;
+  final MunicipiumImage? background;
+  final MunicipiumImage? logo;
+  final MunicipiumImage? image;
   final NewMenuDTO newMenu;
   final String appServiceOne;
   final String appServiceTwo;
@@ -31,15 +37,21 @@ class Municipality extends Equatable {
       {required this.municipalityName,
       required this.muninicipalityId,
       required this.background,
+      required this.image,
       required this.logo,
       required this.lat,
       required this.lng,
+      required this.surface,
+      required this.zipCode,
+      required this.prefix,
       required this.subdomain,
       required this.appServiceOne,
       required this.appServiceTwo,
       required this.appServiceThree,
       required this.appServiceFour,
       required this.newMenu,
+      required this.description,
+      required this.citizensNumber,
       this.configurations,
       required this.jcityGovEnte,
       required this.jcityGovUrl,
@@ -53,8 +65,14 @@ class Municipality extends Equatable {
     return Municipality(
         municipalityName: json['name'],
         muninicipalityId: json['id'],
+        description: json['description'] ?? '',
+        citizensNumber: json['citizens_number'] ?? 0,
+        surface: json['surface'] ?? '',
+        prefix: json['prefix'] ?? '',
+        zipCode: json['zip_code'] ?? '',
         lat: json['lat'],
         lng: json['lng'],
+        image: json['image'] ?? MunicipiumImage.fromJson(json['image']),
         logo: MunicipiumImage.fromJson(json['logo']),
         background: MunicipiumImage.fromJson(json['background']),
         subdomain: json['subdomain'],
@@ -78,8 +96,14 @@ class Municipality extends Equatable {
     return Municipality(
         municipalityName: json['name'],
         muninicipalityId: json['id'],
+        surface: json['surface'] ?? '',
+        description: json['description'] ?? '',
+        citizensNumber: json['citizens_number'] ?? 0,
+        prefix: json['prefix'] ?? '',
+        zipCode: json['zip_code'] ?? '',
         lat: json['lat'],
         lng: json['lng'],
+        image: MunicipiumImage.fromJson(json['image']),
         logo: MunicipiumImage.fromJson(json['logo']),
         background: MunicipiumImage.fromJson(json['background']),
         subdomain: json['subdomain'],
@@ -106,8 +130,14 @@ class Municipality extends Equatable {
       'id': muninicipalityId,
       'lat': lat,
       'lng': lng,
-      'logo': logo.toJson(),
-      'background': background.toJson(),
+      'logo': logo?.toJson(),
+      'background': background?.toJson(),
+      'image' : image?.toJson(),
+      'surface': surface,
+      'description': description,
+      'citizens_number': citizensNumber,
+      'prefix': prefix,
+      'zip_code': zipCode,
       'subdomain': subdomain,
       'appServiceOne': appServiceOne,
       'appServiceTwo': appServiceTwo,
@@ -134,6 +164,11 @@ class Municipality extends Equatable {
         lat,
         lng,
         newMenu,
+        description,
+        citizensNumber, 
+        surface,
+        prefix,
+        zipCode,
         appServiceOne,
         appServiceTwo,
         appServiceThree,

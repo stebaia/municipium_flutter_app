@@ -87,5 +87,29 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: LissiPresentationSessionRoute.page,
         ),
+        AutoRoute(
+          page: GarbageReciclingAreasRoute.page,
+        path: '/recycling_areas'),
+
+        AutoRoute(
+          page: GarbageInfoRetirementRoute.page,
+        path: '/garbage_collections'),
+        
+        AutoRoute(
+          page: SurveryListRoute.page,
+        path: '/surveys'),
+      AutoRoute(
+          page: SurveyDetailRoute.page,
+        path: '/surveys/:id'),
+       AutoRoute(
+          page: QuestionSurveyRoute.page,
+        path: '/question_survey/:id'),
+         AutoRoute(
+          page: InfoMunicipalityRoute.page,
+        path: '/info_municipality'),
+         AutoRoute(
+          page: InfoMunicipalityDetailRoute.page,
+        path: '/info_municipality/:id'),
       ];
+      
 }

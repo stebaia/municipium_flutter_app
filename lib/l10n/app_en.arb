@@ -64,6 +64,12 @@
     "error_news_fetched" : "Errore nel download delle notizie",
     "read_more" : "Leggi di più",
 
+    "text_no_poi_in_list" : "No points of interest found",
+    "text_no_recycling_in_list" : "no recycling areas found",
+
+    "text_telephone" : "Telefono",
+    "text_fax" : "Fax",
+
     "@_ISSUES_STRINGS" : {},
     "new_issue" : "Nuova segnalazione",
     "back_desc" : "Indietro",
@@ -168,6 +174,7 @@
     "text_garbage_calendar_title" : "Ecocalendars",
     "text_garbage_detail_calendar_title" : "Calendars",
     "text_garbage_detail_calendar_element_title" : "Garbage details",
+    "text_garbage_recycling_areas_title" : "Recycling areas",
 
      "label_text_close" : "Close",
      "label_text_description" : "Description",
@@ -179,5 +186,27 @@
     "label_wallet_my_documents" : "I miei documenti",
     "label_wallet_my_documents_description" : "Visualizza i tuou documenti",
     "label_wallet_my_documents_title" : "Scegli tra i vari template",
-    "label_wallet_scan_documents" : "Scansiona documenti"
+    "label_wallet_scan_documents" : "Scansiona documenti",
+
+    "label_ended" : "End",
+    "label_end_date" : "Ending",
+
+    "label_open_survey" : "Open survey",
+    "label_closed_survey" : "Closed survey",
+
+    
+  "acceptation": "Acceptance of personal data information",
+  "acceptation_body": "By proceeding with the completion and submission of this form, you consent to the processing of the personal data provided, in accordance with Article 13 of EU Regulation 2016/679 and the applicable national laws on personal data processing, for the purposes and within the limits specified in the privacy policy that we invite you to read carefully.",
+  "read_info": "READ THE PRIVACY POLICY",
+  "label_no_open_survey" : "No open survey",
+  "label_no_closed_survey" : "No closed survey",
+
+   "label_people" : "People",
+  "label_surface" : "Surface: ",
+  "label_citizens" : "Citizens: ",
+  "label_zip_code" : "Zip code: ",
+  "label_prefix" : "Prefix: ",
+  "label_description" : "Description: "
+
+    
 }

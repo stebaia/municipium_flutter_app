@@ -43,7 +43,6 @@ class _PnrrServicesPageState extends State<PnrrServicesPage> {
           scaffoldKey: _scaffoldKey,
         ),
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
           title: context.read<PnrrServicesBloc>().isSearching
               ? TextField(
                   controller: _searchController,
