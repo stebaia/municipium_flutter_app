@@ -6,7 +6,7 @@ part of 'mmc_municipium_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
 class _MmcMunicipiumService implements MmcMunicipiumService {
   _MmcMunicipiumService(
@@ -27,6 +27,7 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     dynamic authId,
     dynamic municipalityId,
     dynamic authSystem,
+    dynamic authIdOld,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -39,7 +40,7 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     )
         .compose(
           _dio.options,
-          '${baseUrl}/retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}',
+          '${baseUrl}retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -57,6 +58,38 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
       rethrow;
     }
     return _value;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> logoutSpid(
+    String baseUrl,
+    RequestLogoutSpid requestLogoutSpid,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(requestLogoutSpid.toJson());
+    final _options = _setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '${baseUrl}disableDevice',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch(_options);
+    final _value = _result.data;
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
   }
 
   @override

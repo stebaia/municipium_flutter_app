@@ -88,7 +88,7 @@ class EcoMessagePage extends StatelessWidget implements AutoRouteWrapper {
               state is ErrorEcoattiviMessageState) {
             return const Text('errore');
           } else {
-            return ShimmerUtils.buildPoiShimmer(4);
+            return ShimmerUtils.buildPoiShimmer(4, context);
           }
         },
       ),

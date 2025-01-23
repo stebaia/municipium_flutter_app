@@ -5,9 +5,7 @@ import 'package:municipium/bloc/cubit/municipality_stored_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
 import 'package:municipium/model/user/user_configuration_menu.dart';
 import 'package:municipium/routers/app_router.gr.dart';
-import 'package:municipium/ui/components/municipality_components/box_air_quality_component.dart';
 import 'package:municipium/ui/components/municipality_components/box_dashboard_components.dart';
-import 'package:provider/provider.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -40,7 +38,7 @@ class HomePage extends StatelessWidget {
         builder: (context, state) {
           List<UserConfigurationMenu> configurationMenus = state;
           if (configurationMenus.isEmpty) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -57,28 +55,33 @@ class HomePage extends StatelessWidget {
                       municipality: municipality,
                     ),
                     BoxVerticalDashboardComponents(
-                      assetImage: '',
-                      name: configurationMenus[1].serviceName,
-                      isRemoved: configurationMenus[1].isRemoved,
+                      assetImage: configurationMenus[0].assetImage,
+                      name: configurationMenus[0].serviceName,
+                      isRemoved: configurationMenus[0].isRemoved,
+                      slug: configurationMenus[0].slug,
                     ),
                   ],
                 ),
                 BoxHorizzontalDashboardComponents(
-                  name: configurationMenus[2].serviceName,
-                  isRemoved: configurationMenus[2].isRemoved,
+                  assetImage: configurationMenus[1].assetImage,
+                  name: configurationMenus[1].serviceName,
+                  isRemoved: configurationMenus[1].isRemoved,
+                  slug: configurationMenus[1].slug,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     BoxVerticalDashboardComponents(
-                      assetImage: '',
-                      name: configurationMenus[3].serviceName,
-                      isRemoved: configurationMenus[3].isRemoved,
+                      assetImage: configurationMenus[2].assetImage,
+                      name: configurationMenus[2].serviceName,
+                      isRemoved: configurationMenus[2].isRemoved,
+                      slug: configurationMenus[2].slug,
                     ),
                     BoxVerticalDashboardComponents(
-                      assetImage: '',
-                      name: configurationMenus[4].serviceName,
-                      isRemoved: configurationMenus[4].isRemoved,
+                      assetImage: configurationMenus[3].assetImage,
+                      name: configurationMenus[3].serviceName,
+                      isRemoved: configurationMenus[3].isRemoved,
+                      slug: configurationMenus[3].slug,
                     )
                   ],
                 ),

@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -13,11 +12,7 @@ import 'package:municipium/ui/components/row_pnnr_components/row_contact_point.d
 import 'package:municipium/ui/components/row_pnnr_components/row_pnnr_component.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
-import 'package:municipium/utils/icons_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:skeletonizer/skeletonizer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class DetailPoiPage extends StatelessWidget implements AutoRouteWrapper {

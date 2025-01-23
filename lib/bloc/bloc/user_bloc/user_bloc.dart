@@ -17,6 +17,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       : super(const FetchingListIdpState()) {
     on<FetchListIdpEvent>(_fetchListIdp);
     on<FetchUserDataEvent>(_getUserDataSpid);
+    on<LogoutUserDataEvent>(_logoutUser);
     on<ValidateUserDataEvent>(_validateUser);
   }
 
@@ -29,6 +30,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           String? codiceAmico, int istat, String token, bool privacy) =>
       add(ValidateUserDataEvent(baseUrl, userSpidModel, codiceAmico, istat,
           token, 'ecoattivi', privacy));
+  void logoutUserSpid(
+          String baseUrlMmc, String playerId, String cf, String udid) =>
+      add(LogoutUserDataEvent(baseUrlMmc, playerId, cf, udid));
 
   FutureOr<void> _fetchListIdp(
       FetchListIdpEvent event, Emitter<UserState> emit) async {
@@ -60,6 +64,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       print('retrieveUserData: ${ex.toString()}');
       emit(const NoSpidUserState());
     }
+  }
+
+  FutureOr<void> _logoutUser(
+      LogoutUserDataEvent event, Emitter<UserState> emit) async {
+    emit(const FetchingUserDataState());
+    try {
+      final bool spidUserModel = await userRepository.logoutUser(
+        event.baseUrlMmc,
+        event.playerId,
+        event.cf,
+        event.udid,
+      );
+      emit(const NoSpidUserState());
+    } catch (ex) {}
   }
 
   FutureOr<void> _validateUser(

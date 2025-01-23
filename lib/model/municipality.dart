@@ -11,10 +11,16 @@ class Municipality extends Equatable {
   final String municipalityName;
   final int muninicipalityId;
   final String subdomain;
+  final String? description;
+  final int? citizensNumber;
+  final String? surface;
+  final String? zipCode;
+  final String? prefix;
   final double lat;
   final double lng;
-  final MunicipiumImage background;
-  final MunicipiumImage logo;
+  final MunicipiumImage? background;
+  final MunicipiumImage? logo;
+  final MunicipiumImage? image;
   final NewMenuDTO newMenu;
   final String appServiceOne;
   final String appServiceTwo;
@@ -24,6 +30,9 @@ class Municipality extends Equatable {
   final String jcityGovUrl;
   final String province;
   final int istat;
+  final String prenotationWebUrl;
+  final String civilDefenceType;
+  final List<int> civilDefenceNewsCategoryIds;
   Configurations? configurations;
   Municipality(
       {required this.codiceSap,
@@ -43,8 +52,16 @@ class Municipality extends Equatable {
       required this.jcityGovEnte,
       required this.jcityGovUrl,
       required this.province,
-      required this.istat});
-
+      required this.istat,
+      required this.description,
+      required this.citizensNumber,
+      required this.surface,
+      required this.zipCode,
+      required this.prefix,
+      required this.image,
+      required this.civilDefenceType,
+      required this.civilDefenceNewsCategoryIds,
+      required this.prenotationWebUrl});
   factory Municipality.fromJsonFromShared(String jsonString) {
     final json = jsonDecode(jsonString);
     return Municipality(
@@ -67,31 +84,50 @@ class Municipality extends Equatable {
             : null,
         jcityGovEnte: json['jcityGovEnte'] ?? '',
         jcityGovUrl: json['jcityGovUrl'] ?? '',
-        istat: json['istat'] ?? -1);
+        istat: json['istat'] ?? -1,
+        description: json['description'] ?? '',
+        citizensNumber: json['citizens_number'] ?? 0,
+        surface: json['surface'] ?? '',
+        prefix: json['prefix'] ?? '',
+        zipCode: json['zip_code'] ?? '',
+        image: json['image'] ?? MunicipiumImage.fromJson(json['image']),
+        civilDefenceNewsCategoryIds: json['civilDefenceNewsCategoryIds'] ?? [],
+        civilDefenceType: json['civilDefenceType'],
+        prenotationWebUrl: json['prenotationWebUrl']);
   }
 
   factory Municipality.fromJson(Map<String, dynamic> json) {
     return Municipality(
-        codiceSap: json['codice_sap'],
-        municipalityName: json['name'],
-        muninicipalityId: json['id'],
-        lat: json['lat'],
-        lng: json['lng'],
-        logo: MunicipiumImage.fromJson(json['logo']),
-        background: MunicipiumImage.fromJson(json['background']),
-        subdomain: json['subdomain'],
-        appServiceOne: json['appServiceOne'],
-        appServiceTwo: json['appServiceTwo'],
-        appServiceThree: json['appServiceThree'],
-        appServiceFour: json['appServiceFour'],
-        province: json['province'],
-        newMenu: NewMenuDTO.fromJson(json['new_menu']),
-        configurations: json['configurations'] != null
-            ? Configurations.fromJson(json['configurations'])
-            : null,
-        jcityGovEnte: json['jcityGovEnte'] ?? '',
-        jcityGovUrl: json['jcityGovUrl'] ?? '',
-        istat: json['istat'] ?? -1);
+      municipalityName: json['name'],
+      muninicipalityId: json['id'],
+      lat: json['lat'],
+      lng: json['lng'],
+      logo: MunicipiumImage.fromJson(json['logo']),
+      background: MunicipiumImage.fromJson(json['background']),
+      subdomain: json['subdomain'],
+      appServiceOne: json['appServiceOne'],
+      appServiceTwo: json['appServiceTwo'],
+      appServiceThree: json['appServiceThree'],
+      appServiceFour: json['appServiceFour'],
+      province: json['province'],
+      newMenu: NewMenuDTO.fromJson(json['new_menu']),
+      configurations: json['configurations'] != null
+          ? Configurations.fromJson(json['configurations'])
+          : null,
+      jcityGovEnte: json['jcityGovEnte'] ?? '',
+      jcityGovUrl: json['jcityGovUrl'] ?? '',
+      citizensNumber: json['citizensNumber'] ?? 0,
+      civilDefenceNewsCategoryIds: json['civilDefenceNewsCategoryIds'] ?? '',
+      civilDefenceType: json['civilDefenceType'] ?? '',
+      codiceSap: json['codiceSap'] ?? '',
+      description: json['description'] ?? '',
+      image: MunicipiumImage.fromJson(json['image']),
+      istat: json['istat'] ?? '',
+      prefix: json['prefix'] ?? '',
+      prenotationWebUrl: json['prenotationWebUrl'] ?? [],
+      surface: json['surface'] ?? '',
+      zipCode: json['zipCode'] ?? '',
+    );
   }
 
   // Metodo per serializzare l'oggetto Municipality in un JSON di tipo Map
@@ -102,8 +138,14 @@ class Municipality extends Equatable {
       'id': muninicipalityId,
       'lat': lat,
       'lng': lng,
-      'logo': logo.toJson(),
-      'background': background.toJson(),
+      'logo': logo?.toJson(),
+      'background': background?.toJson(),
+      'image': image?.toJson(),
+      'surface': surface,
+      'description': description,
+      'citizens_number': citizensNumber,
+      'prefix': prefix,
+      'zip_code': zipCode,
       'subdomain': subdomain,
       'appServiceOne': appServiceOne,
       'appServiceTwo': appServiceTwo,
@@ -114,7 +156,10 @@ class Municipality extends Equatable {
       'configurations': configurations?.toJson(),
       'jcityGovEnte': jcityGovEnte,
       'jcityGovUrl': jcityGovUrl,
-      'istat': istat
+      'istat': istat,
+      'civilDefenceType': civilDefenceType,
+      'civilDefenceNewsCategoryIds': civilDefenceNewsCategoryIds,
+      'prenotationWebUrl': prenotationWebUrl
     };
   }
 
@@ -129,6 +174,11 @@ class Municipality extends Equatable {
         lat,
         lng,
         newMenu,
+        description,
+        citizensNumber,
+        surface,
+        prefix,
+        zipCode,
         appServiceOne,
         appServiceTwo,
         appServiceThree,
@@ -136,6 +186,9 @@ class Municipality extends Equatable {
         jcityGovEnte,
         jcityGovUrl,
         province,
-        istat
+        istat,
+        civilDefenceType,
+        prenotationWebUrl,
+        civilDefenceNewsCategoryIds
       ];
 }

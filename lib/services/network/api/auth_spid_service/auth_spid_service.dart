@@ -11,6 +11,6 @@ part 'auth_spid_service.g.dart';
 abstract class AuthSpidService {
   factory AuthSpidService(Dio dio) = _AuthSpidService;
 
-  @GET('{baseUrl}/get_idps')
+  @GET('{baseUrl}api/v2/get_idps')
   Future<List<IdpModel>> getIdps(@Path('baseUrl') String baseUrl);
 }

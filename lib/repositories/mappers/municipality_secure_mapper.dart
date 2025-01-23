@@ -14,17 +14,24 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         'subdomain': from.subdomain,
         'lat': from.lat,
         'lng': from.lng,
-        'logo': from.logo.toJson(),
-        'background': from.background.toJson(),
+        'zip_code': from.zipCode ?? '',
+        'prefix': from.prefix ?? '',
+        'surface': from.surface ?? '',
+        'citizens_number': from.citizensNumber ?? 0,
+        'description': from.description ?? '',
+        'image' : from.image ?? from.image!.toJson(),
+        'logo': from.logo ?? from.logo!.toJson(),
+        'background': from.background ?? from.background!.toJson(),
         'appServiceOne': from.appServiceOne,
         'appServiceTwo': from.appServiceTwo,
         'appServiceThree': from.appServiceThree,
         'appServiceFour': from.appServiceFour,
         'province': from.province,
         'new_menu': from.newMenu.toJson(),
-        'configurations': from.configurations ??
-            from.configurations!
-                .toJson() // Serializza l'oggetto MunicipiumImage
+        'configurations': from.configurations ?? from.configurations!.toJson(),
+        'url_prenotazioni_web':
+            from.prenotationWebUrl, // Serializza l'oggetto MunicipiumImage
+        'civil_defence_type': from.civilDefenceType
       });
 
   @override
@@ -36,6 +43,12 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         muninicipalityId: json['id'],
         lat: json['lat'],
         lng: json['lng'],
+        zipCode: json['zip_code'] ?? '',
+        prefix: json['prefix'] ?? '',
+        surface: json['surface'] ?? '',
+        citizensNumber: json['citizens_number'] ?? 0,
+        description: json['description'] ?? '',
+        image: json['image'] != null ? MunicipiumImage.fromJson(json['image']) : null,
         logo: MunicipiumImage.fromJson(json['logo']),
         background: MunicipiumImage.fromJson(
             json['background']), // Deserializza l'oggetto MunicipiumImage
@@ -50,6 +63,9 @@ class MunicipalitySecureMapper extends Mapper<Municipality, String> {
         ),
         configurations: Configurations.fromJson(json['configurations']),
         jcityGovEnte: json['jcityGovEnte'] ?? '',
+        civilDefenceType: json['civil_defence_type'] ?? '',
+        civilDefenceNewsCategoryIds: json['civil_defence_news_category_ids'] ?? [],
+        prenotationWebUrl: json['url_prenotazioni_web'] ?? '',
         jcityGovUrl: json['jcityGovUrl'] ?? '',
         istat: json['istat'] ?? -1);
   }

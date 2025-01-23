@@ -26,6 +26,7 @@
     "issue_menu" : "Segnalazioni",
     "dms_menu" : "Turismo",
     "garbage_menu" : "Rifiuti",
+    "prenotation_menu" : "Prenotations",
     "garbage_collections_menu" : "Ritiro ingrombranti",
     "garbage_categories_menu" : "Glossario",
     "recycling_areas_menu" : "Punti di raccolta",
@@ -62,6 +63,12 @@
     "no_news_fetched" : "Nessuna notizia presente",
     "error_news_fetched" : "Errore nel download delle notizie",
     "read_more" : "Leggi di più",
+
+    "text_no_poi_in_list" : "No points of interest found",
+    "text_no_recycling_in_list" : "no recycling areas found",
+
+    "text_telephone" : "Telefono",
+    "text_fax" : "Fax",
 
     "@_ISSUES_STRINGS" : {},
     "new_issue" : "Nuova segnalazione",
@@ -145,5 +152,61 @@
     "text_yes" : "Yes",
     "text_no" : "No",
 
-     "text_calendar_title" : "Agenda"
+     "text_calendar_title" : "Agenda",
+
+     "text_title_dialog_legend_risk" : "Colors legend",
+
+    "text_legend_white" : "White color",
+    "text_legend_red" : "Red color",
+    "text_legend_green" : "Green color",
+    "text_legend_yellow" : "Yellow color", 
+    "text_legend_orange" : "Orange color",
+    "text_legend_no_prediction" : "No prediction",
+    "text_legend_no_risk" : "Criticality absent",
+    "text_legend_ordinary_risk" : "Ordinary criticality",
+    "text_legend_yellow_risk" : "Modarate criticality",
+    "text_legend_red_risk" : "High riticality",
+
+    "text_civil_defence_are_you_ready_title_page" : "In case of calamity",
+    "text_attachment_and_planning" : "Municipality planning and attachment",
+    "text_attachment" : "Attachment",
+
+    "text_garbage_calendar_title" : "Ecocalendars",
+    "text_garbage_detail_calendar_title" : "Calendars",
+    "text_garbage_detail_calendar_element_title" : "Garbage details",
+    "text_garbage_recycling_areas_title" : "Recycling areas",
+
+     "label_text_close" : "Close",
+     "label_text_description" : "Description",
+     "label_text_instruction" : "Instruction",
+    "label_text_categories" : "Categories",
+    "label_wallet_title_what_do_you_do" : "What do you want to do?",
+    "label_wallet_verify_documents" : "Verifica documenti",
+    "label_wallet_verify_documents_description" : "Verifica i documenti del cittadino/a",
+    "label_wallet_my_documents" : "I miei documenti",
+    "label_wallet_my_documents_description" : "Visualizza i tuou documenti",
+    "label_wallet_my_documents_title" : "Scegli tra i vari template",
+    "label_wallet_scan_documents" : "Scansiona documenti",
+
+    "label_ended" : "End",
+    "label_end_date" : "Ending",
+
+    "label_open_survey" : "Open survey",
+    "label_closed_survey" : "Closed survey",
+
+    
+  "acceptation": "Acceptance of personal data information",
+  "acceptation_body": "By proceeding with the completion and submission of this form, you consent to the processing of the personal data provided, in accordance with Article 13 of EU Regulation 2016/679 and the applicable national laws on personal data processing, for the purposes and within the limits specified in the privacy policy that we invite you to read carefully.",
+  "read_info": "READ THE PRIVACY POLICY",
+  "label_no_open_survey" : "No open survey",
+  "label_no_closed_survey" : "No closed survey",
+
+   "label_people" : "People",
+  "label_surface" : "Surface: ",
+  "label_citizens" : "Citizens: ",
+  "label_zip_code" : "Zip code: ",
+  "label_prefix" : "Prefix: ",
+  "label_description" : "Description: "
+
+    
 }

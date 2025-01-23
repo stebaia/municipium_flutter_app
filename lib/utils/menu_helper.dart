@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
@@ -60,6 +61,9 @@ class MenuHelper {
     }
     if (municipality.newMenu.payment != null) {
       list.add(MenuItem(type: MenuItemType.payment));
+    }
+     if (municipality.newMenu.prenotazioni != null) {
+      list.add(MenuItem(type: MenuItemType.prenotations));
     }
     return list;
   }
@@ -143,6 +147,8 @@ class MenuHelper {
         return Icons.warning;
       case MenuItemType.payment:
         return Icons.payment;
+      case MenuItemType.prenotations:
+        return CupertinoIcons.calendar;
       case MenuItemType.sportelloTelematico:
         return Icons.perm_contact_calendar;
     }
@@ -151,13 +157,13 @@ class MenuHelper {
   static IconData? getSubMenuIcon(SubMenuItemType type) {
     switch (type) {
       case GarbageMenuType.recyclyngAreas:
-        return Icons.view_in_ar;
+        return CupertinoIcons.cube_box;
       case GarbageMenuType.garbageCollectors:
-        return Icons.monitor;
+        return Icons.fire_truck_outlined;
       case GarbageMenuType.garbageCalendars:
         return Icons.calendar_month;
       case GarbageMenuType.garbageCategories:
-        return Icons.monitor;
+        return Icons.category_outlined;
       case CivilDefenceType.civilDefencePhoneNumbers:
         return Icons.phone;
       case CivilDefenceType.civilDefenceLevels:
@@ -187,7 +193,7 @@ class MenuHelper {
       case GarbageMenuType.garbageCollectors:
         return AppLocalizations.of(context)?.garbage_collections_menu;
       case GarbageMenuType.garbageCalendars:
-        return AppLocalizations.of(context)?.calendar_menu;
+        return AppLocalizations.of(context)?.text_garbage_calendar_title;
       case GarbageMenuType.garbageCategories:
         return AppLocalizations.of(context)?.garbage_categories_menu;
       case CivilDefenceType.civilDefencePhoneNumbers:
@@ -240,8 +246,42 @@ class MenuHelper {
         return AppLocalizations.of(context)!.civil_defence_menu;
       case MenuItemType.payment:
         return AppLocalizations.of(context)!.payment_menu;
+      case MenuItemType.prenotations:
+        return AppLocalizations.of(context)!.prenotation_menu;
       case MenuItemType.sportelloTelematico:
         return AppLocalizations.of(context)!.sportello_telematico_menu;
+    }
+  }
+
+  static void checkAndPushSubMenuItem(BuildContext context, SubMenuItemType menuItem) async {
+    switch (menuItem) {
+      case CivilDefenceType.civilDefenceLevels:
+        context.pushRoute(const CivilDefenceLevelRoute());
+      break;
+      case CivilDefenceType.civilDefenceAlertNews:
+        context.pushRoute(const CivilDefenceNewsRoute());
+      break;
+      case CivilDefenceType.civilDefenceInformations:
+        context.pushRoute(const CivilDefenceInformationsRoute());
+      break;
+      case CivilDefenceType.civilDefencePhoneNumbers:
+        context.pushRoute(const CivilDefenceNumbersRoute());
+      break;
+      case CivilDefenceType.civilDefenceAreUReady:
+        context.pushRoute(const CivilDefenceAreYouReadyRoute());
+      break;
+      case GarbageMenuType.garbageCalendars:
+        context.pushRoute(const GarbageCalendarRoute());
+        break;
+      case GarbageMenuType.garbageCategories:
+        context.pushRoute(const GarbageCalendarElementListRoute());
+        break;
+      case GarbageMenuType.recyclyngAreas:
+        context.pushRoute(const GarbageReciclingAreasRoute());
+        break;
+      case GarbageMenuType.garbageCollectors:
+        context.pushRoute(const GarbageInfoRetirementRoute());
+        break;
     }
   }
 
@@ -286,8 +326,11 @@ class MenuHelper {
         break;
       case MenuItemType.civilDefence:
         break;
+       case MenuItemType.prenotations:
+        context.pushRoute(const PrenotationRoute());
+        break;
       case MenuItemType.payment:
-        context.pushRoute(PaymentChoiceRoute());
+        context.pushRoute(const PaymentChoiceRoute());
         break;
       case MenuItemType.sportelloTelematico:
         context.pushRoute(PnrrServicesRoute(type: 'services'));

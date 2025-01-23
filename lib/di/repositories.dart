@@ -46,6 +46,7 @@ final List<RepositoryProvider> _repositories = [
   ),
   RepositoryProvider<UserRepository>(
       create: (context) => UserRepository(
+          municipalityService: context.read(),
           mmcMunicipiumService: context.read(),
           authSpidService: context.read(),
           municipalityRepository: context.read(),
@@ -96,5 +97,38 @@ final List<RepositoryProvider> _repositories = [
             context: context,
             dio: context.read()));
     return ecoattiviRepository;
+  }),
+  RepositoryProvider<GarbageRepository>(
+    create: (context) => GarbageRepository(
+        mapperCalendarElement: context.read(),
+        mapperCalendar: context.read(),
+        service: context.read(),
+        logger: context.read()),
+  ),
+  RepositoryProvider<LissiRepository>(create: (context) {
+    final repository = LissiRepository(
+        service: context.read(),
+        logger: context.read(),
+        secureStorage: context.read());
+    context.read<Dio>().interceptors.insert(
+        0, AuthInterceptor(lissiRepository: repository, dio: context.read()));
+    return repository;
+  }),
+
+   RepositoryProvider<SurveyRepository>(create: (context) {
+    final repository = SurveyRepository(
+        service: context.read(),
+        logger: context.read(),
+        );
+    
+    return repository;
+  }),
+  RepositoryProvider<InfoMunicipalityRepository>(create: (context) {
+    final repository = InfoMunicipalityRepository(
+        service: context.read(),
+        logger: context.read(),
+        );
+    
+    return repository;
   })
 ];

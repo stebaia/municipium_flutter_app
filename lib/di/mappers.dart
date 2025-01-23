@@ -77,4 +77,10 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<EcostopDto, Ecostop>>(create: (_) => EcostopMapper()),
   Provider<DTOMapper<EcoattiviMessaggioDto, EcoattiviMessage>>(
       create: (_) => EcoattiviMessaggiMapper()),
+  Provider<DTOMapper<FieldAttributeDTO, FieldAttribute>>(
+      create: (_) => FieldAttributeMapper()),
+  Provider<DTOMapper<GarbageCalendarsDTO, GarbageCalendars>>(
+      create: (_) => GarbageCalendarMapper()),
+  Provider<DTOMapper<CalendarElementDTO, GarbageCalendarElement>>(
+      create: (_) => GarbageCalendarElementMapper()),
 ];

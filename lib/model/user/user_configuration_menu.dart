@@ -1,24 +1,26 @@
 class UserConfigurationMenu {
   String serviceName;
+  String slug;
   int position;
   bool isMandatory;
   bool isRemoved;
   String assetImage;
 
-  UserConfigurationMenu({
-    required this.serviceName,
-    required this.isMandatory,
-    required this.position,
-    required this.assetImage,
-    this.isRemoved = false
-  });
+  UserConfigurationMenu(
+      {required this.serviceName,
+      required this.isMandatory,
+      required this.slug,
+      required this.position,
+      required this.assetImage,
+      this.isRemoved = false});
   factory UserConfigurationMenu.fromJson(Map<String, dynamic> json) {
     return UserConfigurationMenu(
-      serviceName: json['serviceName'],
-      position: json['position'],
-      isMandatory: json['isMandatory'],
-      assetImage: json['image'],
-      isRemoved: json['isRemoved'],
+      serviceName: json['serviceName'] ?? '',
+      slug: json['slug'] ?? '',
+      position: json['position']?? '' ,
+      isMandatory: json['isMandatory'] ?? false,
+      assetImage: json['image'] ?? '',
+      isRemoved: json['isRemoved'] ?? false,
     );
   }
 
@@ -27,8 +29,9 @@ class UserConfigurationMenu {
     return {
       'serviceName': serviceName,
       'position': position,
+      'slug': slug,
       'isMandatory': isMandatory,
-      'image' : assetImage,
+      'image': assetImage,
       'isRemoved': isRemoved
     };
   }

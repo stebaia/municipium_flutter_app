@@ -15,6 +15,8 @@ class CategoryPoiBloc extends Bloc<CategoryPoiEvent, CategoryPoiState> {
     on<FetchCategoryPoiListEvent>(_fetchCategoryPoiList);
   }
 
+  List<CategoryPoiDTO> categoryPoiList = [];
+
   final PointOfInterestRepository pointOfInterestRepository;
 
   void fetchCategoryPoiList(String baseUrl) =>
@@ -25,9 +27,11 @@ class CategoryPoiBloc extends Bloc<CategoryPoiEvent, CategoryPoiState> {
       Emitter<CategoryPoiState> emitter) async {
     emit(const FetchingCategoryPoiListState());
     try {
-      final categoryPoiList = await pointOfInterestRepository
+      categoryPoiList = await pointOfInterestRepository
           .getCategoryPoiList(fetchCategoryPoiListEvent.baseUrl);
+        
       if (categoryPoiList.isNotEmpty) {
+        
         emit(FetchedCategoryPoiListState(categoryPoiList));
       } else {
         emit(const NoCategoryPoiListState());

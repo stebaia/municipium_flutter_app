@@ -97,5 +97,20 @@ List<SingleChildWidget> providersFun() {
         create: (context) => CalendarService(context.read<Dio>())),
     Provider<EcoattiviService>(
         create: (context) => EcoattiviService(context.read<Dio>())),
+    Provider<GarbageService>(
+        create: (context) => GarbageService(context.read<Dio>())),
+    Provider<LissiService>(
+        create: (context) => LissiService(
+              context.read<Dio>(),
+            )),
+    Provider<SurveyService>(
+        create: (context) => SurveyService(
+              context.read<Dio>(),
+            )),
+
+    Provider<InfoMunicipalityService>(
+        create: (context) => InfoMunicipalityService(
+              context.read<Dio>(),
+            )),
   ];
 }

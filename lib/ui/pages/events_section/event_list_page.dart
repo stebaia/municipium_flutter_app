@@ -128,9 +128,14 @@ class _EventListPageState extends State<EventListPage> {
                 }),
               itemCount: eventsToShow.length,
               itemBuilder: ((context, index) => GestureDetector(
-                    child: Padding(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).canvasColor,
+                          borderRadius: BorderRadius.circular(20)),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 24, horizontal: 16),
+                          vertical: 16, horizontal: 16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,

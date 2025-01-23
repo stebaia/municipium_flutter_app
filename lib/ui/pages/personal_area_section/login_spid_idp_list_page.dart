@@ -41,8 +41,6 @@ class LoginSpidIdpListPage extends StatelessWidget implements AutoRouteWrapper {
               return ListView.builder(
                 itemCount: listIdp.length,
                 itemBuilder: (context, index) => Card(
-                    color: Colors.grey,
-                    surfaceTintColor: Colors.white,
                     margin: const EdgeInsets.all(10),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

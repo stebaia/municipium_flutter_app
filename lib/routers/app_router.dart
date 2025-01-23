@@ -21,12 +21,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: MainRoute.page,
         ),
-        AutoRoute(
-          page: NewsListRoute.page,
-        ),
-        AutoRoute(
-          page: EventListRoute.page,
-        ),
+        AutoRoute(page: NewsListRoute.page, path: '/news'),
+        AutoRoute(page: EventListRoute.page, path: '/events'),
         AutoRoute(
           page: AccountDataRoute.page,
         ),
@@ -34,7 +30,7 @@ class AppRouter extends RootStackRouter {
           page: AccountPrefereceRoute.page,
         ),
         AutoRoute(page: WebViewSpidAuthRoute.page),
-        AutoRoute(page: ServiceOnlineListRoute.page),
+        AutoRoute(page: ServiceOnlineListRoute.page, path: '/services'),
         AutoRoute(page: LoginSpidIdpListRoute.page),
         AutoRoute(page: ChooseMunicipalityRoute.page),
         AutoRoute(page: PnrrServicesRoute.page),
@@ -42,11 +38,11 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: OnlineServiceDetailWebviewRoute.page),
         AutoRoute(page: EventDetailRoute.page),
         AutoRoute(page: DetailPoiRoute.page),
-        AutoRoute(page: IssuesListRoute.page),
+        AutoRoute(page: IssuesListRoute.page, path: '/issue'),
         AutoRoute(page: NewIssueRouter.page),
         AutoRoute(page: WelcomeRoute.page),
         AutoRoute(page: NewsDetailRoute.page),
-        AutoRoute(page: PointOfInterestListRoute.page),
+        AutoRoute(page: PointOfInterestListRoute.page, path: '/poi'),
         AutoRoute(page: SettingsRoute.page),
         AutoRoute(page: UserConfMenuEditRoute.page),
         AutoRoute(page: IssueDetailRoute.page),
@@ -56,6 +52,64 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SelfPaymentsRoute.page),
         AutoRoute(page: NewSelfPaymentRouter.page),
         AutoRoute(page: PersonTypePaymentRoute.page),
+        AutoRoute(page: CivilDefenceAreYouReadyDetailRoute.page),
+        AutoRoute(
+            page: CivilDefenceNumbersRoute.page,
+            path: '/civil_defence_phone_numbers'),
+        AutoRoute(
+            page: CivilDefenceNewsRoute.page,
+            path: '/civil_defence_alerts_news'),
+        AutoRoute(
+            page: CivilDefenceInformationsRoute.page,
+            path: '/civil_defence_informations'),
+        AutoRoute(
+            page: CivilDefenceAreYouReadyRoute.page,
+            path: '/civil_defence_are_you_ready'),
+        AutoRoute(
+            page: CivilDefenceLevelRoute.page, path: '/civil_defence_levels'),
+        AutoRoute(page: PrenotationRoute.page, path: '/prenotazioni'),
+        AutoRoute(page: GarbageCalendarRoute.page, path: '/calendars'),
+        AutoRoute(
+          page: GarbageCalendarDetailRoute.page,
+        ),
+        AutoRoute(
+          page: GarbageElementDetailRoute.page,
+        ),
+        AutoRoute(
+            page: GarbageCalendarElementListRoute.page,
+            path: '/garbage_categories'),
+        AutoRoute(
+          page: LissiDashboardRoute.page,
+        ),
+        AutoRoute(
+          page: LissiPresentationTemplateListRoute.page,
+        ),
+        AutoRoute(
+          page: LissiPresentationSessionRoute.page,
+        ),
+        AutoRoute(
+          page: GarbageReciclingAreasRoute.page,
+        path: '/recycling_areas'),
+
+        AutoRoute(
+          page: GarbageInfoRetirementRoute.page,
+        path: '/garbage_collections'),
+        
+        AutoRoute(
+          page: SurveryListRoute.page,
+        path: '/surveys'),
+      AutoRoute(
+          page: SurveyDetailRoute.page,
+        path: '/surveys/:id'),
+       AutoRoute(
+          page: QuestionSurveyRoute.page,
+        path: '/question_survey/:id'),
+         AutoRoute(
+          page: InfoMunicipalityRoute.page,
+        path: '/info_municipality'),
+         AutoRoute(
+          page: InfoMunicipalityDetailRoute.page,
+        path: '/info_municipality/:id'),
         AutoRoute(page: WeatherQualityRoute.page),
         AutoRoute(page: EcoattiviHomeRoute.page),
         AutoRoute(page: QrEcoattiviRoute.page),
@@ -68,4 +122,5 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: EcoMessageDetailRoute.page),
         AutoRoute(page: InviteFriendRoute.page)
       ];
+      
 }

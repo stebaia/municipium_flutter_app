@@ -41,4 +41,17 @@ class FetchedPoiDetailState extends PointOfInterestState {
   List<Object> get props => [poiDetailDTO];
 }
 
+class SearchPointOfInterestEvent extends PointOfInterestEvent {
+  final String query;
+  final PointOfInterestsList originalList;
+
+  const SearchPointOfInterestEvent(this.query, this.originalList);
+}
+
+class SearchedPointOfInterestListState extends PointOfInterestState {
+  final PointOfInterestsList pointOfInterestsList;
+
+  const SearchedPointOfInterestListState(this.pointOfInterestsList);
+}
+
 

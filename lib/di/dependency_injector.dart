@@ -2,11 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logger/logger.dart';
 import 'package:municipium/bloc/bloc/calendar_event_bloc/calendar_event_bloc_bloc.dart';
-import 'package:municipium/bloc/cubit/base_url_cubit/base_url_cubit.dart';
 import 'package:municipium/bloc/cubit/calendar_filter_cubit/calendar_filter_cubit.dart';
 import 'package:municipium/bloc/cubit/device_cubit/device_cubit.dart';
 import 'package:municipium/bloc/cubit/issue_cubit/issue_cubit.dart';
@@ -16,8 +14,6 @@ import 'package:municipium/bloc/cubit/theme_cubit/theme_cubit.dart';
 import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/temporary_menu_conf_cubit.dart';
 import 'package:municipium/bloc/cubit/user_menu_conf_cubit/user_menu_conf_cubit_cubit.dart';
-import 'package:municipium/bloc/cubit/municipality_url_cubit.dart/municipality_url_cubit.dart';
-import 'package:municipium/bloc/bloc/municipality_bloc/municipality_bloc.dart';
 import 'package:municipium/di/custom_di_helpert.dart';
 import 'package:municipium/model/civil_defence/civil_defence_emergency_call.dart';
 import 'package:municipium/model/device/device_be.dart';
@@ -30,6 +26,8 @@ import 'package:municipium/model/ecoattivi/ecoattivi_situazione_utente.dart';
 import 'package:municipium/model/ecoattivi/ecostop.dart';
 import 'package:municipium/model/events/event_detail.dart';
 import 'package:municipium/model/events/event_item_list.dart';
+import 'package:municipium/model/garbage/garbage_calendar.dart';
+import 'package:municipium/model/garbage/garbage_calendar_element.dart';
 import 'package:municipium/model/issue/issue_Detail.dart';
 import 'package:municipium/model/issue/issue_category_tag.dart';
 import 'package:municipium/model/issue/issue_item_list.dart';
@@ -55,7 +53,10 @@ import 'package:municipium/repositories/calendar_event_repository.dart';
 import 'package:municipium/repositories/civil_defence_repository.dart';
 import 'package:municipium/repositories/ecoattivi_repository.dart';
 import 'package:municipium/repositories/events_repository.dart';
+import 'package:municipium/repositories/garbage_repository.dart';
+import 'package:municipium/repositories/info_municipality_repository.dart';
 import 'package:municipium/repositories/issues_repository.dart';
+import 'package:municipium/repositories/lissi_repository.dart';
 import 'package:municipium/repositories/mappers/civil_defence_mapper/civil_defence_emergency_call_mapper.dart';
 import 'package:municipium/repositories/mappers/configuration_mapper.dart';
 import 'package:municipium/repositories/mappers/device_secure_mapper.dart';
@@ -67,6 +68,8 @@ import 'package:municipium/repositories/mappers/ecoattivi_mapper/ecoattivi_situa
 import 'package:municipium/repositories/mappers/ecoattivi_mapper/ecostop_mapper.dart';
 import 'package:municipium/repositories/mappers/event_mapper/event_detail_mapper.dart';
 import 'package:municipium/repositories/mappers/event_mapper/event_item_mapper.dart';
+import 'package:municipium/repositories/mappers/garbage_mapper/garbage_calendar_element_mapper.dart';
+import 'package:municipium/repositories/mappers/garbage_mapper/garbage_calendar_mapper.dart';
 import 'package:municipium/repositories/mappers/image_mapper.dart';
 import 'package:municipium/repositories/mappers/issue_mapper/issue_category_tag_mapper.dart';
 import 'package:municipium/repositories/mappers/issue_mapper/issue_detail_mapper.dart';
@@ -94,6 +97,7 @@ import 'package:municipium/repositories/payments_repository.dart';
 import 'package:municipium/repositories/pnrr_service_repository.dart';
 import 'package:municipium/repositories/point_of_interest_repository.dart';
 import 'package:municipium/repositories/reservations_repository.dart';
+import 'package:municipium/repositories/survey_repository.dart';
 import 'package:municipium/repositories/user_repository.dart';
 import 'package:municipium/services/auth/auth_service.dart';
 import 'package:municipium/services/auth/service_manager.dart';
@@ -102,7 +106,10 @@ import 'package:municipium/services/network/api/calendar_service/calendar_servic
 import 'package:municipium/services/network/api/civil_defence_service/civil_defence_service.dart';
 import 'package:municipium/services/network/api/ecoattivi_service/ecoattivi_service.dart';
 import 'package:municipium/services/network/api/event_service/event_service.dart';
+import 'package:municipium/services/network/api/garbage_service/garbage_service.dart';
+import 'package:municipium/services/network/api/info_municipality_service/info_municipality_service.dart';
 import 'package:municipium/services/network/api/issue_service/issue_service.dart';
+import 'package:municipium/services/network/api/lissi_service/lissi_service.dart';
 import 'package:municipium/services/network/api/mmc_municipium_service/mmc_municipium_service.dart';
 import 'package:municipium/services/network/api/municipality_be_service/municipality_be_service.dart';
 import 'package:municipium/services/network/api/municipality_configuration_service/municipality_configuration_service.dart';
@@ -113,6 +120,7 @@ import 'package:municipium/services/network/api/payment_service/payment_service.
 import 'package:municipium/services/network/api/pnrr_service/pnrr_service.dart';
 import 'package:municipium/services/network/api/point_of_intertest_service/point_of_interest_service.dart';
 import 'package:municipium/services/network/api/reservations/reservations_service.dart';
+import 'package:municipium/services/network/api/survey_service/survey_service.dart';
 import 'package:municipium/services/network/dto/civild_defence_emergency_call_dto.dart';
 import 'package:municipium/services/network/dto/ecoattivi_foto_azione_dto.dart';
 import 'package:municipium/services/network/dto/ecoattivi_message_response.dart';
@@ -122,6 +130,8 @@ import 'package:municipium/services/network/dto/ecoattivi_situazione_utente_dto.
 import 'package:municipium/services/network/dto/ecostop_dto.dart';
 import 'package:municipium/services/network/dto/event_detail_dto.dart';
 import 'package:municipium/services/network/dto/event_dto.dart';
+import 'package:municipium/services/network/dto/garbage_calendar_dto.dart';
+import 'package:municipium/services/network/dto/garbage_calendar_element_dto.dart';
 import 'package:municipium/services/network/dto/issue_category_tag_dto.dart';
 import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/services/network/dto/issue_dto.dart';
@@ -138,6 +148,7 @@ import 'package:municipium/services/network/dto/reservable_unit_dto.dart';
 import 'package:municipium/services/network/dto/self_payment_dto.dart';
 import 'package:municipium/services/network/dto/service_pnrr_dto.dart';
 import 'package:municipium/services/network/interceptor/ecoattivi_interceptor.dart';
+import 'package:municipium/services/network/interceptors/lissi_auth_interceptor.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/secure_storage.dart';
 import 'package:pine/pine.dart';
@@ -158,13 +169,14 @@ class DependencyInjector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomDiHelper(
-      repositories: _repositories,
-      mappers: _mappers,
-      blocs: _blocs,
-      providers: providersFun(),
-      customService: _customService,
-      child: child,
-    );
+     
+              return CustomDiHelper(
+                      repositories: _repositories,
+                      mappers: _mappers,
+                      blocs: _blocs,
+                      providers: providersFun(),
+                      customService: _customService,
+                      child: child,
+                    );
   }
 }

@@ -26,6 +26,7 @@
     "issue_menu" : "Segnalazioni",
     "dms_menu" : "Turismo",
     "garbage_menu" : "Rifiuti",
+    "prenotation_menu" : "Prenotazioni",
     "garbage_collections_menu" : "Ritiro ingrombranti",
     "garbage_categories_menu" : "Glossario",
     "recycling_areas_menu" : "Punti di raccolta",
@@ -103,6 +104,13 @@
     "issue_load_image" : "Carica immagine",
     "issue_write_message" : "Scrivi un messaggio...",
 
+    "text_no_poi_in_list" : "Nessun punto di interesse",
+    "text_no_recycling_in_list" : "Nessun punto di raccolta",
+
+
+    "text_telephone" : "Telefono",
+    "text_fax" : "Fax",
+
 
     "theme_system" : "Sistema",
     "theme_dark" : "Scuro",
@@ -145,5 +153,62 @@
     "text_yes" : "Si",
     "text_no" : "No",
 
-    "text_calendar_title" : "Agenda"
+    "text_calendar_title" : "Agenda",
+
+    "text_title_dialog_legend_risk" : "Legenda colori",
+
+    "text_legend_white" : "Colore bianco",
+    "text_legend_red" : "Colore rosso",
+    "text_legend_green" : "Colore verde",
+    "text_legend_yellow" : "Colore giallo", 
+    "text_legend_orange" : "Colore arancione",
+    "text_legend_no_prediction" : "Nessuna previsione",
+    "text_legend_no_risk" : "Criticità assente",
+    "text_legend_ordinary_risk" : "Criticità ordinaria",
+    "text_legend_yellow_risk" : "Criticità moderata",
+    "text_legend_red_risk" : "Criticità elevata",
+
+    "text_civil_defence_are_you_ready_title_page" : "In caso di calamità",
+    "text_attachment_and_planning" : "Piano comunale e allegati",
+    "text_attachment" : "Allegati",
+
+     "text_garbage_calendar_title" : "Ecocalendario",
+     "text_garbage_detail_calendar_title" : "Calendario",
+     "text_garbage_detail_calendar_element_title" : "Dettagli rifiuto",
+     "text_garbage_recycling_areas_title" : "Punti di raccolta",
+
+     "label_text_close" : "Chiudi",
+     "label_text_description" : "Descrizione",
+     "label_text_instruction" : "Istruzioni",
+     "label_text_categories" : "Glossario",
+      "label_wallet_title_what_do_you_do" : "Cosa vuoi fare?",
+    "label_wallet_verify_documents" : "Verifica documenti",
+    "label_wallet_verify_documents_description" : "Verifica i documenti del cittadino/a",
+    "label_wallet_my_documents" : "I miei documenti",
+    "label_wallet_my_documents_description" : "Visualizza i tuou documenti",
+    "label_wallet_my_documents_title" : "Scegli tra i vari template",
+    "label_wallet_scan_documents" : "Scansiona documenti",
+
+    "label_ended" : "Terminato",
+    "label_end_date" : "Termina",
+
+    "label_open_survey" : "Sondaggi aperti",
+    "label_closed_survey" : "Sondaggi chiusi",
+    
+    
+  "acceptation": "Accettazione informativa sui Dati personali",
+  "acceptation_body": "Procedendo con la compilazione e con l'invio di questo modulo Lei acconsente al trattamento dei dati personali forniti, ai sensi e per gli effetti dell'articolo 13 del Regolamento EU 2016/679 e della normativa nazionale applicabile in materia di trattamento dei dati personali, per la finalità e nei limiti indicati dalla informativa privacy che la invitiamo a leggere con attenzione.",
+  "read_info": "LEGGI L'INFORMATIVA",
+  "label_no_open_survey" : "Nessun sondaggio aperto",
+  "label_no_closed_survey" : "Nessun sondaggio chiuso",
+
+  "label_people" : "Persone",
+  "label_surface" : "Superficie: ",
+  "label_citizens" : "Abitanti: ",
+  "label_zip_code" : "Codice postale: ",
+  "label_prefix" : "Prefisso: ",
+  "label_description" : "Descrizione: "
+
+
+
 }   

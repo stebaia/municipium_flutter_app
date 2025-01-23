@@ -10,10 +10,10 @@ import 'auth_service.dart';
 class ServiceAccessManager {
   final AuthService authService;
 
-
   ServiceAccessManager(this.authService);
 
-  Future<bool> handleServiceAccess(String serviceName, BuildContext context) async {
+  Future<bool> handleServiceAccess(
+      String serviceName, BuildContext context) async {
     AuthStatus status = await authService.getAuthStatus();
     //bool requiresBiometrics = biometricRequirementAfterAuth[MenuItemType.values.firstWhere((type) => type.toString().split('.').last == serviceName, orElse: () => MenuItemType.issue)] ?? false;
 
@@ -23,16 +23,23 @@ class ServiceAccessManager {
       return true;
     } else {
       // Utente autenticato
-      
+      try {
         bool isBiometricAvailable = await authService.auth.canCheckBiometrics;
         if (isBiometricAvailable) {
           //showModal("Accesso al servizio $serviceName autorizzato.", context);
           return true;
         } else {
-          showModal("Per accedere a $serviceName, è necessario abilitare un metodo di sblocco biometrico.", context);
+          showModal(
+              "Per accedere a $serviceName, è necessario abilitare un metodo di sblocco biometrico.",
+              context);
           return false;
         }
-     
+      } catch (e) {
+        showModal(
+            "Per accedere a $serviceName, è necessario abilitare un metodo di sblocco biometrico.",
+            context);
+        return false;
+      }
     }
   }
 

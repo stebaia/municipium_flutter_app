@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:municipium/app.dart';
 import 'package:municipium/utils/secure_storage.dart';
@@ -24,5 +25,10 @@ void main() async {
 
     prefs.setBool('first_run', false);
   }
+
+  await FlutterDownloader.initialize(
+    debug: true, // optional: set to false to disable printing logs to console (default: true)
+    ignoreSsl: true // option: set to false to disable working with http links (default: false)
+  );
   runApp(App());
 }

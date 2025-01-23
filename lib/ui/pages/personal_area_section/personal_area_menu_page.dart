@@ -3,16 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:municipium/bloc/bloc/user_bloc/user_bloc.dart';
+import 'package:municipium/bloc/cubit/device_cubit/device_cubit.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
+import 'package:municipium/model/device/device_be.dart';
 import 'package:municipium/model/user/user_spid_model.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/custom_row.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/ui/components/dialogs/standard_dialog.dart';
+import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
-class PersonalAreaMenuPage extends StatelessWidget {
+class PersonalAreaMenuPage extends StatelessWidget implements AutoRouteWrapper {
   const PersonalAreaMenuPage({super.key, required this.scaffoldKey});
   final GlobalKey<ScaffoldState> scaffoldKey;
 
@@ -95,9 +100,27 @@ class PersonalAreaMenuPage extends StatelessWidget {
                       tap: () {
                         showDialog(
                           context: context,
-                          builder: (context) => CustomBaseDialog(
-                              callback: () {
-                                context.read<UserDataCubit>().delete();
+                          builder: (mcontext) => CustomBaseDialog(
+                              callback: () async {
+                                String baseUrlMmc =
+                                    Provider.of<BaseUrlNotifier>(context,
+                                            listen: false)
+                                        .baseUrlMmc;
+                                DeviceBe? deviceBe = await context
+                                    .read<DeviceCubit>()
+                                    .getDeviceBeFromStorage();
+                                if (deviceBe != null) {
+                                  context.read<UserBloc>().logoutUserSpid(
+                                      baseUrlMmc,
+                                      deviceBe.playerId.toString(),
+                                      userSpid.codiceFiscale!,
+                                      deviceBe.udid);
+                                  context.read<UserDataCubit>().delete();
+                                } else {
+                                  context.read<UserDataCubit>().delete();
+                                }
+
+                                //
                                 Navigator.maybePop(context);
                               },
                               title: AppLocalizations.of(context)!
@@ -181,4 +204,10 @@ class PersonalAreaMenuPage extends StatelessWidget {
           },
         ));
   }
+
+  @override
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
+        BlocProvider<UserBloc>(
+            create: (context) => UserBloc(userRepository: context.read()))
+      ], child: this);
 }

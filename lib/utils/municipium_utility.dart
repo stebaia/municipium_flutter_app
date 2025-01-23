@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +10,10 @@ import 'package:intl/intl.dart';
 import 'package:municipium/model/issue/progress_issue.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/services/network/dto/post_issue_dto.dart';
-import 'package:municipium/utils/theme_helper.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 import 'package:image/image.dart' as img;
 import 'package:html/parser.dart' as html_parser;
 import 'package:html/dom.dart' as html_dom;
@@ -51,6 +47,23 @@ class MunicipiumUtility {
     return DateFormat('yyyy-MM-dd').format(lastDayOfMonth);
   }
 
+  static String getStartGarbageCalendarOfMonth() {
+    return ((DateTime.now().millisecondsSinceEpoch ~/ 1000) - 86400).toString();
+  }
+
+  static String getEndGarbageCalendarOfMonth() {
+    return ((DateTime.now().millisecondsSinceEpoch ~/ 1000) + 2674800)
+        .toString();
+  }
+
+  static getDateFromString(
+    String dateString,
+    String format,
+  ) {
+    DateTime date = DateTime.parse(dateString);
+    return DateFormat(format).format(date);
+  }
+
   static String getDateFiveDaysAgo() {
     final fiveDaysAgo = DateTime.now().subtract(const Duration(days: 5));
     return DateFormat('yyyy-MM-dd').format(fiveDaysAgo);
@@ -70,6 +83,12 @@ class MunicipiumUtility {
   static String getCurrentDay() {
     final now = DateTime.now();
     return DateFormat('yyyy-MM-dd').format(now);
+  }
+
+  static String getDateWithFormat(
+      String dateString, String format, String localizzations) {
+    DateTime date = DateTime.parse(dateString);
+    return DateFormat(format, localizzations).format(date);
   }
 
   static String getFormatDayFromDate(String dateString) {

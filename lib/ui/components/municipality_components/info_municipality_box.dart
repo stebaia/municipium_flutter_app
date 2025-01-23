@@ -30,7 +30,7 @@ class InfoMunicipalityBox extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      '${municipality.logo.baseUrl}${municipality.logo.i1280}'),
+                      '${municipality.logo?.baseUrl}${municipality.logo?.i1280}'),
                 ),
                 const SizedBox(
                   width: 10,

@@ -6,7 +6,7 @@ part of 'auth_spid_service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
 class _AuthSpidService implements AuthSpidService {
   _AuthSpidService(
@@ -34,7 +34,7 @@ class _AuthSpidService implements AuthSpidService {
     )
         .compose(
           _dio.options,
-          '${baseUrl}/get_idps',
+          '${baseUrl}api/v2/get_idps',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:municipium/utils/municipium_utility.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,7 +19,7 @@ Widget buildRowElement(
                 const SizedBox(
                   width: 10,
                 ),
-                Flexible(child: Text(text)),
+                Flexible(child: Html(data: text,)),
               ],
             ),
             const SizedBox(

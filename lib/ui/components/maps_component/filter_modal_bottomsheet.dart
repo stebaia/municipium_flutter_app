@@ -1,32 +1,31 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:municipium/bloc/bloc/category_poi_bloc/category_poi_bloc.dart';
-import 'package:municipium/bloc/cubit/selected_categories_cubit.dart/selected_categories_cubit.dart';
 import 'package:municipium/bloc/bloc/point_of_interest_list_bloc/point_of_interest_list_bloc.dart';
+import 'package:municipium/bloc/cubit/selected_categories_cubit.dart/selected_categories_cubit.dart';
 import 'package:municipium/ui/components/maps_component/custom_checkbox_tile.dart';
-import 'package:municipium/ui/pages/point_of_interest_section/point_of_interest_list_page.dart';
-import 'package:municipium/utils/theme_helper.dart';
 
 class FilterModalBottomSheet extends StatelessWidget {
   FilterModalBottomSheet(
       {super.key,
-      required this.pointOfInterestListBloc,
+      required this.pointOfInterestBloc,
+      required this.categoryPoiBloc,
       required this.categorySelectionCubit});
-
-  CategoryPoiBloc pointOfInterestListBloc;
+  PointOfInterestBloc pointOfInterestBloc;
+  CategoryPoiBloc categoryPoiBloc;
   CategorySelectionCubit categorySelectionCubit;
   bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
           BlocBuilder<CategoryPoiBloc, CategoryPoiState>(
-              bloc: pointOfInterestListBloc,
+              bloc: categoryPoiBloc,
               builder: (context, state) {
                 if (state is FetchedCategoryPoiListState) {
                   if (categorySelectionCubit.state.isEmpty) {
@@ -34,7 +33,6 @@ class FilterModalBottomSheet extends StatelessWidget {
                       for (var item in state.listCategoryPoi) item.id!: false
                     });
                   }
-
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.4,
                     child: Scrollbar(
@@ -50,7 +48,7 @@ class FilterModalBottomSheet extends StatelessWidget {
                                     color: category.color != null
                                         ? Color(int.parse(category.color!
                                             .replaceAll("#", "0xff")))
-                                        : Colors.black,
+                                        : Theme.of(context).dividerColor,
                                     title: category.name!,
                                     initialValue:
                                         selectedCategories[category.id] ??
@@ -79,11 +77,28 @@ class FilterModalBottomSheet extends StatelessWidget {
           CustomCheckboxTile(
             title: 'Espandi ricerca in comunini limitrofi',
             initialValue: isExpanded,
-            color: Theme.of(context).colorScheme.secondary,
-            onChanged: (value) {
-              
+            color: Theme.of(context).dividerColor,
+            onChanged: (value) {},
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          ElevatedButton(
+            style: ButtonStyle(
+                padding: WidgetStateProperty.all(const EdgeInsets.all(20)),
+                backgroundColor:
+                    WidgetStateProperty.all(Theme.of(context).primaryColor)),
+            onPressed: () {
+              pointOfInterestBloc.filterPoiList(
+                categorySelectionCubit.state,
+                pointOfInterestBloc.originalList!,
+                categoryPoiBloc.categoryPoiList,
+              );
+              // Logica per applicare i filtri, es. aggiornare lista eventi
+              Navigator.pop(context);
             },
-          )
+            child: const Center(child: Text('Applica')),
+          ),
         ],
       ),
     );

@@ -13,12 +13,35 @@ class SecureStorage {
 
   final String _ecoattiviTokenKey = "ECOATTIVI_TOKEN_KEY";
 
+   final String _lissiTokenKey = "LISSI_KEY";
+
   final String _deviceKey = "DEVICE_KEY";
 
   final String _configurationMenu = "CONFIGURATION_MENU";
 
   Future setConfigurationMenu(String menu) async {
     await storage.write(key: _configurationMenu, value: menu);
+  }
+
+  Future<String?> getConfigurationMenu() async {
+    try {
+      return await storage.read(key: _configurationMenu);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<String?> getLissiTokenKeyFromStorage() async {
+    try {
+      return await storage.read(key: _lissiTokenKey);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+
+  Future setLissiTokenKeyInStorage(String token) async {
+    await storage.write(key: _lissiTokenKey, value: token);
   }
 
   Future setMunicipalityKeyInStorage(String municipality) async {
@@ -50,6 +73,7 @@ class SecureStorage {
   }
 
   Future<void> deleteMunicipalitylKeySecureData() async {
+    await storage.delete( key: _configurationMenu);
     await storage.delete(
       key: _municipalityKey,
     );

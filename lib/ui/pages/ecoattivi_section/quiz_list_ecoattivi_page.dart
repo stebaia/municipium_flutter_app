@@ -94,7 +94,7 @@ class QuizListEcoattiviPage extends StatelessWidget
                   },
                 );
               }
-              return ShimmerUtils.buildPoiShimmer(9);
+              return ShimmerUtils.buildPoiShimmer(9, context);
             },
           ),
           floatingActionButtonLocation:
