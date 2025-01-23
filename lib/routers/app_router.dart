@@ -59,6 +59,13 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: WeatherQualityRoute.page),
         AutoRoute(page: EcoattiviHomeRoute.page),
         AutoRoute(page: QrEcoattiviRoute.page),
-        AutoRoute(page: QuizListEcoattiviRoute.page)
+        AutoRoute(page: QuizListEcoattiviRoute.page),
+        AutoRoute(page: EcoattiviQuizRouter.page),
+        AutoRoute(page: EcoPhotoSection.page),
+        AutoRoute(page: EcostopSection.page),
+        AutoRoute(page: EcostopDetailRoute.page),
+        AutoRoute(page: EcoMessageRoute.page),
+        AutoRoute(page: EcoMessageDetailRoute.page),
+        AutoRoute(page: InviteFriendRoute.page)
       ];
 }

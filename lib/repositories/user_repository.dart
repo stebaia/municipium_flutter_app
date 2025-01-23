@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:municipium/model/basic_response.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/model/user/idp_model.dart';
 import 'package:municipium/model/user/spid_object.dart';
@@ -135,6 +136,19 @@ class UserRepository {
         secureStorage.setEcoattiviToken(userValidated.data!.token ?? '');
       }
       return userValidated;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<String> getInfo(String baseUrl, String info) async {
+    try {
+      final response =
+          await mmcMunicipiumService.getInfoTerminiPrivacy(baseUrl, info);
+      if (response.description != null) {
+        return response.description!;
+      }
+      return '';
     } catch (ex) {
       rethrow;
     }

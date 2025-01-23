@@ -1,5 +1,29 @@
 import 'package:pine/dto/dto.dart';
 
+class EcoattiviQuizResponse extends DTO {
+  String? errorMessage;
+  int? resultCode;
+  List<EcoattiviQuizDto>? quiz;
+
+  EcoattiviQuizResponse({this.errorMessage, this.resultCode, this.quiz});
+
+  Map<String, dynamic> toJson() => {
+        'errorMessage': errorMessage,
+        'resultCode': resultCode,
+        'quiz': quiz,
+      };
+
+  factory EcoattiviQuizResponse.fromJson(Map<String, dynamic> json) {
+    return EcoattiviQuizResponse(
+      errorMessage: json['errorMessage'] as String?,
+      resultCode: json['resultCode'] as int?,
+      quiz: (json['quiz'] as List?)
+          ?.map((item) => EcoattiviQuizDto.fromJson(item))
+          .toList(),
+    );
+  }
+}
+
 class EcoattiviQuizDto extends DTO {
   int? quizId;
   String? desc;

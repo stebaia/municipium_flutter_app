@@ -23,6 +23,7 @@ class _QrEcoattiviPageState extends State<QrEcoattiviPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Qr scan'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => context.maybePop(),

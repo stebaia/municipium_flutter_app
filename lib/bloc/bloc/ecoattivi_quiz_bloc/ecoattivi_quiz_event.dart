@@ -21,3 +21,14 @@ class FetchEcoattiviQuizEvent extends EcoattiviQuizEvent {
   @override
   List<Object> get props => [baseUrl, token, guid];
 }
+
+class FilterEcoattiviQuizEvent extends EcoattiviQuizEvent {
+  final bool nuovo;
+
+  const FilterEcoattiviQuizEvent({
+    required this.nuovo,
+  });
+
+  @override
+  List<Object> get props => [nuovo];
+}

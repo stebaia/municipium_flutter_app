@@ -1,5 +1,34 @@
 import 'package:pine/dto/dto.dart';
 
+class EcoattiviPhotoListReponse {
+  int? resultCode;
+  Null? errorMessage;
+  List<EcoattiviFotoAzioneDto>? azioni;
+
+  EcoattiviPhotoListReponse({this.resultCode, this.errorMessage, this.azioni});
+
+  EcoattiviPhotoListReponse.fromJson(Map<String, dynamic> json) {
+    resultCode = json['resultCode'];
+    errorMessage = json['errorMessage'];
+    if (json['azioni'] != null) {
+      azioni = <EcoattiviFotoAzioneDto>[];
+      json['azioni'].forEach((v) {
+        azioni!.add(new EcoattiviFotoAzioneDto.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['resultCode'] = this.resultCode;
+    data['errorMessage'] = this.errorMessage;
+    if (this.azioni != null) {
+      data['azioni'] = this.azioni!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class EcoattiviFotoAzioneDto extends DTO {
   int? azioneId;
   String? titolo;

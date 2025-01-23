@@ -13,7 +13,7 @@ class EcoattiviQuestionMapper
       domandaId: dto.domandaId ?? 0,
       testo: dto.testo ?? '',
       progressivo: dto.progressivo ?? 0,
-      spiegazione: dto.spiegazione ?? '',
+      //spiegazione: dto.spiegazione ?? '',
       risposte: dto.risposte
               ?.map((answerDto) => answerMapper.fromDTO(answerDto))
               .toList() ??
@@ -27,7 +27,7 @@ class EcoattiviQuestionMapper
       domandaId: model.domandaId,
       testo: model.testo,
       progressivo: model.progressivo,
-      spiegazione: model.spiegazione,
+      // spiegazione: model.spiegazione,
       risposte:
           model.risposte?.map((answer) => answerMapper.toDTO(answer)).toList(),
     );

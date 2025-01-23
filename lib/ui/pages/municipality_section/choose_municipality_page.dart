@@ -84,8 +84,8 @@ class ChooseMunicipalityPage extends StatelessWidget
                                       //.deleteMunicipality();
                                       await baseUrlNotifier.updateBaseUrl(
                                           MunicipiumUtility.BASEURL_STAGING);
-                                      context
-                                          .pushRoute(ChooseMunicipalityRoute());
+                                      context.router
+                                          .replace(ChooseMunicipalityRoute());
                                     } else if (textToSearch?.replaceAll(
                                             ' ', '') ==
                                         'AbilitaProduzione') {
@@ -95,8 +95,8 @@ class ChooseMunicipalityPage extends StatelessWidget
 
                                       await baseUrlNotifier.updateBaseUrl(
                                           MunicipiumUtility.BASEURL_PROD);
-                                      context
-                                          .pushRoute(ChooseMunicipalityRoute());
+                                      context.router
+                                          .replace(ChooseMunicipalityRoute());
                                     } else {}
                                     Navigator.of(context)
                                         .pop(); // Chiude il popup

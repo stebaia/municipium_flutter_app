@@ -1,5 +1,34 @@
 import 'package:pine/dto/dto.dart';
 
+class EcostopResponse {
+  int? resultCode;
+  String? errorMessage;
+  List<EcostopDto>? ecostop;
+
+  EcostopResponse({this.resultCode, this.errorMessage, this.ecostop});
+
+  EcostopResponse.fromJson(Map<String, dynamic> json) {
+    resultCode = json['resultCode'];
+    errorMessage = json['errorMessage'];
+    if (json['ecostop'] != null) {
+      ecostop = <EcostopDto>[];
+      json['ecostop'].forEach((v) {
+        ecostop!.add(new EcostopDto.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['resultCode'] = this.resultCode;
+    data['errorMessage'] = this.errorMessage;
+    if (this.ecostop != null) {
+      data['ecostop'] = this.ecostop!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class EcostopDto extends DTO {
   int? ecostopId;
   String? titolo;

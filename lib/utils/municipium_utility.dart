@@ -19,6 +19,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:image/image.dart' as img;
+import 'package:html/parser.dart' as html_parser;
+import 'package:html/dom.dart' as html_dom;
 
 class MunicipiumUtility {
   static String BASEURL_PROD = 'https://cloud.municipiumapp.it/api/v2/';
@@ -129,6 +131,13 @@ class MunicipiumUtility {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  static Color hexToColor(String hexColor) {
+    hexColor =
+        hexColor.replaceAll('#', ''); // Rimuove il simbolo "#" se presente
+    return Color(
+        int.parse('FF$hexColor', radix: 16)); // Aggiunge FF per opacità
   }
 
   static Future<void> requestGalleryPermission(Function() method) async {
@@ -302,6 +311,111 @@ class MunicipiumUtility {
       info = 'Failed to get info: $e';
     }
     return info;
+  }
+
+  static Widget buildRichText(String htmlContent) {
+    final document = html_parser
+        .parse(htmlContent.replaceAll('<br /></strong>', '<br />\n</strong>'));
+
+    // Esempio: costruzione manuale di uno stile basato sui tag
+    return RichText(
+      text: TextSpan(
+        children: document.body?.nodes.map((node) {
+              if (node is html_dom.Element) {
+                switch (node.localName) {
+                  case 'b':
+                  case 'strong':
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    );
+                  case 'i':
+                  case 'em':
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(
+                          fontStyle: FontStyle.italic, fontSize: 16),
+                    );
+                  case 'u':
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(
+                          decoration: TextDecoration.underline, fontSize: 16),
+                    );
+                  case 'p':
+                    return TextSpan(
+                      text:
+                          node.text + '\n\n', // Aggiungi spazio tra i paragrafi
+                      style: const TextStyle(fontSize: 16),
+                    );
+                  case 'h1':
+                    return TextSpan(
+                      text: node.text + '\n', // Aggiungi spazio dopo i titoli
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    );
+                  case 'h2':
+                    return TextSpan(
+                      text: node.text + '\n',
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    );
+                  case 'h3':
+                    return TextSpan(
+                      text: node.text + '\n',
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    );
+                  case 'ul':
+                    return TextSpan(
+                      text: node.text + '\n',
+                      style: const TextStyle(fontSize: 16),
+                    );
+                  case 'li':
+                    return TextSpan(
+                      text: '• ${node.text}\n', // Aggiungi un punto elenco
+                      style: const TextStyle(fontSize: 16),
+                    );
+                  case 'br':
+                  case 'br ':
+                    return TextSpan(
+                        text: node.text + '\n'); // Interruzione di riga
+                  case 'span':
+                    return TextSpan(
+                      text: node.text,
+                      style: TextStyle(
+                          color: node.attributes['style']?.contains('color') ==
+                                  true
+                              ? Colors.blue // Puoi personalizzare lo stile
+                              : Colors.black,
+                          fontSize: 16),
+                    );
+                  case 'a':
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline),
+                    );
+                  default:
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(fontSize: 16),
+                    );
+                }
+              } else if (node is html_dom.Text) {
+                return TextSpan(
+                  text: node.text,
+                  style: const TextStyle(fontSize: 16),
+                );
+              }
+              return const TextSpan();
+            }).toList() ??
+            [],
+      ),
+    );
   }
 }
 

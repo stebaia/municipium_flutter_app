@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:municipium/model/basic_response.dart';
 import 'package:municipium/model/digital_dossier/digital_dossier_configuration.dart';
 import 'package:municipium/model/user/user_spid_model.dart';
 import 'package:municipium/services/network/dto/user_to_validate_dto.dart';
@@ -25,4 +26,8 @@ abstract class MmcMunicipiumService {
   @POST('{baseUrl}/validateUser')
   Future<UserValidated> validateUser(
       @Path('baseUrl') String baseUrl, @Body() UserToValidateDto user);
+
+  @GET('{baseUrl}/ecoattivi/get_info?form={endpoint}')
+  Future<StringResponse> getInfoTerminiPrivacy(
+      @Path('baseUrl') String baseUrl, @Path('endpoint') String info);
 }

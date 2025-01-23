@@ -240,7 +240,7 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                   .updateBaseUrl('https://$subdomain/api/v2');
                             } else {
                               await baseUrlNotifier.updateBaseUrl(
-                                  'https://${MunicipiumUtility.BASEURL_STAGING}/api/v2');
+                                  '${MunicipiumUtility.BASEURL_STAGING}');
                             }
 
                             context.pushRoute(WelcomeRoute(

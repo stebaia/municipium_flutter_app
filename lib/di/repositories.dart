@@ -83,6 +83,10 @@ final List<RepositoryProvider> _repositories = [
         ecoattiviService: context.read(),
         situazioneUtenteMapper: context.read(),
         quizMapper: context.read(),
+        quizDetailMapper: context.read(),
+        photoActionsMapper: context.read(),
+        ecostopMapper: context.read(),
+        messageMapper: context.read(),
         logger: context.read(),
         secureStorage: context.read());
     context.read<Dio>().interceptors.insert(

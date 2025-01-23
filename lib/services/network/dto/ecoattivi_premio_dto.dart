@@ -1,5 +1,34 @@
 import 'package:pine/dto/dto.dart';
 
+class EcoattiviPremioResult {
+  int? resultCode;
+  String? errorMessage;
+  List<EcoattiviPremioDto>? riscatti;
+
+  EcoattiviPremioResult({this.resultCode, this.errorMessage, this.riscatti});
+
+  EcoattiviPremioResult.fromJson(Map<String, dynamic> json) {
+    resultCode = json['resultCode'];
+    errorMessage = json['errorMessage'];
+    if (json['riscatti'] != null) {
+      riscatti = <EcoattiviPremioDto>[];
+      json['riscatti'].forEach((v) {
+        riscatti!.add(new EcoattiviPremioDto.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['resultCode'] = this.resultCode;
+    data['errorMessage'] = this.errorMessage;
+    if (this.riscatti != null) {
+      data['riscatti'] = this.riscatti!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class EcoattiviRequisitoDto extends DTO {
   int? requisitoId;
   String? requisitoDesc;

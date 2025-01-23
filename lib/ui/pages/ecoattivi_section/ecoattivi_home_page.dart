@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:municipium/bloc/bloc/ecoattivi_situazioneutente_bloc/bloc/ecoattivi_situazioneutente_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:municipium/bloc/bloc/ecoattivi_situazioneutente_bloc/ecoattivi_situazioneutente_bloc.dart';
+import 'package:municipium/bloc/bloc/request_info_bloc/request_info_bloc.dart';
 import 'package:municipium/bloc/bloc/user_bloc/user_bloc.dart';
 import 'package:municipium/bloc/cubit/checkbox_cubit/checkbox_cubit.dart';
 import 'package:municipium/bloc/cubit/ecoattivi_user_cubit/ecoattivi_user_cubit.dart';
@@ -14,7 +16,10 @@ import 'package:municipium/model/user/user_spid_model.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/blue_background_painter.dart';
 import 'package:municipium/ui/components/dialog_builder.dart';
+import 'package:municipium/ui/components/webview/custom_webview.dart';
+import 'package:municipium/ui/pages/ecoattivi_section/invite_friend_page.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:municipium/utils/municipium_utility.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -50,6 +55,10 @@ class EcoattiviHomePage extends StatelessWidget {
             BlocProvider(
               create: (context) => EcoattiviSituazioneutenteBloc(
                   ecoattiviRepository: context.read()),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  RequestInfoBloc(userRepository: context.read()),
             )
           ],
           child: BlocBuilder<UserDataCubit, SpidUserModel?>(
@@ -211,7 +220,7 @@ class EcoattiviHomePage extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          'Ciao, ${(user.nome ?? '')} ${user.cognome ?? ''}',
+                                          'Ciao, ${(user.nome ?? user.mailAddress)} ${user.cognome ?? ''}',
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w700),
@@ -239,14 +248,70 @@ class EcoattiviHomePage extends StatelessWidget {
                                       const SizedBox(
                                         width: 8,
                                       ),
-                                      Text(
-                                        'Termini e regolamento',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey,
-                                            decoration:
-                                                TextDecoration.underline),
-                                      )
+                                      GestureDetector(
+                                          child: Text(
+                                            'Termini e regolamento',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.grey,
+                                                decoration:
+                                                    TextDecoration.underline),
+                                          ),
+                                          onTap: () {
+                                            context
+                                                .read<RequestInfoBloc>()
+                                                .getInfo(
+                                                    Provider.of<BaseUrlNotifier>(
+                                                            context,
+                                                            listen: false)
+                                                        .baseUrl,
+                                                    'termini');
+                                            showDialog(
+                                              context: context,
+                                              builder:
+                                                  (BuildContext altcontext) {
+                                                return BlocProvider.value(
+                                                  value: context.read<
+                                                      RequestInfoBloc>(), // Rende accessibile il bloc
+                                                  child: BlocBuilder<
+                                                      RequestInfoBloc,
+                                                      RequestInfoState>(
+                                                    builder: (context, state) {
+                                                      if (state
+                                                          is FetchedInfoState) {
+                                                        return AlertDialog(
+                                                          title: const Text(
+                                                              "Termini e condizioni"),
+                                                          content:
+                                                              SingleChildScrollView(
+                                                            child: MunicipiumUtility
+                                                                .buildRichText(state
+                                                                    .description),
+                                                          ),
+                                                          actions: [
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  "Chiudi"),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop(); // Chiudi il dialog
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      } else {
+                                                        return const Center(
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        );
+                                                      }
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          })
                                     ],
                                   ),
                                   const SizedBox(
@@ -261,14 +326,70 @@ class EcoattiviHomePage extends StatelessWidget {
                                       const SizedBox(
                                         width: 8,
                                       ),
-                                      Text(
-                                        'Privacy policy e regolamento',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey,
-                                            decoration:
-                                                TextDecoration.underline),
-                                      )
+                                      GestureDetector(
+                                          child: Text(
+                                            'Privacy policy e regolamento',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.grey,
+                                                decoration:
+                                                    TextDecoration.underline),
+                                          ),
+                                          onTap: () {
+                                            context
+                                                .read<RequestInfoBloc>()
+                                                .getInfo(
+                                                    Provider.of<BaseUrlNotifier>(
+                                                            context,
+                                                            listen: false)
+                                                        .baseUrl,
+                                                    'privacy');
+                                            showDialog(
+                                              context: context,
+                                              builder:
+                                                  (BuildContext altcontext) {
+                                                return BlocProvider.value(
+                                                  value: context.read<
+                                                      RequestInfoBloc>(), // Rende accessibile il bloc
+                                                  child: BlocBuilder<
+                                                      RequestInfoBloc,
+                                                      RequestInfoState>(
+                                                    builder: (context, state) {
+                                                      if (state
+                                                          is FetchedInfoState) {
+                                                        return AlertDialog(
+                                                          title: const Text(
+                                                              "Privacy policy e regolamento"),
+                                                          content:
+                                                              SingleChildScrollView(
+                                                            child: MunicipiumUtility
+                                                                .buildRichText(state
+                                                                    .description),
+                                                          ),
+                                                          actions: [
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  "Chiudi"),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop(); // Chiudi il dialog
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      } else {
+                                                        return const Center(
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        );
+                                                      }
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          })
                                     ],
                                   ),
                                   const SizedBox(
@@ -281,16 +402,25 @@ class EcoattiviHomePage extends StatelessWidget {
                                       _buildImageButton(
                                           "assets/images/ecoattivi_premi_home.png",
                                           "Premi"),
-                                      _buildImageButton(
-                                          "assets/images/ecoattivi_location_home.png",
-                                          "Ecomappa"),
+                                      GestureDetector(
+                                        child: _buildImageButton(
+                                            "assets/images/ecoattivi_location_home.png",
+                                            "Ecomappa"),
+                                        onTap: () => context.pushRoute(
+                                            EcostopSection(token: token ?? '')),
+                                      ),
                                       _buildImageButton(
                                           "assets/images/ecoattivi_ranking_home.png",
                                           "Ranking"),
-                                      _buildImageButtonWithBadge(
-                                        "assets/images/ecoattivi_message_home.png",
-                                        "Messaggi",
-                                        model.situazioneUtente!.msgNonLetti,
+                                      GestureDetector(
+                                        onTap: () => context.pushRoute(
+                                            EcoMessageRoute(
+                                                token: token ?? '')),
+                                        child: _buildImageButtonWithBadge(
+                                          "assets/images/ecoattivi_message_home.png",
+                                          "Messaggi",
+                                          model.situazioneUtente!.msgNonLetti,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -360,6 +490,13 @@ class EcoattiviHomePage extends StatelessWidget {
                                           title: 'Invita un amico',
                                           badgeCount: 0,
                                           onPressed: () {
+                                            context.pushRoute(InviteFriendRoute(
+                                                code: state.situazioneUtente
+                                                        .codiceAmico ??
+                                                    '',
+                                                punti: state.situazioneUtente
+                                                        .puntiInvitaAmico ??
+                                                    100));
                                             // Azione per Invita un amico
                                           },
                                         ),
@@ -370,6 +507,8 @@ class EcoattiviHomePage extends StatelessWidget {
                                           title: 'Carica foto',
                                           badgeCount: 0,
                                           onPressed: () {
+                                            context.pushRoute(EcoPhotoSection(
+                                                token: model.token ?? ''));
                                             // Azione per Invita un amico
                                           },
                                         ),
