@@ -10,7 +10,7 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
   Municipality fromDTO(MunicipalityDTO dto) {
     MunicipiumImageMapper mapperImages = MunicipiumImageMapper();
     Municipality municipality = Municipality(
-        codiceSap: dto.codiceSap!,
+        codiceSap: dto.codiceSap ?? '',
         municipalityName: dto.name!,
         muninicipalityId: dto.id!,
         lat: dto.latitude ?? 0,
