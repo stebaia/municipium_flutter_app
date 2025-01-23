@@ -254,7 +254,8 @@ class MenuHelper {
         context.pushRoute(const EventListRoute());
         break;
       case MenuItemType.issue:
-        DeviceBe? deviceBe = await context.read<DeviceCubit>().getDeviceBeFromStorage();
+        DeviceBe? deviceBe =
+            await context.read<DeviceCubit>().getDeviceBeFromStorage();
         context.pushRoute(IssuesListRoute(udid: deviceBe!.udid));
         break;
       case MenuItemType.penalties:
@@ -268,7 +269,7 @@ class MenuHelper {
         // TODO: Handle this case.
         break;
       case MenuItemType.ecoattivi:
-        // TODO: Handle this case.
+        context.pushRoute(EcoattiviHomeRoute());
         break;
       case MenuItemType.poi:
         context.pushRoute(const PointOfInterestListRoute());

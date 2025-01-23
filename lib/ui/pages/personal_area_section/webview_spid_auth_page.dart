@@ -2,9 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:municipium/bloc/cubit/checkbox_cubit/checkbox_cubit.dart';
+import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/bloc/bloc/user_bloc/user_bloc.dart';
+import 'package:municipium/model/user/user_spid_model.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/ui/components/dialog_builder.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -12,14 +16,18 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class WebViewSpidAuthPage extends StatefulWidget implements AutoRouteWrapper {
-  const WebViewSpidAuthPage(
+  WebViewSpidAuthPage(
       {super.key,
       required this.urlSpid,
       required this.municipalityId,
-      required this.authSystem});
+      required this.authSystem,
+      required this.ecoattivi});
   final String urlSpid;
   final String municipalityId;
   final String authSystem;
+  final bool ecoattivi;
+  String? token;
+  SpidUserModel? spidUserModel;
 
   @override
   State<WebViewSpidAuthPage> createState() => _WebViewSpidAuthPageState();
@@ -28,8 +36,8 @@ class WebViewSpidAuthPage extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(providers: [
         BlocProvider<UserBloc>(
           create: (context) => UserBloc(userRepository: context.read())
-            ..fetchListIdp(Provider.of<BaseUrlNotifier>(context, listen: false)
-                .baseUrlMmc),
+            ..fetchListIdp(
+                Provider.of<BaseUrlNotifier>(context, listen: false).baseUrl),
         )
       ], child: this);
 }
@@ -50,13 +58,14 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
     });
   }
 
-  Future<void> _dialogBuilder(BuildContext context) {
+  /*Future<void> _dialogBuilder(BuildContext context, bool ecoattivi) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         Future.delayed(Duration(seconds: 3), () {
           Navigator.of(context).pop(); // Close the dialog
-          context.router.popUntilRouteWithName(CoreMunicipalityRoute.name);
+          context.router.popUntilRouteWithName(
+              ecoattivi ? EcoattiviHomeRoute.name : CoreMunicipalityRoute.name);
         });
         return AlertDialog(
           content: Container(
@@ -78,7 +87,7 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
         );
       },
     );
-  }
+  }*/
 
   @override
   void initState() {
@@ -103,6 +112,7 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
           if (match != null) {
             String authId = match.group(1)!;
             print("authId: $authId");
+            widget.token = authId;
             if (request.url.contains(urlToCheck)) {
               context.read<UserBloc>().fetchUserSpid(
                   Provider.of<BaseUrlNotifier>(context, listen: false)
@@ -133,15 +143,34 @@ class _WebViewSpidAuthPageState extends State<WebViewSpidAuthPage> {
 
   @override
   Widget build(BuildContext context) {
+    final municipality = (context.read<MunicipalityGlobalCubit>().state
+            as StoredMunicipalityGlobalState)
+        .municipality;
     return Scaffold(
       appBar: AppBar(
-        title: Text('SPID Auth WebView'),
+        title: Text('SPID Authorization'),
       ),
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
           if (state is FetchedUserDataState) {
             context.read<UserDataCubit>().auth(state.userSpidModel);
-            _dialogBuilder(context);
+            widget.spidUserModel = state.userSpidModel;
+            if (widget.ecoattivi) {
+              Future.delayed(Duration(seconds: 3), () {
+                Navigator.of(context).pop(); // Close the dialog
+                context.router.popUntilRouteWithName(EcoattiviHomeRoute.name);
+              });
+              /*context.read<UserBloc>().validatedUser(
+                  Provider.of<BaseUrlNotifier>(context, listen: false)
+                      .baseUrlMmc,
+                  state.userSpidModel,
+                  '',
+                  municipality.istat,
+                  widget.token ?? '',
+                  false);*/
+            } else {
+              dialogBuilder(context, routeName: CoreMunicipalityRoute.name);
+            }
           }
         },
         child: Column(

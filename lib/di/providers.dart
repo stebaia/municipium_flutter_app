@@ -35,7 +35,7 @@ List<SingleChildWidget> providersFun() {
         return BaseUrlNotifier()..initializeBaseUrl();
       },
     ),
-    
+
     Provider<MunicipalityService>(
       create: (context) {
         return MunicipalityService(
@@ -92,9 +92,10 @@ List<SingleChildWidget> providersFun() {
             MmcMunicipiumService(context.read<Dio>())), //baseUrlMmc
     Provider<OnlineServiceService>(
         create: (context) =>
-            OnlineServiceService(context.read<Dio>())),//baseUrl
+            OnlineServiceService(context.read<Dio>())), //baseUrl
     Provider<CalendarService>(
-        create: (context) =>
-            CalendarService(context.read<Dio>()))
+        create: (context) => CalendarService(context.read<Dio>())),
+    Provider<EcoattiviService>(
+        create: (context) => EcoattiviService(context.read<Dio>())),
   ];
 }

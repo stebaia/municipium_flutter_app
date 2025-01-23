@@ -11,15 +11,15 @@ class SecureStorage {
 
   final String _municipalityKey = "MUNINICIPALITY_KEY";
 
+  final String _ecoattiviTokenKey = "ECOATTIVI_TOKEN_KEY";
+
   final String _deviceKey = "DEVICE_KEY";
 
   final String _configurationMenu = "CONFIGURATION_MENU";
 
-
   Future setConfigurationMenu(String menu) async {
-     await storage.write(key: _configurationMenu, value: menu);
+    await storage.write(key: _configurationMenu, value: menu);
   }
-
 
   Future setMunicipalityKeyInStorage(String municipality) async {
     await storage.write(key: _municipalityKey, value: municipality);
@@ -29,7 +29,7 @@ class SecureStorage {
     await storage.write(key: _deviceKey, value: device);
   }
 
-   Future setConfigurationsKeyInStorage(String conf) async {
+  Future setConfigurationsKeyInStorage(String conf) async {
     await storage.write(key: _configurationKey, value: conf);
   }
 
@@ -77,8 +77,17 @@ class SecureStorage {
     }
   }
 
- 
+  Future<String?> getEcoattiviToken() async {
+    try {
+      return await storage.read(key: _ecoattiviTokenKey);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
+  Future setEcoattiviToken(String value) async {
+    await storage.write(key: _ecoattiviTokenKey, value: value);
+  }
 
   Future setOneSignalKeyInStorage(String key) async {
     await storage.write(key: _oneSignalKey, value: key);

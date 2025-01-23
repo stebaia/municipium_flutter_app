@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:municipium/model/user/idp_model.dart';
 import 'package:municipium/model/user/user_spid_model.dart';
 import 'package:municipium/repositories/user_repository.dart';
+import 'package:municipium/services/network/dto/user_validated.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
@@ -16,6 +17,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       : super(const FetchingListIdpState()) {
     on<FetchListIdpEvent>(_fetchListIdp);
     on<FetchUserDataEvent>(_getUserDataSpid);
+    on<ValidateUserDataEvent>(_validateUser);
   }
 
   void fetchListIdp(String baseUrl) => add(FetchListIdpEvent(baseUrl));
@@ -23,6 +25,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           String authSystem, String authIdOld) =>
       add(FetchUserDataEvent(
           baseUrl, authId, municipalityId, authSystem, authIdOld));
+  void validatedUser(String baseUrl, SpidUserModel userSpidModel,
+          String? codiceAmico, int istat, String token, bool privacy) =>
+      add(ValidateUserDataEvent(baseUrl, userSpidModel, codiceAmico, istat,
+          token, 'ecoattivi', privacy));
 
   FutureOr<void> _fetchListIdp(
       FetchListIdpEvent event, Emitter<UserState> emit) async {
@@ -51,7 +57,26 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           event.authIdOld);
       emit(FetchedUserDataState(spidUserModel));
     } catch (ex) {
+      print('retrieveUserData: ${ex.toString()}');
       emit(const NoSpidUserState());
+    }
+  }
+
+  FutureOr<void> _validateUser(
+      ValidateUserDataEvent event, Emitter<UserState> emit) async {
+    emit(const FetchingValidateUserState());
+    try {
+      final userDetails = await userRepository.validateUserSpid(
+          event.baseUrl,
+          event.userSpidModel,
+          event.token,
+          event.istat,
+          event.service,
+          event.codiceAmico ?? '',
+          event.privacy);
+      emit(FetchedValidateUserState(userDetails));
+    } catch (e) {
+      emit(ErrorFetchingValidateUserState(e.toString()));
     }
   }
 }

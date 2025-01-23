@@ -21,3 +21,16 @@ class FetchUserDataEvent extends UserEvent {
   FetchUserDataEvent(this.baseUrl, this.authId, this.municipalityId,
       this.authSystem, this.authIdOld);
 }
+
+class ValidateUserDataEvent extends UserEvent {
+  String baseUrl;
+  final SpidUserModel userSpidModel;
+  String? codiceAmico;
+  int istat;
+  String token;
+  String service;
+  bool privacy;
+
+  ValidateUserDataEvent(this.baseUrl, this.userSpidModel, this.codiceAmico,
+      this.istat, this.token, this.service, this.privacy);
+}

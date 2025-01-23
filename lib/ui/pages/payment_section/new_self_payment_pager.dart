@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:municipium/bloc/cubit/payment_cubit/payment_cubit.dart';
-import 'package:municipium/bloc/payment_response_bloc/payment_response_bloc.dart';
+import 'package:municipium/bloc/bloc/payment_response_bloc/payment_response_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:municipium/model/payment/saved_payment.dart';
 import 'package:municipium/ui/components/buttons/rounded_shape_button.dart';

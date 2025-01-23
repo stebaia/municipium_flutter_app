@@ -211,12 +211,10 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                                               .hide();
                                           context
                                               .read<MunicipalityIdBloc>()
-                                              .add(municipality
-                                                  .muninicipalityId);
+                                              .add(8093);
                                           context
                                               .read<MunicipalitySubdomainBloc>()
-                                              .add(municipality
-                                                  .subdomain);
+                                              .add('staging.municipiumapp.it');
                                           // Gestisci l'evento di tap sul municipio
                                         },
                                       );
@@ -235,14 +233,16 @@ class OnboardingSearchMunicipalityPage extends StatelessWidget
                         FullWidthConfirmButton(
                           isEnabled: false,
                           onTap: () async {
-                            String? subdomain = context.read<MunicipalitySubdomainBloc>().state;
-                            if(subdomain != null) {
-                              await baseUrlNotifier.updateBaseUrl('https://$subdomain/api/v2');
-                            }else {
-                              
-                              await baseUrlNotifier.updateBaseUrl('https://${MunicipiumUtility.BASEURL_PROD}/api/v2');
+                            String? subdomain =
+                                context.read<MunicipalitySubdomainBloc>().state;
+                            if (subdomain != null) {
+                              await baseUrlNotifier
+                                  .updateBaseUrl('https://$subdomain/api/v2');
+                            } else {
+                              await baseUrlNotifier.updateBaseUrl(
+                                  '${MunicipiumUtility.BASEURL_STAGING}');
                             }
-                            
+
                             context.pushRoute(WelcomeRoute(
                                 municipalityId:
                                     context.read<MunicipalityIdBloc>().state));

@@ -19,22 +19,31 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:image/image.dart' as img;
+import 'package:html/parser.dart' as html_parser;
+import 'package:html/dom.dart' as html_dom;
 
 class MunicipiumUtility {
   static String BASEURL_PROD = 'https://cloud.municipiumapp.it/api/v2/';
   static String BASEURL_STAGING = 'https://staging.municipiumapp.it/api/v2/';
   static String BE_URL_STAGING = "https://api.municipiumapp.it/";
   static String BE_URL_PROD = "https://api.municipiumapp.it/";
-  static String MMC_URL_PROD = "https://mmc.maggiolicloud.it/";
-  static String MMC_URL_STAG = "https://mmc-test.maggiolicloud.it/";
+  static String MMC_URL_PROD = "https://mmc.maggioli.cloud";
+  static String MMC_URL_STAG = "https://mmc-dev.maggioli.cloud";
+  static String ECOATTIVI_URL_STAGING =
+      "https://municipium-api-test.azurewebsites.net/api/v1.0";
+  static String ECOATTIVI_URL_PROD =
+      "https://municipium-api-prod.azurewebsites.net/api/v1.0";
+  static String ECOATTIVI_GUID_STAGING = 'A717D45E-78B5-4687-B138-F4FAD2BAA2AF';
+  static String ECOATTIVI_GUID_PROD = 'D6BF4E88-82A4-4CBE-90D0-3DE035BD43B0';
 
   static String BASEURL_KEY = 'municipium_baseurl_key';
   static String BE_URL_KEY = 'municipium_be_url_key';
   static String MMC_URL_KEY = 'municipium_mmc_url_key';
+  static String ECOATTIVI_URL_KEY = 'ecoattivi_url_key';
+  static String ECOATTIVI_GUID_KEY = 'ecoattivi_guid_key';
   static String getDefaultImageUrl() {
     return 'https://cloud.municipiumapp.it/s3/0/media/images/events-default-squared.jpg';
   }
-
 
   static String getLastDayOfMonth() {
     final now = DateTime.now();
@@ -66,12 +75,12 @@ class MunicipiumUtility {
   static String getFormatDayFromDate(String dateString) {
     DateTime date = DateTime.parse(dateString);
     return date.isAtSameMomentAs(DateTime.now())
-                            ? 'oggi'
-                            : date.isAtSameMomentAs(DateTime.now().subtract(Duration(days: 1)))
-                                ? 'ieri'
-                                : date.isAtSameMomentAs(DateTime.now().add(Duration(days: 1)))
-                                    ? 'domani'
-                                    : DateFormat('EEE, d MMMM').format(date);
+        ? 'oggi'
+        : date.isAtSameMomentAs(DateTime.now().subtract(Duration(days: 1)))
+            ? 'ieri'
+            : date.isAtSameMomentAs(DateTime.now().add(Duration(days: 1)))
+                ? 'domani'
+                : DateFormat('EEE, d MMMM').format(date);
   }
 
   static String convertDate(String dateString, String endFormat,
@@ -122,6 +131,13 @@ class MunicipiumUtility {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  static Color hexToColor(String hexColor) {
+    hexColor =
+        hexColor.replaceAll('#', ''); // Rimuove il simbolo "#" se presente
+    return Color(
+        int.parse('FF$hexColor', radix: 16)); // Aggiunge FF per opacità
   }
 
   static Future<void> requestGalleryPermission(Function() method) async {
@@ -295,6 +311,111 @@ class MunicipiumUtility {
       info = 'Failed to get info: $e';
     }
     return info;
+  }
+
+  static Widget buildRichText(String htmlContent) {
+    final document = html_parser
+        .parse(htmlContent.replaceAll('<br /></strong>', '<br />\n</strong>'));
+
+    // Esempio: costruzione manuale di uno stile basato sui tag
+    return RichText(
+      text: TextSpan(
+        children: document.body?.nodes.map((node) {
+              if (node is html_dom.Element) {
+                switch (node.localName) {
+                  case 'b':
+                  case 'strong':
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    );
+                  case 'i':
+                  case 'em':
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(
+                          fontStyle: FontStyle.italic, fontSize: 16),
+                    );
+                  case 'u':
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(
+                          decoration: TextDecoration.underline, fontSize: 16),
+                    );
+                  case 'p':
+                    return TextSpan(
+                      text:
+                          node.text + '\n\n', // Aggiungi spazio tra i paragrafi
+                      style: const TextStyle(fontSize: 16),
+                    );
+                  case 'h1':
+                    return TextSpan(
+                      text: node.text + '\n', // Aggiungi spazio dopo i titoli
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    );
+                  case 'h2':
+                    return TextSpan(
+                      text: node.text + '\n',
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    );
+                  case 'h3':
+                    return TextSpan(
+                      text: node.text + '\n',
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    );
+                  case 'ul':
+                    return TextSpan(
+                      text: node.text + '\n',
+                      style: const TextStyle(fontSize: 16),
+                    );
+                  case 'li':
+                    return TextSpan(
+                      text: '• ${node.text}\n', // Aggiungi un punto elenco
+                      style: const TextStyle(fontSize: 16),
+                    );
+                  case 'br':
+                  case 'br ':
+                    return TextSpan(
+                        text: node.text + '\n'); // Interruzione di riga
+                  case 'span':
+                    return TextSpan(
+                      text: node.text,
+                      style: TextStyle(
+                          color: node.attributes['style']?.contains('color') ==
+                                  true
+                              ? Colors.blue // Puoi personalizzare lo stile
+                              : Colors.black,
+                          fontSize: 16),
+                    );
+                  case 'a':
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline),
+                    );
+                  default:
+                    return TextSpan(
+                      text: node.text,
+                      style: const TextStyle(fontSize: 16),
+                    );
+                }
+              } else if (node is html_dom.Text) {
+                return TextSpan(
+                  text: node.text,
+                  style: const TextStyle(fontSize: 16),
+                );
+              }
+              return const TextSpan();
+            }).toList() ??
+            [],
+      ),
+    );
   }
 }
 

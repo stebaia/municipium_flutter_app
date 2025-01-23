@@ -65,8 +65,7 @@ final List<RepositoryProvider> _repositories = [
   ),
   RepositoryProvider<OnlineServiceRepository>(
     create: (context) => OnlineServiceRepository(
-        onlineServiceService: context.read(),
-        logger: context.read()),
+        onlineServiceService: context.read(), logger: context.read()),
   ),
   RepositoryProvider<PaymentsRepository>(
     create: (context) => PaymentsRepository(
@@ -77,7 +76,25 @@ final List<RepositoryProvider> _repositories = [
   ),
   RepositoryProvider<CalendarEventRepository>(
     create: (context) => CalendarEventRepository(
-        calendarService: context.read(),
-        logger: context.read()),
-  )
+        calendarService: context.read(), logger: context.read()),
+  ),
+  RepositoryProvider<EcoattiviRepository>(create: (context) {
+    final ecoattiviRepository = EcoattiviRepository(
+        ecoattiviService: context.read(),
+        situazioneUtenteMapper: context.read(),
+        quizMapper: context.read(),
+        quizDetailMapper: context.read(),
+        photoActionsMapper: context.read(),
+        ecostopMapper: context.read(),
+        messageMapper: context.read(),
+        logger: context.read(),
+        secureStorage: context.read());
+    context.read<Dio>().interceptors.insert(
+        0,
+        EcoattiviInterceptor(
+            repository: ecoattiviRepository,
+            context: context,
+            dio: context.read()));
+    return ecoattiviRepository;
+  })
 ];

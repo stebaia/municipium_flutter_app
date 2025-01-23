@@ -9,7 +9,8 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
   @override
   Municipality fromDTO(MunicipalityDTO dto) {
     MunicipiumImageMapper mapperImages = MunicipiumImageMapper();
-    return Municipality(
+    Municipality municipality = Municipality(
+        codiceSap: dto.codiceSap!,
         municipalityName: dto.name!,
         muninicipalityId: dto.id!,
         lat: dto.latitude ?? 0,
@@ -40,7 +41,9 @@ class MunicipalityMapper extends DTOMapper<MunicipalityDTO, Municipality> {
         subdomain: dto.subdomain != null ? dto.subdomain! : '',
         newMenu: dto.newMenu ?? NewMenuDTO(),
         jcityGovUrl: dto.jcityGovUrl ?? '',
-        jcityGovEnte: dto.jcityGovEnte ?? '');
+        jcityGovEnte: dto.jcityGovEnte ?? '',
+        istat: dto.istat ?? -1);
+    return municipality;
   }
 
   @override

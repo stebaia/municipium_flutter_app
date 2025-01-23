@@ -2,7 +2,7 @@ part of 'user_bloc.dart';
 
 abstract class UserState extends Equatable {
   const UserState();
-  
+
   @override
   List<Object> get props => [];
 }
@@ -24,7 +24,6 @@ class FetchingUserDataState extends UserState {
   const FetchingUserDataState();
 }
 
-
 class FetchedUserDataState extends UserState {
   final SpidUserModel userSpidModel;
   const FetchedUserDataState(this.userSpidModel);
@@ -34,4 +33,18 @@ class NoSpidUserState extends UserState {
   const NoSpidUserState();
 }
 
+class FetchedValidateUserState extends UserState {
+  final UserValidated userValidated;
 
+  const FetchedValidateUserState(this.userValidated);
+}
+
+class FetchingValidateUserState extends UserState {
+  const FetchingValidateUserState();
+}
+
+class ErrorFetchingValidateUserState extends UserState {
+  final String message;
+
+  const ErrorFetchingValidateUserState(this.message);
+}

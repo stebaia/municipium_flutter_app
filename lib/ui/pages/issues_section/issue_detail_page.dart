@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,10 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/bloc/issue_detail_bloc/issue_detail_bloc.dart';
 import 'package:municipium/model/issue/issue_Detail.dart';
-import 'package:municipium/model/issue/issue_chat.dart';
 import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
-import 'package:municipium/services/network/dto/issue_detail_dto.dart';
 import 'package:municipium/ui/components/horizzontal_gallery.dart';
 import 'package:municipium/ui/components/shimmers/shimmer_detail_component.dart';
 import 'package:municipium/ui/components/tag_label_bkg.dart';

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:municipium/routers/app_router.gr.dart';
+import 'package:municipium/ui/pages/ecoattivi_section/qr_ecoattivi_page.dart';
 
 @AutoRouterConfig(
   replaceInRouteName: 'Page,Route',
@@ -55,6 +56,16 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SelfPaymentsRoute.page),
         AutoRoute(page: NewSelfPaymentRouter.page),
         AutoRoute(page: PersonTypePaymentRoute.page),
-        AutoRoute(page: WeatherQualityRoute.page)
+        AutoRoute(page: WeatherQualityRoute.page),
+        AutoRoute(page: EcoattiviHomeRoute.page),
+        AutoRoute(page: QrEcoattiviRoute.page),
+        AutoRoute(page: QuizListEcoattiviRoute.page),
+        AutoRoute(page: EcoattiviQuizRouter.page),
+        AutoRoute(page: EcoPhotoSection.page),
+        AutoRoute(page: EcostopSection.page),
+        AutoRoute(page: EcostopDetailRoute.page),
+        AutoRoute(page: EcoMessageRoute.page),
+        AutoRoute(page: EcoMessageDetailRoute.page),
+        AutoRoute(page: InviteFriendRoute.page)
       ];
 }

@@ -65,5 +65,16 @@ final List<SingleChildWidget> _mappers = [
   Provider<DTOMapper<PaymentCustomFieldDTO, PaymentCustomField>>(
       create: (_) => PaymentCustomFieldMapper()),
   Provider<DTOMapper<FieldAttributeDTO, FieldAttribute>>(
-      create: (_) => FieldAttributeMapper())
+      create: (_) => FieldAttributeMapper()),
+  Provider<DTOMapper<EcoattiviSituazioneUtenteDto, EcoattiviSituazioneUtente>>(
+      create: (_) => EcoattiviSituazioneUtenteMapper()),
+  Provider<DTOMapper<EcoattiviQuizDto, EcoattiviQuiz>>(
+      create: (_) => EcoattiviQuizItemMapper()),
+  Provider<DTOMapper<EcoattiviQuizDetailDto, EcoattiviQuizDetail>>(
+      create: (_) => EcoattiviQuizDetailMapper()),
+  Provider<DTOMapper<EcoattiviFotoAzioneDto, EcoattiviFotoAzione>>(
+      create: (_) => EcoattiviFotoAzioneMapper()),
+  Provider<DTOMapper<EcostopDto, Ecostop>>(create: (_) => EcostopMapper()),
+  Provider<DTOMapper<EcoattiviMessaggioDto, EcoattiviMessage>>(
+      create: (_) => EcoattiviMessaggiMapper()),
 ];

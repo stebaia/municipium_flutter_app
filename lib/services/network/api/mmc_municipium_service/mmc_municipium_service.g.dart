@@ -27,7 +27,6 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     dynamic authId,
     dynamic municipalityId,
     dynamic authSystem,
-    dynamic authIdOld,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -40,7 +39,7 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     )
         .compose(
           _dio.options,
-          '${baseUrl}/retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
+          '${baseUrl}/retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -53,6 +52,79 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     late SpidUserModel _value;
     try {
       _value = SpidUserModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<UserValidated> validateUser(
+    String baseUrl,
+    UserToValidateDto user,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(user.toJson());
+    final _options = _setStreamType<UserValidated>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '${baseUrl}/validateUser',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late UserValidated _value;
+    try {
+      _value = UserValidated.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<StringResponse> getInfoTerminiPrivacy(
+    String baseUrl,
+    String info,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<StringResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '${baseUrl}/ecoattivi/get_info?form=${info}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late StringResponse _value;
+    try {
+      _value = StringResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
