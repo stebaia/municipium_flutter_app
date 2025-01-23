@@ -16,7 +16,7 @@ abstract class MmcMunicipiumService {
   factory MmcMunicipiumService(Dio dio) = _MmcMunicipiumService;
 
   @GET(
-      '{baseUrl}retriveUserData/{authId}?municipalityId={municipalityId}&authSystem={authSystem}&authIdOld={authIdOld}')
+      '{baseUrl}/retriveUserData/{authId}?municipalityId={municipalityId}&authSystem={authSystem}&authIdOld={authIdOld}')
   Future<SpidUserModel> retriveUserData(
       @Path('baseUrl') String baseUrl,
       @Path('authId') authId,
@@ -24,7 +24,7 @@ abstract class MmcMunicipiumService {
       @Path('authSystem') authSystem,
       @Path('authIdOld') authIdOld);
 
-  @POST('{baseUrl}disableDevice')
+  @POST('{baseUrl}/disableDevice')
   Future<HttpResponse> logoutSpid(
       @Path('baseUrl') String baseUrl,
       //DISABLE DEVICE REQUEST

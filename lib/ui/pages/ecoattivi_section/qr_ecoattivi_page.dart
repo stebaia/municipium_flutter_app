@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 
 import 'package:flutter/material.dart';
-//import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 @RoutePage()
 class QrEcoattiviPage extends StatefulWidget {
@@ -16,13 +16,12 @@ class QrEcoattiviPage extends StatefulWidget {
 
 class _QrEcoattiviPageState extends State<QrEcoattiviPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  //QRViewController? controller;
-  String? scannedCode;
+  MobileScannerController _controller = MobileScannerController();
+  Barcode? scannedCode;
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-    /*return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('Qr scan'),
         leading: IconButton(
@@ -46,9 +45,10 @@ class _QrEcoattiviPageState extends State<QrEcoattiviPage> {
                   Container(
                     width: 250,
                     height: 250,
-                    child: QRView(
+                    child: MobileScanner(
+                      controller: _controller,
                       key: qrKey,
-                      onQRViewCreated: _onQRViewCreated,
+                      onDetect: _handleCode,
                     ),
                   ),
                   // Linee interrotte staccate
@@ -67,7 +67,7 @@ class _QrEcoattiviPageState extends State<QrEcoattiviPage> {
               child: FloatingActionButton(
                 backgroundColor: Colors.white,
                 onPressed: () {
-                  controller?.toggleFlash();
+                  _controller.toggleTorch();
                 },
                 child: const Icon(Icons.flashlight_on),
               ),
@@ -78,20 +78,10 @@ class _QrEcoattiviPageState extends State<QrEcoattiviPage> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _handleCode(BarcodeCapture code) {
     setState(() {
-      this.controller = controller;
+      scannedCode = code.barcodes.firstOrNull;
     });
-
-    controller.scannedDataStream.listen((scanData) {
-      print("Codice rilevato: ${scanData.code}");
-    });
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }
 
@@ -133,6 +123,4 @@ class BorderPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
-  */
-  }
 }

@@ -150,6 +150,7 @@ import 'package:municipium/services/network/dto/service_pnrr_dto.dart';
 import 'package:municipium/services/network/interceptor/ecoattivi_interceptor.dart';
 import 'package:municipium/services/network/interceptors/lissi_auth_interceptor.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
+import 'package:municipium/utils/position_utils.dart';
 import 'package:municipium/utils/secure_storage.dart';
 import 'package:pine/pine.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -169,14 +170,13 @@ class DependencyInjector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     
-              return CustomDiHelper(
-                      repositories: _repositories,
-                      mappers: _mappers,
-                      blocs: _blocs,
-                      providers: providersFun(),
-                      customService: _customService,
-                      child: child,
-                    );
+    return CustomDiHelper(
+      repositories: _repositories,
+      mappers: _mappers,
+      blocs: _blocs,
+      providers: providersFun(),
+      customService: _customService,
+      child: child,
+    );
   }
 }

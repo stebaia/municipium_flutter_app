@@ -32,7 +32,7 @@ List<SingleChildWidget> providersFun() {
     ChangeNotifierProvider<BaseUrlNotifier>(
       lazy: false,
       create: (context) {
-        return BaseUrlNotifier()..initializeBaseUrl();
+        return BaseUrlNotifier()..initializeBaseUrl(BaseUrlType.staging);
       },
     ),
 

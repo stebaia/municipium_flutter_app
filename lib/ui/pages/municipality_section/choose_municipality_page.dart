@@ -10,6 +10,7 @@ import 'package:municipium/model/municipality.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:municipium/utils/municipium_utility.dart';
+import 'package:municipium/utils/position_utils.dart';
 import 'package:municipium/utils/theme_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -82,8 +83,8 @@ class ChooseMunicipalityPage extends StatelessWidget
                                       //await municipalityContext
                                       //.read<MunicipalityBloc>()
                                       //.deleteMunicipality();
-                                      await baseUrlNotifier.updateBaseUrl(
-                                          MunicipiumUtility.BASEURL_STAGING);
+                                      await baseUrlNotifier.updateAllBaseUrls(
+                                          BaseUrlType.staging);
                                       context.router
                                           .replace(ChooseMunicipalityRoute());
                                     } else if (textToSearch?.replaceAll(
@@ -93,8 +94,8 @@ class ChooseMunicipalityPage extends StatelessWidget
                                       //.read<MunicipalityBloc>()
                                       //.deleteMunicipality();
 
-                                      await baseUrlNotifier.updateBaseUrl(
-                                          MunicipiumUtility.BASEURL_PROD);
+                                      await baseUrlNotifier
+                                          .updateAllBaseUrls(BaseUrlType.prod);
                                       context.router
                                           .replace(ChooseMunicipalityRoute());
                                     } else {}

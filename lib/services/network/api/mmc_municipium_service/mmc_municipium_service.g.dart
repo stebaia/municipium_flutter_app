@@ -40,7 +40,7 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     )
         .compose(
           _dio.options,
-          '${baseUrl}retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
+          '${baseUrl}/retriveUserData/${authId}?municipalityId=${municipalityId}&authSystem=${authSystem}&authIdOld=${authIdOld}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -77,7 +77,7 @@ class _MmcMunicipiumService implements MmcMunicipiumService {
     )
         .compose(
           _dio.options,
-          '${baseUrl}disableDevice',
+          '${baseUrl}/disableDevice',
           queryParameters: queryParameters,
           data: _data,
         )
