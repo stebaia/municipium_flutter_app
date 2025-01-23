@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+//import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 @RoutePage()
 class QrEcoattiviPage extends StatefulWidget {
@@ -16,12 +16,13 @@ class QrEcoattiviPage extends StatefulWidget {
 
 class _QrEcoattiviPageState extends State<QrEcoattiviPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
+  //QRViewController? controller;
   String? scannedCode;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Container();
+    /*return Scaffold(
       appBar: AppBar(
         title: Text('Qr scan'),
         leading: IconButton(
@@ -132,4 +133,6 @@ class BorderPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
+  */
+  }
 }
