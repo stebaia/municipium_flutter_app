@@ -10,7 +10,7 @@ part 'event_list_state.dart';
 
 class EventListBloc extends Bloc<EventListEvent, EventListState> {
   final EventsRepository eventsRepository;
-  int page = 1;
+  int page = 0;
   bool isFetching = true;
   bool isSearching = false;
   List<EventItemList> allEvents = [];

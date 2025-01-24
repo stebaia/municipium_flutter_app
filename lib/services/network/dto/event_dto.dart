@@ -51,7 +51,7 @@ class EventDTO extends DTO with EquatableMixin{
 	int? municipalityId;
 	String? municipalityName;
 	String? slug;
-	Null? aggregatorCategoryId;
+	int? aggregatorCategoryId;
 	String? createdAt;
 	String? excerpt;
 	String? publishedAt;
@@ -66,7 +66,7 @@ class EventDTO extends DTO with EquatableMixin{
 	String? updatedAt;
 	String? breve;
 	bool? isChild;
-	Null? luogoId;
+	int? luogoId;
 	int? dateDiff;
 	String? maxTempo;
 	String? startTimeWithTimezone;

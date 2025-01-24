@@ -14,7 +14,7 @@ class NewsListBloc extends Bloc<NewsListBlocEvent, NewsListBlocState> {
   List<NewsItemList> allNewsFiltered = [];
   bool isFetching = true;
   bool isSearching = false;
-  int page = 1;
+  int page = 0;
 
   NewsListBloc({required this.newsRepository})
       : super(const FetchingNewsListState()) {

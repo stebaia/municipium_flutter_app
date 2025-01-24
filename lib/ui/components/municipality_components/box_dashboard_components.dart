@@ -176,7 +176,7 @@ class BoxHorizzontalDashboardComponents extends StatelessWidget {
         : InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
-              context.pushRoute(LissiDashboardRoute());
+               context.router.pushNamed('/$slug');
             },
             child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

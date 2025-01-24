@@ -17,7 +17,7 @@ abstract class EventService {
   Future<List<EventDTO>> getEventsList(@Path('baseUrl') String baseUrl);
 
   @GET(
-      '{baseUrl}/events/paged_events?page_index={page_index}&page_size={page_size}')
+      '{baseUrl}/events/paged_events?page_index={page_index}&page_size={page_size}&=merge=1&future_events=1')
   Future<EventPagedDTO> getEventsPaged(@Path('baseUrl') String baseUrl,
       @Path('page_index') int page_index, @Path('page_size') int page_size);
 }
