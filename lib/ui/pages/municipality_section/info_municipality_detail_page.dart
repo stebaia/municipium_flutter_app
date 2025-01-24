@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:municipium/bloc/bloc/info_municipality_bloc/info_municipality_detail_page_bloc/bloc/info_municipality_detail_page_bloc.dart';
-import 'package:municipium/model/civil_defence/civil_defence_list_informations.dart';
 import 'package:municipium/model/pages/pages.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/services/network/dto/attachment_dto.dart';

@@ -109,7 +109,7 @@ class _EventService implements EventService {
     )
         .compose(
           _dio.options,
-          '${baseUrl}/events/paged_events?page_index=${page_index}&page_size=${page_size}',
+          '${baseUrl}/events/paged_events?page_index=${page_index}&page_size=${page_size}&=merge=1&future_events=1',
           queryParameters: queryParameters,
           data: _data,
         )
