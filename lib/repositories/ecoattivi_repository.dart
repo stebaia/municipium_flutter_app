@@ -3,6 +3,8 @@ import 'package:municipium/model/basic_response.dart';
 import 'package:municipium/model/ecoattivi/aggiorna_quiz_body.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_foto_azione.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_message.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_qr_body.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_qr_response.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_quiz.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_quiz_detail.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_situazione_utente.dart';
@@ -183,6 +185,21 @@ class EcoattiviRepository {
         logger.e('Error in messaggi: input null');
         return null;
       }
+    } catch (error, stackTrace) {
+      logger.e('Error in messaggi: ${error.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<EcoattiviQrResponse> qrRegistration(
+      {required String baseUrl,
+      required String token,
+      required String guid,
+      required EcoattiviQrBody body}) async {
+    try {
+      final EcoattiviQrResponse response = await ecoattiviService
+          .qrRegistration(baseUrl, 'application/json', token, guid, body);
+      return response;
     } catch (error, stackTrace) {
       logger.e('Error in messaggi: ${error.toString()}');
       rethrow;

@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:municipium/model/basic_response.dart';
 import 'package:municipium/model/ecoattivi/aggiorna_quiz_body.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_qr_body.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_qr_response.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_quiz.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_situazione_utente.dart';
 import 'package:municipium/model/ecoattivi/id_to_send.dart';
@@ -72,4 +74,12 @@ abstract class EcoattiviService {
       @Header('Content-Type') String contentType,
       @Header(TOKEN) String token,
       @Header(GUID) String guid);
+
+  @POST('{baseUrl}/registrazione_qr')
+  Future<EcoattiviQrResponse> qrRegistration(
+      @Path('baseUrl') String baseUrl,
+      @Header('Content-Type') String contentType,
+      @Header(TOKEN) String token,
+      @Header(GUID) String guid,
+      @Body() EcoattiviQrBody body);
 }

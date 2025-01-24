@@ -62,7 +62,7 @@ class EcoPhotoSection extends StatelessWidget implements AutoRouteWrapper {
                 },
               );
             }
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           },
         ));
   }
