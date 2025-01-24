@@ -1,6 +1,6 @@
 import 'package:municipium/model/ecoattivi/ecoattivi_ranking.dart';
 import 'package:municipium/repositories/mappers/ecoattivi_mapper/ecoattivi_ranking_comune_mapper.dart';
-import 'package:municipium/services/network/dto/ecoattivi_ranking_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_ranking_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class EcoattiviRankingMapper

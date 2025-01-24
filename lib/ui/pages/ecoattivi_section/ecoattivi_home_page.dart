@@ -12,10 +12,12 @@ import 'package:municipium/bloc/cubit/ecoattivi_user_cubit/ecoattivi_user_cubit.
 import 'package:municipium/bloc/cubit/municipality_cubit/municipality_global/municipality_global_cubit.dart';
 import 'package:municipium/bloc/cubit/user_data_cubit/user_data_cubit.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_wrapper.dart';
+import 'package:municipium/model/ecoattivi/ecocard_body.dart';
 import 'package:municipium/model/user/user_spid_model.dart';
 import 'package:municipium/routers/app_router.gr.dart';
 import 'package:municipium/ui/components/blue_background_painter.dart';
 import 'package:municipium/ui/components/dialog_builder.dart';
+import 'package:municipium/ui/components/ecoattivi/ecocard.dart';
 import 'package:municipium/ui/components/webview/custom_webview.dart';
 import 'package:municipium/ui/pages/ecoattivi_section/invite_friend_page.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
@@ -442,11 +444,18 @@ class EcoattiviHomePage extends StatelessWidget {
                                         onPressed: () {
                                           // Azione per "Vedi tutti"
                                         },
-                                        child: const Text(
-                                          'Vedi tutti',
-                                          style: TextStyle(
-                                            color: Colors.blue,
-                                            fontWeight: FontWeight.bold,
+                                        child: GestureDetector(
+                                          onTap: () => context.pushRoute(
+                                              EcopointGridRoute(
+                                                  token: token!,
+                                                  situazioneUtente:
+                                                      state.situazioneUtente)),
+                                          child: const Text(
+                                            'Vedi tutti',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -457,7 +466,8 @@ class EcoattiviHomePage extends StatelessWidget {
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
                                       children: [
-                                        _buildEcoCard(
+                                        Ecocard(
+                                            body: EcocardBody(
                                           imagePath:
                                               'assets/images/ecoattivi_quiz_home.png', // Percorso dell'immagine
                                           title: 'Quiz',
@@ -470,50 +480,56 @@ class EcoattiviHomePage extends StatelessWidget {
                                                     token: model.token ?? ''));
                                             // Azione per il quiz
                                           },
-                                        ),
+                                        )),
                                         const SizedBox(width: 16),
-                                        _buildEcoCard(
+                                        Ecocard(
+                                            body: EcocardBody(
                                           imagePath:
                                               'assets/images/ecoattivi_qr_home.png', // Percorso immagine
                                           title: 'QR Code',
                                           badgeCount: 0,
                                           onPressed: () {
-                                            context
-                                                .pushRoute(QrEcoattiviRoute());
+                                            context.pushRoute(
+                                                QrEcoattiviRoute(token: token));
                                             // Azione per Invita un amico
                                           },
+                                        )),
+                                        const SizedBox(width: 16),
+                                        Ecocard(
+                                          body: EcocardBody(
+                                            imagePath:
+                                                'assets/images/ecoattivi_invite_friend_home.png', // Percorso immagine
+                                            title: 'Invita un amico',
+                                            badgeCount: 0,
+                                            onPressed: () {
+                                              context.pushRoute(InviteFriendRoute(
+                                                  code: state.situazioneUtente
+                                                          .codiceAmico ??
+                                                      '',
+                                                  punti: state.situazioneUtente
+                                                          .puntiInvitaAmico ??
+                                                      100));
+                                              // Azione per Invita un amico
+                                            },
+                                          ),
                                         ),
                                         const SizedBox(width: 16),
-                                        _buildEcoCard(
-                                          imagePath:
-                                              'assets/images/ecoattivi_invite_friend_home.png', // Percorso immagine
-                                          title: 'Invita un amico',
-                                          badgeCount: 0,
-                                          onPressed: () {
-                                            context.pushRoute(InviteFriendRoute(
-                                                code: state.situazioneUtente
-                                                        .codiceAmico ??
-                                                    '',
-                                                punti: state.situazioneUtente
-                                                        .puntiInvitaAmico ??
-                                                    100));
-                                            // Azione per Invita un amico
-                                          },
+                                        Ecocard(
+                                          body: EcocardBody(
+                                            imagePath:
+                                                'assets/images/ecoattivi_photo_home.png', // Percorso immagine
+                                            title: 'Carica foto',
+                                            badgeCount: 0,
+                                            onPressed: () {
+                                              context.pushRoute(EcoPhotoSection(
+                                                  token: model.token ?? ''));
+                                              // Azione per Invita un amico
+                                            },
+                                          ),
                                         ),
                                         const SizedBox(width: 16),
-                                        _buildEcoCard(
-                                          imagePath:
-                                              'assets/images/ecoattivi_photo_home.png', // Percorso immagine
-                                          title: 'Carica foto',
-                                          badgeCount: 0,
-                                          onPressed: () {
-                                            context.pushRoute(EcoPhotoSection(
-                                                token: model.token ?? ''));
-                                            // Azione per Invita un amico
-                                          },
-                                        ),
-                                        const SizedBox(width: 16),
-                                        _buildEcoCard(
+                                        Ecocard(
+                                            body: EcocardBody(
                                           imagePath:
                                               'assets/images/ecoattivi_missions_home.png', // Percorso immagine
                                           title: 'Missioni',
@@ -523,7 +539,7 @@ class EcoattiviHomePage extends StatelessWidget {
                                           onPressed: () {
                                             // Azione per Invita un amico
                                           },
-                                        ),
+                                        )),
                                       ],
                                     ),
                                   )
@@ -660,108 +676,6 @@ class EcoattiviHomePage extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildEcoCard({
-    required String imagePath,
-    required String title,
-    required int badgeCount,
-    required VoidCallback onPressed,
-  }) {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Container(
-          width: 190,
-          height: 215, // Altezza della card
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(230, 240, 254, 1),
-            borderRadius: BorderRadius.circular(12.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                blurRadius: 6.0,
-                spreadRadius: 2.0,
-              ),
-            ],
-          ),
-          child: Stack(
-            clipBehavior: Clip.none, // Consente al badge di uscire dai limiti
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Immagine in alto
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(12.0),
-                        topRight: Radius.circular(12.0),
-                      ),
-                      child: Image.asset(
-                        imagePath,
-                        fit: BoxFit.contain, // L'immagine copre l'intero spazio
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
-                    ),
-                  ),
-                  // Parte blu con forma ellittica in alto
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12.0),
-                      bottomRight: Radius.circular(12.0),
-                    ),
-                    child: CustomPaint(
-                      size: Size(double.infinity, 50),
-                      painter: BlueBackgroundPainter(),
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 16),
-                        height: 50, // Altezza della parte blu
-                        alignment: Alignment.center,
-                        child: Text(
-                          title,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              // Badge rosso in alto a destra (fuori dalla card)
-              if (badgeCount > 0)
-                Positioned(
-                  top: -10, // Parzialmente fuori dalla card
-                  right: -10,
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        '$badgeCount',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

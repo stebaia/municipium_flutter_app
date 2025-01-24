@@ -1,15 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:municipium/model/basic_response.dart';
 import 'package:municipium/model/ecoattivi/aggiorna_quiz_body.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_qr_body.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_qr_response.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_quiz.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_situazione_utente.dart';
 import 'package:municipium/model/ecoattivi/id_to_send.dart';
-import 'package:municipium/services/network/dto/ecoattivi_foto_azione_dto.dart';
-import 'package:municipium/services/network/dto/ecoattivi_message_response.dart';
-import 'package:municipium/services/network/dto/ecoattivi_quiz_detail_dto.dart';
-import 'package:municipium/services/network/dto/ecoattivi_quiz_dto.dart';
-import 'package:municipium/services/network/dto/ecoattivi_situazione_utente_dto.dart';
-import 'package:municipium/services/network/dto/ecostop_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_foto_azione_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_message_response.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_missione_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_movimento_utente.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_quiz_detail_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_quiz_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_ranking_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_situazione_utente_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecostop_dto.dart';
 import 'package:municipium/services/network/dto/response_dto.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
@@ -68,6 +73,35 @@ abstract class EcoattiviService {
 
   @POST('{baseUrl}/lista_messaggi')
   Future<EcoattiviMessageResponse> messageList(
+      @Path('baseUrl') String baseUrl,
+      @Header('Content-Type') String contentType,
+      @Header(TOKEN) String token,
+      @Header(GUID) String guid);
+
+  @POST('{baseUrl}/registrazione_qr')
+  Future<EcoattiviQrResponse> qrRegistration(
+      @Path('baseUrl') String baseUrl,
+      @Header('Content-Type') String contentType,
+      @Header(TOKEN) String token,
+      @Header(GUID) String guid,
+      @Body() EcoattiviQrBody body);
+
+  @POST('{baseUrl}/lista_sfide')
+  Future<EcoattiviMissioniReponse> missions(
+      @Path('baseUrl') String baseUrl,
+      @Header('Content-Type') String contentType,
+      @Header(TOKEN) String token,
+      @Header(GUID) String guid);
+
+  @POST('{baseUrl}/ranking')
+  Future<EcoattiviRankingDto> ranking(
+      @Path('baseUrl') String baseUrl,
+      @Header('Content-Type') String contentType,
+      @Header(TOKEN) String token,
+      @Header(GUID) String guid);
+
+  @POST('{baseUrl}/movimenti_utente')
+  Future<EcoattiviMovimentoUtenteResponse> movimentiUtente(
       @Path('baseUrl') String baseUrl,
       @Header('Content-Type') String contentType,
       @Header(TOKEN) String token,

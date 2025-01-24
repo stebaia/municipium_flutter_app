@@ -1,4 +1,4 @@
-import 'package:municipium/services/network/dto/ecoattivi_azione_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_azione_dto.dart';
 import 'package:pine/dto/dto.dart';
 
 class EcoattiviSituazioneUtenteDto extends DTO {

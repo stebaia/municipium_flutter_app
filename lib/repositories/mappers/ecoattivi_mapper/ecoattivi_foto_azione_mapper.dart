@@ -1,5 +1,5 @@
 import 'package:municipium/model/ecoattivi/ecoattivi_foto_azione.dart';
-import 'package:municipium/services/network/dto/ecoattivi_foto_azione_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_foto_azione_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class EcoattiviFotoAzioneMapper

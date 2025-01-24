@@ -88,6 +88,7 @@ final List<RepositoryProvider> _repositories = [
         photoActionsMapper: context.read(),
         ecostopMapper: context.read(),
         messageMapper: context.read(),
+        missionsMapper: context.read(),
         logger: context.read(),
         secureStorage: context.read());
     context.read<Dio>().interceptors.insert(
@@ -114,21 +115,20 @@ final List<RepositoryProvider> _repositories = [
         0, AuthInterceptor(lissiRepository: repository, dio: context.read()));
     return repository;
   }),
-
-   RepositoryProvider<SurveyRepository>(create: (context) {
+  RepositoryProvider<SurveyRepository>(create: (context) {
     final repository = SurveyRepository(
-        service: context.read(),
-        logger: context.read(),
-        );
-    
+      service: context.read(),
+      logger: context.read(),
+    );
+
     return repository;
   }),
   RepositoryProvider<InfoMunicipalityRepository>(create: (context) {
     final repository = InfoMunicipalityRepository(
-        service: context.read(),
-        logger: context.read(),
-        );
-    
+      service: context.read(),
+      logger: context.read(),
+    );
+
     return repository;
   })
 ];
