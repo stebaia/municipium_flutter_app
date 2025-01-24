@@ -1,6 +1,6 @@
 import 'package:municipium/model/ecoattivi/ecoattivi_question.dart';
 import 'package:municipium/repositories/mappers/ecoattivi_mapper/ecoattivi_answer_mapper.dart';
-import 'package:municipium/services/network/dto/ecoattivi_quiz_detail_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_quiz_detail_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class EcoattiviQuestionMapper

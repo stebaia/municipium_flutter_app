@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:municipium/bloc/bloc/ecoattivi_photoaction_bloc/ecoattivi_photoaction_bloc.dart';
+import 'package:municipium/bloc/bloc/ecoattivi_bloc/ecoattivi_photoaction_bloc/ecoattivi_photoaction_bloc.dart';
 import 'package:municipium/ui/components/ecoattivi/ecopoints_label.dart';
 import 'package:municipium/utils/base_url_notifier.dart';
 import 'package:provider/provider.dart';

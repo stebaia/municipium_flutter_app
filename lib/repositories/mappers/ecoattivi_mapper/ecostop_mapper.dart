@@ -1,5 +1,5 @@
 import 'package:municipium/model/ecoattivi/ecostop.dart';
-import 'package:municipium/services/network/dto/ecostop_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecostop_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class EcostopMapper extends DTOMapper<EcostopDto, Ecostop> {

@@ -1,6 +1,6 @@
 import 'package:municipium/model/ecoattivi/ecoattivi_premio.dart';
 import 'package:municipium/repositories/mappers/ecoattivi_mapper/ecoattivi_requisito_mapper.dart';
-import 'package:municipium/services/network/dto/ecoattivi_premio_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_premio_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class EcoattiviPremioMapper

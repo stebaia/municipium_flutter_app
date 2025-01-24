@@ -3,6 +3,7 @@ import 'package:municipium/model/basic_response.dart';
 import 'package:municipium/model/ecoattivi/aggiorna_quiz_body.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_foto_azione.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_message.dart';
+import 'package:municipium/model/ecoattivi/ecoattivi_missione.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_qr_body.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_qr_response.dart';
 import 'package:municipium/model/ecoattivi/ecoattivi_quiz.dart';
@@ -11,12 +12,13 @@ import 'package:municipium/model/ecoattivi/ecoattivi_situazione_utente.dart';
 import 'package:municipium/model/ecoattivi/ecostop.dart';
 import 'package:municipium/model/ecoattivi/id_to_send.dart';
 import 'package:municipium/services/network/api/ecoattivi_service/ecoattivi_service.dart';
-import 'package:municipium/services/network/dto/ecoattivi_foto_azione_dto.dart';
-import 'package:municipium/services/network/dto/ecoattivi_message_response.dart';
-import 'package:municipium/services/network/dto/ecoattivi_quiz_detail_dto.dart';
-import 'package:municipium/services/network/dto/ecoattivi_quiz_dto.dart';
-import 'package:municipium/services/network/dto/ecoattivi_situazione_utente_dto.dart';
-import 'package:municipium/services/network/dto/ecostop_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_foto_azione_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_message_response.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_missione_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_quiz_detail_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_quiz_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_situazione_utente_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecostop_dto.dart';
 import 'package:municipium/services/network/dto/response_dto.dart';
 import 'package:municipium/utils/secure_storage.dart';
 import 'package:pine/utils/dto_mapper.dart';
@@ -30,6 +32,7 @@ class EcoattiviRepository {
       photoActionsMapper;
   final DTOMapper<EcostopDto, Ecostop> ecostopMapper;
   final DTOMapper<EcoattiviMessaggioDto, EcoattiviMessage> messageMapper;
+  final DTOMapper<EcoattiviMissioneDto, EcoattiviMissione> missionsMapper;
   final EcoattiviService ecoattiviService;
   final Logger logger;
   final SecureStorage secureStorage;
@@ -42,6 +45,7 @@ class EcoattiviRepository {
       required this.photoActionsMapper,
       required this.ecostopMapper,
       required this.messageMapper,
+      required this.missionsMapper,
       required this.logger,
       required this.secureStorage});
 
@@ -202,6 +206,30 @@ class EcoattiviRepository {
       return response;
     } catch (error, stackTrace) {
       logger.e('Error in messaggi: ${error.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<List<EcoattiviMissione>?> getMissions({
+    required String baseUrl,
+    required String token,
+    required String guid,
+  }) async {
+    try {
+      final EcoattiviMissioniReponse response = await ecoattiviService.missions(
+          baseUrl, 'application/json', token, guid);
+      if (response.resultCode == 0 && response.sfide != null) {
+        List<EcoattiviMissione> missioni = [];
+        for (var sfida in response.sfide!) {
+          missioni.add(missionsMapper.fromDTO(sfida));
+        }
+        return missioni;
+      } else {
+        logger.e('Error in missioni: input null');
+        return null;
+      }
+    } catch (error, stackTrace) {
+      logger.e('Error in missioni: ${error.toString()}');
       rethrow;
     }
   }

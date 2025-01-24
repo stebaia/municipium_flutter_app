@@ -1,5 +1,5 @@
 import 'package:municipium/model/ecoattivi/ecoattivi_message.dart';
-import 'package:municipium/services/network/dto/ecoattivi_message_response.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_message_response.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class EcoattiviMessaggiMapper

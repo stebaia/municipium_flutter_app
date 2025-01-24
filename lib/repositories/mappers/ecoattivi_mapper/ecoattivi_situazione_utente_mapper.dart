@@ -1,6 +1,6 @@
 import 'package:municipium/model/ecoattivi/ecoattivi_situazione_utente.dart';
 import 'package:municipium/repositories/mappers/ecoattivi_mapper/ecoattivi_azione_mapper.dart';
-import 'package:municipium/services/network/dto/ecoattivi_situazione_utente_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_situazione_utente_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class EcoattiviSituazioneUtenteMapper

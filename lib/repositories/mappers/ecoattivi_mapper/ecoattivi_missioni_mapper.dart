@@ -1,5 +1,5 @@
 import 'package:municipium/model/ecoattivi/ecoattivi_missione.dart';
-import 'package:municipium/services/network/dto/ecoattivi_missione_dto.dart';
+import 'package:municipium/services/network/dto/ecoattivi/ecoattivi_missione_dto.dart';
 import 'package:pine/utils/dto_mapper.dart';
 
 class EcoattiviMissioniMapper

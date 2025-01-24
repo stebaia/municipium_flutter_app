@@ -1,5 +1,24 @@
 import 'package:pine/dto/dto.dart';
 
+class EcoattiviMissioniReponse {
+  int? resultCode;
+  String? errorMessage;
+  List<EcoattiviMissioneDto>? sfide;
+
+  EcoattiviMissioniReponse({this.resultCode, this.errorMessage, this.sfide});
+
+  EcoattiviMissioniReponse.fromJson(Map<String, dynamic> json) {
+    resultCode = json['resultCode'];
+    errorMessage = json['errorMessage'];
+    if (json['sfide'] != null) {
+      sfide = <EcoattiviMissioneDto>[];
+      json['sfide'].forEach((v) {
+        sfide!.add(new EcoattiviMissioneDto.fromJson(v));
+      });
+    }
+  }
+}
+
 class EcoattiviMissioneDto extends DTO {
   int? sfidaMissioneId;
   int? tipo;

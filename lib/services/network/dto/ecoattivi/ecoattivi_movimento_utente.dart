@@ -1,5 +1,27 @@
 import 'package:pine/dto/dto.dart';
 
+class EcoattiviMovimentoUtenteResponse {
+  String? errorMessage;
+  int? resultCode;
+  List<EcoattiviMovimentoUtenteDto>? movimenti;
+
+  EcoattiviMovimentoUtenteResponse(
+      {required this.errorMessage,
+      required this.resultCode,
+      required this.movimenti});
+
+  EcoattiviMovimentoUtenteResponse.fromJson(Map<String, dynamic> json) {
+    resultCode = json['resultCode'];
+    errorMessage = json['errorMessage'];
+    if (json['movimenti'] != null) {
+      movimenti = <EcoattiviMovimentoUtenteDto>[];
+      json['movimenti'].forEach((v) {
+        movimenti!.add(new EcoattiviMovimentoUtenteDto.fromJson(v));
+      });
+    }
+  }
+}
+
 class EcoattiviMovimentoUtenteDto extends DTO {
   String idUnivoco;
   String origine;
